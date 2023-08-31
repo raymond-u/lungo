@@ -599,7 +599,7 @@ session:
   ## The domain to protect.
   ## Note: the authenticator must also be in that domain.
   ## If empty, the cookie is restricted to the subdomain of the issuer.
-  domain: ''
+  domain: 127.0.0.1
 
   ## Sets the Cookie SameSite value. Possible options are none, lax, or strict.
   ## Please read https://www.authelia.com/c/session#same_site
@@ -1055,7 +1055,7 @@ notifier:
     host: 127.0.0.1
 
     ## The port to connect to the SMTP host on.
-    port: 0
+    port: 1025
 
     ## The connection timeout.
     timeout: 5s
@@ -1070,7 +1070,7 @@ notifier:
     ## The sender is used to is used for the MAIL FROM command and the FROM header.
     ## If this is not defined and the username is an email, we use the username as this value. This can either be just
     ## an email address or the RFC5322 'Name <email address>' format.
-    sender: ""
+    sender: "Authelia <admin@example.com>"
 
     ## HELO/EHLO Identifier. Some SMTP Servers may reject the default of localhost.
     # identifier: localhost
