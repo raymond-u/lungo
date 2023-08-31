@@ -1,0 +1,13 @@
+address: 127.0.0.1
+port: 9091
+baseURL: /filebrowser
+
+database: /var/lib/filebrowser/main.db
+root: /
+log: stdout
+
+# auth.header:
+auth.method: noauth
+signup: false
+
+branding.disableExternal: true

@@ -1,0 +1,100 @@
+services:
+  nginx:
+    container_name: nginx
+    image: nginx
+
+    configs:
+      - source: nginx
+        target: /etc/nginx/nginx.conf
+      - source: nginx_cert
+        target: /etc/ssl/certs/self-signed.crt
+      - source: nginx_dh_param
+        target: /etc/ssl/certs/dhparam.pem
+    secrets:
+      - source: NGINX_PRIVATE_KEY
+        target: /etc/ssl/private/self-signed.key
+
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - type: bind
+        source: nginx/html
+        target: /var/www/html
+        read_only: true
+
+    depends_on:
+      - authelia
+      - filebrowser
+    restart: 'no'
+
+  authelia:
+    container_name: authelia
+    image: authelia/authelia
+
+    configs:
+      - source: authelia
+        target: /etc/authelia/config.yaml
+      - source: nginx_cert
+        target: /etc/authelia/certs/self-signed.crt
+    environment:
+      - AUTHELIA_JWT_SECRET_FILE=/run/secrets/AUTHELIA_JWT_SECRET
+      - AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE=/run/secrets/AUTHELIA_NOTIFIER_SMTP_PASSWORD
+      - AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE=/run/secrets/AUTHELIA_STORAGE_ENCRYPTION_KEY
+    secrets:
+      - AUTHELIA_JWT_SECRET
+      - AUTHELIA_NOTIFIER_SMTP_PASSWORD
+      - AUTHELIA_STORAGE_ENCRYPTION_KEY
+
+    command: authelia --config /etc/authelia/config.yaml
+    expose:
+      - 9091
+    volumes:
+      - type: bind
+        source: authelia/db/users.yaml
+        target: /etc/authelia/users.yaml
+        read_only: false
+      - type: bind
+        source: authelia/db/main.sqlite3
+        target: /var/lib/authelia/main.sqlite3
+        read_only: false
+
+    restart: 'no'
+
+  filebrowser:
+    container_name: filebrowser
+    image: filebrowser/filebrowser
+
+    expose:
+      - 9091
+    volumes:
+      - type: bind
+        source: filebrowser/db/main.db
+        target: /var/lib/filebrowser/main.db
+        read_only: false
+
+    configs:
+      - source: filebrowser
+        target: /etc/filebrowser/.filebrowser.yaml
+
+configs:
+  nginx:
+    file: nginx/nginx.conf
+  nginx_cert:
+    file: nginx/certs/self-signed.crt
+  nginx_dh_param:
+    file: nginx/certs/self-signed.pem
+  authelia:
+    file: authelia/config.yaml
+  filebrowser:
+    file: filebrowser/config.yaml
+
+secrets:
+  NGINX_PRIVATE_KEY:
+    file: nginx/secrets/self-signed.key
+  AUTHELIA_JWT_SECRET:
+    file: authelia/secrets/jwt_secret
+  AUTHELIA_NOTIFIER_SMTP_PASSWORD:
+    file: authelia/secrets/notifier_smtp_password
+  AUTHELIA_STORAGE_ENCRYPTION_KEY:
+    file: authelia/secrets/storage_encryption_key
