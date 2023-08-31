@@ -3,13 +3,6 @@ services:
     container_name: nginx
     image: nginx
 
-    configs:
-      - source: nginx
-        target: /etc/nginx/nginx.conf
-      - source: nginx_cert
-        target: /etc/ssl/certs/self-signed.crt
-      - source: nginx_dh_param
-        target: /etc/ssl/certs/dhparam.pem
     secrets:
       - source: NGINX_PRIVATE_KEY
         target: /etc/ssl/private/self-signed.key
@@ -18,7 +11,11 @@ services:
       - '80:80'
       - '443:443'
     volumes:
+      - './nginx/config:/etc/nginx:ro'
       - './nginx/html:/var/www/html:ro'
+      - './nginx/certs/self-signed.crt:/etc/ssl/certs/self-signed.crt:ro'
+      - './nginx/certs/self-signed.pem:/etc/ssl/certs/self-signed.pem:ro'
+      - './nginx/secrets/self-signed.key:/etc/ssl/private/self-signed.key:ro'
 
     depends_on:
       - authelia
@@ -29,11 +26,6 @@ services:
     container_name: authelia
     image: authelia/authelia
 
-    configs:
-      - source: authelia
-        target: /etc/authelia/config.yaml
-      - source: nginx_cert
-        target: /etc/authelia/certs/self-signed.crt
     environment:
       - AUTHELIA_JWT_SECRET_FILE=/run/secrets/AUTHELIA_JWT_SECRET
       - AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE=/run/secrets/AUTHELIA_NOTIFIER_SMTP_PASSWORD
@@ -47,6 +39,8 @@ services:
     expose:
       - 9091
     volumes:
+      - './authelia/config.yaml:/etc/authelia/config.yaml:ro'
+      - './nginx/certs/self-signed.crt:/etc/authelia/certs/self-signed.crt:ro'
       - './authelia/db/users.yaml:/etc/authelia/users.yaml:rw'
       - './authelia/db/main.sqlite3:/var/lib/authelia/main.sqlite3:rw'
 
@@ -59,23 +53,10 @@ services:
     expose:
       - 9091
     volumes:
+      - './filebrowser/config.yaml:/etc/filebrowser/.filebrowser.yaml:ro'
       - './filebrowser/db/main.db:/var/lib/filebrowser/main.db:rw'
 
-    configs:
-      - source: filebrowser
-        target: /etc/filebrowser/.filebrowser.yaml
-
-configs:
-  nginx:
-    file: ./nginx/nginx.conf
-  nginx_cert:
-    file: ./nginx/certs/self-signed.crt
-  nginx_dh_param:
-    file: ./nginx/certs/self-signed.pem
-  authelia:
-    file: ./authelia/config.yaml
-  filebrowser:
-    file: ./filebrowser/config.yaml
+    restart: 'no'
 
 secrets:
   NGINX_PRIVATE_KEY:
