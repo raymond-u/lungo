@@ -3,7 +3,8 @@
 # Set up Nginx and Authelia docker images
 
 # Unofficial bash strict mode
-set -euo pipefail
+# set -euo pipefail
+set -eu
 
 # Change to the directory of this script
 pushd -- "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null
