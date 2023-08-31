@@ -573,7 +573,7 @@ password_policy:
 access_control:
   ## Default policy can either be 'bypass', 'one_factor', 'two_factor' or 'deny'. It is the policy applied to any
   ## resource if there is no policy to be applied to the user.
-  default_policy: one_factor
+  default_policy: deny
 
   # networks:
     # - name: internal
@@ -583,12 +583,9 @@ access_control:
     # - name: VPN
     #   networks: 10.9.0.0/16
 
-  # rules:
-    # - domain: '*'
-      # subject:
-        # - 'group:admin'
-        # - 'group:user'
-      # policy: one_factor
+  rules:
+    - domain: '*'
+      policy: one_factor
 
 ##
 ## Session Provider Configuration
@@ -602,7 +599,7 @@ session:
   ## The domain to protect.
   ## Note: the authenticator must also be in that domain.
   ## If empty, the cookie is restricted to the subdomain of the issuer.
-  # domain: ''
+  domain: ''
 
   ## Sets the Cookie SameSite value. Possible options are none, lax, or strict.
   ## Please read https://www.authelia.com/c/session#same_site
@@ -1055,10 +1052,10 @@ notifier:
   ##     (configure in tls section)
   smtp:
     ## The SMTP host to connect to.
-    # host: 127.0.0.1
+    host: 127.0.0.1
 
     ## The port to connect to the SMTP host on.
-    # port: 1025
+    port: 0
 
     ## The connection timeout.
     timeout: 5s
@@ -1073,7 +1070,7 @@ notifier:
     ## The sender is used to is used for the MAIL FROM command and the FROM header.
     ## If this is not defined and the username is an email, we use the username as this value. This can either be just
     ## an email address or the RFC5322 'Name <email address>' format.
-    # sender: "Authelia <admin@example.com>"
+    sender: ""
 
     ## HELO/EHLO Identifier. Some SMTP Servers may reject the default of localhost.
     # identifier: localhost
