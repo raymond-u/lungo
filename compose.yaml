@@ -18,7 +18,7 @@ services:
       - '80:80'
       - '443:443'
     volumes:
-      - 'nginx/html:/var/www/html:ro'
+      - './nginx/html:/var/www/html:ro'
 
     depends_on:
       - authelia
@@ -47,8 +47,8 @@ services:
     expose:
       - 9091
     volumes:
-      - 'authelia/db/users.yaml:/etc/authelia/users.yaml:rw'
-      - 'authelia/db/main.sqlite3:/var/lib/authelia/main.sqlite3:rw'
+      - './authelia/db/users.yaml:/etc/authelia/users.yaml:rw'
+      - './authelia/db/main.sqlite3:/var/lib/authelia/main.sqlite3:rw'
 
     restart: 'no'
 
@@ -59,7 +59,7 @@ services:
     expose:
       - 9091
     volumes:
-      - 'filebrowser/db/main.db:/var/lib/filebrowser/main.db:rw'
+      - './filebrowser/db/main.db:/var/lib/filebrowser/main.db:rw'
 
     configs:
       - source: filebrowser
