@@ -15,7 +15,6 @@ services:
       - './nginx/html:/var/www/html:ro'
       - './nginx/certs/self-signed.crt:/etc/ssl/certs/self-signed.crt:ro'
       - './nginx/certs/self-signed.pem:/etc/ssl/certs/self-signed.pem:ro'
-      - './nginx/secrets/self-signed.key:/etc/ssl/private/self-signed.key:ro'
 
     depends_on:
       - authelia
