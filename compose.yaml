@@ -18,10 +18,7 @@ services:
       - '80:80'
       - '443:443'
     volumes:
-      - type: bind
-        source: nginx/html
-        target: /var/www/html
-        read_only: true
+      - nginx/html:/var/www/html:ro
 
     depends_on:
       - authelia
@@ -50,14 +47,8 @@ services:
     expose:
       - 9091
     volumes:
-      - type: bind
-        source: authelia/db/users.yaml
-        target: /etc/authelia/users.yaml
-        read_only: false
-      - type: bind
-        source: authelia/db/main.sqlite3
-        target: /var/lib/authelia/main.sqlite3
-        read_only: false
+      - authelia/db/users.yaml:/etc/authelia/users.yaml:rw
+      - authelia/db/main.sqlite3:/var/lib/authelia/main.sqlite3:rw
 
     restart: 'no'
 
@@ -68,10 +59,7 @@ services:
     expose:
       - 9091
     volumes:
-      - type: bind
-        source: filebrowser/db/main.db
-        target: /var/lib/filebrowser/main.db
-        read_only: false
+      - filebrowser/db/main.db:/var/lib/filebrowser/main.db:rw
 
     configs:
       - source: filebrowser
