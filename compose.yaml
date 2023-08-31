@@ -67,22 +67,22 @@ services:
 
 configs:
   nginx:
-    file: nginx/nginx.conf
+    file: ./nginx/nginx.conf
   nginx_cert:
-    file: nginx/certs/self-signed.crt
+    file: ./nginx/certs/self-signed.crt
   nginx_dh_param:
-    file: nginx/certs/self-signed.pem
+    file: ./nginx/certs/self-signed.pem
   authelia:
-    file: authelia/config.yaml
+    file: ./authelia/config.yaml
   filebrowser:
-    file: filebrowser/config.yaml
+    file: ./filebrowser/config.yaml
 
 secrets:
   NGINX_PRIVATE_KEY:
-    file: nginx/secrets/self-signed.key
+    file: ./nginx/secrets/self-signed.key
   AUTHELIA_JWT_SECRET:
-    file: authelia/secrets/jwt_secret
+    file: ./authelia/secrets/jwt_secret
   AUTHELIA_NOTIFIER_SMTP_PASSWORD:
-    file: authelia/secrets/notifier_smtp_password
+    file: ./authelia/secrets/notifier_smtp_password
   AUTHELIA_STORAGE_ENCRYPTION_KEY:
-    file: authelia/secrets/storage_encryption_key
+    file: ./authelia/secrets/storage_encryption_key
