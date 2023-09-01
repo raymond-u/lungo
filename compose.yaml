@@ -53,7 +53,9 @@ services:
     container_name: filebrowser
     image: filebrowser/filebrowser
 
-    command: filebrowser --config /etc/filebrowser/config.yaml
+    environment:
+      - FB_CONFIG=/etc/filebrowser/config.yaml
+
     expose:
       - 9091
     volumes:
