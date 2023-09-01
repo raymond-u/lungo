@@ -11,7 +11,9 @@ services:
       - '80:80'
       - '443:443'
     volumes:
-      - './nginx/config:/etc/nginx:ro'
+      - './nginx/config/nginx.conf:/etc/nginx/conf.d/default.conf:ro'
+      - './nginx/config/sites:/etc/nginx/sites:ro'
+      - './nginx/config/snippets:/etc/nginx/snippets:ro'
       - './nginx/html:/var/www/html:ro'
       - './nginx/certs/self-signed.crt:/etc/ssl/certs/self-signed.crt:ro'
       - './nginx/certs/self-signed.pem:/etc/ssl/certs/self-signed.pem:ro'
