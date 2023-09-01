@@ -40,7 +40,7 @@ services:
 
     command: authelia --config /etc/authelia/config.yaml
     expose:
-      - 9091
+      - 80
     volumes:
       - './authelia/config.yaml:/etc/authelia/config.yaml:ro'
       - './nginx/certs/self-signed.crt:/etc/authelia/certs/self-signed.crt:ro'
@@ -55,7 +55,7 @@ services:
 
     command: --database /var/lib/filebrowser/main.db
     expose:
-      - 9091
+      - 80
     volumes:
       - './filebrowser/config.yaml:/etc/filebrowser/config.yaml:ro'
       - './filebrowser/db/main.db:/var/lib/filebrowser/main.db:rw'
