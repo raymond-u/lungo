@@ -53,10 +53,11 @@ services:
     container_name: filebrowser
     image: filebrowser/filebrowser
 
+    command: filebrowser --config /etc/filebrowser/config.yaml
     expose:
       - 9091
     volumes:
-      - './filebrowser/config.yaml:/etc/filebrowser/.filebrowser.yaml:ro'
+      - './filebrowser/config.yaml:/etc/filebrowser/config.yaml:ro'
       - './filebrowser/db/main.db:/var/lib/filebrowser/main.db:rw'
 
     restart: 'no'
