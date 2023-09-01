@@ -16,10 +16,10 @@ mkdir -p "${nginx_certs_dir}" "${nginx_secrets_dir}"
 
 if ! [[ -f "${nginx_certs_dir}/self-signed.crt" ]] || ! [[ -f "${nginx_secrets_dir}/self-signed.key" ]]; then
     echo 'Generating self-signed certificate...'
-    openssl req -x509 -nodes -days 36500 -newkey rsa:4096 -sha256 -keyout "${nginx_secrets_dir}/self-signed.key" -out "${nginx_certs_dir}/self-signed.crt"
+    openssl req -x509 -nodes -days 36500 -newkey rsa:2048 -sha256 -keyout "${nginx_secrets_dir}/self-signed.key" -out "${nginx_certs_dir}/self-signed.crt"
 fi
 if ! [[ -f "${nginx_certs_dir}/self-signed.pem" ]]; then
-    openssl dhparam -out "${nginx_certs_dir}/self-signed.pem" 4096
+    openssl dhparam -out "${nginx_certs_dir}/self-signed.pem" 2048
 fi
 
 # Configure Authelia
