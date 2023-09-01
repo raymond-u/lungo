@@ -15,6 +15,7 @@ nginx_secrets_dir=nginx/secrets
 mkdir -p "${nginx_certs_dir}" "${nginx_secrets_dir}"
 
 if ! [[ -f "${nginx_certs_dir}/self-signed.crt" ]] || ! [[ -f "${nginx_secrets_dir}/self-signed.key" ]]; then
+    echo 'Generating self-signed certificate...'
     openssl req -x509 -nodes -days 36500 -newkey rsa:4096 -sha256 -keyout "${nginx_secrets_dir}/self-signed.key" -out "${nginx_certs_dir}/self-signed.crt"
 fi
 if ! [[ -f "${nginx_certs_dir}/self-signed.pem" ]]; then
@@ -51,6 +52,8 @@ mkdir -p "${filebrowser_db_dir}"
 
 if ! [[ -f "${filebrowser_db_dir}/main.db" ]]; then
     touch "${filebrowser_db_dir}/main.db"
+    podman run -v "./${filebrowser_db_dir}/config.yaml:/etc/filebrowser/config.yaml:ro" -v "./${filebrowser_db_dir}/main.db:/var/lib/filebrowser/main.db:rw" filebrowser/filebrowser -d /var/lib/filebrowser/main.db config import /etc/filebrowser/config.yaml
+    podman run -v "./${filebrowser_db_dir}/users.yaml:/etc/filebrowser/users.yaml:ro" -v "./${filebrowser_db_dir}/main.db:/var/lib/filebrowser/main.db:rw" filebrowser/filebrowser -d /var/lib/filebrowser/main.db users import /etc/filebrowser/users.yaml
 fi
 
 # Build docker images

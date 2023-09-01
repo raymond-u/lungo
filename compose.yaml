@@ -53,7 +53,10 @@ services:
     container_name: filebrowser
     image: filebrowser/filebrowser
 
-    command: --config /etc/filebrowser/config.yaml
+    environment:
+      - FB_DATABASE=/var/lib/filebrowser/main.db
+
+    command: --database /var/lib/filebrowser/main.db
     expose:
       - 9091
     volumes:

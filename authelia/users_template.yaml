@@ -1,0 +1,8 @@
+users:
+  user:
+    disabled: false
+    displayname: "Some User"
+    password: ""
+    email: example@gmail.com
+    groups:
+      - admin

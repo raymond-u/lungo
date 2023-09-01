@@ -1,0 +1,84 @@
+settings:
+  authmethod: proxy
+  authheader: Remote-User
+
+  signup: false
+  createuserdir: false
+  userhomebasepath: /mnt
+
+  defaults:
+    scope: /mnt
+    locale: en
+    viewmode: list
+    singleclick: false
+    sorting:
+      by: name
+      asc: true
+    perm:
+      admin: false
+      execute: false
+      create: true
+      rename: true
+      modify: true
+      delete: true
+      share: true
+      download: true
+    commands: []
+    hidedotfiles: true
+    dateformat: false
+
+  branding:
+    name: ""
+    disableexternal: true
+    disableusedpercentage: false
+    files: ""
+    theme: ""
+    color: ""
+
+  tus:
+    chunksize: 10485760
+    retrycount: 5
+
+  commands:
+    after_copy: []
+    after_delete: []
+    after_rename: []
+    after_save: []
+    after_upload: []
+    before_copy: []
+    before_delete: []
+    before_rename: []
+    before_save: []
+    before_upload: []
+
+  shell: []
+
+  rules:
+  - regex: true
+    allow: false
+    path: ""
+    regexp:
+      raw: ^/.+$
+  - regex: true
+    allow: true
+    path: ""
+    regexp:
+      raw: ^/shared(_readonly)?(/.*)?$
+
+server:
+  root: /
+  baseurl: /filebrowser
+  socket: ""
+  tlskey: ""
+  tlscert: ""
+  port: "9091"
+  address: 0.0.0.0
+  log: stdout
+  enablethumbnails: false
+  resizepreview: false
+  enableexec: false
+  typedetectionbyheader: false
+  authhook: ""
+
+auther:
+  recaptcha: null
