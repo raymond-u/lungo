@@ -6,9 +6,8 @@ database: /var/lib/filebrowser/main.db
 root: /
 log: stdout
 
-# auth.header: X-Remote-User
-# auth.method: proxy
-auth.method: noauth
+auth.header: X-Remote-User
+auth.method: proxy
 signup: false
 
 branding.disableExternal: true
