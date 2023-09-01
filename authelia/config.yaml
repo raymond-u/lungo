@@ -584,7 +584,9 @@ access_control:
     #   networks: 10.9.0.0/16
 
   rules:
-    - domain: '*'
+    - groups:
+        - admin
+        - user
       policy: one_factor
 
 ##
