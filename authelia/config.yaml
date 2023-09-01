@@ -41,7 +41,7 @@ server:
   host: 0.0.0.0
 
   ## The port to listen on.
-  port: 9091
+  port: 80
 
   ## Set the single level path Authelia listens on.
   ## Must be alphanumeric chars and should not contain any slashes.
