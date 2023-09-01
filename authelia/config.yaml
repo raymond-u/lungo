@@ -38,7 +38,7 @@ theme: auto
 server:
 
   ## The address to listen on.
-  host: 127.0.0.1
+  host: 0.0.0.0
 
   ## The port to listen on.
   port: 9091
