@@ -573,7 +573,7 @@ password_policy:
 access_control:
   ## Default policy can either be 'bypass', 'one_factor', 'two_factor' or 'deny'. It is the policy applied to any
   ## resource if there is no policy to be applied to the user.
-  default_policy: deny
+  default_policy: one_factor
 
   # networks:
     # - name: internal
@@ -582,12 +582,6 @@ access_control:
         # - 192.168.2.0/24
     # - name: VPN
     #   networks: 10.9.0.0/16
-
-  rules:
-    - groups:
-        - admin
-        - user
-      policy: one_factor
 
 ##
 ## Session Provider Configuration
