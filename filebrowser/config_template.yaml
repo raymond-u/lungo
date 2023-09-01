@@ -1,7 +1,5 @@
 settings:
   authmethod: proxy
-  authheader: Remote-User
-
   signup: false
   createuserdir: false
   userhomebasepath: /mnt
@@ -81,4 +79,4 @@ server:
   authhook: ""
 
 auther:
-  recaptcha: null
+  header: Remote-User

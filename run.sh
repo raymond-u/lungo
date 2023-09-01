@@ -40,6 +40,7 @@ fi
 if ! [[ -f "${authelia_secrets_dir}/notifier_smtp_password" ]]; then
     read -srp $'\n'"Please enter the value for notifier_smtp_password: " _answer
     echo "${_answer}" >"${authelia_secrets_dir}/notifier_smtp_password"
+    echo
     unset _answer
 fi
 if ! [[ -f "${authelia_secrets_dir}/storage_encryption_key" ]]; then
@@ -52,8 +53,8 @@ mkdir -p "${filebrowser_db_dir}"
 
 if ! [[ -f "${filebrowser_db_dir}/main.db" ]]; then
     touch "${filebrowser_db_dir}/main.db"
-    podman run -v "./${filebrowser_db_dir}/config.yaml:/etc/filebrowser/config.yaml:ro" -v "./${filebrowser_db_dir}/main.db:/var/lib/filebrowser/main.db:rw" filebrowser/filebrowser -d /var/lib/filebrowser/main.db config import /etc/filebrowser/config.yaml
-    podman run -v "./${filebrowser_db_dir}/users.yaml:/etc/filebrowser/users.yaml:ro" -v "./${filebrowser_db_dir}/main.db:/var/lib/filebrowser/main.db:rw" filebrowser/filebrowser -d /var/lib/filebrowser/main.db users import /etc/filebrowser/users.yaml
+    podman run -v "./${filebrowser_db_dir}/config.yaml:/etc/filebrowser/config.yaml:ro" -v "./${filebrowser_db_dir}/main.db:/var/lib/filebrowser/main.db:rw" filebrowser/filebrowser -d /var/lib/filebrowser/main.db config import /etc/filebrowser/config.yaml >/dev/null
+    podman run -v "./${filebrowser_db_dir}/users.yaml:/etc/filebrowser/users.yaml:ro" -v "./${filebrowser_db_dir}/main.db:/var/lib/filebrowser/main.db:rw" filebrowser/filebrowser -d /var/lib/filebrowser/main.db users import /etc/filebrowser/users.yaml >/dev/null
 fi
 
 # Build docker images
