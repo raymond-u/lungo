@@ -59,6 +59,7 @@ services:
     volumes:
       - './filebrowser/config.yaml:/etc/filebrowser/config.yaml:ro'
       - './filebrowser/db/main.db:/var/lib/filebrowser/main.db:rw'
+      - '/home:/mnt:rw'
 
     restart: 'no'
 
