@@ -1,7 +1,7 @@
 services:
   nginx:
     container_name: nginx
-    image: nginx
+    image: openresty/openresty
 
     secrets:
       - source: NGINX_PRIVATE_KEY

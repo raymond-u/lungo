@@ -1,2 +1,0 @@
-ARG ENABLED_MODULES=set-misc
-FROM nginx
