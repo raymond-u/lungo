@@ -53,7 +53,7 @@ mkdir -p "${filebrowser_db_dir}"
 
 if ! [[ -f "${filebrowser_db_dir}/main.db" ]]; then
     touch "${filebrowser_db_dir}/main.db"
-    podman run -v "./${filebrowser_db_dir}/main.db:/var/lib/filebrowser/main.db:rw" filebrowser/filebrowser -d /var/lib/filebrowser/main.db config init --port 8080 --address "0.0.0.0" --baseurl "" --log "stdout" --root="/data" --auth.method='noauth' --commands "" --lockPassword --perm.admin="true" --perm.create="true" --perm.delete="true" --perm.execute="true" --perm.modify="true" --perm.rename="true" --signup="false" >/dev/null
+    podman run -v "./${filebrowser_db_dir}/main.db:/var/lib/filebrowser/main.db:rw" filebrowser/filebrowser -d /var/lib/filebrowser/main.db config init --auth.method=noauth >/dev/null
     podman run -v "./${filebrowser_db_dir}/users.yaml:/etc/filebrowser/users.yaml:ro" -v "./${filebrowser_db_dir}/main.db:/var/lib/filebrowser/main.db:rw" filebrowser/filebrowser -d /var/lib/filebrowser/main.db users import /etc/filebrowser/users.yaml >/dev/null
     podman run -v "./${filebrowser_db_dir}/config.yaml:/etc/filebrowser/config.yaml:ro" -v "./${filebrowser_db_dir}/main.db:/var/lib/filebrowser/main.db:rw" filebrowser/filebrowser -d /var/lib/filebrowser/main.db config import /etc/filebrowser/config.yaml >/dev/null
 fi
