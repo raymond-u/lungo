@@ -1,6 +1,7 @@
 services:
   nginx:
     container_name: nginx
+    hostname: nginx
     image: openresty/openresty
 
     secrets:
@@ -25,6 +26,7 @@ services:
 
   authelia:
     container_name: authelia
+    hostname: authelia
     image: authelia/authelia
 
     environment:
@@ -55,6 +57,7 @@ services:
 
   filebrowser:
     container_name: filebrowser
+    hostname: filebrowser
     image: filebrowser/filebrowser
 
     command: --config /etc/filebrowser/settings.yaml
@@ -69,6 +72,7 @@ services:
 
   rstudio:
     container_name: rstudio
+    hostname: rstudio
     image: rocker/verse
 
     expose:
