@@ -66,6 +66,17 @@ services:
 
     restart: 'no'
 
+  rstudio:
+    container_name: rstudio
+    image: rocker/verse
+
+    expose:
+      - 8787
+    volumes:
+      - '/home:/home/rstudio/home:rw'
+
+    restart: 'no'
+
 secrets:
   NGINX_PRIVATE_KEY:
     file: ./nginx/secrets/self-signed.key
