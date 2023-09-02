@@ -54,11 +54,11 @@ services:
     container_name: filebrowser
     image: filebrowser/filebrowser
 
-    command: --database /var/lib/filebrowser/main.db
+    command: --config /etc/filebrowser/settings.yaml
     expose:
       - 80
     volumes:
-      - './filebrowser/config.yaml:/etc/filebrowser/config.yaml:ro'
+      - './filebrowser/settings.yaml:/etc/filebrowser/settings.yaml:ro'
       - './filebrowser/db/main.db:/var/lib/filebrowser/main.db:rw'
       - '/home:/mnt:rw'
 
