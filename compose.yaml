@@ -79,7 +79,7 @@ services:
     expose:
       - 8787
     volumes:
-      - '/home:/home/rstudio/home:rw'
+      - '/home:/root/home:rw'
 
     restart: 'no'
 
