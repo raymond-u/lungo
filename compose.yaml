@@ -75,6 +75,7 @@ services:
     hostname: rstudio
     image: rocker/verse
 
+    command: bash -c "umask 000; /init"
     expose:
       - 8787
     volumes:
