@@ -9,6 +9,11 @@ services:
         target: /etc/ssl/private/self-signed.key
 
     command: /usr/bin/openresty -g 'daemon off;' -c /etc/nginx/nginx.conf
+    extra_hosts:
+      nginx: 192.168.1.1
+    networks:
+      static:
+        ipv4_address: 192.168.1.1
     ports:
       - '80:80'
       - '443:443'
@@ -47,6 +52,11 @@ services:
     command: authelia --config /etc/authelia/config.yaml
     expose:
       - 80
+    extra_hosts:
+      authelia: 192.168.1.2
+    networks:
+      static:
+        ipv4_address: 192.168.1.2
     volumes:
       - './authelia/config.yaml:/etc/authelia/config.yaml:ro'
       - './nginx/certs/self-signed.crt:/etc/authelia/certs/self-signed.crt:ro'
@@ -63,6 +73,11 @@ services:
     command: --config /etc/filebrowser/settings.yaml
     expose:
       - 80
+    extra_hosts:
+      filebrowser: 192.168.1.3
+    networks:
+      static:
+        ipv4_address: 192.168.1.3
     volumes:
       - './filebrowser/settings.yaml:/etc/filebrowser/settings.yaml:ro'
       - './filebrowser/db/main.db:/var/lib/filebrowser/main.db:rw'
@@ -78,10 +93,21 @@ services:
     command: bash -c "umask 000; /init"
     expose:
       - 8787
+    extra_hosts:
+      rstudio: 192.168.1.4
+    networks:
+      static:
+        ipv4_address: 192.168.1.4
     volumes:
       - '/home:/root/home:rw'
 
     restart: 'no'
+
+networks:
+  static:
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
 
 secrets:
   NGINX_PRIVATE_KEY:
