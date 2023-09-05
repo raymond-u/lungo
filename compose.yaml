@@ -2,13 +2,10 @@ services:
   nginx:
     container_name: nginx
     hostname: nginx
+
     image: openresty/openresty
+    command: openresty -g 'daemon off;' -c /etc/nginx/nginx.conf -e /var/log/nginx/error.log -p /etc/nginx
 
-    secrets:
-      - source: NGINX_PRIVATE_KEY
-        target: /etc/ssl/private/self-signed.key
-
-    command: /usr/bin/openresty -g 'daemon off;' -c /etc/nginx/nginx.conf -e /var/log/nginx/error.log -p /etc/nginx
     extra_hosts:
       - 'nginx:192.168.1.100'
     networks:
@@ -17,6 +14,7 @@ services:
     ports:
       - '80:80'
       - '443:443'
+
     volumes:
       - './nginx/config:/etc/nginx:ro'
       - './third_party/server_configs_nginx/h5bp:/etc/nginx/h5bp:ro'
@@ -25,6 +23,10 @@ services:
       - './nginx/certs/self-signed.crt:/etc/ssl/certs/self-signed.crt:ro'
       - './nginx/html:/usr/local/nginx/html:ro'
       - '${XDG_CACHE_HOME:-$HOME/.cache}/lungo/nginx:/var/log/nginx:rw'
+
+    secrets:
+      - source: NGINX_PRIVATE_KEY
+        target: /etc/ssl/private/self-signed.key
 
     depends_on:
       - authelia
@@ -35,7 +37,23 @@ services:
   authelia:
     container_name: authelia
     hostname: authelia
+
     image: authelia/authelia
+    command: authelia --config /etc/authelia/config.yaml
+
+    expose:
+      - 80
+    extra_hosts:
+      - 'authelia:192.168.1.101'
+    networks:
+      static:
+        ipv4_address: 192.168.1.101
+
+    volumes:
+      - './authelia/config.yaml:/etc/authelia/config.yaml:ro'
+      - './nginx/certs/self-signed.crt:/etc/authelia/certs/self-signed.crt:ro'
+      - './authelia/db/users.yaml:/etc/authelia/users.yaml:rw'
+      - './authelia/db/main.sqlite3:/var/lib/authelia/main.sqlite3:rw'
 
     environment:
       - AUTHELIA_NOTIFIER_SMTP_HOST=${AUTHELIA_NOTIFIER_SMTP_HOST}
@@ -52,28 +70,15 @@ services:
       - AUTHELIA_NOTIFIER_SMTP_PASSWORD
       - AUTHELIA_STORAGE_ENCRYPTION_KEY
 
-    command: authelia --config /etc/authelia/config.yaml
-    expose:
-      - 80
-    extra_hosts:
-      - 'authelia:192.168.1.101'
-    networks:
-      static:
-        ipv4_address: 192.168.1.101
-    volumes:
-      - './authelia/config.yaml:/etc/authelia/config.yaml:ro'
-      - './nginx/certs/self-signed.crt:/etc/authelia/certs/self-signed.crt:ro'
-      - './authelia/db/users.yaml:/etc/authelia/users.yaml:rw'
-      - './authelia/db/main.sqlite3:/var/lib/authelia/main.sqlite3:rw'
-
     restart: 'no'
 
   filebrowser:
     container_name: filebrowser
     hostname: filebrowser
-    image: filebrowser/filebrowser
 
+    image: filebrowser/filebrowser
     command: --config /etc/filebrowser/settings.yaml
+
     expose:
       - 80
     extra_hosts:
@@ -81,6 +86,7 @@ services:
     networks:
       static:
         ipv4_address: 192.168.1.102
+
     volumes:
       - './filebrowser/settings.yaml:/etc/filebrowser/settings.yaml:ro'
       - './filebrowser/db/main.db:/var/lib/filebrowser/main.db:rw'
@@ -91,9 +97,10 @@ services:
   rstudio:
     container_name: rstudio
     hostname: rstudio
-    image: rocker/verse
 
-    command: bash -c "umask 000; /init"
+    image: rocker/verse
+    command: bash -c 'umask 000; /init'
+
     expose:
       - 8787
     extra_hosts:
@@ -101,6 +108,7 @@ services:
     networks:
       static:
         ipv4_address: 192.168.1.103
+
     volumes:
       - '/home:/root/home:rw'
 
