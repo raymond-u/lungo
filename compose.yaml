@@ -8,7 +8,7 @@ services:
       - source: NGINX_PRIVATE_KEY
         target: /etc/ssl/private/self-signed.key
 
-    command: /usr/bin/openresty -g 'daemon off;' -c /etc/nginx/nginx.conf -p /etc/nginx
+    command: /usr/bin/openresty -g 'daemon off;' -c /etc/nginx/nginx.conf -e /var/log/nginx/error.log -p /etc/nginx
     extra_hosts:
       - 'nginx:192.168.1.100'
     networks:
