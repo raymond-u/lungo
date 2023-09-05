@@ -22,9 +22,9 @@ services:
       - './third_party/server_configs_nginx/h5bp:/etc/nginx/h5bp:ro'
       - './third_party/server_configs_nginx/mime.types:/etc/nginx/mime.types:ro'
       - './third_party/server_configs_nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
-      - './nginx/html:/usr/local/nginx/html:ro'
       - './nginx/certs/self-signed.crt:/etc/ssl/certs/self-signed.crt:ro'
-      - './nginx/certs/self-signed.pem:/etc/ssl/certs/self-signed.pem:ro'
+      - './nginx/html:/usr/local/nginx/html:ro'
+      - '${XDG_CACHE_HOME:-${HOME}/.cache}/lungo/nginx:/var/log/nginx:rw'
 
     depends_on:
       - authelia
