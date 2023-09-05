@@ -24,7 +24,7 @@ services:
       - './third_party/server_configs_nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
       - './nginx/certs/self-signed.crt:/etc/ssl/certs/self-signed.crt:ro'
       - './nginx/html:/usr/local/nginx/html:ro'
-      - '${XDG_CACHE_HOME:-${HOME}/.cache}/lungo/nginx:/var/log/nginx:rw'
+      - '${XDG_CACHE_HOME:-$HOME/.cache}/lungo/nginx:/var/log/nginx:rw'
 
     depends_on:
       - authelia
