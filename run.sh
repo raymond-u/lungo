@@ -9,6 +9,9 @@ set -eu
 # Change to the directory of this script
 pushd -- "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null
 
+# Create directories
+mkdir -p "${XDG_CACHE_HOME:-${HOME}/.cache}/lungo" "${XDG_CONFIG_HOME:-${HOME}/.config}/lungo" "${XDG_DATA_HOME:-${HOME}/.local/share}/lungo"
+
 # Configure Nginx
 nginx_certs_dir=nginx/certs
 nginx_secrets_dir=nginx/secrets
