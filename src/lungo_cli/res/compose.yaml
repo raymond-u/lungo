@@ -1,0 +1,138 @@
+services:
+  nginx:
+    container_name: nginx
+    hostname: nginx
+
+    image: docker.io/openresty/openresty
+    command: openresty -g 'daemon off;' -c /etc/nginx/nginx.conf -e /var/log/nginx/error.log -p /etc/nginx
+
+    extra_hosts:
+      - 'nginx:192.168.1.100'
+    networks:
+      static:
+        ipv4_address: 192.168.1.100
+    ports:
+      - '80:80'
+      - '443:443'
+
+    volumes:
+      - './nginx:/etc/nginx:ro'
+      - './www:/var/www:ro'
+      - './third_party/server_configs_nginx/h5bp:/etc/nginx/h5bp:ro'
+      - './third_party/server_configs_nginx/mime.types:/etc/nginx/mime.types:ro'
+      - './third_party/server_configs_nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
+      - '${XDG_CACHE_HOME:-$HOME/.cache}/lungo/nginx:/var/log/nginx:rw'
+      - '${XDG_DATA_HOME:-$HOME/.local/share}/lungo/nginx/cert.pem:/etc/ssl/certs/cert.pem:ro'
+
+    secrets:
+      - source: NGINX_PRIVATE_KEY
+        target: /etc/ssl/private/key.pem
+
+    depends_on:
+      - authelia
+      - filebrowser
+      - rstudio
+    restart: 'no'
+
+  authelia:
+    container_name: authelia
+    hostname: authelia
+
+    image: docker.io/authelia/authelia
+    command: authelia --config /etc/authelia/config.yaml
+
+    expose:
+      - 80
+    extra_hosts:
+      - 'authelia:192.168.1.101'
+    networks:
+      static:
+        ipv4_address: 192.168.1.101
+
+    volumes:
+      - './authelia:/etc/authelia:ro'
+      - '${XDG_CACHE_HOME:-$HOME/.cache}/lungo/authelia:/var/log/authelia:rw'
+      - '${XDG_DATA_HOME:-$HOME/.local/share}/lungo/authelia:/var/lib/authelia:rw'
+      - '${XDG_DATA_HOME:-$HOME/.local/share}/lungo/nginx/cert.pem:/etc/authelia/cert.pem:ro'
+
+    env_file: '${XDG_CONFIG_HOME:-$HOME/.config}/lungo/authelia/authelia.env'
+    environment:
+      - AUTHELIA_NOTIFIER_SMTP_HOST=${AUTHELIA_NOTIFIER_SMTP_HOST}
+      - AUTHELIA_NOTIFIER_SMTP_PORT=${AUTHELIA_NOTIFIER_SMTP_PORT}
+      - AUTHELIA_NOTIFIER_SMTP_SENDER=${AUTHELIA_NOTIFIER_SMTP_SENDER}
+      - AUTHELIA_NOTIFIER_SMTP_SUBJECT=${AUTHELIA_NOTIFIER_SMTP_SUBJECT}
+      - AUTHELIA_NOTIFIER_SMTP_USERNAME=${AUTHELIA_NOTIFIER_SMTP_USERNAME}
+      - AUTHELIA_SESSION_DOMAIN=${AUTHELIA_SESSION_DOMAIN}
+      - AUTHELIA_JWT_SECRET_FILE=/run/secrets/AUTHELIA_JWT_SECRET
+      - AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE=/run/secrets/AUTHELIA_NOTIFIER_SMTP_PASSWORD
+      - AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE=/run/secrets/AUTHELIA_STORAGE_ENCRYPTION_KEY
+    secrets:
+      - AUTHELIA_JWT_SECRET
+      - AUTHELIA_NOTIFIER_SMTP_PASSWORD
+      - AUTHELIA_STORAGE_ENCRYPTION_KEY
+
+    restart: 'no'
+
+  filebrowser:
+    container_name: filebrowser
+    hostname: filebrowser
+
+    build:
+      context: ./filebrowser
+
+    command: --config /etc/filebrowser/settings.yaml
+
+    expose:
+      - 80
+    extra_hosts:
+      - 'filebrowser:192.168.1.102'
+    networks:
+      static:
+        ipv4_address: 192.168.1.102
+
+    volumes:
+      - './filebrowser:/etc/filebrowser:ro'
+      - '/home:/mnt/home:rw'
+      - '${XDG_CACHE_HOME:-$HOME/.cache}/lungo/filebrowser:/var/log/filebrowser:rw'
+      - '${XDG_DATA_HOME:-$HOME/.local/share}/lungo/filebrowser:/var/lib/filebrowser:rw'
+
+    restart: 'no'
+
+  rstudio:
+    container_name: rstudio
+    hostname: rstudio
+
+    build:
+      context: ./rstudio
+
+    expose:
+      - 80
+    extra_hosts:
+      - 'rstudio:192.168.1.103'
+    networks:
+      static:
+        ipv4_address: 192.168.1.103
+
+    volumes:
+      - './rstudio/rserver.conf:/etc/rstudio/rserver.conf:ro'
+      - './rstudio/rsession.conf:/etc/rstudio/rsession.conf:ro'
+      - '/home:/mnt/home:rw'
+      - '${XDG_DATA_HOME:-$HOME/.local/share}/lungo/rstudio:/var/lib/rstudio-server:rw'
+
+    restart: 'no'
+
+networks:
+  static:
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+
+secrets:
+  NGINX_PRIVATE_KEY:
+    file: '${XDG_DATA_HOME:-$HOME/.local/share}/lungo/nginx/key.pem'
+  AUTHELIA_JWT_SECRET:
+    file: '${XDG_DATA_HOME:-$HOME/.local/share}/lungo/authelia/jwt_secret'
+  AUTHELIA_NOTIFIER_SMTP_PASSWORD:
+    file: '${XDG_DATA_HOME:-$HOME/.local/share}/lungo/authelia/notifier_smtp_password'
+  AUTHELIA_STORAGE_ENCRYPTION_KEY:
+    file: '${XDG_DATA_HOME:-$HOME/.local/share}/lungo/authelia/storage_encryption_key'

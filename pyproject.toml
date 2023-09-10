@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "lungo-cli"
+version = "0.1.0"
+description = ""
+authors = ["raymond-u <36328498+raymond-u@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "lungo_cli", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+typer = {extras = ["all"], version = "^0.9.0"}
+importlib-resources = "^6.0.1"
+platformdirs = "^3.10.0"
+ruamel-yaml = "^0.17.32"
+cryptography = "^41.0.3"
+
+[tool.poetry.scripts]
+lungo = "lungo_cli.app.main:app_wrapper"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		
+		<link rel="modulepreload" href="_app/immutable/entry/start.dc8be9d1.js">
+		<link rel="modulepreload" href="_app/immutable/chunks/scheduler.e108d1fd.js">
+		<link rel="modulepreload" href="_app/immutable/chunks/singletons.3f276f39.js">
+		<link rel="modulepreload" href="_app/immutable/entry/app.1be2eccd.js">
+		<link rel="modulepreload" href="_app/immutable/chunks/index.0719bd3d.js">
+		<link rel="modulepreload" href="_app/immutable/nodes/0.a4d6fcb2.js">
+		<link rel="modulepreload" href="_app/immutable/nodes/2.e0712070.js">
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">  <h1 data-svelte-h="svelte-1axyf4f">Home</h1> <ul data-svelte-h="svelte-10ne1ns"><li><a href="/filebrowser" rel="external">File Browser</a></li> <li><a href="/rstudio" rel="external">R Studio</a></li></ul> <hr> <p data-svelte-h="svelte-1db40mv">A dead simple landing page.</p> 
+			
+			<script>
+				{
+					__sveltekit_18o188v = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.dc8be9d1.js"),
+						import("./_app/immutable/entry/app.1be2eccd.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 2],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>

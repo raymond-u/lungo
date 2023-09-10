@@ -1,6 +1,0 @@
-port: 80
-baseURL: '/filebrowser'
-address: 0.0.0.0
-log: stdout
-database: '/var/lib/filebrowser/main.db'
-root: '/'

@@ -1,0 +1,72 @@
+settings:
+  authmethod: proxy
+  signup: false
+  createuserdir: false
+  userhomebasepath: /root
+
+  defaults:
+    scope: /
+    locale: en
+    viewmode: list
+    singleclick: false
+    sorting:
+      by: name
+      asc: true
+    perm:
+      admin: false
+      execute: false
+      create: true
+      rename: true
+      modify: true
+      delete: true
+      share: true
+      download: true
+    commands: []
+    hidedotfiles: true
+    dateformat: false
+
+  branding:
+    name: ""
+    disableexternal: true
+    disableusedpercentage: false
+    files: ""
+    theme: ""
+    color: ""
+
+  tus:
+    chunksize: 33554432
+    retrycount: 5
+
+  commands:
+    after_copy: []
+    after_delete: []
+    after_rename: []
+    after_save: []
+    after_upload: []
+    before_copy: []
+    before_delete: []
+    before_rename: []
+    before_save: []
+    before_upload: []
+
+  shell: []
+
+  rules: []
+
+server:
+  root: /
+  baseurl: /filebrowser
+  socket: ""
+  tlskey: ""
+  tlscert: ""
+  port: "80"
+  address: 0.0.0.0
+  log: /var/log/filebrowser/filebrowser.log
+  enablethumbnails: false
+  resizepreview: false
+  enableexec: false
+  typedetectionbyheader: false
+  authhook: ""
+
+auther:
+  header: Remote-User

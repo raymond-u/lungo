@@ -1,0 +1,6 @@
+port: 80
+baseURL: '/filebrowser'
+address: 0.0.0.0
+log: '/var/log/filebrowser/filebrowser.log'
+database: '/var/lib/filebrowser/filebrowser.db'
+root: '/'
