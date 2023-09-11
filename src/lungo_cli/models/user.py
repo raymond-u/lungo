@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 
-class UserRole(Enum, str):
+class UserRole(str, Enum):
     """User role."""
     ADMIN = "admin"
     USER = "user"
