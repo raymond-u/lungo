@@ -65,6 +65,10 @@ class AppFiles:
         return self.config_dir / "filebrowser" / "Dockerfile"
 
     @property
+    def filebrowser_database(self) -> Path:
+        return self.data_dir / "filebrowser" / "filebrowser.db"
+
+    @property
     def filebrowser_users(self) -> Path:
         return self.data_dir / "filebrowser" / "users_export.yaml"
 

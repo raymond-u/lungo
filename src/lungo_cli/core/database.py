@@ -222,6 +222,26 @@ class UsersFile:
             self.console.print_error(f"Failed to write {format_path(self.app_files.filebrowser_dockerfile)} ({e}).")
             raise Exit(code=1)
 
+        if not self.app_files.filebrowser_database.exists():
+            self.container.run(
+                ContainerService.FILEBROWSER,
+                "-c",
+                "/etc/filebrowser/settings.yaml",
+                "config",
+                "init",
+                "--auth.method=noauth",
+                ensure_built=True,
+            )
+            self.container.run(
+                ContainerService.FILEBROWSER,
+                "-c",
+                "/etc/filebrowser/settings.yaml",
+                "config",
+                "import",
+                "/etc/filebrowser/config_export.yaml",
+                ensure_built=True,
+            )
+
         self.container.run(
             ContainerService.FILEBROWSER,
             "-c",

@@ -4,11 +4,10 @@ from typing import Annotated
 from importlib_resources import as_file, files
 from typer import Exit, Option
 
-from ..app.state import app_files, console, container, flat_file, users_file
+from ..app.state import app_files, console, flat_file, users_file
 from ..core.constants import PACKAGE_NAME
 from ..helpers.app import gather_user_info, handle_common_args
 from ..helpers.crypto import generate_random_string, generate_self_signed_cert
-from ..models.container import ContainerService
 
 
 def main(
@@ -118,26 +117,6 @@ def main(
             except Exception as e:
                 console().print_error(f"Failed to generate self-signed certificate ({e}).")
                 raise Exit(code=1)
-
-        # Execute commands in containers
-        container().run(
-            ContainerService.FILEBROWSER,
-            "-c",
-            "/etc/filebrowser/settings.yaml",
-            "config",
-            "init",
-            "--auth.method=noauth",
-            ensure_built=True,
-        )
-        container().run(
-            ContainerService.FILEBROWSER,
-            "-c",
-            "/etc/filebrowser/settings.yaml",
-            "config",
-            "import",
-            "/etc/filebrowser/config_export.yaml",
-            ensure_built=True,
-        )
 
         console().request_for_newline()
         console().print("Initialization complete.")
