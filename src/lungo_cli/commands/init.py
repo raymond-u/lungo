@@ -60,14 +60,6 @@ def main(
         for dir_ in app_files().all_directories:
             dir_.mkdir(parents=True, exist_ok=True)
 
-        # Gather user information
-        if not app_files().authelia_users.exists():
-            console().print("No user information found. You will need to provide some information to continue.")
-
-            users = []
-            gather_user_info(users)
-            users_file().save(users)
-
         # Generate env and secret files for Authelia
         if not app_files().authelia_env.exists():
             domain_name = console().ask_for_string("Please enter the domain name of your website")
@@ -117,6 +109,14 @@ def main(
             except Exception as e:
                 console().print_error(f"Failed to generate self-signed certificate ({e}).")
                 raise Exit(code=1)
+
+        # Gather user information
+        if not app_files().authelia_users.exists():
+            console().print("No user information found. You will need to provide some information to continue.")
+
+            users = []
+            gather_user_info(users)
+            users_file().save(users)
 
         console().request_for_newline()
         console().print("Initialization complete.")
