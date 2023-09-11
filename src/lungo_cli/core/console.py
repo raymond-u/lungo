@@ -10,6 +10,7 @@ TEnum = TypeVar("TEnum", bound=Enum)
 
 class LogLevels(int, Enum):
     """Log levels."""
+
     TRACE = 0
     DEBUG = 1
     INFO = 2
@@ -115,8 +116,9 @@ class Console:
 
         return Confirm.ask(**kwargs)
 
-    def ask_for_integer(self, prompt: str, default: int | None = None, guard: Callable[[int], bool] = lambda x: True,
-                        **kwargs: Any) -> int:
+    def ask_for_integer(
+        self, prompt: str, default: int | None = None, guard: Callable[[int], bool] = lambda x: True, **kwargs: Any
+    ) -> int:
         self.ensure_newline()
 
         kwargs["prompt"] = f"[bold]{prompt}[/bold]"
@@ -128,8 +130,9 @@ class Console:
 
         return int(answer)
 
-    def ask_for_string(self, prompt: str, default: str | None = None, guard: Callable[[str], bool] = lambda x: bool(x),
-                       **kwargs: Any) -> str:
+    def ask_for_string(
+        self, prompt: str, default: str | None = None, guard: Callable[[str], bool] = lambda x: bool(x), **kwargs: Any
+    ) -> str:
         self.ensure_newline()
 
         kwargs["prompt"] = f"[bold]{prompt}[/bold]"

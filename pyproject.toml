@@ -1,3 +1,6 @@
+[tool.black]
+line-length = 120
+
 [tool.poetry]
 name = "lungo-cli"
 version = "0.1.0"
@@ -17,6 +20,8 @@ cryptography = "^41.0.3"
 [tool.poetry.scripts]
 lungo = "lungo_cli.app.main:app_wrapper"
 
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
 
 [build-system]
 requires = ["poetry-core"]

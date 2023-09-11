@@ -11,7 +11,7 @@ app = Typer(
     context_settings={"help_option_names": ["-h", "--help"]},
     no_args_is_help=True,
     pretty_exceptions_show_locals=False,
-    rich_markup_mode="rich"
+    rich_markup_mode="rich",
 )
 
 app.command("init")(init.main)
@@ -35,10 +35,16 @@ def version_callback(value: bool):
 
 @app.callback()
 def main(
-    version: Annotated[bool, Option("--version", "-v",
-                                    callback=version_callback,
-                                    help="Show the version of the program and exit.",
-                                    is_eager=True)] = False
+    version: Annotated[
+        bool,
+        Option(
+            "--version",
+            "-v",
+            callback=version_callback,
+            help="Show the version of the program and exit.",
+            is_eager=True,
+        ),
+    ] = False
 ):
     """
     A CLI tool for managing Lungo, a self-hosted web application suite.

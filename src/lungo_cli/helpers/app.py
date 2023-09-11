@@ -12,8 +12,13 @@ def handle_common_args(quiet: bool):
         console().set_log_level(-1)
 
 
-def gather_user_info(users: list[User], usernames: list[str] | None = None, full_names: list[str] = None,
-                     emails: list[str] = None, user_roles: list[UserRole] = None):
+def gather_user_info(
+    users: list[User],
+    usernames: list[str] | None = None,
+    full_names: list[str] = None,
+    emails: list[str] = None,
+    user_roles: list[UserRole] = None,
+):
     # Check the number of elements in each argument
     max_length = 0
     users_initial_length = len(users)

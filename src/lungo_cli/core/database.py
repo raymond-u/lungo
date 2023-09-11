@@ -87,8 +87,16 @@ class UsersFile:
                 else:
                     user_role = UserRole.GUEST
 
-                users.append(User(username=key, full_name=value["displayname"], email=value["email"],
-                                  user_role=user_role, user_disabled=value["disabled"], password=value["password"]))
+                users.append(
+                    User(
+                        username=key,
+                        full_name=value["displayname"],
+                        email=value["email"],
+                        user_role=user_role,
+                        user_disabled=value["disabled"],
+                        password=value["password"],
+                    )
+                )
         except Exception as e:
             self.console.print_error(f"Failed to read {format_path(self.app_files.authelia_users)} ({e}).")
             raise Exit(code=1)
@@ -101,8 +109,13 @@ class UsersFile:
             try:
                 pwd.getpwnam(user.username)
             except KeyError:
-                self.console.print((f"User {format_input(user.username)} does not seem to exist on the system. "
-                                    "You must create it manually."), epilogue=True)
+                self.console.print(
+                    (
+                        f"User {format_input(user.username)} does not seem to exist on the system. "
+                        "You must create it manually."
+                    ),
+                    epilogue=True,
+                )
 
         self.console.print("Saving user information...")
 
@@ -136,34 +149,57 @@ class UsersFile:
 
         for user in users:
             if user.user_role == UserRole.ADMIN:
-                permission = {"admin": True, "execute": True, "create": True, "rename": True,
-                              "modify": True, "delete": True, "share": True, "download": True}
+                permission = {
+                    "admin": True,
+                    "execute": True,
+                    "create": True,
+                    "rename": True,
+                    "modify": True,
+                    "delete": True,
+                    "share": True,
+                    "download": True,
+                }
             elif user.user_role == UserRole.USER:
-                permission = {"admin": False, "execute": False, "create": True, "rename": True,
-                              "modify": True, "delete": True, "share": True, "download": True}
+                permission = {
+                    "admin": False,
+                    "execute": False,
+                    "create": True,
+                    "rename": True,
+                    "modify": True,
+                    "delete": True,
+                    "share": True,
+                    "download": True,
+                }
             else:
-                permission = {"admin": False, "execute": False, "create": False, "rename": False,
-                              "modify": False, "delete": False, "share": True, "download": True}
+                permission = {
+                    "admin": False,
+                    "execute": False,
+                    "create": False,
+                    "rename": False,
+                    "modify": False,
+                    "delete": False,
+                    "share": True,
+                    "download": True,
+                }
 
-            filebrowser_data.append({
-                "id": 0,
-                "username": user.username,
-                "password": FILEBROWSER_DEFAULT_PASSWORD_HASH,
-                "scope": f"/root/home/{user.username}",
-                "locale": "en",
-                "lockpassword": True,
-                "viewmode": "list",
-                "singleclick": False,
-                "perm": permission,
-                "commands": [],
-                "sorting": {
-                    "by": "name",
-                    "asc": True
-                },
-                "rules": [],
-                "hidedotfiles": True,
-                "dateformat": False,
-            })
+            filebrowser_data.append(
+                {
+                    "id": 0,
+                    "username": user.username,
+                    "password": FILEBROWSER_DEFAULT_PASSWORD_HASH,
+                    "scope": f"/root/home/{user.username}",
+                    "locale": "en",
+                    "lockpassword": True,
+                    "viewmode": "list",
+                    "singleclick": False,
+                    "perm": permission,
+                    "commands": [],
+                    "sorting": {"by": "name", "asc": True},
+                    "rules": [],
+                    "hidedotfiles": True,
+                    "dateformat": False,
+                }
+            )
 
         try:
             self.yaml.dump(filebrowser_data, self.app_files.filebrowser_users)
@@ -188,7 +224,11 @@ class UsersFile:
 
         self.container.run(
             ContainerService.FILEBROWSER,
-            "-c", "/etc/filebrowser/settings.yaml", "users", "import", "/var/lib/filebrowser/users_export.yaml",
+            "-c",
+            "/etc/filebrowser/settings.yaml",
+            "users",
+            "import",
+            "/var/lib/filebrowser/users_export.yaml",
             ensure_built=True,
             force_rebuild=True,
         )
@@ -230,8 +270,13 @@ class UsersFile:
             user.password = AUTHELIA_DEFAULT_PASSWORD_HASH
 
             if not self.password_printed:
-                self.console.print((f"The default password is {format_input(AUTHELIA_DEFAULT_PASSWORD)}. "
-                                    "Please change it after logging in."), epilogue=True)
+                self.console.print(
+                    (
+                        f"The default password is {format_input(AUTHELIA_DEFAULT_PASSWORD)}. "
+                        "Please change it after logging in."
+                    ),
+                    epilogue=True,
+                )
                 self.password_printed = True
 
         users.append(user)

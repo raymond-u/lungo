@@ -12,12 +12,24 @@ from ..models.container import ContainerService
 
 
 def main(
-    force: Annotated[bool, Option("--force", "-f",
-                                  help="Force initialization even if already initialized.",
-                                  show_default=False)] = False,
-    quiet: Annotated[bool, Option("--quiet", "-q",
-                                  help="Suppress all output except for errors.",
-                                  show_default=False)] = False,
+    force: Annotated[
+        bool,
+        Option(
+            "--force",
+            "-f",
+            help="Force initialization even if already initialized.",
+            show_default=False,
+        ),
+    ] = False,
+    quiet: Annotated[
+        bool,
+        Option(
+            "--quiet",
+            "-q",
+            help="Suppress all output except for errors.",
+            show_default=False,
+        ),
+    ] = False,
 ):
     """
     Initialize config files and containers. Must be run before first use.
@@ -57,11 +69,15 @@ def main(
     if not app_files().authelia_env.exists():
         domain_name = console().ask_for_string("Please enter the domain name of your website")
         brand_name = console().ask_for_string("Please enter the brand name of your website")
-        email_address = console().ask_for_string("Please enter the email address for notification service",
-                                                 guard=lambda x: "@" in x)
+        email_address = console().ask_for_string(
+            "Please enter the email address for notification service",
+            guard=lambda x: "@" in x,
+        )
         smtp_host = console().ask_for_string("Please enter the SMTP server address associated with the email address")
-        smtp_port = console().ask_for_integer("Please enter the SMTP server port associated with the email address",
-                                              guard=lambda x: 0 < x < 65536)
+        smtp_port = console().ask_for_integer(
+            "Please enter the SMTP server port associated with the email address",
+            guard=lambda x: 0 < x < 65536,
+        )
 
         flat_file().save_env(
             app_files().authelia_env,
@@ -100,12 +116,20 @@ def main(
     # Execute commands in containers
     container().run(
         ContainerService.FILEBROWSER,
-        "-c", "/etc/filebrowser/settings.yaml", "config", "init", "--auth.method=noauth",
+        "-c",
+        "/etc/filebrowser/settings.yaml",
+        "config",
+        "init",
+        "--auth.method=noauth",
         ensure_built=True,
     )
     container().run(
         ContainerService.FILEBROWSER,
-        "-c", "/etc/filebrowser/settings.yaml", "config", "import", "/etc/filebrowser/config_export.yaml",
+        "-c",
+        "/etc/filebrowser/settings.yaml",
+        "config",
+        "import",
+        "/etc/filebrowser/config_export.yaml",
         ensure_built=True,
     )
 

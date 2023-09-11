@@ -4,6 +4,7 @@ from enum import Enum
 
 class UserRole(str, Enum):
     """User role."""
+
     ADMIN = "admin"
     USER = "user"
     GUEST = "guest"
@@ -12,6 +13,7 @@ class UserRole(str, Enum):
 @dataclass
 class User:
     """User information."""
+
     username: str
     full_name: str
     email: str

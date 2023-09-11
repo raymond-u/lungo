@@ -7,9 +7,9 @@ from .constants import DOCKER_URL, PODMAN_COMPOSE_URL, PODMAN_URL
 from ..helpers.common import format_command, format_program, program_exists, run_shell_command
 from ..models.container import ContainerService, ContainerTool
 
-docker = format_program('Docker')
-podman = format_program('Podman')
-podman_compose = format_program('podman-compose')
+docker = format_program("Docker")
+podman = format_program("Podman")
+podman_compose = format_program("podman-compose")
 docker_link = f"[link={DOCKER_URL}]{docker}[/link]"
 podman_link = f"[link={PODMAN_URL}]{podman}[/link]"
 podman_compose_link = f"[link={PODMAN_COMPOSE_URL}]{podman_compose}[/link]"
@@ -39,40 +39,49 @@ class Container:
                 self.console.print(f"Found {podman}. Use {podman} for the following operations.")
                 return ContainerTool.PODMAN
             else:
-                self.console.print_error((
+                self.console.print_error(
                     f"{podman} is installed, but {podman_compose_link} is not. Please install {podman_compose_link}."
-                ))
+                )
                 raise Exit(code=1)
         else:
-            self.console.print_error((
-                f"Neither {docker_link} nor {podman_link} is installed."
-                f"Please install one of them. For {podman_link}, you will also need {podman_compose_link}."
-            ))
+            self.console.print_error(
+                (
+                    f"Neither {docker_link} nor {podman_link} is installed."
+                    f"Please install one of them. For {podman_link}, you will also need {podman_compose_link}."
+                )
+            )
             raise Exit(code=1)
 
     def build(self, service: ContainerService | None = None, force_rebuild: bool = False):
         with self.console.status("Building container images..."):
             match self.choose_tool():
                 case ContainerTool.DOCKER:
-                    self.run_shell_command("docker", "compose", "build",
-                                           service.value if service else "",
-                                           "--no-cache" if force_rebuild else "")
+                    self.run_shell_command(
+                        "docker",
+                        "compose",
+                        "build",
+                        service.value if service else "",
+                        "--no-cache" if force_rebuild else "",
+                    )
                 case ContainerTool.PODMAN:
-                    self.run_shell_command("podman-compose", "build",
-                                           service.value if service else "",
-                                           "--no-cache" if force_rebuild else "")
+                    self.run_shell_command(
+                        "podman-compose",
+                        "build",
+                        service.value if service else "",
+                        "--no-cache" if force_rebuild else "",
+                    )
 
     def up(self, detach: bool = True, ensure_built: bool = False):
         with self.console.status("Starting containers..."):
             match self.choose_tool():
                 case ContainerTool.DOCKER:
-                    self.run_shell_command("docker", "compose", "up",
-                                           "-d" if detach else "",
-                                           "--build" if ensure_built else "")
+                    self.run_shell_command(
+                        "docker", "compose", "up", "-d" if detach else "", "--build" if ensure_built else ""
+                    )
                 case ContainerTool.PODMAN:
-                    self.run_shell_command("podman-compose", "up",
-                                           "-d" if detach else "",
-                                           "--build" if ensure_built else "")
+                    self.run_shell_command(
+                        "podman-compose", "up", "-d" if detach else "", "--build" if ensure_built else ""
+                    )
 
     def down(self):
         with self.console.status("Stopping containers..."):
