@@ -37,7 +37,7 @@ def main(
     # Handle common arguments
     handle_common_args(quiet)
 
-    # Remove existing config files if force is enabled
+    # Remove existing configuration files if force is enabled
     if force:
         console().print("Removing existing configuration files...")
 
