@@ -1,4 +1,3 @@
-from enum import auto, Enum
 from os import PathLike
 
 from typer import Exit
@@ -6,6 +5,7 @@ from typer import Exit
 from .console import Console
 from .constants import DOCKER_URL, PODMAN_COMPOSE_URL, PODMAN_URL
 from ..helpers.common import format_command, format_program, program_exists, run_shell_command
+from ..models.container import ContainerService, ContainerTool
 
 docker = format_program('Docker')
 podman = format_program('Podman')
@@ -13,22 +13,6 @@ podman_compose = format_program('podman-compose')
 docker_link = f"[link={DOCKER_URL}]{docker}[/link]"
 podman_link = f"[link={PODMAN_URL}]{podman}[/link]"
 podman_compose_link = f"[link={PODMAN_COMPOSE_URL}]{podman_compose}[/link]"
-
-
-class ContainerService(Enum, str):
-    """Container services."""
-
-    AUTHELIA = "authelia"
-    FILEBROWSER = "filebrowser"
-    NGINX = "nginx"
-    RSTUDIO = "rstudio"
-
-
-class ContainerTool(Enum):
-    """Container management tools."""
-
-    DOCKER = auto()
-    PODMAN = auto()
 
 
 class Container:

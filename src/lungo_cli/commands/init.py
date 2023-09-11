@@ -6,9 +6,9 @@ from typer import Exit, Option
 
 from ..app.state import app_files, console, container, flat_file, users_file
 from ..core.constants import PACKAGE_NAME
-from ..core.container import ContainerService
 from ..helpers.app import gather_user_info, handle_common_args
 from ..helpers.crypto import generate_random_string, generate_self_signed_cert
+from ..models.container import ContainerService
 
 
 def main(

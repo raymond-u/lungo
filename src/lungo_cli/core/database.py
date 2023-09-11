@@ -10,9 +10,10 @@ from typer import Exit
 
 from .console import Console
 from .constants import AUTHELIA_DEFAULT_PASSWORD, AUTHELIA_DEFAULT_PASSWORD_HASH, FILEBROWSER_DEFAULT_PASSWORD_HASH
-from .container import Container, ContainerService
+from .container import Container
 from .files import AppFiles
 from ..helpers.common import format_input, format_path
+from ..models.container import ContainerService
 from ..models.user import User, UserRole
 
 
