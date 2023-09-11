@@ -3,7 +3,7 @@ from enum import Enum
 from importlib import metadata
 from os import PathLike
 from shutil import which
-from typing import Iterable
+from typing import Iterable, Mapping
 
 from ..core.constants import PACKAGE_NAME
 
@@ -14,15 +14,21 @@ def get_app_version() -> str:
 
 
 def run_shell_command(
-    *command: str, cwd: str | PathLike[str] | None = None, show_output: bool = False, umask: int = -1
+    *command: str,
+    cwd: str | PathLike[str] | None = None,
+    show_output: bool = False,
+    env: Mapping[str, str] | None = None,
+    umask: int = -1,
 ):
     """Run a shell command."""
     command = list(filter(None, command))
 
     if show_output:
-        subprocess.run(command, check=True, cwd=cwd, umask=umask)
+        subprocess.run(command, check=True, cwd=cwd, env=env, umask=umask)
     else:
-        subprocess.run(command, check=True, cwd=cwd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, umask=umask)
+        subprocess.run(
+            command, check=True, cwd=cwd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, env=env, umask=umask
+        )
 
 
 def program_exists(program: str) -> bool:

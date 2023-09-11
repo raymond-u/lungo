@@ -1,3 +1,4 @@
+import os
 from os import PathLike
 
 from typer import Exit
@@ -25,7 +26,16 @@ class Container:
     def run_shell_command(self, *command: str):
         """Run a shell command."""
         try:
-            run_shell_command(*command, cwd=self.working_dir, show_output=True, umask=0)
+            env = os.environ.copy()
+
+            if not env.get("XDG_CACHE_HOME"):
+                env["XDG_CACHE_HOME"] = os.path.expanduser("~/.cache")
+            if not env.get("XDG_CONFIG_HOME"):
+                env["XDG_CONFIG_HOME"] = os.path.expanduser("~/.config")
+            if not env.get("XDG_DATA_HOME"):
+                env["XDG_DATA_HOME"] = os.path.expanduser("~/.local/share")
+
+            run_shell_command(*command, cwd=self.working_dir, show_output=True, env=env, umask=0)
         except Exception as e:
             self.console.print_error(f"An error occurred while running command {format_command(command)} ({e}).")
             raise Exit(code=1)

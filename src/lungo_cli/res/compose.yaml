@@ -21,8 +21,8 @@ services:
       - './third_party/server_configs_nginx/h5bp:/etc/nginx/h5bp:ro'
       - './third_party/server_configs_nginx/mime.types:/etc/nginx/mime.types:ro'
       - './third_party/server_configs_nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
-      - '${XDG_CACHE_HOME:-~/.cache}/lungo/nginx:/var/log/nginx:rw'
-      - '${XDG_DATA_HOME:-~/.local/share}/lungo/nginx/cert.pem:/etc/ssl/certs/cert.pem:ro'
+      - '${XDG_CACHE_HOME}/lungo/nginx:/var/log/nginx:rw'
+      - '${XDG_DATA_HOME}/lungo/nginx/cert.pem:/etc/ssl/certs/cert.pem:ro'
 
     secrets:
       - source: NGINX_PRIVATE_KEY
@@ -51,11 +51,11 @@ services:
 
     volumes:
       - './authelia:/etc/authelia:ro'
-      - '${XDG_CACHE_HOME:-~/.cache}/lungo/authelia:/var/log/authelia:rw'
-      - '${XDG_DATA_HOME:-~/.local/share}/lungo/authelia:/var/lib/authelia:rw'
-      - '${XDG_DATA_HOME:-~/.local/share}/lungo/nginx/cert.pem:/etc/authelia/cert.pem:ro'
+      - '${XDG_CACHE_HOME}/lungo/authelia:/var/log/authelia:rw'
+      - '${XDG_DATA_HOME}/lungo/authelia:/var/lib/authelia:rw'
+      - '${XDG_DATA_HOME}/lungo/nginx/cert.pem:/etc/authelia/cert.pem:ro'
 
-    env_file: '${XDG_CONFIG_HOME:-~/.config}/lungo/authelia/authelia.env'
+    env_file: '${XDG_CONFIG_HOME}/lungo/authelia/authelia.env'
     environment:
       - AUTHELIA_NOTIFIER_SMTP_HOST=${AUTHELIA_NOTIFIER_SMTP_HOST}
       - AUTHELIA_NOTIFIER_SMTP_PORT=${AUTHELIA_NOTIFIER_SMTP_PORT}
@@ -93,8 +93,8 @@ services:
     volumes:
       - './filebrowser:/etc/filebrowser:ro'
       - '/home:/mnt/home:rw'
-      - '${XDG_CACHE_HOME:-~/.cache}/lungo/filebrowser:/var/log/filebrowser:rw'
-      - '${XDG_DATA_HOME:-~/.local/share}/lungo/filebrowser:/var/lib/filebrowser:rw'
+      - '${XDG_CACHE_HOME}/lungo/filebrowser:/var/log/filebrowser:rw'
+      - '${XDG_DATA_HOME}/lungo/filebrowser:/var/lib/filebrowser:rw'
 
     restart: 'no'
 
@@ -117,7 +117,7 @@ services:
       - './rstudio/rserver.conf:/etc/rstudio/rserver.conf:ro'
       - './rstudio/rsession.conf:/etc/rstudio/rsession.conf:ro'
       - '/home:/mnt/home:rw'
-      - '${XDG_DATA_HOME:-~/.local/share}/lungo/rstudio:/var/lib/rstudio-server:rw'
+      - '${XDG_DATA_HOME}/lungo/rstudio:/var/lib/rstudio-server:rw'
 
     restart: 'no'
 
@@ -129,10 +129,10 @@ networks:
 
 secrets:
   NGINX_PRIVATE_KEY:
-    file: '${XDG_DATA_HOME:-~/.local/share}/lungo/nginx/key.pem'
+    file: '${XDG_DATA_HOME}/lungo/nginx/key.pem'
   AUTHELIA_JWT_SECRET:
-    file: '${XDG_DATA_HOME:-~/.local/share}/lungo/authelia/jwt_secret'
+    file: '${XDG_DATA_HOME}/lungo/authelia/jwt_secret'
   AUTHELIA_NOTIFIER_SMTP_PASSWORD:
-    file: '${XDG_DATA_HOME:-~/.local/share}/lungo/authelia/notifier_smtp_password'
+    file: '${XDG_DATA_HOME}/lungo/authelia/notifier_smtp_password'
   AUTHELIA_STORAGE_ENCRYPTION_KEY:
-    file: '${XDG_DATA_HOME:-~/.local/share}/lungo/authelia/storage_encryption_key'
+    file: '${XDG_DATA_HOME}/lungo/authelia/storage_encryption_key'
