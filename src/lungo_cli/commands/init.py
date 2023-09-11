@@ -51,7 +51,10 @@ def main(
 
         with as_file(files(f"{PACKAGE_NAME}.res")) as resources:
             for file in resources.iterdir():
-                shutil.copytree(file, app_files().config_dir, dirs_exist_ok=True)
+                if file.is_dir():
+                    shutil.copytree(file, app_files().config_dir / file.name)
+                elif file.is_file() and file.name != "__init__.py":
+                    shutil.copy(file, app_files().config_dir)
 
     # Ensure that directories exist
     for dir_ in app_files().all_directories:
