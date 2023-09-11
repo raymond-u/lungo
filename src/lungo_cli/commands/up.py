@@ -10,22 +10,10 @@ from ..helpers.common import format_command
 
 def main(
     attach: Annotated[
-        bool,
-        Option(
-            "--attach",
-            "-a",
-            help="Attach to the container's output.",
-            show_default=False,
-        ),
+        bool, Option("--attach", "-a", help="Attach to the container's output.", show_default=False)
     ] = False,
     quiet: Annotated[
-        bool,
-        Option(
-            "--quiet",
-            "-q",
-            help="Suppress all output except for errors.",
-            show_default=False,
-        ),
+        bool, Option("--quiet", "-q", help="Suppress all output except for errors.", show_default=False)
     ] = False,
 ):
     """

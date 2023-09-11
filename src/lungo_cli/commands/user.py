@@ -29,39 +29,19 @@ def main():
 @app.command()
 def add(
     usernames: Annotated[
-        Optional[list[str]],
-        Argument(help="The username of the user to add.", show_default=False),
+        Optional[list[str]], Argument(help="The username of the user to add.", show_default=False)
     ] = None,
     full_names: Annotated[
-        Optional[list[str]],
-        Option(
-            "--full-name",
-            "-n",
-            help="The full name of the user to add.",
-            show_default=False,
-        ),
+        Optional[list[str]], Option("--full-name", "-n", help="The full name of the user to add.", show_default=False)
     ] = None,
     emails: Annotated[
-        Optional[list[str]],
-        Option(
-            "--email",
-            "-e",
-            help="The email address of the user to add.",
-            show_default=False,
-        ),
+        Optional[list[str]], Option("--email", "-e", help="The email address of the user to add.", show_default=False)
     ] = None,
     user_roles: Annotated[
-        Optional[list[UserRole]],
-        Option("--user-role", "-r", help="The role of the user to add.", show_default=False),
+        Optional[list[UserRole]], Option("--user-role", "-r", help="The role of the user to add.", show_default=False)
     ] = None,
     quiet: Annotated[
-        bool,
-        Option(
-            "--quiet",
-            "-q",
-            help="Suppress all output except for errors.",
-            show_default=False,
-        ),
+        bool, Option("--quiet", "-q", help="Suppress all output except for errors.", show_default=False)
     ] = False,
 ):
     """
@@ -79,17 +59,10 @@ def add(
 @app.command()
 def enable(
     usernames: Annotated[
-        Optional[list[str]],
-        Argument(help="The username of the user to activate.", show_default=False),
+        Optional[list[str]], Argument(help="The username of the user to activate.", show_default=False)
     ] = None,
     quiet: Annotated[
-        bool,
-        Option(
-            "--quiet",
-            "-q",
-            help="Suppress all output except for errors.",
-            show_default=False,
-        ),
+        bool, Option("--quiet", "-q", help="Suppress all output except for errors.", show_default=False)
     ] = False,
 ):
     """
@@ -112,17 +85,10 @@ def enable(
 @app.command()
 def disable(
     usernames: Annotated[
-        Optional[list[str]],
-        Argument(help="The username of the user to activate.", show_default=False),
+        Optional[list[str]], Argument(help="The username of the user to activate.", show_default=False)
     ] = None,
     quiet: Annotated[
-        bool,
-        Option(
-            "--quiet",
-            "-q",
-            help="Suppress all output except for errors.",
-            show_default=False,
-        ),
+        bool, Option("--quiet", "-q", help="Suppress all output except for errors.", show_default=False)
     ] = False,
 ):
     """
@@ -145,17 +111,10 @@ def disable(
 @app.command()
 def show(
     usernames: Annotated[
-        Optional[list[str]],
-        Argument(help="The username of the user to activate.", show_default=False),
+        Optional[list[str]], Argument(help="The username of the user to activate.", show_default=False)
     ] = None,
     quiet: Annotated[
-        bool,
-        Option(
-            "--quiet",
-            "-q",
-            help="Suppress all output except for errors.",
-            show_default=False,
-        ),
+        bool, Option("--quiet", "-q", help="Suppress all output except for errors.", show_default=False)
     ] = False,
 ):
     """

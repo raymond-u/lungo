@@ -12,22 +12,10 @@ from ..helpers.crypto import generate_random_string, generate_self_signed_cert
 
 def main(
     force: Annotated[
-        bool,
-        Option(
-            "--force",
-            "-f",
-            help="Force initialization even if already initialized.",
-            show_default=False,
-        ),
+        bool, Option("--force", "-f", help="Force initialization even if already initialized.", show_default=False)
     ] = False,
     quiet: Annotated[
-        bool,
-        Option(
-            "--quiet",
-            "-q",
-            help="Suppress all output except for errors.",
-            show_default=False,
-        ),
+        bool, Option("--quiet", "-q", help="Suppress all output except for errors.", show_default=False)
     ] = False,
 ):
     """

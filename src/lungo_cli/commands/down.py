@@ -8,13 +8,7 @@ from ..helpers.app import handle_common_args
 
 def main(
     quiet: Annotated[
-        bool,
-        Option(
-            "--quiet",
-            "-q",
-            help="Suppress all output except for errors.",
-            show_default=False,
-        ),
+        bool, Option("--quiet", "-q", help="Suppress all output except for errors.", show_default=False)
     ] = False,
 ):
     """
