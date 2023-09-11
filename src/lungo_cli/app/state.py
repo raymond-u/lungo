@@ -5,7 +5,7 @@ from ..core.files import AppFiles
 
 _app_files = AppFiles()
 _console = Console()
-_container = Container(_console)
+_container = Container(_console, _app_files.compose_dir)
 _flat_file = FlatFile(_console)
 _users_file = UsersFile(_app_files, _console, _container)
 

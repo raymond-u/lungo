@@ -1,10 +1,10 @@
 from enum import auto, Enum
+from os import PathLike
 
 from typer import Exit
 
 from .console import Console
 from .constants import DOCKER_URL, PODMAN_COMPOSE_URL, PODMAN_URL
-from ..app.state import app_files
 from ..helpers.common import format_command, format_program, program_exists, run_shell_command
 
 docker = format_program('Docker')
@@ -34,13 +34,14 @@ class ContainerTool(Enum):
 class Container:
     """Communicate with the container management tool."""
 
-    def __init__(self, console: Console):
+    def __init__(self, console: Console, working_dir: str | PathLike[str]):
         self.console = console
+        self.working_dir = working_dir
 
     def run_shell_command(self, *command: str):
         """Run a shell command."""
         try:
-            run_shell_command(*command, cwd=app_files().compose_dir, show_output=True)
+            run_shell_command(*command, cwd=self.working_dir, show_output=True)
         except Exception as e:
             self.console.print_error(f"An error occurred while running command {format_command(command)} ({e}).")
             raise Exit(code=1)
