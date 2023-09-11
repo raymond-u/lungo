@@ -7,7 +7,7 @@ from ..helpers.app import gather_user_info, get_user_by_usernames, handle_common
 from ..helpers.common import format_section
 from ..models.user import UserRole
 
-app = Typer()
+app = Typer(no_args_is_help=True)
 
 
 @app.callback(rich_help_panel=format_section("user"))
@@ -18,7 +18,7 @@ def main():
     ...
 
 
-@app.command()
+@app.command(rich_help_panel=format_section("user"))
 def add(
     usernames: Annotated[Optional[list[str]], Argument(help="The username of the user to add.",
                                                        show_default=False)] = None,
@@ -47,7 +47,7 @@ def add(
     users_file().save(users)
 
 
-@app.command()
+@app.command(rich_help_panel=format_section("user"))
 def enable(
     usernames: Annotated[Optional[list[str]], Argument(help="The username of the user to activate.",
                                                        show_default=False)] = None,
@@ -72,7 +72,7 @@ def enable(
     console().print(f"Successfully activated {len(users_found)} account(s).")
 
 
-@app.command()
+@app.command(rich_help_panel=format_section("user"))
 def disable(
     usernames: Annotated[Optional[list[str]], Argument(help="The username of the user to activate.",
                                                        show_default=False)] = None,
@@ -97,7 +97,7 @@ def disable(
     console().print(f"Successfully suspended {len(users_found)} account(s).")
 
 
-@app.command()
+@app.command(rich_help_panel=format_section("user"))
 def show(
     usernames: Annotated[Optional[list[str]], Argument(help="The username of the user to activate.",
                                                        show_default=False)] = None,
