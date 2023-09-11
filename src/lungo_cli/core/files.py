@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Generator
+from typing import Iterator
 
 from platformdirs import user_cache_path, user_config_path, user_data_path
 
@@ -15,7 +15,7 @@ class AppFiles:
         self._data_dir = user_data_path(APP_NAME, APP_AUTHOR)
 
     @property
-    def all_directories(self) -> Generator[Path]:
+    def all_directories(self) -> Iterator[Path]:
         dirs = [self.cache_dir, self.config_dir, self.data_dir]
         apps = ["authelia", "filebrowser", "nginx", "rstudio"]
         return (dir_ / app for dir_ in dirs for app in apps)
