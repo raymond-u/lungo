@@ -13,14 +13,16 @@ def get_app_version() -> str:
     return metadata.version(PACKAGE_NAME)
 
 
-def run_shell_command(*command: str, cwd: str | PathLike[str] | None = ..., show_output: bool = False):
+def run_shell_command(
+    *command: str, cwd: str | PathLike[str] | None = None, show_output: bool = False, umask: int = -1
+):
     """Run a shell command."""
     command = list(filter(None, command))
 
     if show_output:
-        subprocess.run(command, check=True, cwd=cwd)
+        subprocess.run(command, check=True, cwd=cwd, umask=umask)
     else:
-        subprocess.run(command, check=True, cwd=cwd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+        subprocess.run(command, check=True, cwd=cwd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, umask=umask)
 
 
 def program_exists(program: str) -> bool:

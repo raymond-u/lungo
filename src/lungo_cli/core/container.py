@@ -25,7 +25,7 @@ class Container:
     def run_shell_command(self, *command: str):
         """Run a shell command."""
         try:
-            run_shell_command(*command, cwd=self.working_dir, show_output=True)
+            run_shell_command(*command, cwd=self.working_dir, show_output=True, umask=0)
         except Exception as e:
             self.console.print_error(f"An error occurred while running command {format_command(command)} ({e}).")
             raise Exit(code=1)
