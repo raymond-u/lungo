@@ -47,7 +47,11 @@ class FlatFile:
         try:
             with open(path, "w") as f:
                 for key, value in env.items():
-                    f.write(f"{key}='{value}'\n")
+                    # Escape special characters if necessary
+                    if re.search(r"[\s\\#$]", value):
+                        value = f"'{value}'"
+
+                    f.write(f"{key}={value}\n")
         except Exception as e:
             self.console.print_error(f"Failed to write {format_path(path)} ({e}).")
             raise Exit(code=1)
