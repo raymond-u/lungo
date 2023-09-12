@@ -1,9 +1,10 @@
+import shutil
 from typing import Collection
 
 from typer import Exit
 
 from .common import format_input
-from ..app.state import console, users_file
+from ..app.state import app_files, console, users_file
 from ..models.user import User, UserRole
 
 
@@ -149,3 +150,16 @@ def print_user_info(users: Collection[User]):
         console().print(f"User role: {format_input(user.user_role.value)}")
 
     console().request_for_newline()
+
+
+def reset_app():
+    try:
+        if app_files().cache_dir.exists():
+            shutil.rmtree(app_files().cache_dir)
+        if app_files().config_dir.exists():
+            shutil.rmtree(app_files().config_dir)
+        if app_files().data_dir.exists():
+            shutil.rmtree(app_files().data_dir)
+    except Exception as e:
+        console().print_error(f"Failed to remove existing configuration files ({e}).")
+        raise Exit(code=1)

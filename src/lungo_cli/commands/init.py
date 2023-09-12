@@ -1,16 +1,29 @@
 import shutil
-from typing import Annotated
+from typing import Annotated, Optional
 
 from importlib_resources import as_file, files
 from typer import Exit, Option
 
 from ..app.state import app_files, console, flat_file, users_file
 from ..core.constants import PACKAGE_NAME
-from ..helpers.app import gather_user_info, handle_common_args
+from ..helpers.app import gather_user_info, handle_common_args, reset_app
 from ..helpers.crypto import generate_random_string, generate_self_signed_cert
+from ..models.user import UserRole
 
 
 def main(
+    usernames: Annotated[
+        Optional[list[str]], Option("--username", "-u", help="The username of the user to add.", show_default=False)
+    ] = None,
+    full_names: Annotated[
+        Optional[list[str]], Option("--full-name", "-n", help="The full name of the user to add.", show_default=False)
+    ] = None,
+    emails: Annotated[
+        Optional[list[str]], Option("--email", "-e", help="The email address of the user to add.", show_default=False)
+    ] = None,
+    user_roles: Annotated[
+        Optional[list[UserRole]], Option("--user-role", "-r", help="The role of the user to add.", show_default=False)
+    ] = None,
     force: Annotated[
         bool, Option("--force", "-f", help="Force initialization even if already initialized.", show_default=False)
     ] = False,
@@ -28,10 +41,7 @@ def main(
         # Remove existing configuration files if force is enabled
         if force:
             console().print("Removing existing configuration files...")
-
-            shutil.rmtree(app_files().cache_dir, ignore_errors=True)
-            shutil.rmtree(app_files().config_dir, ignore_errors=True)
-            shutil.rmtree(app_files().data_dir, ignore_errors=True)
+            reset_app()
 
         # Copy files from resources to config directory
         if not app_files().res_dir.exists():
@@ -103,15 +113,12 @@ def main(
             console().print("No user information found. You will need to provide some information to continue.")
 
             users = []
-            gather_user_info(users)
+            gather_user_info(users, usernames, full_names, emails, user_roles)
             users_file().save(users)
 
         console().request_for_newline()
         console().print("Initialization complete.")
     except Exception:
         # Remove existing configuration files if initialization fails
-        shutil.rmtree(app_files().cache_dir, ignore_errors=True)
-        shutil.rmtree(app_files().config_dir, ignore_errors=True)
-        shutil.rmtree(app_files().data_dir, ignore_errors=True)
-
+        reset_app()
         raise Exit(code=1)
