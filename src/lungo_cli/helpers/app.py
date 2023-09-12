@@ -18,7 +18,7 @@ def update_resources():
             with as_file(files(f"{PACKAGE_NAME}.res")) as resources:
                 for file in resources.iterdir():
                     if file.is_dir():
-                        shutil.copytree(file, app_files().res_dir / file.name)
+                        shutil.copytree(file, app_files().res_dir / file.name, dirs_exist_ok=True)
                     elif file.is_file() and file.name != "__init__.py":
                         shutil.copy(file, app_files().res_dir)
 
