@@ -1,7 +1,6 @@
 import os
 import pwd
 import re
-import tempfile
 from os import PathLike
 from typing import Iterable
 
@@ -13,15 +12,17 @@ from .constants import AUTHELIA_DEFAULT_PASSWORD, AUTHELIA_DEFAULT_PASSWORD_HASH
 from .container import Container
 from .files import AppFiles
 from ..helpers.common import format_input, format_path
+from ..models.config import AutheliaConfig
 from ..models.container import ContainerService
 from ..models.user import User, UserRole
 
 
-class FlatFile:
-    """Flat files."""
+class ConfigFile:
+    """Files for general configuration."""
 
     def __init__(self, console: Console):
         self.console = console
+        self.yaml = YAML()
 
     def create(self, path: str | PathLike[str]):
         try:
@@ -30,18 +31,6 @@ class FlatFile:
         except Exception as e:
             self.console.print_error(f"Failed to create {format_path(path)} ({e}).")
             raise Exit(code=1)
-
-    def use_temp(self):
-        class TempFile:
-            def __enter__(self):
-                self.temp = tempfile.NamedTemporaryFile("w", delete=False)
-                return self.temp
-
-            def __exit__(self, exc_type, exc_val, exc_tb):
-                self.temp.close()
-                os.unlink(self.temp.name)
-
-        return TempFile()
 
     def save_env(self, path: str | PathLike[str], **env: str):
         try:
@@ -57,9 +46,35 @@ class FlatFile:
             raise Exit(code=1)
 
     def save_secret(self, path: str | PathLike[str], secret: str):
+        # Create the file with restrictive permissions
+        self.create(path)
+        os.chmod(path, 0o600)
+
         try:
             with open(path, "w") as f:
                 f.write(secret)
+        except Exception as e:
+            self.console.print_error(f"Failed to write {format_path(path)} ({e}).")
+            raise Exit(code=1)
+
+    def save_authelia_config(self, path: str | PathLike[str], config: AutheliaConfig):
+        data = {
+            "notifier": {
+                "smtp": {
+                    "host": config.notifier_smtp_host,
+                    "port": config.notifier_smtp_port,
+                    "username": config.notifier_smtp_username,
+                    "sender": config.notifier_smtp_sender,
+                    "subject": config.notifier_smtp_subject,
+                }
+            },
+            "session": {
+                "domain": config.session_domain,
+            },
+        }
+
+        try:
+            self.yaml.dump(data, path)
         except Exception as e:
             self.console.print_error(f"Failed to write {format_path(path)} ({e}).")
             raise Exit(code=1)

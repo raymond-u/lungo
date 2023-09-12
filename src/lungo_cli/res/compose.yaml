@@ -39,7 +39,7 @@ services:
     hostname: authelia
 
     image: docker.io/authelia/authelia
-    command: authelia --config /etc/authelia/config.yaml
+    command: authelia --config /etc/authelia/config.yaml --config /var/lib/authelia/user_config.yaml
 
     expose:
       - 80

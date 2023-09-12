@@ -2,9 +2,10 @@ from typing import Annotated, Optional
 
 from typer import Exit, Option
 
-from ..app.state import app_files, console, flat_file, users_file
+from ..app.state import app_files, config_file, console, users_file
 from ..helpers.app import gather_user_info, handle_common_args, reset_app
 from ..helpers.crypto import generate_random_string, generate_self_signed_cert
+from ..models.config import AutheliaConfig
 from ..models.user import UserRole
 
 
@@ -43,8 +44,8 @@ def main(
         for dir_ in app_files().all_directories:
             dir_.mkdir(parents=True, exist_ok=True)
 
-        # Generate env and secret files for Authelia
-        if not app_files().authelia_env.exists():
+        # Generate config files for Authelia
+        if not app_files().authelia_config.exists():
             domain_name = console().ask_for_string("Please enter the domain name of your website")
             brand_name = console().ask_for_string("Please enter the brand name of your website")
             email_address = console().ask_for_string(
@@ -59,29 +60,31 @@ def main(
                 guard=lambda x: 0 < x < 65536,
             )
 
-            flat_file().save_env(
-                app_files().authelia_env,
-                AUTHELIA_NOTIFIER_SMTP_HOST=smtp_host,
-                AUTHELIA_NOTIFIER_SMTP_PORT=str(smtp_port),
-                AUTHELIA_NOTIFIER_SMTP_USERNAME=email_address,
-                AUTHELIA_NOTIFIER_SMTP_SENDER=f"{brand_name} <{email_address}>",
-                AUTHELIA_NOTIFIER_SMTP_SUBJECT=f"[{brand_name}] {{title}}",
-                AUTHELIA_SESSION_DOMAIN=domain_name,
+            config_file().save_authelia_config(
+                app_files().authelia_config,
+                AutheliaConfig(
+                    notifier_smtp_host=smtp_host,
+                    notifier_smtp_port=smtp_port,
+                    notifier_smtp_username=email_address,
+                    notifier_smtp_sender=f"{brand_name} <{email_address}>",
+                    notifier_smtp_subject=f"[{brand_name}] {{title}}",
+                    session_domain=domain_name,
+                ),
             )
 
         if not app_files().authelia_smtp_password.exists():
             email_password = console().ask_for_password("Please enter the password for the email address")
-            flat_file().save_secret(app_files().authelia_smtp_password, email_password)
+            config_file().save_secret(app_files().authelia_smtp_password, email_password)
 
         # Encryption key is used to encrypt the database, so we must create both
         if not app_files().authelia_encryption_key.exists() or not app_files().authelia_db.exists():
             console().print("Generating encryption key and database...")
-            flat_file().create(app_files().authelia_db)
-            flat_file().save_secret(app_files().authelia_encryption_key, generate_random_string())
+            config_file().create(app_files().authelia_db)
+            config_file().save_secret(app_files().authelia_encryption_key, generate_random_string())
 
         if not app_files().authelia_jwt_secret.exists():
             console().print("Generating JWT secret...")
-            flat_file().save_secret(app_files().authelia_jwt_secret, generate_random_string())
+            config_file().save_secret(app_files().authelia_jwt_secret, generate_random_string())
 
         # Generate self-signed certificate
         if not app_files().nginx_cert.exists() or not app_files().nginx_key.exists():

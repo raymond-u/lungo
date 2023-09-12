@@ -41,12 +41,8 @@ class AppFiles:
         return self._data_dir / ".version"
 
     @property
-    def authelia_env(self) -> Path:
-        return self._data_dir / "authelia" / "authelia.env"
-
-    @property
-    def authelia_smtp_password(self) -> Path:
-        return self._data_dir / "authelia" / "notifier_smtp_password"
+    def authelia_config(self) -> Path:
+        return self._data_dir / "authelia" / "user_config.yaml"
 
     @property
     def authelia_db(self) -> Path:
@@ -59,6 +55,10 @@ class AppFiles:
     @property
     def authelia_jwt_secret(self) -> Path:
         return self._data_dir / "authelia" / "jwt_secret"
+
+    @property
+    def authelia_smtp_password(self) -> Path:
+        return self._data_dir / "authelia" / "notifier_smtp_password"
 
     @property
     def authelia_users(self) -> Path:
@@ -77,13 +77,13 @@ class AppFiles:
         return self._data_dir / "filebrowser" / "users_export.yaml"
 
     @property
+    def rstudio_dockerfile(self) -> Path:
+        return self._data_dir / "rstudio" / "Dockerfile"
+
+    @property
     def nginx_cert(self) -> Path:
         return self._data_dir / "nginx" / "cert.pem"
 
     @property
     def nginx_key(self) -> Path:
         return self._data_dir / "nginx" / "key.pem"
-
-    @property
-    def rstudio_dockerfile(self) -> Path:
-        return self._data_dir / "rstudio" / "Dockerfile"
