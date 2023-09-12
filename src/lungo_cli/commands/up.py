@@ -23,7 +23,7 @@ def main(
     handle_common_args(quiet)
 
     # Check if config files exist
-    if not app_files().config_dir.exists():
+    if not app_files().res_dir.exists():
         console().print_error(f"No configuration files found. Please run {format_command(f'{APP_NAME} init')} first.")
         raise Exit(code=1)
 

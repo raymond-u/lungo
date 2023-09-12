@@ -33,53 +33,53 @@ class AppFiles:
         return self._data_dir
 
     @property
-    def compose_dir(self) -> Path:
-        return self._config_dir
+    def res_dir(self) -> Path:
+        return self._data_dir
 
     @property
     def authelia_env(self) -> Path:
-        return self.config_dir / "authelia" / "authelia.env"
+        return self._data_dir / "authelia" / "authelia.env"
 
     @property
     def authelia_smtp_password(self) -> Path:
-        return self.config_dir / "authelia" / "notifier_smtp_password"
+        return self._data_dir / "authelia" / "notifier_smtp_password"
 
     @property
     def authelia_db(self) -> Path:
-        return self.data_dir / "authelia" / "authelia.sqlite3"
+        return self._data_dir / "authelia" / "authelia.sqlite3"
 
     @property
     def authelia_encryption_key(self) -> Path:
-        return self.data_dir / "authelia" / "storage_encryption_key"
+        return self._data_dir / "authelia" / "storage_encryption_key"
 
     @property
     def authelia_jwt_secret(self) -> Path:
-        return self.data_dir / "authelia" / "jwt_secret"
+        return self._data_dir / "authelia" / "jwt_secret"
 
     @property
     def authelia_users(self) -> Path:
-        return self.data_dir / "authelia" / "users.yaml"
+        return self._data_dir / "authelia" / "users.yaml"
 
     @property
     def filebrowser_dockerfile(self) -> Path:
-        return self.config_dir / "filebrowser" / "Dockerfile"
+        return self._data_dir / "filebrowser" / "Dockerfile"
 
     @property
     def filebrowser_database(self) -> Path:
-        return self.data_dir / "filebrowser" / "filebrowser.db"
+        return self._data_dir / "filebrowser" / "filebrowser.db"
 
     @property
     def filebrowser_users(self) -> Path:
-        return self.data_dir / "filebrowser" / "users_export.yaml"
+        return self._data_dir / "filebrowser" / "users_export.yaml"
 
     @property
     def nginx_cert(self) -> Path:
-        return self.data_dir / "nginx" / "cert.pem"
+        return self._data_dir / "nginx" / "cert.pem"
 
     @property
     def nginx_key(self) -> Path:
-        return self.data_dir / "nginx" / "key.pem"
+        return self._data_dir / "nginx" / "key.pem"
 
     @property
     def rstudio_dockerfile(self) -> Path:
-        return self.config_dir / "rstudio" / "Dockerfile"
+        return self._data_dir / "rstudio" / "Dockerfile"

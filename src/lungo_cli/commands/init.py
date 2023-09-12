@@ -34,15 +34,15 @@ def main(
             shutil.rmtree(app_files().data_dir, ignore_errors=True)
 
         # Copy files from resources to config directory
-        if not app_files().config_dir.exists():
-            app_files().config_dir.mkdir(parents=True)
+        if not app_files().res_dir.exists():
+            app_files().res_dir.mkdir(parents=True)
 
             with as_file(files(f"{PACKAGE_NAME}.res")) as resources:
                 for file in resources.iterdir():
                     if file.is_dir():
-                        shutil.copytree(file, app_files().config_dir / file.name)
+                        shutil.copytree(file, app_files().res_dir / file.name)
                     elif file.is_file() and file.name != "__init__.py":
-                        shutil.copy(file, app_files().config_dir)
+                        shutil.copy(file, app_files().res_dir)
 
         # Ensure that directories exist
         for dir_ in app_files().all_directories:

@@ -55,7 +55,7 @@ services:
       - '${XDG_DATA_HOME}/lungo/authelia:/var/lib/authelia:rw'
       - '${XDG_DATA_HOME}/lungo/nginx/cert.pem:/etc/authelia/cert.pem:ro'
 
-    env_file: '${XDG_CONFIG_HOME}/lungo/authelia/authelia.env'
+    env_file: '${XDG_DATA_HOME}/lungo/authelia/authelia.env'
     environment:
       - AUTHELIA_NOTIFIER_SMTP_HOST=${AUTHELIA_NOTIFIER_SMTP_HOST}
       - AUTHELIA_NOTIFIER_SMTP_PORT=${AUTHELIA_NOTIFIER_SMTP_PORT}
@@ -133,6 +133,6 @@ secrets:
   AUTHELIA_JWT_SECRET:
     file: '${XDG_DATA_HOME}/lungo/authelia/jwt_secret'
   AUTHELIA_NOTIFIER_SMTP_PASSWORD:
-    file: '${XDG_CONFIG_HOME}/lungo/authelia/notifier_smtp_password'
+    file: '${XDG_DATA_HOME}/lungo/authelia/notifier_smtp_password'
   AUTHELIA_STORAGE_ENCRYPTION_KEY:
     file: '${XDG_DATA_HOME}/lungo/authelia/storage_encryption_key'
