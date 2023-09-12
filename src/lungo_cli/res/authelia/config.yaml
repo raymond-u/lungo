@@ -110,7 +110,7 @@ server:
 log:
 
   ## Level of verbosity for logs: info, debug, trace.
-  level: debug
+  level: info
 
   ## Format the logs are written as: json, text.
   format: text
@@ -153,9 +153,9 @@ telemetry:
       # read: 6s
 
       ## Write timeout.
-      # write: 6s
+    # write: 6s
 
-      ## Idle timeout.
+    ## Idle timeout.
     # idle: 30s
 
 ##
@@ -459,8 +459,8 @@ authentication_backend:
     # permit_referrals: false
 
     ## The username and password of the admin user.
-    # user: cn=admin,dc=example,dc=com
-    ## Password can also be set using a secret: https://www.authelia.com/c/secrets
+  # user: cn=admin,dc=example,dc=com
+  ## Password can also be set using a secret: https://www.authelia.com/c/secrets
   # password: password
 
   ##
@@ -477,7 +477,7 @@ authentication_backend:
   ##
   file:
     path: /var/lib/authelia/users.yaml
-    watch: true
+    watch: false
     search:
       email: false
       case_insensitive: false
@@ -579,8 +579,8 @@ access_control:
     # - name: internal
     #   networks:
     # - 10.10.0.0/16
-    # - 192.168.2.0/24
-    # - name: VPN
+  # - 192.168.2.0/24
+  # - name: VPN
   #   networks: 10.9.0.0/16
 
 ##
@@ -763,9 +763,9 @@ session:
     #   port: 6379
 
     ## Choose the host with the lowest latency.
-    # route_by_latency: false
+  # route_by_latency: false
 
-    ## Choose the host randomly.
+  ## Choose the host randomly.
   # route_randomly: false
 
 ##
@@ -1015,8 +1015,8 @@ storage:
       # rBoTcCI1GqZNlqWOVQ65ZIEiaI7o1vPBZo2GMQEZuq8mDKFsOMThvvTrM5cAep84
       # n6HJR4ECgYABWcbsSnr0MKvVth/inxjbKapbZnp2HUCuw87Ie5zK2Of/tbC20wwk
       # yKw3vrGoE3O1t1g2m2tn8UGGASeZ842jZWjIODdSi5+icysQGuULKt86h/woz2SQ
-      # 27GoE2i5mh6Yez6VAYbUuns3FcwIsMyWLq043Tu2DNkx9ijOOAuQzw^invalid..
-      # DO NOT USE==
+    # 27GoE2i5mh6Yez6VAYbUuns3FcwIsMyWLq043Tu2DNkx9ijOOAuQzw^invalid..
+    # DO NOT USE==
     # -----END RSA PRIVATE KEY-----
 
 ##
@@ -1032,8 +1032,8 @@ notifier:
     ## File System (Notification Provider)
     ##
     ## Important: Kubernetes (or HA) users must read https://www.authelia.com/t/statelessness
-    ##
-    # filesystem:
+  ##
+  # filesystem:
   # filename: /config/notification.txt
 
   ##
@@ -1360,8 +1360,8 @@ notifier:
       # response_modes:
       # - form_post
       # - query
-      # - fragment
+    # - fragment
 
-      ## The algorithm used to sign userinfo endpoint responses for this client, either none or RS256.
+    ## The algorithm used to sign userinfo endpoint responses for this client, either none or RS256.
     # userinfo_signing_algorithm: none
 ...

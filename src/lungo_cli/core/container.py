@@ -81,26 +81,13 @@ class Container:
                         "--no-cache" if force_rebuild else "",
                     )
 
-    def up(self, detach: bool = True, ensure_built: bool = False):
-        # with self.console.status("Starting containers..."):
-        #     match self.choose_tool():
-        #         case ContainerTool.DOCKER:
-        #             self.run_shell_command(
-        #                 "docker", "compose", "up", "-d" if detach else "", "--build" if ensure_built else ""
-        #             )
-        #         case ContainerTool.PODMAN:
-        #             self.run_shell_command(
-        #                 "podman-compose", "up", "-d" if detach else "", "--build" if ensure_built else ""
-        #             )
-        match self.choose_tool():
-            case ContainerTool.DOCKER:
-                self.run_shell_command(
-                    "docker", "compose", "up", "-d" if detach else "", "--build" if ensure_built else ""
-                )
-            case ContainerTool.PODMAN:
-                self.run_shell_command(
-                    "podman-compose", "up", "-d" if detach else "", "--build" if ensure_built else ""
-                )
+    def up(self, ensure_built: bool = False):
+        with self.console.status("Starting containers..."):
+            match self.choose_tool():
+                case ContainerTool.DOCKER:
+                    self.run_shell_command("docker", "compose", "up", "-d", "--build" if ensure_built else "")
+                case ContainerTool.PODMAN:
+                    self.run_shell_command("podman-compose", "up", "-d", "--build" if ensure_built else "")
 
     def down(self):
         with self.console.status("Stopping containers..."):
