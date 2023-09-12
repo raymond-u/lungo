@@ -1,11 +1,9 @@
 from typing import Annotated
 
-from typer import Exit, Option
+from typer import Option
 
-from ..app.state import app_files, console, container
-from ..core.constants import APP_NAME
-from ..helpers.app import handle_common_args
-from ..helpers.common import format_command
+from ..app.state import console, container
+from ..helpers.app import check_prerequisites, handle_common_args
 
 
 def main(
@@ -19,13 +17,8 @@ def main(
     """
     Bring the service online.
     """
-    # Handle common arguments
     handle_common_args(quiet)
-
-    # Check if config files exist
-    if not app_files().res_dir.exists():
-        console().print_error(f"No configuration files found. Please run {format_command(f'{APP_NAME} init')} first.")
-        raise Exit(code=1)
+    check_prerequisites()
 
     # Start the service
     container().up(not attach)

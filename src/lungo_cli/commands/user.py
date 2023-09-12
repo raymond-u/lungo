@@ -4,6 +4,7 @@ from typer import Argument, Option, Typer
 
 from ..app.state import console, users_file
 from ..helpers.app import (
+    check_prerequisites,
     gather_user_info,
     get_user_by_usernames,
     handle_common_args,
@@ -47,8 +48,8 @@ def add(
     """
     Add a user.
     """
-    # Handle common arguments
     handle_common_args(quiet)
+    check_prerequisites()
 
     # Gather user information
     users = users_file().load()
@@ -70,8 +71,8 @@ def enable(
     """
     Activate a user's account.
     """
-    # Handle common arguments
     handle_common_args(quiet)
+    check_prerequisites()
 
     # Activate users
     users = users_file().load()
@@ -96,8 +97,8 @@ def disable(
     """
     Suspend a user's account.
     """
-    # Handle common arguments
     handle_common_args(quiet)
+    check_prerequisites()
 
     # Suspend users
     users = users_file().load()
@@ -122,8 +123,8 @@ def show(
     """
     Show information about a user.
     """
-    # Handle common arguments
     handle_common_args(quiet)
+    check_prerequisites()
 
     # Show information about users
     users = users_file().load()

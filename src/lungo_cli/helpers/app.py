@@ -1,16 +1,56 @@
 import shutil
 from typing import Collection
 
+from importlib_resources import as_file, files
 from typer import Exit
 
-from .common import format_input
+from .common import format_command, format_input, get_app_version
 from ..app.state import app_files, console, users_file
+from ..core.constants import APP_NAME, PACKAGE_NAME
 from ..models.user import User, UserRole
+
+
+def update_resources():
+    try:
+        if not app_files().res_version.exists() or app_files().res_version.read_text() != get_app_version():
+            app_files().res_dir.mkdir(parents=True, exist_ok=True)
+
+            with as_file(files(f"{PACKAGE_NAME}.res")) as resources:
+                for file in resources.iterdir():
+                    if file.is_dir():
+                        shutil.copytree(file, app_files().res_dir / file.name)
+                    elif file.is_file() and file.name != "__init__.py":
+                        shutil.copy(file, app_files().res_dir)
+
+            with app_files().res_version.open("w") as version_file:
+                version_file.write(get_app_version())
+    except Exception as e:
+        console().print_error(f"Failed to update resources ({e}).")
+        raise Exit(code=1)
+
+
+def reset_app():
+    try:
+        if app_files().cache_dir.exists():
+            shutil.rmtree(app_files().cache_dir)
+        if app_files().config_dir.exists():
+            shutil.rmtree(app_files().config_dir)
+        if app_files().data_dir.exists():
+            shutil.rmtree(app_files().data_dir)
+    except Exception as e:
+        console().print_error(f"Failed to remove existing configuration files ({e}).")
+        raise Exit(code=1)
 
 
 def handle_common_args(quiet: bool):
     if quiet:
         console().set_log_level(-1)
+
+
+def check_prerequisites():
+    if any(map(lambda x: not x.exists(), app_files().all_directories)):
+        console().print_error(f"No configuration files found. Please run {format_command(f'{APP_NAME} init')} first.")
+        raise Exit(code=1)
 
 
 def gather_user_info(
@@ -150,16 +190,3 @@ def print_user_info(users: Collection[User]):
         console().print(f"User role: {format_input(user.user_role.value)}")
 
     console().request_for_newline()
-
-
-def reset_app():
-    try:
-        if app_files().cache_dir.exists():
-            shutil.rmtree(app_files().cache_dir)
-        if app_files().config_dir.exists():
-            shutil.rmtree(app_files().config_dir)
-        if app_files().data_dir.exists():
-            shutil.rmtree(app_files().data_dir)
-    except Exception as e:
-        console().print_error(f"Failed to remove existing configuration files ({e}).")
-        raise Exit(code=1)

@@ -3,7 +3,7 @@ from typing import Annotated
 from typer import Option
 
 from ..app.state import console, container
-from ..helpers.app import handle_common_args
+from ..helpers.app import check_prerequisites, handle_common_args
 
 
 def main(
@@ -14,8 +14,8 @@ def main(
     """
     Bring the service offline.
     """
-    # Handle common arguments
     handle_common_args(quiet)
+    check_prerequisites()
 
     # Stop the service
     container().down()

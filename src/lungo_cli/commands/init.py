@@ -1,11 +1,8 @@
-import shutil
 from typing import Annotated, Optional
 
-from importlib_resources import as_file, files
 from typer import Exit, Option
 
 from ..app.state import app_files, console, flat_file, users_file
-from ..core.constants import PACKAGE_NAME
 from ..helpers.app import gather_user_info, handle_common_args, reset_app
 from ..helpers.crypto import generate_random_string, generate_self_signed_cert
 from ..models.user import UserRole
@@ -35,24 +32,12 @@ def main(
     Initialize config files and containers. Must be run before first use.
     """
     try:
-        # Handle common arguments
         handle_common_args(quiet)
 
         # Remove existing configuration files if force is enabled
         if force:
             console().print("Removing existing configuration files...")
             reset_app()
-
-        # Copy files from resources to config directory
-        if not app_files().res_dir.exists():
-            app_files().res_dir.mkdir(parents=True)
-
-            with as_file(files(f"{PACKAGE_NAME}.res")) as resources:
-                for file in resources.iterdir():
-                    if file.is_dir():
-                        shutil.copytree(file, app_files().res_dir / file.name)
-                    elif file.is_file() and file.name != "__init__.py":
-                        shutil.copy(file, app_files().res_dir)
 
         # Ensure that directories exist
         for dir_ in app_files().all_directories:

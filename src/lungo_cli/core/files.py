@@ -37,6 +37,10 @@ class AppFiles:
         return self._data_dir
 
     @property
+    def res_version(self) -> Path:
+        return self._data_dir / ".version"
+
+    @property
     def authelia_env(self) -> Path:
         return self._data_dir / "authelia" / "authelia.env"
 

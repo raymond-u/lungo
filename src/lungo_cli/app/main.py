@@ -5,6 +5,7 @@ from typer import Exit, Option, Typer
 from .state import console
 from ..commands import down, init, up, user
 from ..core.constants import APP_NAME_CAPITALIZED
+from ..helpers.app import update_resources
 from ..helpers.common import get_app_version
 
 app = Typer(
@@ -22,6 +23,7 @@ app.add_typer(user.app, name="user")
 
 
 def app_wrapper():
+    update_resources()
     app()
     console().show_epilogue()
 
