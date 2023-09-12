@@ -35,7 +35,7 @@ class Container:
             if not env.get("XDG_DATA_HOME"):
                 env["XDG_DATA_HOME"] = os.path.expanduser("~/.local/share")
 
-            run_shell_command(*command, cwd=self.working_dir, show_output=True, env=env, umask=0)
+            run_shell_command(*command, cwd=self.working_dir, env=env)
         except Exception as e:
             self.console.print_error(f"An error occurred while running command {format_command(command)} ({e}).")
             raise Exit(code=1)
