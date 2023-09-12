@@ -4,13 +4,14 @@ services:
     hostname: nginx
 
     image: docker.io/openresty/openresty
+    entrypoint: [ ]
     command: openresty -g 'daemon off;' -c /etc/nginx/nginx.conf -e /var/log/nginx/error.log -p /etc/nginx
 
-    extra_hosts:
-      - 'nginx:192.168.1.100'
     networks:
       static:
         ipv4_address: 192.168.1.100
+    extra_hosts:
+      - 'nginx:192.168.1.100'
     ports:
       - '80:80'
       - '443:443'
@@ -39,15 +40,16 @@ services:
     hostname: authelia
 
     image: docker.io/authelia/authelia
+    entrypoint: [ ]
     command: authelia --config /etc/authelia/config.yaml --config /var/lib/authelia/user_config.yaml
 
-    expose:
-      - 80
-    extra_hosts:
-      - 'authelia:192.168.1.101'
     networks:
       static:
         ipv4_address: 192.168.1.101
+    extra_hosts:
+      - 'authelia:192.168.1.101'
+    expose:
+      - 80
 
     volumes:
       - './authelia:/etc/authelia:ro'
@@ -73,15 +75,16 @@ services:
     build:
       context: ./filebrowser
 
-    command: --config /etc/filebrowser/settings.yaml
+    entrypoint: [ ]
+    command: /filebrowser --config /etc/filebrowser/settings.yaml
 
-    expose:
-      - 80
-    extra_hosts:
-      - 'filebrowser:192.168.1.102'
     networks:
       static:
         ipv4_address: 192.168.1.102
+    extra_hosts:
+      - 'filebrowser:192.168.1.102'
+    expose:
+      - 80
 
     volumes:
       - './filebrowser:/etc/filebrowser:ro'
@@ -98,13 +101,16 @@ services:
     build:
       context: ./rstudio
 
-    expose:
-      - 80
-    extra_hosts:
-      - 'rstudio:192.168.1.103'
+    entrypoint: [ ]
+    command: /init
+
     networks:
       static:
         ipv4_address: 192.168.1.103
+    extra_hosts:
+      - 'rstudio:192.168.1.103'
+    expose:
+      - 80
 
     volumes:
       - './rstudio/rserver.conf:/etc/rstudio/rserver.conf:ro'
