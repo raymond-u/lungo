@@ -21,7 +21,7 @@ settings:
       delete: true
       share: true
       download: true
-    commands: []
+    commands: [ ]
     hidedotfiles: true
     dateformat: false
 
@@ -34,24 +34,24 @@ settings:
     color: ""
 
   tus:
-    chunksize: 33554432
+    chunksize: 104857600
     retrycount: 5
 
   commands:
-    after_copy: []
-    after_delete: []
-    after_rename: []
-    after_save: []
-    after_upload: []
-    before_copy: []
-    before_delete: []
-    before_rename: []
-    before_save: []
-    before_upload: []
+    after_copy: [ ]
+    after_delete: [ ]
+    after_rename: [ ]
+    after_save: [ ]
+    after_upload: [ ]
+    before_copy: [ ]
+    before_delete: [ ]
+    before_rename: [ ]
+    before_save: [ ]
+    before_upload: [ ]
 
-  shell: []
+  shell: [ ]
 
-  rules: []
+  rules: [ ]
 
 server:
   root: /

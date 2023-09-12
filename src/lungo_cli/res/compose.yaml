@@ -75,7 +75,7 @@ services:
     build:
       context: ./filebrowser
 
-    entrypoint: [ ]
+    entrypoint: umask 002;
     command: /filebrowser --config /etc/filebrowser/settings.yaml
 
     networks:
@@ -101,7 +101,7 @@ services:
     build:
       context: ./rstudio
 
-    entrypoint: [ ]
+    entrypoint: umask 002;
     command: /init
 
     networks:
