@@ -2,7 +2,7 @@ from typing import Annotated
 
 from typer import Option
 
-from ..app.state import container
+from ..app.state import console, container
 from ..helpers.app import handle_common_args
 
 
@@ -19,3 +19,4 @@ def main(
 
     # Stop the service
     container().down()
+    console().print("Service stopped.")

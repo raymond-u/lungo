@@ -18,7 +18,7 @@ def gather_user_info(
     full_names: list[str] = None,
     emails: list[str] = None,
     user_roles: list[UserRole] = None,
-):
+) -> int:
     # Check the number of elements in each argument
     max_length = 0
     users_initial_length = len(users)
@@ -108,6 +108,8 @@ def gather_user_info(
             users_file().add(users, user)
 
         print_user_info(users[users_initial_length:])
+
+    return len(users) - users_initial_length
 
 
 def get_user_by_usernames(users: list[User], usernames: list[str] | None = None) -> list[User]:

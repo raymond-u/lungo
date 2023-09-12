@@ -29,3 +29,4 @@ def main(
 
     # Start the service
     container().up(not attach)
+    console().print("Service is now online.")

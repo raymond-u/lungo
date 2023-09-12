@@ -52,8 +52,10 @@ def add(
 
     # Gather user information
     users = users_file().load()
-    gather_user_info(users, usernames, full_names, emails, user_roles)
+    count = gather_user_info(users, usernames, full_names, emails, user_roles)
     users_file().save(users)
+
+    console().print(f"Successfully added {count} account(s).")
 
 
 @app.command()
