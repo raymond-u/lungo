@@ -133,6 +133,6 @@ secrets:
   AUTHELIA_JWT_SECRET:
     file: '${XDG_DATA_HOME}/lungo/authelia/jwt_secret'
   AUTHELIA_NOTIFIER_SMTP_PASSWORD:
-    file: '${XDG_DATA_HOME}/lungo/authelia/notifier_smtp_password'
+    file: '${XDG_CONFIG_HOME}/lungo/authelia/notifier_smtp_password'
   AUTHELIA_STORAGE_ENCRYPTION_KEY:
     file: '${XDG_DATA_HOME}/lungo/authelia/storage_encryption_key'
