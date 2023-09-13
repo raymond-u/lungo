@@ -33,6 +33,10 @@ class AppFiles:
         return self._data_dir
 
     @property
+    def init_file(self) -> Path:
+        return self._data_dir / ".init"
+
+    @property
     def res_dir(self) -> Path:
         return self._data_dir
 

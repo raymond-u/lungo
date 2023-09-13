@@ -3,7 +3,8 @@ from typing import Annotated, Optional
 from typer import Exit, Option
 
 from ..app.state import app_files, config_file, console, users_file
-from ..helpers.app import gather_user_info, handle_common_args, reset_app, update_resources
+from ..helpers.app import check_prerequisites, gather_user_info, handle_common_args, reset_app, update_resources
+from ..helpers.common import get_app_version
 from ..helpers.crypto import generate_random_string, generate_self_signed_cert
 from ..models.config import AutheliaConfig
 from ..models.user import UserRole
@@ -40,6 +41,9 @@ def main(
             console().print("Removing existing configuration files...")
             reset_app()
             update_resources()
+
+        # Check if initialization has already been completed
+        check_prerequisites()
 
         # Ensure that directories exist
         for dir_ in app_files().all_directories:
@@ -104,6 +108,14 @@ def main(
             users = []
             gather_user_info(users, usernames, full_names, emails, user_roles)
             users_file().save(users)
+
+        # Write initialization file
+        try:
+            with app_files().init_file.open("w") as init_file:
+                init_file.write(get_app_version())
+        except Exception as e:
+            console().print_error(f"Failed to write initialization file ({e}).")
+            raise Exit(code=1)
 
         console().request_for_newline()
         console().print("Initialization complete.")

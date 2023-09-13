@@ -47,9 +47,29 @@ def handle_common_args(quiet: bool):
         console().set_log_level(-1)
 
 
-def check_prerequisites():
-    if any(map(lambda x: not x.exists(), app_files().all_directories)):
-        console().print_error(f"No configuration files found. Please run {format_command(f'{APP_NAME} init')} first.")
+def check_prerequisites(should_init: bool = True):
+    try:
+        if should_init:
+            if not app_files().init_file.exists():
+                console().print_error(
+                    f"No configuration files found. Please run {format_command(f'{APP_NAME} init')} first."
+                )
+                raise Exit(code=1)
+            elif app_files().init_file.read_text().split(".")[0] != get_app_version().split(".")[0]:
+                console().print_error(
+                    f"Configuration files are outdated. Please run {format_command(f'{APP_NAME} init')} again."
+                )
+                raise Exit(code=1)
+        else:
+            if (
+                app_files().init_file.exists()
+                and app_files().init_file.read_text().split(".")[0] == get_app_version().split(".")[0]
+            ):
+                console().print("Initialization has already been completed.")
+                console().print(f"To force reinitialization, please run {format_command(f'{APP_NAME} init --force')}.")
+                raise Exit()
+    except Exception as e:
+        console().print_error(f"Failed to check configuration files ({e}).")
         raise Exit(code=1)
 
 
