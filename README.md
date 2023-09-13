@@ -32,7 +32,7 @@ respective documentation.
 ### Rootless Execution
 
 For enhanced security, Lungo should be run in a non-root user environment. To do so, the administrator must complete
-necessary configurations, outlined in the [Docker guide](https://docs.docker.com/engine/security/rootless/) or
+necessary configurations, as described in the [Docker guide](https://docs.docker.com/engine/security/rootless/) or
 the [Podman guide](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md).
 
 To enable non-root users to bind to port 80, modify the value of `net.ipv4.ip_unprivileged_port_start` using the
@@ -69,7 +69,7 @@ Ensure that the directories `/home/shared` and `/home/shared_readonly` are creat
 mounted as volumes in the containers. If necessary, they can be symbolic links to other directories.
 
 Avoid using `sudo su lungo` to switch to the `lungo` user when launching Lungo in a rootless environment, as
-this [may not function properly](https://www.redhat.com/sysadmin/sudo-rootless-podman). Instead, set a password for
+it [may not function properly](https://www.redhat.com/sysadmin/sudo-rootless-podman). Instead, set a password for
 the `lungo` user to log in without root privileges:
 
 ```bash
@@ -92,7 +92,7 @@ poetry install --compile
 
 ### Configuration
 
-Before first use, Lungo requires some configuration. This can be done by running
+Before first use, Lungo requires some configuration. This can be done by running:
 
 ```bash
 lungo init
@@ -102,6 +102,12 @@ To add a new user, run:
 
 ```bash
 lungo user add <username>
+```
+
+If the user does not exist on the host machine, it must be created. To do so, run:
+
+```bash
+sudo useradd -m -G share <username>
 ```
 
 ### Running Lungo
