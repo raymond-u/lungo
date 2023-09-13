@@ -18,17 +18,14 @@ def run_shell_command(
     cwd: str | PathLike[str] | None = None,
     show_output: bool = False,
     env: Mapping[str, str] | None = None,
-    umask: int = -1,
 ):
     """Run a shell command."""
     command = list(filter(None, command))
 
     if show_output:
-        subprocess.run(command, check=True, cwd=cwd, env=env, umask=umask)
+        subprocess.run(command, check=True, cwd=cwd, env=env)
     else:
-        subprocess.run(
-            command, check=True, cwd=cwd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, env=env, umask=umask
-        )
+        subprocess.run(command, check=True, cwd=cwd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, env=env)
 
 
 def program_exists(program: str) -> bool:

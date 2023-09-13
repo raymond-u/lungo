@@ -75,8 +75,8 @@ services:
     build:
       context: ./filebrowser
 
-    entrypoint: umask 002;
-    command: /filebrowser --config /etc/filebrowser/settings.yaml
+    entrypoint: [ ]
+    command: sh -c 'umask 002; /filebrowser --config /etc/filebrowser/settings.yaml'
 
     networks:
       static:
@@ -101,8 +101,8 @@ services:
     build:
       context: ./rstudio
 
-    entrypoint: umask 002;
-    command: /init
+    entrypoint: [ ]
+    command: sh -c 'umask 002; /init'
 
     networks:
       static:
