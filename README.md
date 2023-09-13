@@ -6,8 +6,9 @@
 </h1>
 
 <p align="center">
-  Lungo is a comprehensive home lab setup designed specifically for academic research purposes. Deployable on a single
-  machine, it offers secure access to a range of services through a unified single sign-on portal.
+  Lungo is a comprehensive home lab setup designed specifically for academic research purposes.
+  <br>
+  Deployable on a single machine, it offers secure access to a range of services through a unified single sign-on portal.
 </p>
 
 ## Featured Services
