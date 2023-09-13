@@ -25,7 +25,6 @@ app.add_typer(user.app, name="user")
 def app_wrapper():
     update_resources()
     app()
-    console().show_epilogue()
 
 
 def version_callback(value: bool):

@@ -119,6 +119,7 @@ def main(
 
         console().request_for_newline()
         console().print("Initialization complete.")
+        console().show_epilogue()
     except Exception:
         # Remove existing configuration files if initialization fails
         reset_app()

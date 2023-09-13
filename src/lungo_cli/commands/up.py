@@ -21,5 +21,8 @@ def main(
 
     # Start the service
     container().up()
+
+    console().request_for_newline()
     console().print("Service is now online.")
     console().print(f"To stop the service, run {format_command(f'{APP_NAME} down')}.")
+    console().show_epilogue()

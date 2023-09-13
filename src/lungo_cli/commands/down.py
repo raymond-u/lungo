@@ -19,4 +19,7 @@ def main(
 
     # Stop the service
     container().down()
+
+    console().request_for_newline()
     console().print("Service stopped.")
+    console().show_epilogue()

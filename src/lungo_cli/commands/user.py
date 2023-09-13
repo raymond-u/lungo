@@ -56,7 +56,9 @@ def add(
     count = gather_user_info(users, usernames, full_names, emails, user_roles)
     users_file().save(users)
 
+    console().request_for_newline()
     console().print(f"Successfully added {count} account(s).")
+    console().show_epilogue()
 
 
 @app.command()
@@ -82,7 +84,10 @@ def enable(
         user.user_disabled = False
 
     users_file().save(users)
+
+    console().request_for_newline()
     console().print(f"Successfully activated {len(users_found)} account(s).")
+    console().show_epilogue()
 
 
 @app.command()
@@ -108,7 +113,10 @@ def disable(
         user.user_disabled = True
 
     users_file().save(users)
+
+    console().request_for_newline()
     console().print(f"Successfully suspended {len(users_found)} account(s).")
+    console().show_epilogue()
 
 
 @app.command()
@@ -130,4 +138,6 @@ def show(
     users = users_file().load()
     users_found = get_user_by_usernames(users, usernames)
 
+    console().request_for_newline()
     print_user_info(users_found)
+    console().show_epilogue()
