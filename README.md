@@ -127,12 +127,6 @@ sudo ufw allow http
 sudo ufw allow https
 ```
 
-To set Lungo to launch at startup, run:
-
-```bash
-lungo service install
-```
-
 ## License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
