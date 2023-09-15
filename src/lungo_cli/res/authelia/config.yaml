@@ -137,14 +137,14 @@ telemetry:
     ## The address to listen on for metrics. This should be on a different port to the main server.port value.
     address: tcp://0.0.0.0:9959
 
-      ## Metrics Server Buffers configuration.
-      # buffers:
+    ## Metrics Server Buffers configuration.
+    # buffers:
 
-      ## Read buffer.
-      # read: 4096
+    ## Read buffer.
+    # read: 4096
 
-      ## Write buffer.
-      # write: 4096
+    ## Write buffer.
+    # write: 4096
 
     ## Metrics Server Timeouts configuration.
     # timeouts:
@@ -449,9 +449,9 @@ authentication_backend:
 
     ## The attribute holding the mail address of the user. If multiple email addresses are defined for a user, only the
     ## first one returned by the LDAP server is used.
-    # mail_attribute: mail
+  # mail_attribute: mail
 
-    ## The attribute holding the display name of the user. This will be used to greet an authenticated user.
+  ## The attribute holding the display name of the user. This will be used to greet an authenticated user.
   # display_name_attribute: displayName
 
   ## Follow referrals returned by the server.
@@ -477,7 +477,7 @@ authentication_backend:
   ##
   file:
     path: /var/lib/authelia/users.yaml
-    watch: false
+    watch: true
     search:
       email: false
       case_insensitive: false
@@ -751,12 +751,12 @@ session:
     # sentinel_username: sentinel_specific_user
 
     ## Specific password for Redis Sentinel. The node username and password is configured above.
-    # sentinel_password: sentinel_specific_pass
+  # sentinel_password: sentinel_specific_pass
 
-    ## The additional nodes to pre-seed the redis provider with (for sentinel).
-    ## If the host in the above section is defined, it will be combined with this list to connect to sentinel.
-    ## For high availability to be used you must have either defined; the host above or at least one node below.
-    # nodes:
+  ## The additional nodes to pre-seed the redis provider with (for sentinel).
+  ## If the host in the above section is defined, it will be combined with this list to connect to sentinel.
+  ## For high availability to be used you must have either defined; the host above or at least one node below.
+  # nodes:
   # - host: sentinel-node1
   #   port: 6379
   # - host: sentinel-node2
@@ -1010,9 +1010,9 @@ storage:
       # lXccV2meeLZv7TagVxSi3DO6dSJfSEHyemd5j9mBAoGAX8Hv+0gOQZQCSOTAq8Nx
       # 6dZcp9gHlNaXnMsP9eTDckOSzh636JPGvj6m+GPJSSbkURUIQ3oyokMNwFqvlNos
       # fTaLhAOfjBZI9WnDTTQxpugWjphJ4HqbC67JC/qIiw5S6FdaEvGLEEoD4zoChywZ
-    # 9oGAn+fz2d/0/JAH/FpFPgsCgYEAp/ipZgPzziiZ9ov1wbdAQcWRj7RaWnssPFpX
-    # jXwEiXT3CgEMO4MJ4+KWIWOChrti3qFBg6i6lDyyS6Qyls7sLFbUdC7HlTcrOEMe
-    # rBoTcCI1GqZNlqWOVQ65ZIEiaI7o1vPBZo2GMQEZuq8mDKFsOMThvvTrM5cAep84
+      # 9oGAn+fz2d/0/JAH/FpFPgsCgYEAp/ipZgPzziiZ9ov1wbdAQcWRj7RaWnssPFpX
+      # jXwEiXT3CgEMO4MJ4+KWIWOChrti3qFBg6i6lDyyS6Qyls7sLFbUdC7HlTcrOEMe
+      # rBoTcCI1GqZNlqWOVQ65ZIEiaI7o1vPBZo2GMQEZuq8mDKFsOMThvvTrM5cAep84
     # n6HJR4ECgYABWcbsSnr0MKvVth/inxjbKapbZnp2HUCuw87Ie5zK2Of/tbC20wwk
     # yKw3vrGoE3O1t1g2m2tn8UGGASeZ842jZWjIODdSi5+icysQGuULKt86h/woz2SQ
     # 27GoE2i5mh6Yez6VAYbUuns3FcwIsMyWLq043Tu2DNkx9ijOOAuQzw^invalid..
@@ -1357,12 +1357,12 @@ notifier:
       ## Response Types configures which responses this client can be sent.
       ## It's not recommended to define this unless you know what you're doing.
       # response_types:
-    # - code
+      # - code
 
-    ## Response Modes configures which response modes this client supports.
-    # response_modes:
-    # - form_post
-    # - query
+      ## Response Modes configures which response modes this client supports.
+      # response_modes:
+      # - form_post
+      # - query
     # - fragment
 
     ## The algorithm used to sign userinfo endpoint responses for this client, either none or RS256.
