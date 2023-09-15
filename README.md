@@ -12,14 +12,14 @@
   Deployable on a single machine, it offers secure access to a range of services through a unified single sign-on portal.
 </p>
 
-## Featured Services
+## Featured services
 
 - [Nginx](https://nginx.org/) as a reverse proxy
 - [Authelia](https://www.authelia.com/) as a single sign-on portal
 - [File Browser](https://filebrowser.org/) as a file manager
 - [R Studio](https://posit.co/products/open-source/rstudio-server/) as an IDE for R
 
-## Getting Started
+## Getting started
 
 ### Prerequisites
 
@@ -30,7 +30,7 @@ Alternatively, you can use [Podman](https://podman.io/)
 and [Podman Compose](https://github.com/containers/podman-compose). For installation instructions, refer to their
 respective documentation.
 
-### Rootless Execution
+### Rootless execution
 
 For enhanced security, Lungo should be run in a non-root user environment. To do so, the administrator must complete
 necessary configurations, as described in the [Docker guide](https://docs.docker.com/engine/security/rootless/) or
@@ -111,7 +111,7 @@ If the user does not exist on the host machine, it must be created. To do so, ru
 sudo useradd -m -G share <username>
 ```
 
-### Running Lungo
+### Usage
 
 To launch Lungo, just run:
 
@@ -119,7 +119,7 @@ To launch Lungo, just run:
 lungo up
 ```
 
-### Additional Notes
+### Additional notes
 
 You might need to configure your firewall to permit access on ports 80 and 443. For instance, if you're using UFW, run:
 
