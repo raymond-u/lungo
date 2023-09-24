@@ -52,12 +52,11 @@
         <a class="text-xl" href="/">{SITE_TITLE}</a>
     </div>
     <div class="flex-none">
-        <a
-            class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-accent text-sm font-bold text-accent-content"
-            href="/"
-        >
-            RU
-        </a>
+        <div class="avatar placeholder">
+            <div class="w-8 rounded-full bg-accent text-accent-content">
+                <a class="p-1 text-sm font-bold" href="/">RU</a>
+            </div>
+        </div>
     </div>
 </div>
 <div class="absolute left-20 right-4 h-12 bg-gradient-to-b from-base-100"></div>
