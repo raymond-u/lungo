@@ -1,26 +1,15 @@
 <script lang="ts">
     import { page } from "$app/stores"
-    import { SITE_TITLE } from "$lib/constants.js"
+    import { syncScroll } from "$lib/actions"
+    import { SITE_TITLE } from "$lib/constants"
     import Icon from "$lib/components/Icon.svelte"
-    import { EIcon } from "$lib/types.js"
+    import { EIcon } from "$lib/types"
     import { useStore } from "$lib/utils"
 
-    const { currentApp, navExpanded, navScrollTop } = useStore()
-    const handleScroll = (e: Event) => {
-        const target = e.target as HTMLDivElement
-        $navScrollTop = target.scrollTop
-    }
-
+    const { allowScroll, currentApp, syncedScrollTops } = useStore()
     let checked: boolean | undefined
-    let scrollable: HTMLDivElement | undefined
 
-    $: $navExpanded = checked ?? false
-
-    $: if (checked) {
-        if (scrollable) {
-            scrollable.scrollTop = $navScrollTop
-        }
-    }
+    $: $allowScroll = !checked
 </script>
 
 <div class="navbar gap-1.5 bg-base-100 px-4 py-2">
@@ -36,9 +25,8 @@
         <div class="drawer-side top-16 z-10 h-[calc(100vh-64px)]">
             <label for="nav-drawer" class="drawer-overlay"></label>
             <div
-                bind:this={scrollable}
                 class="scrollbar-none h-full w-80 overflow-y-auto bg-base-100 py-10"
-                on:scroll={handleScroll}
+                use:syncScroll={{ id: "nav", stores: syncedScrollTops }}
             >
                 <ul class="menu items-center gap-2 p-2 pb-3">
                     {#each $page.data.apps as { name, href, icon }}

@@ -3,6 +3,10 @@ import { page } from "$app/stores"
 import type { App } from "$lib/types"
 import type { Page } from "@sveltejs/kit"
 
+export function allowScroll(): Writable<boolean> {
+    return writable(true)
+}
+
 export function currentApp(): Readable<App | undefined> {
     return derived(
         page,
@@ -10,10 +14,6 @@ export function currentApp(): Readable<App | undefined> {
     )
 }
 
-export function navExpanded(): Writable<boolean> {
-    return writable(true)
-}
-
-export function navScrollTop(): Writable<number> {
+export function syncedScrollTop(): Writable<number> {
     return writable(0)
 }

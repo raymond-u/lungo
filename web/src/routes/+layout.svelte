@@ -3,7 +3,7 @@
     import NavBar from "$lib/components/NavBar.svelte"
     import { createStore } from "$lib/utils"
 
-    const { navExpanded } = createStore()
+    const { allowScroll } = createStore()
 </script>
 
 <header>
@@ -18,7 +18,7 @@
 </main>
 
 <svelte:head>
-    {#if $navExpanded}
+    {#if !$allowScroll}
         <style>
             body {
                 overflow: hidden;

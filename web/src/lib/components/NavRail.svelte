@@ -1,24 +1,13 @@
 <script lang="ts">
     import { page } from "$app/stores"
+    import { syncScroll } from "$lib/actions"
     import Icon from "$lib/components/Icon.svelte"
     import { useStore } from "$lib/utils"
 
-    const { currentApp, navExpanded, navScrollTop } = useStore()
-    const handleScroll = (e: Event) => {
-        const target = e.target as HTMLElement
-        $navScrollTop = target.scrollTop
-    }
-
-    let scrollable: HTMLElement | undefined
-
-    $: if (!$navExpanded) {
-        if (scrollable) {
-            scrollable.scrollTop = $navScrollTop
-        }
-    }
+    const { currentApp, syncedScrollTops } = useStore()
 </script>
 
-<nav bind:this={scrollable} class="scrollbar-none w-20 overflow-y-auto py-10" on:scroll={handleScroll}>
+<nav class="scrollbar-none w-20 overflow-y-auto py-10" use:syncScroll={{ id: "nav", stores: syncedScrollTops }}>
     <ul class="menu items-center gap-1 px-3 py-2">
         {#each $page.data.apps as { name, href, icon }}
             {@const active = $currentApp?.name === name}
