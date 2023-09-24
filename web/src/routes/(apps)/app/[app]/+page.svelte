@@ -8,7 +8,7 @@
     {#if $currentApp}
         <p>
             You can access.
-            {@html "<br>You can use HTML tags in Svelte.".repeat(50)}
+            {@html "<br>You can use HTML tags in Svelte. Yeah you can use HTML tags in Svelte.".repeat(50)}
         </p>
     {:else}
         <p>You cannot access.</p>

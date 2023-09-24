@@ -12,7 +12,7 @@
     </div>
 </header>
 <main>
-    <div class="flex h-[calc(100vh-64px)]">
+    <div class="flex h-[calc(100vh-4rem)]">
         <slot />
     </div>
 </main>

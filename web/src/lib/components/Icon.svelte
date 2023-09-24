@@ -41,6 +41,6 @@
 </script>
 
 <span class="swap" class:swap-active={active} class:swap-flip={flip} class:swap-rotate={rotate}>
-    <svelte:component this={icons[icon].normal} class="swap-off fill-base-content transition duration-200" />
-    <svelte:component this={icons[icon].active} class="swap-on fill-base-content transition duration-200" />
+    <svelte:component this={icons[icon].normal} class="swap-off fill-base-content" />
+    <svelte:component this={icons[icon].active} class="swap-on fill-base-content" />
 </span>

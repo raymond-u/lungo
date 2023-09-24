@@ -22,8 +22,9 @@
                 </span>
             </label>
         </div>
-        <div class="drawer-side top-16 z-10 h-[calc(100vh-64px)]">
+        <div class="drawer-side top-16 z-10 h-[calc(100vh-4rem)]">
             <label for="nav-drawer" class="drawer-overlay"></label>
+            <div class="absolute z-10 h-12 w-80 bg-gradient-to-b from-base-100"></div>
             <div
                 class="scrollbar-none h-full w-80 overflow-y-auto bg-base-100 py-10"
                 use:syncScroll={{ id: "nav", stores: syncedScrollTops }}
@@ -59,4 +60,7 @@
         </div>
     </div>
 </div>
-<div class="absolute left-20 right-4 h-12 bg-gradient-to-b from-base-100"></div>
+<div
+    class="absolute left-0 right-4 z-10 h-12 bg-gradient-to-b from-base-100 transition"
+    class:opacity-0={checked}
+></div>
