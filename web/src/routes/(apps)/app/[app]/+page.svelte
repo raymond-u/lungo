@@ -8,7 +8,10 @@
     {#if $currentApp}
         <p>
             You can access.
-            {@html "<br>You can use HTML tags in Svelte. Yeah you can use HTML tags in Svelte.".repeat(50)}
+            {#each Array(100).keys() as i}
+                <br />
+                {i}: You can use HTML tags in Svelte. Yeah you can use HTML tags in Svelte.
+            {/each}
         </p>
     {:else}
         <p>You cannot access.</p>
