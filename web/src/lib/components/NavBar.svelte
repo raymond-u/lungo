@@ -30,7 +30,7 @@
                 use:syncScroll={{ id: "nav", stores: syncedScrollTops }}
             >
                 <ul class="menu items-center gap-2 p-2 pb-3">
-                    {#each $page.data.apps as { name, href, icon }}
+                    {#each $page.data.apps as { name, href, icon } (name)}
                         {@const active = $currentApp?.name === name}
                         <li class="mx-0 h-14 w-full rounded-full">
                             <a

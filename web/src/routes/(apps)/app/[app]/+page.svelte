@@ -8,7 +8,7 @@
     {#if $currentApp}
         <p>
             You can access.
-            {#each Array(100).keys() as i}
+            {#each Array(100).keys() as i (i)}
                 <br />
                 {i}: You can use HTML tags in Svelte. Yeah you can use HTML tags in Svelte.
             {/each}
