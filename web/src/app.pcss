@@ -5,13 +5,12 @@
 @layer components {
     .drawer-side > .drawer-overlay {
         @apply cursor-auto;
-        @apply duration-200;
-        @apply ease-in-out;
+        @apply duration-0;
     }
 
     .drawer-side > *:not(.drawer-overlay) {
         @apply duration-200;
-        @apply ease-in-out;
+        @apply ease-out;
     }
 
     .drawer-toggle:checked ~ .drawer-side > .drawer-overlay {

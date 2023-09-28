@@ -4,7 +4,7 @@
     const { currentApp } = useStore()
 </script>
 
-<div class="flex-1 overflow-y-auto">
+<div class="flex-1 overflow-y-auto px-6 py-12">
     {#if $currentApp}
         <p>
             You can access.

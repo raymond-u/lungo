@@ -6,4 +6,6 @@
     <title>{formatTitle("Home")}</title>
 </svelte:head>
 
-<p>This is the landing page.</p>
+<div class="px-6 py-12">
+    <p>This is the landing page.</p>
+</div>
