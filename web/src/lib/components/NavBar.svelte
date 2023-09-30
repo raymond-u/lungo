@@ -2,7 +2,7 @@
     import { page } from "$app/stores"
     import { syncScroll } from "$lib/actions"
     import { SITE_TITLE } from "$lib/constants"
-    import Icon from "$lib/components/Icon.svelte"
+    import { Icon } from "$lib/components"
     import { EIcon } from "$lib/types"
     import { useStore } from "$lib/utils"
 

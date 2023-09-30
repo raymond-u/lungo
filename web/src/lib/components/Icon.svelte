@@ -1,14 +1,16 @@
 <script lang="ts">
-    import Close from "$lib/icons/Close.svelte"
-    import FolderOutline from "$lib/icons/FolderOutline.svelte"
-    import FolderSolid from "$lib/icons/FolderSolid.svelte"
-    import Menu from "$lib/icons/Menu.svelte"
-    import ProxyOutline from "$lib/icons/ProxyOutline.svelte"
-    import ProxySolid from "$lib/icons/ProxySolid.svelte"
-    import RStudioOutline from "$lib/icons/RStudioOutline.svelte"
-    import RStudioSolid from "$lib/icons/RStudioSolid.svelte"
-    import TerminalOutline from "$lib/icons/TerminalOutline.svelte"
-    import TerminalSolid from "$lib/icons/TerminalSolid.svelte"
+    import {
+        Close,
+        FolderOutline,
+        FolderSolid,
+        Menu,
+        ProxyOutline,
+        ProxySolid,
+        RStudioOutline,
+        RStudioSolid,
+        TerminalOutline,
+        TerminalSolid,
+    } from "$lib/icons"
     import { EIcon } from "$lib/types"
 
     export let icon: EIcon

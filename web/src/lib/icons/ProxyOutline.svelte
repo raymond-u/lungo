@@ -1,6 +1,6 @@
 <!--suppress JSUnusedGlobalSymbols -->
 <script lang="ts">
-    import IconBase from "$lib/icons/IconBase.svelte"
+    import { IconBase } from "$lib/icons"
     import type { ComponentProps } from "svelte"
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

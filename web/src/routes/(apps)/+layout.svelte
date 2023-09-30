@@ -1,5 +1,5 @@
 <script>
-    import NavRail from "$lib/components/NavRail.svelte"
+    import { NavRail } from "$lib/components"
 </script>
 
 <div class="flex flex-none">

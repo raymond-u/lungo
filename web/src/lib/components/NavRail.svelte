@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from "$app/stores"
     import { syncScroll } from "$lib/actions"
-    import Icon from "$lib/components/Icon.svelte"
+    import { Icon } from "$lib/components"
     import { useStore } from "$lib/utils"
 
     const { currentApp, syncedScrollTops } = useStore()

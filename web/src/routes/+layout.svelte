@@ -1,6 +1,6 @@
 <script lang="ts">
     import "../app.pcss"
-    import NavBar from "$lib/components/NavBar.svelte"
+    import { NavBar } from "$lib/components"
     import { createStore } from "$lib/utils"
 
     const { allowScroll } = createStore()
