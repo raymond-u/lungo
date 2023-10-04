@@ -1,8 +1,10 @@
 <script lang="ts">
     import {
         CloseIcon,
+        DarkModeIcon,
         FolderOutlineIcon,
         FolderSolidIcon,
+        LightModeIcon,
         MenuIcon,
         ProxyOutlineIcon,
         ProxySolidIcon,
@@ -40,6 +42,10 @@
         [EIcon.Terminal]: {
             normal: TerminalOutlineIcon,
             active: TerminalSolidIcon,
+        },
+        [EIcon.Theme]: {
+            normal: DarkModeIcon,
+            active: LightModeIcon,
         },
         [EIcon.Visibility]: {
             normal: VisibilityOnIcon,

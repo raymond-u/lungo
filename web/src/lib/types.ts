@@ -20,6 +20,7 @@ export enum EIcon {
     Proxy,
     RStudio,
     Terminal,
+    Theme,
     Visibility,
 }
 

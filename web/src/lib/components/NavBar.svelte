@@ -1,6 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores"
-    import { syncScroll } from "$lib/actions"
+    import { safeClick, syncScroll } from "$lib/actions"
     import { Avatar, SwapIcon } from "$lib/components"
     import { SITE_TITLE } from "$lib/constants"
     import { LogoutIcon, SettingsIcon } from "$lib/icons"
@@ -8,6 +8,17 @@
     import { getPlaceholder, useStore } from "$lib/utils"
 
     const { allowScroll, currentApp, syncedScrollTops } = useStore()
+
+    const handleClick = async () => {
+        await fetch("/logout", {
+            method: "POST",
+            body: new URLSearchParams({ logoutToken: $page.data.logoutToken }),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+        })
+    }
+
     let checked: boolean | undefined
 
     $: $allowScroll = !checked
@@ -17,7 +28,7 @@
     <div class="drawer w-12 flex-none">
         <input id="nav-drawer" type="checkbox" class="drawer-toggle" bind:checked />
         <div class="drawer-content">
-            <label for="nav-drawer" class="btn btn-circle btn-ghost drawer-button h-12 w-12">
+            <label for="nav-drawer" class="btn btn-circle btn-ghost drawer-button">
                 <span class="h-6 w-6">
                     <SwapIcon icon={EIcon.Menu} active={checked} rotate />
                 </span>
@@ -53,18 +64,25 @@
     <div class="flex-1 px-2">
         <a class="text-xl" href="/">{SITE_TITLE}</a>
     </div>
-    <div class="flex-none">
-        {#if $page.data.identity}
-            {@const { name } = $page.data.identity}
-            <div class="dropdown dropdown-end dropdown-bottom">
+    <div class="mr-1 flex-none">
+        <div class="btn btn-circle btn-ghost h-10 min-h-0 w-10">
+            <span class="h-6 w-6">
+                <SwapIcon icon={EIcon.Theme} rotate />
+            </span>
+        </div>
+    </div>
+    <div class="mr-4 flex-none">
+        {#if $page.data.userInfo}
+            {@const { email, name } = $page.data.userInfo}
+            <div class="dropdown-end dropdown-bottom dropdown">
                 <Avatar button placeholder={getPlaceholder(name.first, name.last)} />
-                <ul class="menu dropdown-content z-20 mt-2 w-56 rounded-2xl bg-base-300 p-2 shadow">
+                <ul class="dropdown-content menu z-20 mt-2 w-56 rounded-2xl bg-base-300 p-2 shadow">
                     <li>
                         <div class="pointer-events-none flex">
                             <Avatar large placeholder={getPlaceholder(name.first, name.last)} />
                             <div class="flex flex-col">
                                 <span class="text-base font-semibold">{name.first} {name.last}</span>
-                                <span>{$page.data.identity.email}</span>
+                                <span>{email}</span>
                             </div>
                         </div>
                     </li>
@@ -78,7 +96,7 @@
                         </a>
                     </li>
                     <li>
-                        <button>
+                        <button use:safeClick={{ callback: handleClick }}>
                             <span class="h-6 w-6">
                                 <LogoutIcon />
                             </span>

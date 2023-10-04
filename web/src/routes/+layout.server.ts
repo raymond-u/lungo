@@ -29,19 +29,36 @@ export async function load({ depends, fetch }: { depends: (...deps: string[]) =>
     //
     // switch (response.response.status) {
     //     case 200:
+    //         break
+    //     default:
     //         return {
-    //             identity: response.data!.identity.traits,
+    //             apps: getAllowedApps(),
+    //             logoutToken: undefined,
+    //             userInfo: undefined,
+    //         }
+    // }
+    //
+    // const response2 = await client.GET("/self-service/logout/browser", { params: {} })
+    //
+    // switch (response2.response.status) {
+    //     case 200:
+    //         return {
     //             apps: getAllowedApps(response.data!.identity.metadata_public?.["allowed_apps"] as string[] | undefined),
+    //             logoutToken: response2.data!.logout_token,
+    //             userInfo: response.data!.identity.traits,
     //         }
     //     default:
     //         return {
-    //             identity: undefined,
     //             apps: getAllowedApps(),
+    //             logoutToken: undefined,
+    //             userInfo: undefined,
     //         }
     // }
 
     return {
-        identity: {
+        apps: getAllowedApps(),
+        logoutToken: "abc123",
+        userInfo: {
             username: "test",
             email: "test@gmail.com",
             name: {
@@ -49,6 +66,5 @@ export async function load({ depends, fetch }: { depends: (...deps: string[]) =>
                 last: "User",
             },
         },
-        apps: getAllowedApps(),
     }
 }
