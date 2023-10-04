@@ -3,13 +3,19 @@
 @tailwind utilities;
 
 @layer components {
+    .btn {
+        @apply animate-none;
+        @apply duration-0;
+        @apply normal-case;
+    }
+
     .drawer-side > .drawer-overlay {
         @apply cursor-auto;
         @apply duration-0;
     }
 
     .drawer-side > *:not(.drawer-overlay) {
-        @apply duration-200;
+        @apply duration-300;
         @apply ease-out;
     }
 

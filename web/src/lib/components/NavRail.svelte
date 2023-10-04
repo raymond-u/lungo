@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from "$app/stores"
     import { syncScroll } from "$lib/actions"
-    import { Icon } from "$lib/components"
+    import { SwapIcon } from "$lib/components"
     import { useStore } from "$lib/utils"
 
     const { currentApp, syncedScrollTops } = useStore()
@@ -13,7 +13,7 @@
             {@const active = $currentApp?.name === name}
             <li class="mt-3 h-8 w-14 transition" class:-translate-y-3={active}>
                 <a class="rounded-full py-1" class:active {href}>
-                    <Icon {active} {icon} />
+                    <SwapIcon {active} {icon} />
                 </a>
             </li>
             <li

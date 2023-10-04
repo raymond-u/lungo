@@ -1,9 +1,9 @@
 <script>
-    import { formatTitle } from "$lib/utils"
+    import { getTitle } from "$lib/utils"
 </script>
 
 <svelte:head>
-    <title>{formatTitle("Home")}</title>
+    <title>{getTitle("Home")}</title>
 </svelte:head>
 
 <div class="px-6 py-12">

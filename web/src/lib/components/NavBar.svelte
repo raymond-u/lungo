@@ -1,10 +1,10 @@
 <script lang="ts">
     import { page } from "$app/stores"
     import { syncScroll } from "$lib/actions"
+    import { SwapIcon } from "$lib/components"
     import { SITE_TITLE } from "$lib/constants"
-    import { Icon } from "$lib/components"
     import { EIcon } from "$lib/types"
-    import { useStore } from "$lib/utils"
+    import { getPlaceholder, useStore } from "$lib/utils"
 
     const { allowScroll, currentApp, syncedScrollTops } = useStore()
     let checked: boolean | undefined
@@ -18,7 +18,7 @@
         <div class="drawer-content">
             <label for="nav-drawer" class="btn btn-circle btn-ghost drawer-button h-12 w-12">
                 <span class="h-6 w-6">
-                    <Icon icon={EIcon.Menu} active={checked} rotate />
+                    <SwapIcon icon={EIcon.Menu} active={checked} rotate />
                 </span>
             </label>
         </div>
@@ -39,7 +39,7 @@
                                 {href}
                             >
                                 <span class="h-6 w-6">
-                                    <Icon {active} {icon} />
+                                    <SwapIcon {active} {icon} />
                                 </span>
                                 <span class="p-0 text-xs font-semibold">{name}</span>
                             </a>
@@ -53,11 +53,16 @@
         <a class="text-xl" href="/">{SITE_TITLE}</a>
     </div>
     <div class="flex-none">
-        <div class="avatar placeholder">
-            <div class="w-8 rounded-full bg-accent text-accent-content">
-                <a class="p-1 text-sm font-bold" href="/">RU</a>
+        {#if $page.data.identity}
+            {@const { name } = $page.data.identity}
+            <div class="avatar placeholder">
+                <div class="w-8 rounded-full bg-accent text-accent-content">
+                    <a class="p-1 text-sm font-bold" href="/">{getPlaceholder(name.first, name.last)}</a>
+                </div>
             </div>
-        </div>
+        {:else}
+            <a class="btn btn-block border-0 text-base" href="/login">Sign in</a>
+        {/if}
     </div>
 </div>
 <div

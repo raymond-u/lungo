@@ -2,16 +2,6 @@ import { getContext, setContext } from "svelte"
 import { SITE_TITLE } from "$lib/constants"
 import { Store } from "$lib/types"
 
-export function asSearchParams(form: HTMLFormElement): URLSearchParams {
-    return new URLSearchParams(
-        Array.from(new FormData(form), ([key, value]: [string, FormDataEntryValue]) => [key, value as string])
-    )
-}
-
-export function formatTitle(title: string): string {
-    return `${title} | ${SITE_TITLE}`
-}
-
 export function createStore(): Store {
     const store = new Store()
     setContext("globalStore", store)
@@ -21,4 +11,26 @@ export function createStore(): Store {
 
 export function useStore(): Store {
     return getContext<Store>("globalStore")
+}
+
+export function asSearchParams(form: HTMLFormElement): URLSearchParams {
+    return new URLSearchParams(
+        Array.from(new FormData(form), ([key, value]: [string, FormDataEntryValue]) => [key, value as string])
+    )
+}
+
+export function getFlow(url: string): string {
+    return new URL(url).searchParams.get("flow") ?? ""
+}
+
+export function getPlaceholder(firstName: string, lastName: string): string {
+    return `${firstName[0].toUpperCase()}${lastName[0].toUpperCase()}`
+}
+
+export function getRandomId(): number {
+    return Number(Math.round(Math.random() * 100000).toString() + Date.now().toString().slice(-5))
+}
+
+export function getTitle(title: string): string {
+    return `${title} | ${SITE_TITLE}`
 }

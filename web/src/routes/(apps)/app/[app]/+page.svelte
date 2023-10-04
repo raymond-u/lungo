@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { formatTitle, useStore } from "$lib/utils"
+    import { getTitle, useStore } from "$lib/utils"
 
     const { currentApp } = useStore()
 </script>
@@ -19,5 +19,5 @@
 </div>
 
 <svelte:head>
-    <title>{formatTitle($currentApp?.name ?? "?")}</title>
+    <title>{getTitle($currentApp?.name ?? "?")}</title>
 </svelte:head>

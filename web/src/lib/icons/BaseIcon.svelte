@@ -1,11 +1,11 @@
 <!--suppress ReservedWordAsName -->
 <script lang="ts">
-    let class_string = ""
-    export { class_string as class }
+    let classString = ""
+    export { classString as class }
 </script>
 
 <svg
-    class={class_string}
+    class="fill-base-content {classString}"
     height="100%"
     style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
     viewBox="0 0 24 24"
