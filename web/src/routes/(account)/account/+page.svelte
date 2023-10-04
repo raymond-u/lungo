@@ -1,12 +1,12 @@
 <script lang="ts">
     import { FormBuilder, HeroFrame } from "$lib/components"
-    import { ResetIcon } from "$lib/icons"
+    import { SettingsIcon } from "$lib/icons"
 </script>
 
 <HeroFrame>
-    <span class="text-center text-4xl">Recover your account</span>
+    <span class="text-center text-4xl">Manage account</span>
     <span class="mb-6 h-12 w-12">
-        <ResetIcon />
+        <SettingsIcon />
     </span>
     <FormBuilder />
 </HeroFrame>

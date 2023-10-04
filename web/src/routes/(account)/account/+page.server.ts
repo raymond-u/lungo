@@ -9,12 +9,12 @@ export const actions = {
         const data = await request.formData()
 
         const client = createKratosClient(fetch)
-        const response = await client.POST("/self-service/recovery", {
+        const response = await client.POST("/self-service/settings", {
             params: { query: { flow: data.get("flow") as string } },
             body: {
                 csrf_token: data.get("csrf_token") as string,
-                method: data.get("method") as "code" | "link",
-                email: data.get("email") as string,
+                method: data.get("method") as string,
+                password: data.get("password") as string,
             },
         })
 
@@ -24,7 +24,7 @@ export const actions = {
                     messages: [
                         {
                             id: getRandomId(),
-                            text: "Recovery email sent. Please check your inbox.",
+                            text: "Account information updated.",
                             type: "success",
                         },
                     ],
@@ -42,8 +42,8 @@ export const actions = {
                 })
             case 400:
                 return fail(400, {
-                    messages: (response.error as kratosComponents["schemas"]["recoveryFlow"]).ui.messages,
-                    nodes: (response.error as kratosComponents["schemas"]["recoveryFlow"]).ui.nodes,
+                    messages: (response.error as kratosComponents["schemas"]["settingsFlow"]).ui.messages,
+                    nodes: (response.error as kratosComponents["schemas"]["settingsFlow"]).ui.nodes,
                 })
             default:
                 await invalidate(EDependency.Form)
@@ -64,7 +64,7 @@ export async function load({ depends, fetch }: { depends: (...deps: string[]) =>
     depends(EDependency.Form)
 
     // const client = createKratosClient(fetch)
-    // const response = await client.GET("/self-service/recovery/browser", { params: {} })
+    // const response = await client.GET("/self-service/settings/browser", { params: {} })
     //
     // switch (response.response.status) {
     //     case 200:
@@ -74,19 +74,13 @@ export async function load({ depends, fetch }: { depends: (...deps: string[]) =>
     //             nodes: response.data!.ui.nodes,
     //         }
     //     default:
-    //         // Already logged in
-    //         throw redirect(302, "/account")
+    //         // Invalid session or insufficient session privileges
+    //         throw redirect(302, "/login")
     // }
 
     return {
         flow: getFlow("https://playground.com/self-service/login?flow=33f6079a-ef14-4084-af13-34a91e53cd6c"),
-        messages: [
-            // {
-            //     id: 4000001,
-            //     text: "Wrong credentials.",
-            //     type: "error",
-            // },
-        ],
+        messages: [],
         nodes: [
             {
                 type: "input",
@@ -103,10 +97,10 @@ export async function load({ depends, fetch }: { depends: (...deps: string[]) =>
             },
             {
                 type: "input",
-                group: "default",
+                group: "password",
                 attributes: {
-                    name: "email",
-                    type: "text",
+                    name: "password",
+                    type: "password",
                     required: true,
                     disabled: false,
                 },
@@ -114,25 +108,25 @@ export async function load({ depends, fetch }: { depends: (...deps: string[]) =>
                 meta: {
                     label: {
                         id: 1070001,
-                        text: "Email",
+                        text: "Password",
                         type: "info",
                     },
                 },
             },
             {
                 type: "input",
-                group: "default",
+                group: "password",
                 attributes: {
                     name: "method",
                     type: "submit",
-                    value: "code",
+                    value: "password",
                     disabled: false,
                 },
                 messages: [],
                 meta: {
                     label: {
                         id: 1010001,
-                        text: "Send recovery code",
+                        text: "Change password",
                         type: "info",
                         context: {},
                     },

@@ -1,8 +1,9 @@
 <script lang="ts">
     import { page } from "$app/stores"
     import { syncScroll } from "$lib/actions"
-    import { SwapIcon } from "$lib/components"
+    import { Avatar, SwapIcon } from "$lib/components"
     import { SITE_TITLE } from "$lib/constants"
+    import { LogoutIcon, SettingsIcon } from "$lib/icons"
     import { EIcon } from "$lib/types"
     import { getPlaceholder, useStore } from "$lib/utils"
 
@@ -55,10 +56,36 @@
     <div class="flex-none">
         {#if $page.data.identity}
             {@const { name } = $page.data.identity}
-            <div class="avatar placeholder">
-                <div class="w-8 rounded-full bg-accent text-accent-content">
-                    <a class="p-1 text-sm font-bold" href="/">{getPlaceholder(name.first, name.last)}</a>
-                </div>
+            <div class="dropdown dropdown-end dropdown-bottom">
+                <Avatar button placeholder={getPlaceholder(name.first, name.last)} />
+                <ul class="menu dropdown-content z-20 mt-2 w-56 rounded-2xl bg-base-300 p-2 shadow">
+                    <li>
+                        <div class="pointer-events-none flex">
+                            <Avatar large placeholder={getPlaceholder(name.first, name.last)} />
+                            <div class="flex flex-col">
+                                <span class="text-base font-semibold">{name.first} {name.last}</span>
+                                <span>{$page.data.identity.email}</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li><div class="menu-title divider pointer-events-none"></div></li>
+                    <li>
+                        <a href="/account">
+                            <span class="h-6 w-6">
+                                <SettingsIcon />
+                            </span>
+                            <span>Manage account</span>
+                        </a>
+                    </li>
+                    <li>
+                        <button>
+                            <span class="h-6 w-6">
+                                <LogoutIcon />
+                            </span>
+                            <span>Log out</span>
+                        </button>
+                    </li>
+                </ul>
             </div>
         {:else}
             <a class="btn btn-block border-0 text-base" href="/login">Sign in</a>
