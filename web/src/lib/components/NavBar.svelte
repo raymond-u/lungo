@@ -7,9 +7,9 @@
     import { EIcon } from "$lib/types"
     import { getPlaceholder, useStore } from "$lib/utils"
 
-    const { allowScroll, currentApp, syncedScrollTops } = useStore()
+    const { allowScroll, currentApp, darkTheme, syncedScrollTops } = useStore()
 
-    const handleClick = async () => {
+    const handleLogout = async () => {
         await fetch("/logout", {
             method: "POST",
             body: new URLSearchParams({ logoutToken: $page.data.logoutToken }),
@@ -17,6 +17,9 @@
                 "Content-Type": "application/x-www-form-urlencoded",
             },
         })
+    }
+    const handleSwitchTheme = () => {
+        $darkTheme = !$darkTheme
     }
 
     let checked: boolean | undefined
@@ -65,18 +68,18 @@
         <a class="text-xl" href="/">{SITE_TITLE}</a>
     </div>
     <div class="mr-1 flex-none">
-        <div class="btn btn-circle btn-ghost h-10 min-h-0 w-10">
+        <button class="btn btn-circle btn-ghost h-10 min-h-0 w-10" on:click={handleSwitchTheme}>
             <span class="h-6 w-6">
-                <SwapIcon icon={EIcon.Theme} rotate />
+                <SwapIcon icon={EIcon.Theme} active={$darkTheme} rotate />
             </span>
-        </div>
+        </button>
     </div>
     <div class="mr-4 flex-none">
         {#if $page.data.userInfo}
             {@const { email, name } = $page.data.userInfo}
-            <div class="dropdown-end dropdown-bottom dropdown">
+            <div class="dropdown dropdown-end dropdown-bottom">
                 <Avatar button placeholder={getPlaceholder(name.first, name.last)} />
-                <ul class="dropdown-content menu z-20 mt-2 w-56 rounded-2xl bg-base-300 p-2 shadow">
+                <ul class="menu dropdown-content z-20 mt-2 w-56 rounded-2xl bg-base-300 p-2 shadow">
                     <li>
                         <div class="pointer-events-none flex">
                             <Avatar large placeholder={getPlaceholder(name.first, name.last)} />
@@ -96,7 +99,7 @@
                         </a>
                     </li>
                     <li>
-                        <button use:safeClick={{ callback: handleClick }}>
+                        <button use:safeClick={{ callback: handleLogout }}>
                             <span class="h-6 w-6">
                                 <LogoutIcon />
                             </span>

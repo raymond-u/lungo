@@ -3,7 +3,7 @@
     import { ResetIcon } from "$lib/icons"
 </script>
 
-<HeroFrame>
+<HeroFrame wrapped>
     <span class="text-center text-4xl">Recover your account</span>
     <span class="mb-6 h-12 w-12">
         <ResetIcon />

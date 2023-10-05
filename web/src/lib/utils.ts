@@ -27,6 +27,10 @@ export function getPlaceholder(firstName: string, lastName: string): string {
     return `${firstName[0].toUpperCase()}${lastName[0].toUpperCase()}`
 }
 
+export function getRandomElement<T>(array: T[]): T {
+    return array[Math.floor(Math.random() * array.length)]
+}
+
 export function getRandomId(): number {
     return Number(Math.round(Math.random() * 100000).toString() + Date.now().toString().slice(-5))
 }

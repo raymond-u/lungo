@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { NavRail } from "$lib/components"
 </script>
 

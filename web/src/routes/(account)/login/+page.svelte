@@ -4,7 +4,7 @@
     import { AccountIcon } from "$lib/icons"
 </script>
 
-<HeroFrame>
+<HeroFrame wrapped>
     <span class="text-center text-4xl">Welcome to {SITE_TITLE}</span>
     <span class="mb-6 h-12 w-12">
         <AccountIcon />
