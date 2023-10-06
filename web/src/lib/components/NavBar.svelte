@@ -4,7 +4,7 @@
     import { Avatar, SwapIcon } from "$lib/components"
     import { SITE_TITLE } from "$lib/constants"
     import { LogoutIcon, SettingsIcon } from "$lib/icons"
-    import { EIcon } from "$lib/types"
+    import { EIcon } from "$lib/types/common"
     import { getPlaceholder, useStore } from "$lib/utils"
 
     const { allowScroll, currentApp, darkTheme, syncedScrollTops } = useStore()

@@ -1,7 +1,7 @@
 import { fail, redirect } from "@sveltejs/kit"
 import { invalidate } from "$app/navigation"
-import { createKratosClient, type kratosComponents } from "$lib/api"
-import { EDependency, type Fetch } from "$lib/types"
+import { createKratosClient } from "$lib/server/api"
+import { EDependency, type Fetch, type KratosComponents } from "$lib/types"
 import { getFlow, getRandomId } from "$lib/utils"
 
 export const actions = {
@@ -36,8 +36,8 @@ export const actions = {
                 })
             case 400:
                 return fail(400, {
-                    messages: (response.error as kratosComponents["schemas"]["loginFlow"]).ui.messages,
-                    nodes: (response.error as kratosComponents["schemas"]["loginFlow"]).ui.nodes,
+                    messages: (response.error as KratosComponents["schemas"]["loginFlow"]).ui.messages,
+                    nodes: (response.error as KratosComponents["schemas"]["loginFlow"]).ui.nodes,
                 })
             default:
                 await invalidate(EDependency.Form)
@@ -45,7 +45,7 @@ export const actions = {
                     messages: [
                         {
                             id: getRandomId(),
-                            text: (response.error as kratosComponents["schemas"]["errorGeneric"]).error.message,
+                            text: (response.error as KratosComponents["schemas"]["errorGeneric"]).error.message,
                             type: "error",
                         },
                     ],

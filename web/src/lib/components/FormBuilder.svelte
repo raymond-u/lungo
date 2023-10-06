@@ -2,17 +2,17 @@
     import type { ActionResult } from "@sveltejs/kit"
     import { applyAction, enhance } from "$app/forms"
     import { page } from "$app/stores"
-    import type { kratosComponents } from "$lib/api"
     import { PasswordInput } from "$lib/components"
+    import type { KratosComponents } from "$lib/types"
 
-    const getNodeId = (node: kratosComponents["schemas"]["uiNode"]) => {
+    const getNodeId = (node: KratosComponents["schemas"]["uiNode"]) => {
         if (node.type === "input") {
             return node.meta.label?.id ?? node.attributes.name + node.attributes.value
         } else {
             return node.attributes.id
         }
     }
-    const getSwitchGroupTitle = (group: kratosComponents["schemas"]["uiNode"]["group"]) => {
+    const getSwitchGroupTitle = (group: KratosComponents["schemas"]["uiNode"]["group"]) => {
         return (
             nodes.find((node) => node.group === group && node.type === "input" && node.attributes.type === "submit")
                 ?.meta.label?.text ?? ""
@@ -30,11 +30,11 @@
     let disabled = false
     let flow = $page.data.flow
 
-    let messages: kratosComponents["schemas"]["uiTexts"] = $page.data.messages
-    let nodes: kratosComponents["schemas"]["uiNodes"] = $page.data.nodes
-    let currentGroup: kratosComponents["schemas"]["uiNode"]["group"] =
+    let messages: KratosComponents["schemas"]["uiTexts"] = $page.data.messages
+    let nodes: KratosComponents["schemas"]["uiNodes"] = $page.data.nodes
+    let currentGroup: KratosComponents["schemas"]["uiNode"]["group"] =
         nodes.find((node) => node.group !== "default")?.group ?? "default"
-    let otherGroups: kratosComponents["schemas"]["uiNode"]["group"][]
+    let otherGroups: KratosComponents["schemas"]["uiNode"]["group"][]
 
     $: messages = $page.form?.messages ?? $page.data.messages
     $: nodes = $page.form?.nodes ?? $page.data.nodes

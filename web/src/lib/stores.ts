@@ -1,7 +1,7 @@
 import { derived, writable, type Readable, type Writable } from "svelte/store"
+import type { Page } from "@sveltejs/kit"
 import { page } from "$app/stores"
 import type { App } from "$lib/types"
-import type { Page } from "@sveltejs/kit"
 
 export function allowScroll(): Writable<boolean> {
     return writable(true)

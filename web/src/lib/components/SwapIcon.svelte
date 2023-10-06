@@ -15,7 +15,7 @@
         VisibilityOffIcon,
         VisibilityOnIcon,
     } from "$lib/icons"
-    import { EIcon } from "$lib/types"
+    import { EIcon } from "$lib/types/common"
 
     export let icon: EIcon
     export let active = false

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { SwapIcon } from "$lib/components"
-    import { EIcon } from "$lib/types"
+    import { EIcon } from "$lib/types/common"
 
     export let name = ""
     export let value = ""

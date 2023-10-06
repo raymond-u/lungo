@@ -1,5 +1,5 @@
-import { createKratosClient } from "$lib/api"
-import { type App, EDependency, EIcon, type Fetch } from "$lib/types"
+import { createKetoClient, createKratosClient } from "$lib/server/api"
+import { type App, EDependency, EIcon, type Fetch, type User } from "$lib/types"
 
 function getAllowedApps(allowedApps: string[] | undefined = undefined): App[] {
     allowedApps = allowedApps ?? []
@@ -42,8 +42,30 @@ export async function load({ depends, fetch }: { depends: (...deps: string[]) =>
     //
     // switch (response2.response.status) {
     //     case 200:
+    //         break
+    //     default:
     //         return {
-    //             apps: getAllowedApps(response.data!.identity.metadata_public?.["allowed_apps"] as string[] | undefined),
+    //             apps: getAllowedApps(),
+    //             logoutToken: undefined,
+    //             userInfo: undefined,
+    //         }
+    // }
+    //
+    // const client2 = createKetoClient(fetch)
+    // const response3 = await client2.GET("/relation-tuples", {
+    //     params: {
+    //         query: {
+    //             namespace: "app",
+    //             relation: "access",
+    //             subject_id: (response.data!.identity as User).traits!.username,
+    //         },
+    //     },
+    // })
+    //
+    // switch (response3.response.status) {
+    //     case 200:
+    //         return {
+    //             apps: getAllowedApps(response3.data?.relation_tuples?.map((tuple) => tuple.object)),
     //             logoutToken: response2.data!.logout_token,
     //             userInfo: response.data!.identity.traits,
     //         }

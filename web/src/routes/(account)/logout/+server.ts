@@ -1,7 +1,7 @@
-import { invalidate } from "$app/navigation"
-import { createKratosClient } from "$lib/api"
-import { EDependency } from "$lib/types"
 import { redirect } from "@sveltejs/kit"
+import { invalidate } from "$app/navigation"
+import { createKratosClient } from "$lib/server/api"
+import { EDependency } from "$lib/types/common"
 
 export async function POST({ request }: { request: Request }) {
     const data = await request.formData()

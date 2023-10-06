@@ -1,11 +1,7 @@
 import createClient from "openapi-fetch"
 import { error } from "@sveltejs/kit"
-import { KRATOS_API_BASEURL } from "$env/static/private"
-import type { Fetch } from "$lib/types"
-import type { paths as kratosPaths } from "./kratos"
-
-export type { components as kratosComponents } from "./kratos"
-export type { kratosPaths }
+import { KETO_API_BASEURL, KRATOS_API_BASEURL } from "$env/static/private"
+import type { Fetch, KetoPaths, KratosPaths } from "$lib/types"
 
 function wrapFetch(fetch: Fetch): Fetch {
     if (!fetch) {
@@ -21,8 +17,17 @@ function wrapFetch(fetch: Fetch): Fetch {
     }
 }
 
+export const createKetoClient = (fetch: Fetch) => {
+    return createClient<KetoPaths>({
+        baseUrl: KETO_API_BASEURL,
+        fetch: wrapFetch(fetch),
+        credentials: "include",
+        headers: { Accept: "application/json" },
+    })
+}
+
 export const createKratosClient = (fetch: Fetch) => {
-    return createClient<kratosPaths>({
+    return createClient<KratosPaths>({
         baseUrl: KRATOS_API_BASEURL,
         fetch: wrapFetch(fetch),
         credentials: "include",
