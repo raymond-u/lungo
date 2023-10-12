@@ -64,7 +64,8 @@ class Container:
                 return EContainerTool.PODMAN
             else:
                 self.console.print_error(
-                    f"{podman} is installed, but {podman_compose_link} is not. Please install {podman_compose_link}."
+                    f"{podman_link} is installed, but {podman_compose_link} is not. "
+                    f"Please install {podman_compose_link}."
                 )
                 raise Exit(code=1)
         else:
