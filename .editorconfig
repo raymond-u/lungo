@@ -9,5 +9,8 @@ insert_final_newline = true
 max_line_length = 120
 tab_width = 4
 
-[*.{yaml,yml}]
+[*.{rts,rts.jinja}]
+indent_size = 0
+
+[*.{yaml,yaml.jinja,yml,yml.jinja}]
 indent_size = 2

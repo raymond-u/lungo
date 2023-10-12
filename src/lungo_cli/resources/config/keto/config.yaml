@@ -1,0 +1,21 @@
+dsn: 'sqlite:///var/lib/keto/db.sqlite3?_fk=true&mode=rw'
+
+serve:
+  read:
+    port: 80
+  write:
+    port: 8080
+  metrics:
+    port: 8081
+  opl:
+    port: 8082
+
+namespaces:
+  - id: 0
+    name: app
+  - id: 1
+    name: role
+
+limit:
+  max_read_width: 200
+  max_read_depth: 10

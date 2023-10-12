@@ -1,0 +1,306 @@
+{% set NGINX_VER = '1.21.4.2-alpine-apk' %}
+{% set KETO_VER = 'v0.11.1' %}
+{% set KRATOS_VER = 'v1.0.0' %}
+{% set OATHKEEPER_VER = 'v0.40.6' %}
+{% SET NODE_VER = '20.8.0-alpine' %}
+{% set FILEBROWSER_VER = 'v2.25.0' %}
+{% set RSTUDIO_VER = '4.3.1' %}
+
+{% set accounts = users.accounts %}
+{% set branding = config.branding %}
+{% set directories = config.directories %}
+{% set network = config.network %}
+
+services:
+
+  # ============= #
+  # Reverse proxy #
+  # ============= #
+
+  nginx:
+    container_name: nginx
+    hostname: nginx
+
+    image: 'docker.io/openresty/openresty:{{ NGINX_VER }}'
+    entrypoint: [ ]
+    command: openresty -c /etc/nginx/nginx.conf -e /var/log/nginx/error.log -g 'daemon off;' -p /etc/nginx
+
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses.nginx }}
+    extra_hosts:
+      - 'nginx:{{ ip_addresses.nginx }}'
+    ports:
+      {% if network.http.enabled %}
+      - '{{ network.http.port }}:80'
+      {% endif %}
+      - '{{ network.https.port }}:443'
+
+    volumes:
+      - './config/nginx:/etc/nginx:ro'
+      - './third_party/server_configs_nginx/h5bp:/etc/nginx/h5bp:ro'
+      - './third_party/server_configs_nginx/mime.types:/etc/nginx/mime.types:ro'
+      - './third_party/server_configs_nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
+      - '{{ app_dirs.cache_dir }}/nginx:/var/log/nginx:rw'
+      {% if network.https.tls %}
+      - '{{ network.https.tls.cert }}:/etc/ssl/certs/lungo.crt:ro'
+      {% else %}
+      - '{{ app_dirs.generated_dir }}/nginx/lungo.crt:/etc/ssl/certs/lungo.crt:ro'
+      {% endif %}
+
+    secrets:
+      - source: NGINX_PRIVATE_KEY
+        target: /etc/ssl/private/lungo.key
+
+    depends_on:
+      - keto
+      - kratos
+      - oathkeeper
+      - filebrowser
+      - rstudio
+    restart: 'no'
+
+  # ============================== #
+  # Identity and access management #
+  # ============================== #
+
+  keto:
+    container_name: keto
+    hostname: keto
+
+    image: 'docker.io/oryd/keto:{{ KETO_VER }}'
+    entrypoint: [ ]
+    command: keto serve -c /etc/keto/config.yaml --sqa-opt-out
+
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses.keto }}
+    extra_hosts:
+      - 'keto:{{ ip_addresses.keto }}'
+    expose:
+      - 80
+
+    volumes:
+      - './config/keto:/etc/keto:ro'
+      - '{{ app_dirs.managed_dir }}/keto:/var/lib/keto:rw'
+
+    restart: 'no'
+
+  kratos:
+    container_name: kratos
+    hostname: kratos
+
+    image: 'docker.io/oryd/kratos:{{ KRATOS_VER }}'
+    entrypoint: [ ]
+    command: kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out --dev
+
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses.kratos }}
+    extra_hosts:
+      - 'kratos:{{ ip_addresses.kratos }}'
+    expose:
+      - 80
+
+    volumes:
+      - './config/kratos:/etc/kratos:ro'
+      - '{{ app_dirs.managed_dir }}/kratos:/var/lib/kratos:rw'
+
+    secrets:
+      - source: KRATOS_SECRETS
+        target: /etc/kratos/secrets.yaml
+
+    restart: 'no'
+
+  oathkeeper:
+    container_name: oathkeeper
+    hostname: oathkeeper
+
+    image: 'docker.io/oryd/oathkeeper:{{ OATHKEEPER_VER }}'
+    entrypoint: [ ]
+    command: oathkeeper serve -c /etc/oathkeeper/config.yaml --sqa-opt-out
+
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses.oathkeeper }}
+    extra_hosts:
+      - 'oathkeeper:{{ ip_addresses.oathkeeper }}'
+    expose:
+      - 80
+
+    volumes:
+      - './config/oathkeeper:/etc/oathkeeper:ro'
+
+    restart: 'no'
+
+  # == #
+  # UI #
+  # == #
+
+  node:
+    container_name: node
+    hostname: node
+
+    build:
+      context: ./web
+      dockerfile_inline: |
+        FROM docker.io/library/node:{{ NODE_VER }} AS builder
+        WORKDIR /app
+        COPY package*.json .
+        RUN npm ci
+        COPY . .
+        RUN npm run build
+        RUN npm prune --production
+
+        FROM docker.io/library/node:{{ NODE_VER }}
+        WORKDIR /app
+        COPY --from=builder /app/build build/
+        COPY --from=builder /app/node_modules node_modules/
+        COPY package.json .
+
+    entrypoint: [ ]
+    command: node build
+
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses.node }}
+    extra_hosts:
+      - 'node:{{ ip_addresses.node }}'
+    expose:
+      - 80
+
+    volumes:
+      {% if branding.cover or branding.logo %}
+        {% if branding.cover %}
+      - '{{ branding.cover }}:/app/cover.jpg:ro'
+        {% endif %}
+        {% if branding.logo %}
+      - '{{ branding.logo }}:/app/favicon.png:ro'
+        {% endif %}
+      {% else %}
+      [ ]
+      {% endif %}
+
+    environment:
+      - BODY_SIZE_LIMIT=0
+      - NODE_ENV=production
+      - PORT=80
+
+      - ADDRESS_HEADER=X-Forwarded-For
+      - HOST_HEADER=X-Forwarded-Host
+      - PROTOCOL_HEADER=X-Forwarded-Proto
+      - XFF_DEPTH=1
+
+      - KETO_API_BASE_URL='http://{{ ip_addresses.keto }}:80/'
+      - KRATOS_API_BASE_URL='http://{{ ip_addresses.kratos }}:80/'
+      - PUBLIC_SITE_TITLE='{{ branding.name }}'
+
+    restart: 'no'
+
+  # ============ #
+  # Applications #
+  # ============ #
+
+  filebrowser:
+    container_name: filebrowser
+    hostname: filebrowser
+
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM docker.io/filebrowser/filebrowser:{{ FILEBROWSER_VER }}
+        {% for account in accounts %}
+        RUN mkdir -p '/root/home/{{ account.username }}'
+        RUN ln -s '/mnt/home/{{ account.username }}' '/root/home/{{ account.username }}/home'
+          {% for shared_dir in directories.shared_dirs %}
+        RUN ln -s '/mnt/{{ shared_dir.name }}' '/root/home/{{ account.username }}/{{ shared_dir.name }}'
+          {% endfor %}
+        {% endfor %}
+
+    entrypoint: [ ]
+    command: sh -c 'umask 002; /filebrowser -c /etc/filebrowser/settings.yaml'
+
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses.filebrowser }}
+    extra_hosts:
+      - 'filebrowser:{{ ip_addresses.filebrowser }}'
+    expose:
+      - 80
+
+    volumes:
+      - './config/filebrowser:/etc/filebrowser:ro'
+      - '{{ app_dirs.user_dir }}:/mnt/home:rw'
+      {% for account in accounts %}
+        {% if account.extra.user_dir %}
+      - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
+        {% endif %}
+      {% endfor %}
+      - '{{ app_dirs.cache_dir }}/filebrowser:/var/log/filebrowser:rw'
+      - '{{ app_dirs.managed_dir }}/filebrowser:/var/lib/filebrowser:rw'
+      {% for shared_dir in directories.shared_dirs %}
+      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
+      {% endfor %}
+
+    restart: 'no'
+
+  rstudio:
+    container_name: rstudio
+    hostname: rstudio
+
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM docker.io/rocker/verse:{{ RSTUDIO_VER }}
+        {% for account in accounts %}
+        RUN useradd -g root -G sudo -m '{{ account.username }}'
+        RUN echo '{{ account.username }}:passwd' | chpasswd
+        RUN ln -s '/mnt/home/{{ account.username }}' '/home/{{ account.username }}/home'
+          {% for shared_dir in directories.shared_dirs %}
+        RUN ln -s '/mnt/{{ shared_dir.name }}' '/home/{{ account.username }}/{{ shared_dir.name }}'
+          {% endfor %}
+        {% endfor %}
+
+    entrypoint: [ ]
+    command: sh -c 'umask 002; /init'
+
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses.rstudio }}
+    extra_hosts:
+      - 'rstudio:{{ ip_addresses.rstudio }}'
+    expose:
+      - 80
+
+    volumes:
+      - './config/rstudio/rserver.conf:/etc/rstudio/rserver.conf:ro'
+      - './config/rstudio/rsession.conf:/etc/rstudio/rsession.conf:ro'
+      - '{{ app_dirs.user_dir }}:/mnt/home:rw'
+      {% for account in accounts %}
+        {% if account.extra.user_dir %}
+      - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
+        {% endif %}
+      {% endfor %}
+      - '{{ app_dirs.managed_dir }}/rstudio:/var/lib/rstudio-server:rw'
+      {% for shared_dir in directories.shared_dirs %}
+      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
+      {% endfor %}
+
+    restart: 'no'
+
+networks:
+  static:
+    ipam:
+      config:
+        - subnet: {{ network.subnet }}
+
+secrets:
+  NGINX_PRIVATE_KEY:
+    file: |
+      {% if network.https.tls %}
+      '{{ network.https.tls.key }}'
+      {% else %}
+      '{{ app_dirs.generated_dir }}/nginx/lungo.key'
+      {% endif %}
+  KRATOS_SECRETS:
+    file: '{{ app_dirs.generated_dir }}/kratos/secrets.yaml'

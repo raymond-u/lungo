@@ -7,10 +7,11 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 
+from .file import write_bytes
 from ..core.constants import APP_NAME_CAPITALIZED
 
 
-def generate_self_signed_cert(cert_file: str | PathLike[str], key_file: str | PathLike[str]):
+def generate_self_signed_cert(cert_file: str | PathLike[str], key_file: str | PathLike[str]) -> None:
     """Generate a self-signed certificate."""
     key = rsa.generate_private_key(public_exponent=65537, key_size=2048, backend=default_backend())
     name = x509.Name([x509.NameAttribute(x509.oid.NameOID.ORGANIZATION_NAME, APP_NAME_CAPITALIZED)])
@@ -37,9 +38,8 @@ def generate_self_signed_cert(cert_file: str | PathLike[str], key_file: str | Pa
         encryption_algorithm=serialization.NoEncryption(),
     )
 
-    with open(cert_file, "wb") as cf, open(key_file, "wb") as kf:
-        cf.write(cert_pem)
-        kf.write(key_pem)
+    write_bytes(cert_file, cert_pem)
+    write_bytes(key_file, key_pem)
 
 
 def generate_random_string() -> str:

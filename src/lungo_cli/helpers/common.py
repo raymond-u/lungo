@@ -1,9 +1,7 @@
-import subprocess
 from enum import Enum
 from importlib import metadata
 from os import PathLike
 from shutil import which
-from typing import Iterable, Mapping
 
 from ..core.constants import PACKAGE_NAME
 
@@ -13,31 +11,13 @@ def get_app_version() -> str:
     return metadata.version(PACKAGE_NAME)
 
 
-def run_shell_command(
-    *command: str,
-    cwd: str | PathLike[str] | None = None,
-    show_output: bool = False,
-    env: Mapping[str, str] | None = None,
-):
-    """Run a shell command."""
-    command = list(filter(None, command))
-
-    if show_output:
-        subprocess.run(command, check=True, cwd=cwd, env=env)
-    else:
-        subprocess.run(command, check=True, cwd=cwd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, env=env)
-
-
 def program_exists(program: str) -> bool:
     """Check if a program exists in the user's PATH."""
     return which(program) is not None
 
 
-def format_command(value: str | Iterable[str]) -> str:
+def format_command(*value: str) -> str:
     """Format a shell command for console output."""
-    if isinstance(value, str):
-        return f"[green]{value}[/green]"
-
     return f"[green]{' '.join(value)}[/green]"
 
 

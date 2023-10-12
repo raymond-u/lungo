@@ -1,0 +1,14 @@
+{% set KETO_VER = 'v0.11.1' %}
+
+services:
+  keto:
+    image: 'docker.io/oryd/keto:{{ KETO_VER }}'
+    entrypoint: [ ]
+    command: keto serve -c /etc/keto/config.yaml --sqa-opt-out
+
+    ports:
+      - '3939:8080'
+
+    volumes:
+      - './config/keto:/etc/keto:ro'
+      - '{{ app_dirs.managed_dir }}/keto:/var/lib/keto:rw'

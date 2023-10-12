@@ -1,52 +1,36 @@
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Optional
 
-from typer import Exit, Option
+from typer import Option
 
-from ..app.state import console, container, users_file
+from ..app.state import console, container
 from ..core.constants import APP_NAME
-from ..helpers.app import check_prerequisites, handle_common_args
-from ..helpers.common import format_command, format_input, format_path
+from ..helpers.app import ensure_application_data, load_config, process_args, process_args_delayed
+from ..helpers.common import format_command
 
 
 def main(
+    config_dir: Annotated[
+        Optional[Path], Option("--config-dir", "-c", help="Path to the configuration directory.", show_default=False)
+    ] = None,
+    dev: Annotated[bool, Option("--dev", help="Use the development configuration.", show_default=False)] = False,
+    force_init: Annotated[bool, Option("--force-init", help="Do a fresh initialization.", show_default=False)] = False,
+    remove_lock: Annotated[bool, Option("--remove-lock", help="Remove the lock file.", show_default=False)] = False,
     quiet: Annotated[
         bool, Option("--quiet", "-q", help="Suppress all output except for errors.", show_default=False)
     ] = False,
+    verbosity: Annotated[
+        int, Option("--verbose", "-v", count=True, help="Increase verbosity.", show_default=False)
+    ] = 0,
 ):
     """
-    Bring the service online.
+    Start the service.
     """
-    handle_common_args(quiet)
-    check_prerequisites()
+    process_args(config_dir, quiet, verbosity)
+    config, users = load_config()
+    process_args_delayed(dev, force_init, remove_lock)
 
-    # Check if the shared directories and user home directories exist
-    shared_dir = Path.home().parent.joinpath("shared")
-    shared_readonly_dir = Path.home().parent.joinpath("shared_readonly")
+    ensure_application_data(config, users)
 
-    if not shared_dir.exists() or not shared_readonly_dir.exists():
-        console().print_error(
-            f"The {format_path('shared')} and {format_path('shared_readonly')} directories are missing."
-            "Please create them and configure their permissions as described in the documentation."
-        )
-        raise Exit(code=1)
-
-    users = users_file().load()
-
-    for user in users:
-        user_home_dir = Path.home().parent.joinpath(user.username)
-
-        if not user_home_dir.exists():
-            console().print_error(
-                f"The home directory for user {format_input(user.username)} is missing."
-                "Please create the user and configure its permissions as described in the documentation."
-            )
-            raise Exit(code=1)
-
-    # Start the service
     container().up()
-
-    console().request_for_newline()
-    console().print("Service is now online.")
-    console().print(f"To stop the service, run {format_command(f'{APP_NAME} down')}.")
-    console().show_epilogue()
+    console().print(f"Service is now online. To stop it, run {format_command(APP_NAME, 'down')}")

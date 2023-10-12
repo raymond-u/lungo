@@ -1,0 +1,54 @@
+{% set accounts = users.accounts %}
+{% set privileges = config.rules.privileges %}
+
+app:filebrowser#access@(app:all#access)
+app:rstudio#access@(app:all#access)
+
+role:unregistered#member@(role:guest#member)
+role:guest#member@(role:user#member)
+role:user#member@(role:admin#member)
+
+role:unregistered#member@anonymous
+
+{% if privileges.unregistered.allowed_apps == 'all' %}
+app:all#access@(role:unregistered#member)
+{% else %}
+{% for allowed_app in privileges.unregistered.allowed_apps %}
+app:{{ allowed_app }}#access@(role:unregistered#member)
+{% endfor %}
+{% endif %}
+
+{% if privileges.guest.allowed_apps == 'all' %}
+app:all#access@(role:guest#member)
+{% else %}
+{% for allowed_app in privileges.guest.allowed_apps %}
+app:{{ allowed_app }}#access@(role:guest#member)
+{% endfor %}
+{% endif %}
+
+{% if privileges.user.allowed_apps == 'all' %}
+app:all#access@(role:user#member)
+{% else %}
+{% for allowed_app in privileges.user.allowed_apps %}
+app:{{ allowed_app }}#access@(role:user#member)
+{% endfor %}
+{% endif %}
+
+{% if privileges.admin.allowed_apps == 'all' %}
+app:all#access@(role:admin#member)
+{% else %}
+{% for allowed_app in privileges.admin.allowed_apps %}
+app:{{ allowed_app }}#access@(role:admin#member)
+{% endfor %}
+{% endif %}
+
+{% for account in accounts %}
+role:{{ account.role }}#member@{{ account.username }}
+{% if account.extra.allowed_apps == 'all' %}
+app:all#access@{{ account.username }}
+{% else %}
+{% for allowed_app in account.extra.allowed_apps %}
+app:{{ allowed_app }}#access@{{ account.username }}
+{% endfor %}
+{% endif %}
+{% endfor %}

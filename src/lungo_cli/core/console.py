@@ -1,3 +1,4 @@
+from contextlib import nullcontext
 from enum import Enum
 from typing import Any, Callable, TypeVar
 
@@ -191,6 +192,9 @@ class Console:
 
         return answers
 
-    def status(self, status: str, **kwargs: Any) -> Status:
+    def status(self, status: str, **kwargs: Any) -> Status | nullcontext:
+        if self.log_level.value > LogLevels.INFO.value:
+            return nullcontext()
+
         kwargs["status"] = status
         return self.stdout.status(**kwargs)

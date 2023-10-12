@@ -1,0 +1,26 @@
+- id: app
+  match:
+    url: 'https://<.*>/app/<.*>'
+    methods:
+      - GET
+      - POST
+      - DELETE
+      - PATCH
+      - PUT
+  authenticators:
+    - handler: cookie_session
+    - handler: anonymous
+  authorizer:
+    handler: remote_json
+  mutators:
+    - handler: header
+  errors:
+    - handler: json
+
+- id: catch-all
+  match:
+    url: 'https://<.*>'
+  authenticators:
+    - handler: noop
+  errors:
+    - handler: json

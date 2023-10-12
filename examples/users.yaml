@@ -1,0 +1,12 @@
+accounts:
+  - enabled: false
+    username: joe
+    name:
+      first: Joe
+      last: Doe
+    email: joe@gmail.com
+    role: user
+    extra:
+      allowed_apps:
+        - rstudio
+      user_dir: /mnt/data/joe

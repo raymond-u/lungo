@@ -1,212 +1,179 @@
-import shutil
-from typing import Collection
+import subprocess
+from ipaddress import IPv4Network
+from os import PathLike
+from pathlib import Path
 
 from importlib_resources import as_file, files
 from typer import Exit
 
-from .common import format_command, format_input, get_app_version
-from ..app.state import app_files, console, users_file
-from ..core.constants import APP_NAME, PACKAGE_NAME
-from ..models.user import User, UserRole
+from .common import format_command, format_input, format_path
+from .crypto import generate_random_string, generate_self_signed_cert
+from .file import copy, hash_sha256, read_text, remove, write_text
+from .yaml import parse_yaml
+from ..app.state import account_manager, console, renderer, storage
+from ..core.constants import PACKAGE_NAME
+from ..models.config import Config
+from ..models.context import AppDirs, Context, IpAddresses
+from ..models.users import Users
 
 
-def update_resources():
-    try:
-        if not app_files().res_version.exists() or app_files().res_version.read_text() != get_app_version():
-            app_files().res_dir.mkdir(parents=True, exist_ok=True)
+def process_args(config_dir: str | PathLike[str] | None, quiet: bool, verbosity: int) -> None:
+    """Process common arguments."""
+    if config_dir:
+        if not Path(config_dir).is_dir():
+            console().print_error(f"{format_path(config_dir)} is not a directory.")
+            raise Exit(code=1)
 
-            with as_file(files(f"{PACKAGE_NAME}.res")) as resources:
-                for file in resources.iterdir():
-                    if file.is_dir():
-                        shutil.copytree(file, app_files().res_dir / file.name, dirs_exist_ok=True)
-                    elif file.is_file() and file.name != "__init__.py":
-                        shutil.copy(file, app_files().res_dir)
+        storage().config_dir = Path(config_dir).resolve()
 
-            with app_files().res_version.open("w") as version_file:
-                version_file.write(get_app_version())
-    except Exception as e:
-        console().print_error(f"Failed to update resources ({e}).")
-        raise Exit(code=1)
-
-
-def reset_app():
-    try:
-        if app_files().cache_dir.exists():
-            shutil.rmtree(app_files().cache_dir)
-        if app_files().config_dir.exists():
-            shutil.rmtree(app_files().config_dir)
-        if app_files().data_dir.exists():
-            shutil.rmtree(app_files().data_dir)
-    except Exception as e:
-        console().print_error(f"Failed to remove existing configuration files ({e}).")
-        raise Exit(code=1)
-
-
-def handle_common_args(quiet: bool):
     if quiet:
         console().set_log_level(-1)
+    else:
+        console().set_log_level(verbosity)
 
 
-def check_prerequisites(should_init: bool = True):
-    try:
-        if should_init:
-            if not app_files().init_file.exists():
-                console().print_error(
-                    f"No configuration files found. Please run {format_command(f'{APP_NAME} init')} first."
-                )
-                raise Exit(code=1)
-            elif app_files().init_file.read_text().split(".")[0] != get_app_version().split(".")[0]:
-                console().print_error(
-                    f"Configuration files are outdated. Please run {format_command(f'{APP_NAME} init')} again."
-                )
-                raise Exit(code=1)
-        else:
-            if (
-                app_files().init_file.exists()
-                and app_files().init_file.read_text().split(".")[0] == get_app_version().split(".")[0]
-            ):
-                console().print("Initialization has already been completed.")
-                console().print(f"To force reinitialization, please run {format_command(f'{APP_NAME} init --force')}.")
-                raise Exit()
-    except Exception as e:
-        console().print_error(f"Failed to check configuration files ({e}).")
+def process_args_delayed(dev: bool, force_init: bool = False, remove_lock: bool = False) -> None:
+    """Process common arguments that need to be processed after the configuration is loaded."""
+    if dev:
+        storage().storage_version = "dev"
+        console().set_log_level(1)
+
+    if force_init:
+        remove(storage().bundled_dir)
+
+    if remove_lock:
+        remove(storage().lock_file)
+
+
+def copy_resources(src: str | PathLike[str], dst: str | PathLike[str]) -> None:
+    """Copy resources from the package to the destination directory."""
+    with as_file(files(f"{PACKAGE_NAME}.resources")) as resources:
+        copy(resources / src, dst)
+
+
+def get_user_dir(config: Config) -> Path:
+    """Get the directory where data for all the users is stored."""
+    if config.directories.user_dir:
+        return config.directories.user_dir.resolve()
+    else:
+        return Path.home().parent
+
+
+def get_ip_addresses(subnet: IPv4Network) -> IpAddresses:
+    """Get the IP addresses for the services."""
+    if subnet.num_addresses < 256:
+        console().print_error(
+            f"Subnet {format_input(str(subnet))} is too small. "
+            "Please change it to a subnet with at least 256 addresses."
+        )
         raise Exit(code=1)
 
+    hosts = list(subnet.hosts())
 
-def gather_user_info(
-    users: list[User],
-    usernames: list[str] | None = None,
-    full_names: list[str] = None,
-    emails: list[str] = None,
-    user_roles: list[UserRole] = None,
-) -> int:
-    # Check the number of elements in each argument
-    max_length = 0
-    users_initial_length = len(users)
-
-    for arg in (usernames, full_names, emails, user_roles):
-        if arg:
-            if len(arg) != max_length:
-                if max_length == 0:
-                    max_length = len(arg)
-                else:
-                    console().print_error("Non-empty arguments must have the same number of elements.")
-                    raise Exit(code=1)
-
-    # If no arguments are provided, ask for user information indefinitely
-    if max_length == 0:
-        while True:
-            count = 1
-
-            while True:
-                console().print(f"Please enter information for user {count}. Leave blank to finish.")
-
-                if not (username := console().ask_for_string("Username", guard=lambda x: True)):
-                    break
-                if not (full_name := console().ask_for_string("Full name", guard=lambda x: True)):
-                    break
-                if not (email := console().ask_for_string("Email", guard=lambda x: True)):
-                    break
-                user_role = console().ask_for_enum("User role", UserRole, default=UserRole.USER)
-
-                console().request_for_newline()
-                user = User(username=username, full_name=full_name, email=email, user_role=user_role)
-
-                if users_file().add(users, user):
-                    count += 1
-
-            console().request_for_newline()
-
-            if not users:
-                console().print_warning("You must provide at least one user.")
-                continue
-
-            print_user_info(users[users_initial_length:])
-
-            if console().ask_for_boolean("Is this information correct?"):
-                break
-    else:
-        for i in range(max_length):
-            prologue_printed = False
-
-            if usernames:
-                username = usernames[i]
-            else:
-                console().print(f"Please enter information for user {i + 1}.")
-                prologue_printed = True
-
-                username = console().ask_for_string("Username")
-
-            if full_names:
-                full_name = full_names[i]
-            else:
-                if not prologue_printed:
-                    console().print(f"Please enter information for user {format_input(username)}.")
-                    prologue_printed = True
-
-                full_name = console().ask_for_string("Full name")
-
-            if emails:
-                email = emails[i]
-            else:
-                if not prologue_printed:
-                    console().print(f"Please enter information for user {format_input(username)}.")
-                    prologue_printed = True
-
-                email = console().ask_for_string("Email")
-
-            if user_roles:
-                user_role = user_roles[i]
-            else:
-                if not prologue_printed:
-                    console().print(f"Please enter information for user {format_input(username)}.")
-
-                user_role = console().ask_for_enum("User role", UserRole, default=UserRole.USER)
-
-            console().request_for_newline()
-            user = User(username=username, full_name=full_name, email=email, user_role=user_role)
-
-            users_file().add(users, user)
-
-        print_user_info(users[users_initial_length:])
-
-    return len(users) - users_initial_length
+    return IpAddresses(
+        nginx=hosts[100],
+        keto=hosts[101],
+        kratos=hosts[102],
+        oathkeeper=hosts[103],
+        node=hosts[104],
+        filebrowser=hosts[105],
+        rstudio=hosts[106],
+    )
 
 
-def get_user_by_usernames(users: list[User], usernames: list[str] | None = None) -> list[User]:
-    users_found = []
+def create_context(config: Config, users: Users) -> Context:
+    """Create a context object for template rendering."""
+    app_dirs = AppDirs(
+        cache_dir=storage().cache_latest_dir,
+        generated_dir=storage().generated_dir,
+        managed_dir=storage().managed_dir,
+        user_dir=get_user_dir(config),
+    )
 
-    if not usernames:
-        console().print(f"Please enter usernames. Leave blank to finish.")
-
-        while True:
-            while True:
-                if not (username := console().ask_for_string("Username", guard=lambda x: True)):
-                    break
-
-                if user := users_file().find(users, username):
-                    users_found.append(user)
-
-            if not users_found:
-                console().print_warning("You must provide at least one username.")
-                continue
-
-            break
-    else:
-        for username in usernames:
-            if user := users_file().find(users, username):
-                users_found.append(user)
-
-    console().request_for_newline()
-    return users_found
+    return Context(config=config, users=users, app_dirs=app_dirs, ip_addresses=get_ip_addresses(config.network.subnet))
 
 
-def print_user_info(users: Collection[User]):
-    for index, user in enumerate(users, start=1):
-        console().print(f"User {index}/{len(users)}")
-        console().print(f"Username:  {format_input(user.username)}")
-        console().print(f"Full name: {format_input(user.full_name)}")
-        console().print(f"Email:     {format_input(user.email)}")
-        console().print(f"User role: {format_input(user.user_role.value)}")
+def ensure_application_data(config: Config, users: Users) -> None:
+    """Ensure that all the application data exists and is up-to-date."""
+    with console().status("Updating storage..."):
+        storage().validate()
+        storage().create_dirs()
 
-    console().request_for_newline()
+        if not storage().bundled_dir.is_dir() or storage().storage_version == "dev":
+            console().print_info("Updating bundled data...")
+            copy_resources(".", storage().bundled_dir)
+            remove(storage().init_file)
+
+        if not storage().nginx_cert_file.is_file() or not storage().nginx_key_file.is_file():
+            console().print_info("Generating self-signed certificate...")
+            generate_self_signed_cert(storage().nginx_cert_file, storage().nginx_key_file)
+
+        if not storage().kratos_secrets_file.is_file():
+            console().print_info("Generating Kratos secrets...")
+            renderer().render(
+                storage().template_kratos_secrets_rel,
+                storage().kratos_secrets_file,
+                secret_cookie=generate_random_string(),
+            )
+
+    with console().status("Updating database..."):
+        config_hash = hash_config()
+
+        if not storage().init_file.is_file() or read_text(storage().init_file) != config_hash:
+            remove(storage().init_file)
+
+            renderer().render_all(create_context(config, users))
+            account_manager().verify(users.accounts, config.directories.user_dir)
+            account_manager().update(users.accounts, config.rules.privileges)
+
+            write_text(storage().init_file, config_hash)
+
+
+def hash_config() -> str:
+    """Hash the configuration files."""
+    return hash_sha256(storage().config_file) + hash_sha256(storage().users_file)
+
+
+def load_config() -> tuple[Config, Users]:
+    """Load the configuration files and may set application directories."""
+    if not storage().config_file.is_file():
+        console().print_error(
+            f"{format_path(storage().config_file.name)} not found. "
+            "A template will be created, please read the manual to learn how to configure it."
+        )
+        copy_resources(storage().template_config_rel, storage().config_file)
+
+        raise Exit(code=1)
+
+    if not storage().users_file.is_file():
+        console().print_error(
+            f"{format_path(storage().users_file.name)} not found. "
+            "A template will be created, please read the manual to learn how to configure it."
+        )
+        copy_resources(storage().template_users_rel, storage().users_file)
+
+        raise Exit(code=1)
+
+    config = parse_yaml(storage().config_file, Config)
+    users = parse_yaml(storage().users_file, Users)
+
+    if config.directories.cache_dir:
+        storage().cache_dir = config.directories.cache_dir.resolve()
+    if config.directories.data_dir:
+        storage().data_dir = config.directories.data_dir.resolve()
+
+    return config, users
+
+
+def run_shell_command(*command: str, cwd: str | PathLike[str] | None = None, show_output: bool = False) -> None:
+    """Run a shell command."""
+    command = list(filter(None, command))
+
+    try:
+        if show_output:
+            subprocess.run(command, check=True, cwd=cwd)
+        else:
+            subprocess.run(command, check=True, cwd=cwd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+    except Exception as e:
+        console().print_error(f"Failed to run command {format_command(*command)} ({e}).")
+        raise Exit(code=1)

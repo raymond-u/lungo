@@ -16,6 +16,10 @@ importlib-resources = "^6.0.1"
 platformdirs = "^3.10.0"
 ruamel-yaml = "^0.17.32"
 cryptography = "^41.0.3"
+pydantic = {extras = ["email"], version = "^2.4.2"}
+pydantic-yaml = "^1.2.0"
+jinja2 = "^3.1.2"
+requests = "^2.31.0"
 
 [tool.poetry.scripts]
 lungo = "lungo_cli.app.main:app_wrapper"

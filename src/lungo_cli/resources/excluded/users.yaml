@@ -1,0 +1,63 @@
+## Lungo user configuration
+
+# =========
+# accounts:
+# =========
+
+#   # List of accounts
+#   -
+
+#       # Enable or disable the account
+#       # Type: boolean
+#       # Default: true
+#       # Required: no
+#       enabled: false
+
+#       # Username
+#       # Type: string
+#       # Default: none
+#       # Required: yes
+#       username: joe
+
+#       # Full name (first and last)
+#       name:
+
+#         # First name
+#         # Type: string
+#         # Default: none
+#         # Required: yes
+#         first: Joe
+
+#         # Last name
+#         # Type: string
+#         # Default: none
+#         # Required: yes
+#         last: Doe
+
+#       # Email address
+#       # Type: string
+#       # Default: none
+#       # Required: yes
+#       email: joe@gmail.com
+
+#       # User role
+#       # Type: 'guest' | 'user' | 'admin'
+#       # Default: none
+#       # Required: yes
+#       role: user
+
+#       # Extra configuration
+#       extra:
+
+#         # Allowed apps besides those defined in the role, or 'all' to allow all apps
+#         # Type: 'all' | array
+#         # Default: [ ]
+#         # Required: no
+#         allowed_apps:
+#           - rstudio
+
+#         # Override user directory
+#         # Type: path
+#         # Default: none
+#         # Required: no
+#         user_dir: /mnt/somewhere/someone

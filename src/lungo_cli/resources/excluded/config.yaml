@@ -1,0 +1,201 @@
+## Lungo general configuration
+
+# =========
+# branding:
+# =========
+
+#   # Custom name for the Lungo instance
+#   # Type: string
+#   # Default: 'Lungo'
+#   # Required: no
+#   name: Lungo
+
+#   # Custom cover image for the landing page
+#   # Type: path
+#   # Default: none
+#   # Required: no
+#   cover: /assets/cover.png
+
+#   # Custom logo for the website
+#   # Type: path
+#   # Default: none
+#   # Required: no
+#   logo: /assets/favicon.png
+
+# ============
+# directories:
+# ============
+
+#   # Cache directory
+#   # Type: path
+#   # Default: (platform specific)
+#   # Required: no
+#   cache_dir: ~/.cache/lungo
+
+#   # Data directory
+#   # Type: path
+#   # Default: (platform specific)
+#   # Required: no
+#   data_dir: ~/.local/share/lungo
+
+#   # Directory to store user data (e.g. user joe will have its data stored in joe/ inside this directory)
+#   # Type: path
+#   # Default: (platform specific)
+#   # Required: no
+#   user_dir: /home
+
+#   # Directories to mount that are shared between apps and users
+#   shared_dirs:
+#     -
+
+#         # Name of the directory after mounted (must be unique)
+#         Type: string
+#         Default: none
+#         Required: yes
+#         name: shared_readonly
+
+#         # Path to the directory on the host
+#         # Type: path
+#         # Default: none
+#         # Required: yes
+#         source: /mnt/data/shared_readonly
+
+#         # Whether to mount the directory as read-only or not
+#         # Type: boolean
+#         # Default: false
+#         # Required: no
+#         read_only: true
+
+# ========
+# network:
+# ========
+
+#   # Subnet to use for the internal network, in CIDR notation (must have a minimum of 256 addresses)
+#   # Type: string
+#   # Default: 192.168.2.0/24
+#   # Required: no
+#   subnet: 192.168.2.0/24
+
+#   # HTTP settings
+#   http:
+
+#     # Enable or disable HTTP
+#     # Type: boolean
+#     # Default: true
+#     # Required: no
+#     enabled: true
+
+#     # Port to use for HTTP
+#     # Type: integer
+#     # Default: 80
+#     # Required: no
+#     port: 80
+
+#   # HTTPS settings
+#   https:
+
+#     # Port to use for HTTPS
+#     # Type: integer
+#     # Default: 443
+#     # Required: no
+#     port: 443
+
+#     # Set custom TLS certificate and key
+#     tls:
+
+#       # Path to the TLS certificate
+#       # Type: path
+#       # Default: none
+#       # Required: no
+#       cert: /etc/ssl/certs/self-signed.crt
+
+#       # Path to the TLS private key
+#       # Type: path
+#       # Default: none
+#       # Required: no
+#       key: /etc/ssl/private/self-signed.key
+
+# ======
+# rules:
+# ======
+
+#   # Privileges of each role (privileges are inherited from roles above)
+#   privileges:
+
+#     # For unregistered users
+#     unregistered:
+
+#       # Allowed apps, or 'all' to allow all apps (do not allow services that require authentication)
+#       # Type: 'all' | array
+#       # Default: [ ]
+#       # Required: no
+#       allowed_apps: [ ]
+
+#     # For guest users
+#     guest:
+
+#       # Allowed apps, or 'all' to allow all apps
+#       # Type: 'all' | array
+#       # Default: ['filebrowser']
+#       # Required: no
+#       allowed_apps:
+#         - filebrowser
+
+#     # For regular users
+#     user:
+
+#       # Allowed apps, or 'all' to allow all apps
+#       # Type: 'all' | array
+#       # Default: ['rstudio']
+#       # Required: no
+#       allowed_apps:
+#         - rstudio
+
+#     # For administrators
+#     admin:
+
+#       # Allowed apps, or 'all' to allow all apps
+#       # Type: 'all' | array
+#       # Default: 'all'
+#       # Required: no
+#       allowed_apps: all
+
+# =====
+# smtp:
+# =====
+
+#   # SMTP server host
+#   # Type: string
+#   # Default: none
+#   # Required: yes
+#   host: smtp.gmail.com
+
+#   # SMTP server port
+#   # Type: integer
+#   # Default: none
+#   # Required: yes
+#   port: 587
+
+#   # SMTP server username
+#   # Type: string
+#   # Default: none
+#   # Required: yes
+#   username: joe
+
+#   # SMTP server password
+#   # Type: string
+#   # Default: none
+#   # Required: yes
+#   password: joe123
+
+#   # Sender name
+#   # Type: string
+#   # Default: 'Lungo'
+#   # Required: no
+#   name: Lungo
+
+#   # Sender email
+#   # Type: string
+#   # Default: none
+#   # Required: yes
+#   sender: joe@gmail.com

@@ -1,0 +1,52 @@
+{% set smtp = config.smtp %}
+
+serve:
+  public:
+    port: 80
+  admin:
+    port: 8080
+
+session:
+  cookie:
+    name: 'lungo_session'
+  earliest_possible_extend: 12h
+  lifespan: 24h
+  whoami:
+    required_aal: aal1
+
+identity:
+  default_schema_id: user
+  schemas:
+    - id: user
+      url: 'file:///etc/kratos/user.schema.json'
+
+dsn: 'sqlite:///var/lib/kratos/db.sqlite3?_fk=true&mode=rw'
+
+selfservice:
+  flows:
+    registration:
+      enabled: false
+    verification:
+      enabled: false
+    recovery:
+      enabled: true
+      use: code
+      notify_unknown_recipients: false
+      after:
+        hooks:
+          - hook: revoke_active_sessions
+  methods:
+    code:
+      enabled: true
+      passwordless_enabled: true
+    password:
+      enabled: true
+    profile:
+      enabled: false
+
+courier:
+  smtp:
+    connection_uri: 'smtp://{{ smtp.username }}:{{ smtp.password }}@{{ smtp.host }}:{{ smtp.port }}/'
+    from_address: '{{ smtp.sender }}'
+    from_name: '{{ smtp.name }}'
+  template_override_path: '/etc/kratos/email_templates'

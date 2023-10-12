@@ -1,0 +1,47 @@
+branding:
+  name: Lungo
+  cover: /assets/cover.png
+  logo: /assets/favicon.png
+
+directories:
+  cache_dir: ~/.cache/lungo
+  data_dir: ~/.local/share/lungo
+  user_dir: /home
+  shared_dirs:
+    - name: shared
+      source: /mnt/data/shared
+    - name: shared_readonly
+      source: /mnt/data/shared_readonly
+      read_only: true
+
+network:
+  subnet: 192.168.2.0/24
+  http:
+    enabled: true
+    port: 80
+  https:
+    port: 443
+    tls:
+      cert: /etc/ssl/certs/self-signed.crt
+      key: /etc/ssl/private/self-signed.key
+
+rules:
+  privileges:
+    unregistered:
+      allowed_apps: [ ]
+    guest:
+      allowed_apps:
+        - filebrowser
+    user:
+      allowed_apps:
+        - rstudio
+    admin:
+      allowed_apps: all
+
+smtp:
+  host: smtp.gmail.com
+  port: 587
+  username: joe
+  password: joe123
+  name: Lungo
+  sender: joe@gmail.com

@@ -1,0 +1,63 @@
+{% set FILEBROWSER_DEFAULT_PASSWORD_HASH = '$2a$10$aulj1r/ROe0VnA1iE2/ojOItBBFeHK0KLMv5mnl3ECXfiNLKfcKHi' %}
+
+{% for account in users.accounts %}
+- id: 0
+  username: {{ account.username }}
+  password: {{ FILEBROWSER_DEFAULT_PASSWORD_HASH }}
+  scope: /root/home/{{ account.username }}
+  locale: en
+  lockpassword: true
+  viewmode: list
+  singleclick: false
+  perm:
+    admin:
+    {% if account.role == 'admin' %}
+      true
+    {% else %}
+      false
+    {% endif %}
+    execute:
+    {% if account.role == 'admin' %}
+      true
+    {% else %}
+      false
+    {% endif %}
+    create:
+    {% if account.role == 'admin' or account.role == 'user' %}
+      true
+    {% else %}
+      false
+    {% endif %}
+    rename:
+    {% if account.role == 'admin' or account.role == 'user' %}
+      true
+    {% else %}
+      false
+    {% endif %}
+    modify:
+    {% if account.role == 'admin' or account.role == 'user' %}
+      true
+    {% else %}
+      false
+    {% endif %}
+    delete:
+    {% if account.role == 'admin' or account.role == 'user' %}
+      true
+    {% else %}
+      false
+    {% endif %}
+    share:
+    {% if account.role == 'admin' or account.role == 'user' %}
+      true
+    {% else %}
+      false
+    {% endif %}
+    download: true
+  commands: [ ]
+  sorting:
+    by: name
+    asc: true
+  rules: [ ]
+  hidedotfiles: true
+  dateformat: false
+{% endfor %}

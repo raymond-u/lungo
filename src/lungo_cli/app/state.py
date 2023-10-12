@@ -1,30 +1,32 @@
 from ..core.console import Console
 from ..core.container import Container
-from ..core.database import ConfigFile, UsersFile
-from ..core.files import AppFiles
+from ..core.database import AccountManager
+from ..core.network import HttpApiClient
+from ..core.renderer import Renderer
+from ..core.storage import Storage
 
-_app_files = AppFiles()
 _console = Console()
-_container = Container(_console, _app_files.res_dir)
-_config_file = ConfigFile(_console)
-_users_file = UsersFile(_app_files, _console, _container)
-
-
-def app_files() -> AppFiles:
-    return _app_files
+_storage = Storage(_console)
+_container = Container(_console, _storage)
+_account_manager = AccountManager(_console, _storage, HttpApiClient(_console), _container)
+_renderer = Renderer(_console, _storage)
 
 
 def console() -> Console:
     return _console
 
 
+def storage() -> Storage:
+    return _storage
+
+
 def container() -> Container:
     return _container
 
 
-def config_file() -> ConfigFile:
-    return _config_file
+def account_manager() -> AccountManager:
+    return _account_manager
 
 
-def users_file() -> UsersFile:
-    return _users_file
+def renderer() -> Renderer:
+    return _renderer

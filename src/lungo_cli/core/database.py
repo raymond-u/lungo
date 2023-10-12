@@ -1,330 +1,239 @@
 import os
-import pwd
-import re
 from os import PathLike
-from typing import Iterable
+from pathlib import Path
 
-from ruamel.yaml import YAML
 from typer import Exit
 
 from .console import Console
-from .constants import AUTHELIA_DEFAULT_PASSWORD, AUTHELIA_DEFAULT_PASSWORD_HASH, FILEBROWSER_DEFAULT_PASSWORD_HASH
+from .constants import KETO_ADMIN_API_BASE_URL, KRATOS_ADMIN_API_BASE_URL
 from .container import Container
-from .files import AppFiles
+from .network import HttpApiClient
+from .storage import Storage
 from ..helpers.common import format_input, format_path
-from ..models.config import AutheliaConfig
-from ..models.container import ContainerService
-from ..models.user import User, UserRole
+from ..helpers.file import create_dir
+from ..models.config import Privilege, Privileges
+from ..models.users import Account
 
 
-class ConfigFile:
-    """Files for general configuration."""
-
-    def __init__(self, console: Console):
+class AccountManager:
+    def __init__(self, console: Console, storage: Storage, client: HttpApiClient, container: Container):
         self.console = console
-        self.yaml = YAML()
-
-    def create(self, path: str | PathLike[str]):
-        try:
-            with open(path, "w"):
-                ...
-        except Exception as e:
-            self.console.print_error(f"Failed to create {format_path(path)} ({e}).")
-            raise Exit(code=1)
-
-    def save_env(self, path: str | PathLike[str], **env: str):
-        try:
-            with open(path, "w") as f:
-                for key, value in env.items():
-                    # Escape special characters if necessary
-                    if re.search(r"[\s\\#$]", value):
-                        value = f"'{value}'"
-
-                    f.write(f"{key}={value}\n")
-        except Exception as e:
-            self.console.print_error(f"Failed to write {format_path(path)} ({e}).")
-            raise Exit(code=1)
-
-    def save_secret(self, path: str | PathLike[str], secret: str):
-        # Create the file with restrictive permissions
-        self.create(path)
-        os.chmod(path, 0o600)
-
-        try:
-            with open(path, "w") as f:
-                f.write(secret)
-        except Exception as e:
-            self.console.print_error(f"Failed to write {format_path(path)} ({e}).")
-            raise Exit(code=1)
-
-    def save_authelia_config(self, path: str | PathLike[str], config: AutheliaConfig):
-        data = {
-            "notifier": {
-                "smtp": {
-                    "host": config.notifier_smtp_host,
-                    "port": config.notifier_smtp_port,
-                    "username": config.notifier_smtp_username,
-                    "sender": config.notifier_smtp_sender,
-                    "subject": config.notifier_smtp_subject,
-                }
-            },
-            "session": {
-                "domain": config.session_domain,
-            },
-        }
-
-        try:
-            self.yaml.dump(data, path)
-        except Exception as e:
-            self.console.print_error(f"Failed to write {format_path(path)} ({e}).")
-            raise Exit(code=1)
-
-
-class UsersFile:
-    """Files for integral user management."""
-
-    def __init__(self, app_files: AppFiles, console: Console, container: Container):
-        self.app_files = app_files
-        self.console = console
+        self.storage = storage
+        self.client = client
         self.container = container
-        self.password_printed = False
-        self.yaml = YAML()
 
-    def load(self) -> list[User]:
-        if not self.app_files.authelia_users.is_file():
-            return []
+    def verify(self, accounts: list[Account], user_dir: str | PathLike[str]) -> None:
+        usernames = list(map(lambda x: x.username, accounts))
 
-        try:
-            data = self.yaml.load(self.app_files.authelia_users)
-            users = []
-
-            for key, value in data["users"].items():
-                if UserRole.ADMIN.value in value["groups"]:
-                    user_role = UserRole.ADMIN
-                elif UserRole.USER.value in value["groups"]:
-                    user_role = UserRole.USER
-                else:
-                    user_role = UserRole.GUEST
-
-                users.append(
-                    User(
-                        username=key,
-                        full_name=value["displayname"],
-                        email=value["email"],
-                        user_role=user_role,
-                        user_disabled=value["disabled"],
-                        password=value["password"],
-                    )
-                )
-        except Exception as e:
-            self.console.print_error(f"Failed to read {format_path(self.app_files.authelia_users)} ({e}).")
+        if len(usernames) != len(set(usernames)):
+            self.console.print_error("Username of each account must be unique.")
             raise Exit(code=1)
 
-        return users
-
-    def save(self, users: Iterable[User]):
-        # Check the existence of users on the system
-        for user in users:
-            try:
-                pwd.getpwnam(user.username)
-            except KeyError:
-                self.console.print(
-                    (
-                        f"User {format_input(user.username)} does not seem to exist on the system. "
-                        "You must create it manually."
-                    ),
-                    epilogue=True,
+        for account in accounts:
+            if account.username == "anonymous":
+                self.console.print_warning(
+                    f"Username {format_input('anonymous')} detected. "
+                    "This account will be shared by all unregistered users when they access services "
+                    "that require authentication. Please change the username if not intended."
                 )
 
-        self.console.print("Saving user information...")
+            if not (path := Path(user_dir).joinpath(account.username)).is_dir():
+                if os.access(user_dir, os.W_OK):
+                    self.console.print_info(f"Creating user directory at {format_path(path)}...")
+                    create_dir(path)
+                else:
+                    self.console.print_error(
+                        f"User directory at {format_path(path)} does not exist. "
+                        "Please create it with the appropriate permissions."
+                    )
+                    raise Exit(code=1)
 
-        # Authelia users
-        authelia_data = {"users": {}}
+    def update(self, accounts: list[Account], privileges: Privileges) -> None:
+        self.container.up(self.storage.utils_keto_admin_dir)
+        self.container.up(self.storage.utils_kratos_admin_dir)
 
-        for user in users:
-            if user.user_role == UserRole.ADMIN:
-                groups = [UserRole.ADMIN.value, UserRole.USER.value, UserRole.GUEST.value]
-            elif user.user_role == UserRole.USER:
-                groups = [UserRole.USER.value, UserRole.GUEST.value]
+        self.console.print_debug("Connecting to Keto Admin API...")
+        self.client.ensure_reachable(f"{KETO_ADMIN_API_BASE_URL}/health/ready")
+
+        # Remove all existing relation tuples
+        self.console.print_debug("Removing existing relation tuples...")
+        self.client.delete(f"{KETO_ADMIN_API_BASE_URL}/admin/relation-tuples?namespace=app")
+        self.client.delete(f"{KETO_ADMIN_API_BASE_URL}/admin/relation-tuples?namespace=role")
+
+        # Add base relation tuples
+        data = [
+            {
+                "action": "insert",
+                "relation_tuple": {
+                    "namespace": "app",
+                    "object": "filebrowser",
+                    "relation": "access",
+                    "subject_set": {"namespace": "app", "object": "all", "relation": "access"},
+                },
+            },
+            {
+                "action": "insert",
+                "relation_tuple": {
+                    "namespace": "app",
+                    "object": "rstudio",
+                    "relation": "access",
+                    "subject_set": {"namespace": "app", "object": "all", "relation": "access"},
+                },
+            },
+            {
+                "action": "insert",
+                "relation_tuple": {
+                    "namespace": "role",
+                    "object": "unregistered",
+                    "relation": "member",
+                    "subject_set": {"namespace": "role", "object": "guest", "relation": "member"},
+                },
+            },
+            {
+                "action": "insert",
+                "relation_tuple": {
+                    "namespace": "role",
+                    "object": "guest",
+                    "relation": "member",
+                    "subject_set": {"namespace": "role", "object": "user", "relation": "member"},
+                },
+            },
+            {
+                "action": "insert",
+                "relation_tuple": {
+                    "namespace": "role",
+                    "object": "user",
+                    "relation": "member",
+                    "subject_set": {"namespace": "role", "object": "admin", "relation": "member"},
+                },
+            },
+            {
+                "action": "insert",
+                "relation_tuple": {
+                    "namespace": "role",
+                    "object": "unregistered",
+                    "relation": "member",
+                    "subject_id": "anonymous",
+                },
+            },
+        ]
+
+        # Add role privileges
+        for role in ["unregistered", "guest", "user", "admin"]:
+            privilege: Privilege = getattr(privileges, role)
+
+            if privilege.allowed_apps == "all":
+                data.append(
+                    {
+                        "action": "insert",
+                        "relation_tuple": {
+                            "namespace": "app",
+                            "object": "all",
+                            "relation": "access",
+                            "subject_set": {"namespace": "role", "object": role, "relation": "member"},
+                        },
+                    },
+                )
             else:
-                groups = [UserRole.GUEST.value]
+                for allowed_app in privilege.allowed_apps:
+                    data.append(
+                        {
+                            "action": "insert",
+                            "relation_tuple": {
+                                "namespace": "app",
+                                "object": allowed_app.value,
+                                "relation": "access",
+                                "subject_set": {"namespace": "role", "object": role, "relation": "member"},
+                            },
+                        },
+                    )
 
-            authelia_data["users"][user.username] = {
-                "disabled": user.user_disabled,
-                "displayname": user.full_name,
-                "password": user.password,
-                "email": user.email,
-                "groups": groups,
+        # Add account privileges
+        for account in accounts:
+            data.append(
+                {
+                    "action": "insert",
+                    "relation_tuple": {
+                        "namespace": "role",
+                        "object": account.role.value,
+                        "relation": "member",
+                        "subject_id": account.username,
+                    },
+                },
+            )
+
+            if account.extra.allowed_apps == "all":
+                data.append(
+                    {
+                        "action": "insert",
+                        "relation_tuple": {
+                            "namespace": "app",
+                            "object": "all",
+                            "relation": "access",
+                            "subject_id": account.username,
+                        },
+                    },
+                )
+            else:
+                for allowed_app in account.extra.allowed_apps:
+                    data.append(
+                        {
+                            "action": "insert",
+                            "relation_tuple": {
+                                "namespace": "app",
+                                "object": allowed_app.value,
+                                "relation": "access",
+                                "subject_id": account.username,
+                            },
+                        },
+                    )
+
+        self.console.print_debug("Creating new relation tuples...")
+        self.client.patch(f"{KETO_ADMIN_API_BASE_URL}/admin/relation-tuples", data)
+
+        self.container.down(self.storage.utils_keto_admin_dir)
+
+        self.console.print_debug("Connecting to Kratos Admin API...")
+        self.client.ensure_reachable(f"{KRATOS_ADMIN_API_BASE_URL}/health/ready")
+
+        accounts = accounts[:]
+
+        for old_account in self.client.get(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities"):
+            if new_account := next(filter(lambda x: x.username == old_account["traits"]["username"], accounts), None):
+                # Update the account
+                accounts.remove(new_account)
+                data = []
+
+                if old_account["state"] != (state := ("active" if new_account.enabled else "inactive")):
+                    data.append({"op": "replace", "path": "/state", "value": state})
+                if old_account["traits"]["email"] != new_account.email:
+                    data.append({"op": "replace", "path": "/traits/email", "value": new_account.email})
+                if old_account["traits"]["name"]["first"] != new_account.name.first:
+                    data.append({"op": "replace", "path": "/traits/name/first", "value": new_account.name.first})
+                if old_account["traits"]["name"]["last"] != new_account.name.last:
+                    data.append({"op": "replace", "path": "/traits/name/last", "value": new_account.name.last})
+
+                if data:
+                    self.console.print_debug(f"Updating account {format_input(new_account.username)}...")
+                    self.client.patch(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities/{old_account['id']}", data)
+            else:
+                # Remove the account
+                self.console.print_debug(f"Removing account {format_input(old_account['traits']['username'])}...")
+                self.client.delete(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities/{old_account['id']}")
+
+        for new_account in accounts:
+            # Create the account
+            data = {
+                "schema_id": "user",
+                "state": "active" if new_account.enabled else "inactive",
+                "traits": {
+                    "username": new_account.username,
+                    "email": new_account.email,
+                    "name": {"first": new_account.name.first, "last": new_account.name.last},
+                },
             }
 
-        try:
-            self.yaml.dump(authelia_data, self.app_files.authelia_users)
-        except Exception as e:
-            self.console.print_error(f"Failed to write {format_path(self.app_files.authelia_users)} ({e}).")
-            raise Exit(code=1)
+            self.console.print_debug(f"Creating account {format_path(new_account.username)}...")
+            self.client.post(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities", data)
 
-        # Filebrowser users
-        filebrowser_data = []
-
-        for user in users:
-            if user.user_role == UserRole.ADMIN:
-                permission = {
-                    "admin": True,
-                    "execute": True,
-                    "create": True,
-                    "rename": True,
-                    "modify": True,
-                    "delete": True,
-                    "share": True,
-                    "download": True,
-                }
-            elif user.user_role == UserRole.USER:
-                permission = {
-                    "admin": False,
-                    "execute": False,
-                    "create": True,
-                    "rename": True,
-                    "modify": True,
-                    "delete": True,
-                    "share": True,
-                    "download": True,
-                }
-            else:
-                permission = {
-                    "admin": False,
-                    "execute": False,
-                    "create": False,
-                    "rename": False,
-                    "modify": False,
-                    "delete": False,
-                    "share": True,
-                    "download": True,
-                }
-
-            filebrowser_data.append(
-                {
-                    "id": 0,
-                    "username": user.username,
-                    "password": FILEBROWSER_DEFAULT_PASSWORD_HASH,
-                    "scope": f"/root/home/{user.username}",
-                    "locale": "en",
-                    "lockpassword": True,
-                    "viewmode": "list",
-                    "singleclick": False,
-                    "perm": permission,
-                    "commands": [],
-                    "sorting": {"by": "name", "asc": True},
-                    "rules": [],
-                    "hidedotfiles": True,
-                    "dateformat": False,
-                }
-            )
-
-        try:
-            self.yaml.dump(filebrowser_data, self.app_files.filebrowser_users)
-        except Exception as e:
-            self.console.print_error(f"Failed to write {format_path(self.app_files.filebrowser_users)} ({e}).")
-            raise Exit(code=1)
-
-        filebrowser_dockerfile = ["FROM docker.io/filebrowser/filebrowser"]
-
-        for user in users:
-            filebrowser_dockerfile.append(f"RUN mkdir -p /root/home/{user.username}")
-            filebrowser_dockerfile.append(f"RUN ln -s /mnt/home/{user.username} /root/home/{user.username}/home")
-            filebrowser_dockerfile.append(f"RUN ln -s /mnt/home/shared /root/home/{user.username}")
-            filebrowser_dockerfile.append(f"RUN ln -s /mnt/home/shared_readonly /root/home/{user.username}")
-
-        try:
-            with open(self.app_files.filebrowser_dockerfile, "w") as f:
-                f.write("\n".join(filebrowser_dockerfile))
-        except Exception as e:
-            self.console.print_error(f"Failed to write {format_path(self.app_files.filebrowser_dockerfile)} ({e}).")
-            raise Exit(code=1)
-
-        if not self.app_files.filebrowser_database.exists():
-            self.container.run(
-                ContainerService.FILEBROWSER,
-                "-c",
-                "/etc/filebrowser/settings.yaml",
-                "config",
-                "init",
-                "--auth.method=noauth",
-                ensure_built=True,
-            )
-            self.container.run(
-                ContainerService.FILEBROWSER,
-                "-c",
-                "/etc/filebrowser/settings.yaml",
-                "config",
-                "import",
-                "/etc/filebrowser/config_export.yaml",
-                ensure_built=True,
-            )
-
-        self.container.run(
-            ContainerService.FILEBROWSER,
-            "-c",
-            "/etc/filebrowser/settings.yaml",
-            "users",
-            "import",
-            "/var/lib/filebrowser/users_export.yaml",
-            ensure_built=True,
-            force_rebuild=True,
-        )
-
-        # RStudio users
-        rstudio_dockerfile = ["FROM docker.io/rocker/verse"]
-
-        for user in users:
-            rstudio_dockerfile.append(f"RUN useradd -g root -G sudo -m '{user.username}'")
-            rstudio_dockerfile.append(f"RUN echo '{user.username}:passwd' | chpasswd")
-            rstudio_dockerfile.append(f"RUN ln -s /mnt/home/{user.username} /home/{user.username}/home")
-            rstudio_dockerfile.append(f"RUN ln -s /mnt/home/shared /home/{user.username}")
-            rstudio_dockerfile.append(f"RUN ln -s /mnt/home/shared_readonly /home/{user.username}")
-
-        try:
-            with open(self.app_files.rstudio_dockerfile, "w") as f:
-                f.write("\n".join(rstudio_dockerfile))
-        except Exception as e:
-            self.console.print_error(f"Failed to write {format_path(self.app_files.rstudio_dockerfile)} ({e}).")
-            raise Exit(code=1)
-
-        self.container.build(ContainerService.RSTUDIO, force_rebuild=True)
-
-    def add(self, users: list[User], user: User) -> bool:
-        if not re.fullmatch(r"[\w-]+", user.username):
-            self.console.print_warning("Username must only contain alphanumeric characters, underscores, and dashes.")
-            return False
-
-        for user_ in users:
-            if user_.username == user.username:
-                self.console.print_warning("Username must be unique.")
-                return False
-
-        if "@" not in user.email:
-            self.console.print_warning("Email address must be valid.")
-            return False
-
-        if user.password is ...:
-            user.password = AUTHELIA_DEFAULT_PASSWORD_HASH
-
-            if not self.password_printed:
-                self.console.print(
-                    (
-                        f"The default password is {format_input(AUTHELIA_DEFAULT_PASSWORD)}. "
-                        "Please change it after logging in."
-                    ),
-                    epilogue=True,
-                )
-                self.password_printed = True
-
-        users.append(user)
-        return True
-
-    def find(self, users: list[User], username: str) -> User | None:
-        for user in users:
-            if user.username == username:
-                return user
-        else:
-            self.console.print_warning(f"User {format_input(username)} does not exist.")
-            return None
+        self.container.down(self.storage.utils_kratos_admin_dir)

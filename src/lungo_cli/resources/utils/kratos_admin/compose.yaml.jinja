@@ -1,0 +1,22 @@
+{% set KRATOS_VER = 'v1.0.0' %}
+
+services:
+  kratos:
+    image: 'docker.io/oryd/kratos:{{ KRATOS_VER }}'
+    entrypoint: [ ]
+    command: 'kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out'
+
+    ports:
+      - '3940:8080'
+
+    volumes:
+      - './config/kratos:/etc/kratos:ro'
+      - '{{ app_dirs.managed_dir }}/kratos:/var/lib/kratos:rw'
+
+    secrets:
+      - source: KRATOS_SECRETS
+        target: /etc/kratos/secrets.yaml
+
+secrets:
+  KRATOS_SECRETS:
+    file: '{{ app_dirs.generated_dir }}/kratos/secrets.yaml'

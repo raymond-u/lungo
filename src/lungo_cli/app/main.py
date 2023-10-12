@@ -3,9 +3,8 @@ from typing import Annotated
 from typer import Exit, Option, Typer
 
 from .state import console
-from ..commands import down, init, up, user
+from ..commands import check, down, init, up
 from ..core.constants import APP_NAME_CAPITALIZED
-from ..helpers.app import update_resources
 from ..helpers.common import get_app_version
 
 app = Typer(
@@ -15,15 +14,13 @@ app = Typer(
     rich_markup_mode="rich",
 )
 
+app.command("check")(check.main)
 app.command("init")(init.main)
 app.command("up")(up.main)
 app.command("down")(down.main)
 
-app.add_typer(user.app, name="user")
-
 
 def app_wrapper():
-    update_resources()
     app()
 
 

@@ -1,25 +1,32 @@
-from typing import Annotated
+from pathlib import Path
+from typing import Annotated, Optional
 
 from typer import Option
 
 from ..app.state import console, container
-from ..helpers.app import check_prerequisites, handle_common_args
+from ..helpers.app import load_config, process_args, process_args_delayed
 
 
 def main(
+    config_dir: Annotated[
+        Optional[Path], Option("--config-dir", "-c", help="Path to the configuration directory.", show_default=False)
+    ] = None,
+    dev: Annotated[bool, Option("--dev", help="Use the development configuration.", show_default=False)] = False,
     quiet: Annotated[
         bool, Option("--quiet", "-q", help="Suppress all output except for errors.", show_default=False)
     ] = False,
+    verbosity: Annotated[
+        int, Option("--verbose", "-v", count=True, help="Increase verbosity.", show_default=False)
+    ] = 0,
 ):
     """
-    Bring the service offline.
+    Stop the service.
     """
-    handle_common_args(quiet)
-    check_prerequisites()
+    process_args(config_dir, quiet, verbosity)
+    load_config()
+    process_args_delayed(dev)
 
-    # Stop the service
-    container().down()
+    with console().status("Stopping the service..."):
+        container().down()
 
-    console().request_for_newline()
     console().print("Service stopped.")
-    console().show_epilogue()

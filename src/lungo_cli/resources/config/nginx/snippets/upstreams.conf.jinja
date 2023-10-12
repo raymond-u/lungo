@@ -1,0 +1,15 @@
+upstream oathkeeper {
+    server {{ ip_addresses.oathkeeper }}:80;
+}
+
+upstream node {
+    server {{ ip_addresses.node }}:80;
+}
+
+upstream filebrowser {
+    server {{ ip_addresses.filebrowser }}:80;
+}
+
+upstream rstudio {
+    server {{ ip_addresses.rstudio }}:80;
+}

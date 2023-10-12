@@ -1,0 +1,67 @@
+serve:
+  api:
+    port: 80
+
+  proxy:
+    port: 8080
+    trust_forwarded_headers: true
+
+  prometheus:
+    port: 8081
+    collapse_request_paths: false
+    hide_request_paths: false
+    metric_name_prefix: 'ory_oathkeeper_'
+    metrics_path: ''
+
+access_rules:
+  matching_strategy: regexp
+  repositories:
+    - 'file:///etc/oathkeeper/access_rules.yaml'
+
+authenticators:
+  anonymous:
+    enabled: true
+    config:
+      subject: anonymous
+
+  cookie_session:
+    enabled: true
+    config:
+      check_session_url: 'http://{{ ip_addresses.kratos }}:80/sessions/whoami'
+      preserve_path: true
+      extra_from: '@this'
+      subject_from: 'identity.id'
+      only:
+        - 'lungo_session'
+
+  noop:
+    enabled: true
+
+authorizers:
+  remote_json:
+    enabled: true
+    config:
+      remote: 'http://{{ ip_addresses.keto }}:80/check'
+      payload: |
+        {% raw %}
+        {
+          "namespace": "app",
+          "object": "{{ printIndex .MatchContext.RegexpCaptureGroups 1 }}",
+          "relation": "access",
+          "subject_id": "{{ default .Subject .Extra.identity.traits.username }}"
+        }
+        {% endraw %}
+
+mutators:
+  header:
+    enabled: true
+    config:
+      headers:
+        X-Remote-User: {% raw %}"{{ default .Subject .Extra.identity.traits.username }}"{% endraw %}
+
+errors:
+  handlers:
+    json:
+      enabled: true
+      config:
+        verbose: true
