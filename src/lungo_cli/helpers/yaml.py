@@ -21,7 +21,7 @@ def parse_yaml(path: str | PathLike[str], model: Type[T]) -> T:
         for error in e.errors():
             error_msg += "\n  "
 
-            for loc in error.loc():
+            for loc in error.loc:
                 if type(loc) is int:
                     error_msg += f"[{loc}]"
                 else:
