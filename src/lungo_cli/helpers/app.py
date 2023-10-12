@@ -57,8 +57,10 @@ def get_user_dir(config: Config) -> Path:
         return Path.home().parent
 
 
-def get_ip_addresses(subnet: IPv4Network) -> IpAddresses:
+def get_ip_addresses(subnet: str | IPv4Network) -> IpAddresses:
     """Get the IP addresses for the services."""
+    subnet = IPv4Network(subnet)
+
     if subnet.num_addresses < 256:
         console().print_error(
             f"Subnet {format_input(str(subnet))} is too small. "
