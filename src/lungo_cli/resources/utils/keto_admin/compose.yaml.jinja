@@ -2,6 +2,9 @@
 
 services:
   keto:
+    container_name: keto_admin
+    hostname: keto_admin
+
     image: 'docker.io/oryd/keto:{{ KETO_VER }}'
     entrypoint: [ ]
     command: keto serve -c /etc/keto/config.yaml --sqa-opt-out

@@ -2,6 +2,9 @@
 
 services:
   kratos:
+    container_name: kratos_admin
+    hostname: kratos_admin
+
     image: 'docker.io/oryd/kratos:{{ KRATOS_VER }}'
     entrypoint: [ ]
     command: 'kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out'
