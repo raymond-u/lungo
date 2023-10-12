@@ -13,7 +13,7 @@ services:
       - '3940:8080'
 
     volumes:
-      - './config/kratos:/etc/kratos:ro'
+      - '../../config/kratos:/etc/kratos:ro'
       - '{{ app_dirs.managed_dir }}/kratos:/var/lib/kratos:rw'
 
     secrets:
