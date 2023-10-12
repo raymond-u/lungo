@@ -1,6 +1,7 @@
 from enum import Enum
 from importlib import metadata
 from os import PathLike
+from pathlib import Path
 from shutil import which
 
 from ..core.constants import PACKAGE_NAME
@@ -9,6 +10,14 @@ from ..core.constants import PACKAGE_NAME
 def get_app_version() -> str:
     """Get the version of the app."""
     return metadata.version(PACKAGE_NAME)
+
+
+def get_user_dir(path: str | PathLike[str] | None) -> Path:
+    """Get the directory where data for all the users is stored."""
+    if path:
+        return Path(path).resolve()
+    else:
+        return Path.home().parent
 
 
 def program_exists(program: str) -> bool:

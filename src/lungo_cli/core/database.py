@@ -9,8 +9,7 @@ from .container import Container
 from .file import FileUtils
 from .network import HttpApiClient
 from .storage import Storage
-from ..helpers.app import get_user_dir
-from ..helpers.common import format_input, format_path
+from ..helpers.common import format_input, format_path, get_user_dir
 from ..models.config import Privilege, Privileges
 from ..models.users import Account
 

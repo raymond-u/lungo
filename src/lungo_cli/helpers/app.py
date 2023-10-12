@@ -5,7 +5,7 @@ from pathlib import Path
 from importlib_resources import as_file, files
 from typer import Exit
 
-from .common import format_input, format_path
+from .common import format_input, format_path, get_user_dir
 from .crypto import generate_random_string, generate_self_signed_cert
 from .yaml import parse_yaml
 from ..app.state import account_manager, console, file_utils, renderer, storage
@@ -47,14 +47,6 @@ def copy_resources(src: str | PathLike[str], dst: str | PathLike[str]) -> None:
     """Copy resources from the package to the destination directory."""
     with as_file(files(f"{PACKAGE_NAME}.resources")) as resources:
         file_utils().copy(resources / src, dst)
-
-
-def get_user_dir(path: str | PathLike[str] | None) -> Path:
-    """Get the directory where data for all the users is stored."""
-    if path:
-        return Path(path).resolve()
-    else:
-        return Path.home().parent
 
 
 def get_ip_addresses(subnet: str | IPv4Network) -> IpAddresses:
