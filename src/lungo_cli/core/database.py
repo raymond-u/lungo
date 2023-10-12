@@ -7,17 +7,20 @@ from typer import Exit
 from .console import Console
 from .constants import KETO_ADMIN_API_BASE_URL, KRATOS_ADMIN_API_BASE_URL
 from .container import Container
+from .file import FileUtils
 from .network import HttpApiClient
 from .storage import Storage
 from ..helpers.common import format_input, format_path
-from ..helpers.file import create_dir
 from ..models.config import Privilege, Privileges
 from ..models.users import Account
 
 
 class AccountManager:
-    def __init__(self, console: Console, storage: Storage, client: HttpApiClient, container: Container):
+    def __init__(
+        self, console: Console, file_utils: FileUtils, storage: Storage, client: HttpApiClient, container: Container
+    ):
         self.console = console
+        self.file_utils = file_utils
         self.storage = storage
         self.client = client
         self.container = container
@@ -40,7 +43,7 @@ class AccountManager:
             if not (path := Path(user_dir).joinpath(account.username)).is_dir():
                 if os.access(user_dir, os.W_OK):
                     self.console.print_info(f"Creating user directory at {format_path(path)}...")
-                    create_dir(path)
+                    self.file_utils.create_dir(path)
                 else:
                     self.console.print_error(
                         f"User directory at {format_path(path)} does not exist. "

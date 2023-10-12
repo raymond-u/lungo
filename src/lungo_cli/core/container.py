@@ -4,10 +4,10 @@ from typer import Exit
 
 from .console import Console
 from .constants import DOCKER_URL, PODMAN_COMPOSE_URL, PODMAN_URL
+from .file import FileUtils
 from .storage import Storage
 from ..helpers.app import run_shell_command
 from ..helpers.common import format_command, format_program, program_exists
-from ..helpers.file import create, remove
 from ..models.container import EContainerService, EContainerTool
 
 docker = format_program("Docker")
@@ -21,8 +21,9 @@ podman_compose_link = f"[link={PODMAN_COMPOSE_URL}]{podman_compose}[/link]"
 class Container:
     """Communicate with the container management tool."""
 
-    def __init__(self, console: Console, storage: Storage):
+    def __init__(self, console: Console, file_utils: FileUtils, storage: Storage):
         self.console = console
+        self.file_utils = file_utils
         self.storage = storage
         self.tool = None
 
@@ -89,7 +90,7 @@ class Container:
             raise Exit(code=1)
 
         if not working_dir:
-            create(self.storage.lock_file)
+            self.file_utils.create(self.storage.lock_file)
 
         match self.choose_tool():
             case EContainerTool.DOCKER:
@@ -107,4 +108,4 @@ class Container:
                 run_shell_command("podman-compose", "down", cwd=working_dir or self.storage.bundled_dir)
 
         if not working_dir:
-            remove(self.storage.lock_file)
+            self.file_utils.remove(self.storage.lock_file)

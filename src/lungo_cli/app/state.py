@@ -1,19 +1,25 @@
 from ..core.console import Console
 from ..core.container import Container
 from ..core.database import AccountManager
+from ..core.file import FileUtils
 from ..core.network import HttpApiClient
 from ..core.renderer import Renderer
 from ..core.storage import Storage
 
 _console = Console()
-_storage = Storage(_console)
-_container = Container(_console, _storage)
-_account_manager = AccountManager(_console, _storage, HttpApiClient(_console), _container)
-_renderer = Renderer(_console, _storage)
+_file_utils = FileUtils(_console)
+_storage = Storage(_console, _file_utils)
+_container = Container(_console, _file_utils, _storage)
+_account_manager = AccountManager(_console, _file_utils, _storage, HttpApiClient(_console), _container)
+_renderer = Renderer(_console, _file_utils, _storage)
 
 
 def console() -> Console:
     return _console
+
+
+def file_utils() -> FileUtils:
+    return _file_utils
 
 
 def storage() -> Storage:

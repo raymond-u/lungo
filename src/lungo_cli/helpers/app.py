@@ -8,9 +8,8 @@ from typer import Exit
 
 from .common import format_command, format_input, format_path
 from .crypto import generate_random_string, generate_self_signed_cert
-from .file import copy, hash_sha256, read_text, remove, write_text
 from .yaml import parse_yaml
-from ..app.state import account_manager, console, renderer, storage
+from ..app.state import account_manager, console, file_utils, renderer, storage
 from ..core.constants import PACKAGE_NAME
 from ..models.config import Config
 from ..models.context import AppDirs, Context, IpAddresses
@@ -39,16 +38,16 @@ def process_args_delayed(dev: bool, force_init: bool = False, remove_lock: bool 
         console().set_log_level(1)
 
     if force_init:
-        remove(storage().bundled_dir)
+        file_utils().remove(storage().bundled_dir)
 
     if remove_lock:
-        remove(storage().lock_file)
+        file_utils().remove(storage().lock_file)
 
 
 def copy_resources(src: str | PathLike[str], dst: str | PathLike[str]) -> None:
     """Copy resources from the package to the destination directory."""
     with as_file(files(f"{PACKAGE_NAME}.resources")) as resources:
-        copy(resources / src, dst)
+        file_utils().copy(resources / src, dst)
 
 
 def get_user_dir(config: Config) -> Path:
@@ -102,7 +101,7 @@ def ensure_application_data(config: Config, users: Users) -> None:
         if not storage().bundled_dir.is_dir() or storage().storage_version == "dev":
             console().print_info("Updating bundled data...")
             copy_resources(".", storage().bundled_dir)
-            remove(storage().init_file)
+            file_utils().remove(storage().init_file)
 
         if not storage().nginx_cert_file.is_file() or not storage().nginx_key_file.is_file():
             console().print_info("Generating self-signed certificate...")
@@ -119,19 +118,19 @@ def ensure_application_data(config: Config, users: Users) -> None:
     with console().status("Updating database..."):
         config_hash = hash_config()
 
-        if not storage().init_file.is_file() or read_text(storage().init_file) != config_hash:
-            remove(storage().init_file)
+        if not storage().init_file.is_file() or file_utils().read_text(storage().init_file) != config_hash:
+            file_utils().remove(storage().init_file)
 
             renderer().render_all(create_context(config, users))
             account_manager().verify(users.accounts, config.directories.user_dir)
             account_manager().update(users.accounts, config.rules.privileges)
 
-            write_text(storage().init_file, config_hash)
+            file_utils().write_text(storage().init_file, config_hash)
 
 
 def hash_config() -> str:
     """Hash the configuration files."""
-    return hash_sha256(storage().config_file) + hash_sha256(storage().users_file)
+    return file_utils().hash_sha256(storage().config_file) + file_utils().hash_sha256(storage().users_file)
 
 
 def load_config() -> tuple[Config, Users]:

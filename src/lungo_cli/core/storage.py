@@ -6,15 +6,16 @@ from platformdirs import user_cache_path, user_config_path, user_data_path
 
 from .console import Console
 from .constants import APP_AUTHOR, APP_NAME, STORAGE_PREFIX, STORAGE_VERSION
+from .file import FileUtils
 from ..helpers.common import format_path
-from ..helpers.file import copy, create_dir
 
 
 class Storage:
     """Represent the application files."""
 
-    def __init__(self, console: Console):
+    def __init__(self, console: Console, file_utils: FileUtils):
         self.console = console
+        self.file_utils = file_utils
         self._storage_version = STORAGE_VERSION
         self._cache_dir = user_cache_path(APP_NAME, APP_AUTHOR)
         self._config_dir = user_config_path(APP_NAME, APP_AUTHOR)
@@ -156,10 +157,10 @@ class Storage:
     def migrate(self, from_: str | PathLike[str]) -> None:
         self.console.print_info(f"Migrating storage from {format_path(Path(from_).name)}...")
 
-        copy(from_ / self.generated_rel, self.generated_dir)
-        copy(from_ / self.managed_rel, self.managed_dir)
+        self.file_utils.copy(from_ / self.generated_rel, self.generated_dir)
+        self.file_utils.copy(from_ / self.managed_rel, self.managed_dir)
 
     def create_dirs(self) -> None:
         for app in ["nginx", "keto", "kratos", "oathkeeper", "node", "filebrowser", "rstudio"]:
-            create_dir(self.cache_latest_dir / app)
-            create_dir(self.managed_dir / app)
+            self.file_utils.create_dir(self.cache_latest_dir / app)
+            self.file_utils.create_dir(self.managed_dir / app)

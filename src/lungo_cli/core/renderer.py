@@ -5,15 +5,16 @@ from jinja2 import Environment, FileSystemLoader
 from typer import Exit
 
 from .console import Console
+from .file import FileUtils
 from .storage import Storage
 from ..helpers.common import format_path
-from ..helpers.file import write_text
 from ..models.context import Context
 
 
 class Renderer:
-    def __init__(self, console: Console, storage: Storage):
+    def __init__(self, console: Console, file_utils: FileUtils, storage: Storage):
         self.console = console
+        self.file_utils = file_utils
         self.storage = storage
         self._env = None
 
@@ -30,7 +31,7 @@ class Renderer:
 
     def render(self, src: str | PathLike[str], dst: str | PathLike[str], **kwargs: Any) -> None:
         try:
-            write_text(dst, self.env.get_template(str(src)).render(**kwargs))
+            self.file_utils.write_text(dst, self.env.get_template(str(src)).render(**kwargs))
         except Exception as e:
             self.console.print_error(f"Failed to render {format_path(src)} ({e}).")
             raise Exit(code=1)

@@ -7,7 +7,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 
-from .file import write_bytes
+from ..app.state import file_utils
 from ..core.constants import APP_NAME_CAPITALIZED
 
 
@@ -38,8 +38,8 @@ def generate_self_signed_cert(cert_file: str | PathLike[str], key_file: str | Pa
         encryption_algorithm=serialization.NoEncryption(),
     )
 
-    write_bytes(cert_file, cert_pem)
-    write_bytes(key_file, key_pem)
+    file_utils().write_bytes(cert_file, cert_pem)
+    file_utils().write_bytes(key_file, key_pem)
 
 
 def generate_random_string() -> str:
