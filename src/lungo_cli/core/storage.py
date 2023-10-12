@@ -47,7 +47,7 @@ class Storage:
 
     @property
     def cache_latest_dir(self) -> Path:
-        return self._cache_dir / f"{STORAGE_PREFIX}{self._storage_version}"
+        return self._cache_dir / self._storage_version
 
     @property
     def data_dir(self) -> Path:
@@ -59,7 +59,7 @@ class Storage:
 
     @property
     def data_latest_dir(self) -> Path:
-        return self._data_dir / f"{STORAGE_PREFIX}{self._storage_version}"
+        return self._data_dir / self._storage_version
 
     @property
     def bundled_dir(self) -> Path:

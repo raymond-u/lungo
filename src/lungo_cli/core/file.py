@@ -84,6 +84,7 @@ class FileUtils:
         path = Path(path)
 
         try:
+            self.create_dir(path.parent)
             path.write_bytes(data)
         except Exception as e:
             self.console.print_error(f"Failed to write {format_path(path.name)} ({e}).")
@@ -93,6 +94,7 @@ class FileUtils:
         path = Path(path)
 
         try:
+            self.create_dir(path.parent)
             path.write_text(text)
         except Exception as e:
             self.console.print_error(f"Failed to write {format_path(path.name)} ({e}).")
