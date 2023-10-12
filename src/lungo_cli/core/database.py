@@ -26,6 +26,10 @@ class AccountManager:
         self.container = container
 
     def verify(self, accounts: list[Account], user_dir: str | PathLike[str]) -> None:
+        if len(accounts) == 0:
+            self.console.print_error("At least one account must be defined.")
+            raise Exit(code=1)
+
         usernames = list(map(lambda x: x.username, accounts))
 
         if len(usernames) != len(set(usernames)):
