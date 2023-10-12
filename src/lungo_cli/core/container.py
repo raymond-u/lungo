@@ -28,7 +28,7 @@ class Container:
         self.tool = None
 
     def run_shell_command(
-        self, *command: str, cwd: str | PathLike[str] | None = None, show_output: bool = False
+        self, *command: str, cwd: str | PathLike[str] | None = None, show_output: bool = True
     ) -> None:
         command = list(filter(None, command))
 
