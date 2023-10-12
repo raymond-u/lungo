@@ -57,6 +57,10 @@ class AccountManager:
                     raise Exit(code=1)
 
     def update(self, accounts: list[Account], privileges: Privileges) -> None:
+        # Ensure that the container can always be started even if it failed last time
+        self.container.down(self.storage.utils_keto_admin_dir)
+        self.container.down(self.storage.utils_kratos_admin_dir)
+
         self.container.up(self.storage.utils_keto_admin_dir)
         self.container.up(self.storage.utils_kratos_admin_dir)
 
