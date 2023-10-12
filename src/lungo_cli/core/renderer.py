@@ -2,7 +2,6 @@ from os import PathLike
 from typing import Any
 
 from jinja2 import Environment, FileSystemLoader
-from typer import Exit
 
 from .console import Console
 from .file import FileUtils
@@ -31,10 +30,13 @@ class Renderer:
 
     def render(self, src: str | PathLike[str], dst: str | PathLike[str], **kwargs: Any) -> None:
         try:
+            self.console.print_debug(f"Rendering {format_path(src)}...")
+            self.console.print_debug(f"{kwargs}")
             self.file_utils.write_text(dst, self.env.get_template(str(src)).render(**kwargs))
         except Exception as e:
             self.console.print_error(f"Failed to render {format_path(src)} ({e}).")
-            raise Exit(code=1)
+            raise
+            # raise Exit(code=1)
 
     def render_all(self, context: Context) -> None:
         self.console.print_info("Rendering templates...")
@@ -43,5 +45,4 @@ class Renderer:
             relative_path = file.relative_to(self.storage.bundled_dir)
 
             if str(self.storage.excluded_rel) not in relative_path.parts:
-                self.console.print_debug(f"Rendering {format_path(file.name)}...")
                 self.render(relative_path, file.with_suffix(""), **context.model_dump())
