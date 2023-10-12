@@ -2,7 +2,7 @@ import time
 from typing import Any
 
 import requests
-from requests import ConnectionError, Timeout
+from requests import ConnectTimeout
 from typer import Exit
 
 from .console import Console
@@ -18,7 +18,7 @@ class HttpApiClient:
             try:
                 requests.get(url, headers={"Accept": "application/json"}).raise_for_status()
                 break
-            except ConnectionError | Timeout:
+            except ConnectTimeout:
                 time.sleep(1)
                 continue
             except Exception as e:
