@@ -1,5 +1,7 @@
 {% set smtp = config.smtp %}
 
+dsn: 'sqlite:///var/lib/kratos/db.sqlite3?_fk=true&mode=rwc'
+
 serve:
   public:
     port: 80
@@ -19,8 +21,6 @@ identity:
   schemas:
     - id: user
       url: 'file:///etc/kratos/user.schema.json'
-
-dsn: 'sqlite:///var/lib/kratos/db.sqlite3?_fk=true&mode=rw'
 
 selfservice:
   flows:
