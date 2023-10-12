@@ -1,6 +1,5 @@
 import os
 from os import PathLike
-from pathlib import Path
 
 from typer import Exit
 
@@ -10,6 +9,7 @@ from .container import Container
 from .file import FileUtils
 from .network import HttpApiClient
 from .storage import Storage
+from ..helpers.app import get_user_dir
 from ..helpers.common import format_input, format_path
 from ..models.config import Privilege, Privileges
 from ..models.users import Account
@@ -25,7 +25,7 @@ class AccountManager:
         self.client = client
         self.container = container
 
-    def verify(self, accounts: list[Account], user_dir: str | PathLike[str]) -> None:
+    def verify(self, accounts: list[Account], user_dir: str | PathLike[str] | None) -> None:
         if len(accounts) == 0:
             self.console.print_error("At least one account must be defined.")
             raise Exit(code=1)
@@ -36,6 +36,8 @@ class AccountManager:
             self.console.print_error("Username of each account must be unique.")
             raise Exit(code=1)
 
+        user_dir = get_user_dir(user_dir)
+
         for account in accounts:
             if account.username == "anonymous":
                 self.console.print_warning(
@@ -44,7 +46,7 @@ class AccountManager:
                     "that require authentication. Please change the username if not intended."
                 )
 
-            if not (path := Path(user_dir).joinpath(account.username)).is_dir():
+            if not (path := user_dir / account.username).is_dir():
                 if os.access(user_dir, os.W_OK):
                     self.console.print_info(f"Creating user directory at {format_path(path)}...")
                     self.file_utils.create_dir(path)

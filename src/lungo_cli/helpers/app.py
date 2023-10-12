@@ -49,10 +49,10 @@ def copy_resources(src: str | PathLike[str], dst: str | PathLike[str]) -> None:
         file_utils().copy(resources / src, dst)
 
 
-def get_user_dir(config: Config) -> Path:
+def get_user_dir(path: str | PathLike[str] | None) -> Path:
     """Get the directory where data for all the users is stored."""
-    if config.directories.user_dir:
-        return config.directories.user_dir.resolve()
+    if path:
+        return Path(path).resolve()
     else:
         return Path.home().parent
 
@@ -87,7 +87,7 @@ def create_context(config: Config, users: Users) -> Context:
         cache_dir=storage().cache_latest_dir,
         generated_dir=storage().generated_dir,
         managed_dir=storage().managed_dir,
-        user_dir=get_user_dir(config),
+        user_dir=get_user_dir(config.directories.user_dir),
     )
 
     return Context(config=config, users=users, app_dirs=app_dirs, ip_addresses=get_ip_addresses(config.network.subnet))
