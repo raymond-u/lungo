@@ -1,4 +1,3 @@
-import subprocess
 from ipaddress import IPv4Network
 from os import PathLike
 from pathlib import Path
@@ -6,7 +5,7 @@ from pathlib import Path
 from importlib_resources import as_file, files
 from typer import Exit
 
-from .common import format_command, format_input, format_path
+from .common import format_input, format_path
 from .crypto import generate_random_string, generate_self_signed_cert
 from .yaml import parse_yaml
 from ..app.state import account_manager, console, file_utils, renderer, storage
@@ -162,17 +161,3 @@ def load_config() -> tuple[Config, Users]:
         storage().data_dir = config.directories.data_dir.resolve()
 
     return config, users
-
-
-def run_shell_command(*command: str, cwd: str | PathLike[str] | None = None, show_output: bool = False) -> None:
-    """Run a shell command."""
-    command = list(filter(None, command))
-
-    try:
-        if show_output:
-            subprocess.run(command, check=True, cwd=cwd)
-        else:
-            subprocess.run(command, check=True, cwd=cwd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
-    except Exception as e:
-        console().print_error(f"Failed to run command {format_command(*command)} ({e}).")
-        raise Exit(code=1)
