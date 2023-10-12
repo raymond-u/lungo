@@ -1,11 +1,13 @@
 {% set KETO_VER = 'v0.11.1' %}
 
 services:
-  keto:
+  keto_admin:
     container_name: keto_admin
     hostname: keto_admin
 
     image: 'docker.io/oryd/keto:{{ KETO_VER }}'
+
+    user: root
     entrypoint: [ ]
     command: keto serve -c /etc/keto/config.yaml --sqa-opt-out
 

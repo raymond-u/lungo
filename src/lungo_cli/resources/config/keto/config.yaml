@@ -1,4 +1,4 @@
-dsn: 'sqlite:////var/lib/keto/db.sqlite3?_fk=true&mode=rwc'
+dsn: 'sqlite:///var/lib/keto/db.sqlite3?_fk=true&mode=rwc'
 
 serve:
   read:

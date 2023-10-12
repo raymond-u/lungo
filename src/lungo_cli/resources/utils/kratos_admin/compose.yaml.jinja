@@ -1,11 +1,13 @@
 {% set KRATOS_VER = 'v1.0.0' %}
 
 services:
-  kratos:
+  kratos_admin:
     container_name: kratos_admin
     hostname: kratos_admin
 
     image: 'docker.io/oryd/kratos:{{ KRATOS_VER }}'
+
+    user: root
     entrypoint: [ ]
     command: 'kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out'
 

@@ -22,6 +22,8 @@ services:
     hostname: nginx
 
     image: 'docker.io/openresty/openresty:{{ NGINX_VER }}'
+
+    user: root
     entrypoint: [ ]
     command: openresty -c /etc/nginx/nginx.conf -e /var/log/nginx/error.log -g 'daemon off;' -p /etc/nginx
 
@@ -69,6 +71,8 @@ services:
     hostname: keto
 
     image: 'docker.io/oryd/keto:{{ KETO_VER }}'
+
+    user: root
     entrypoint: [ ]
     command: keto serve -c /etc/keto/config.yaml --sqa-opt-out
 
@@ -91,6 +95,8 @@ services:
     hostname: kratos
 
     image: 'docker.io/oryd/kratos:{{ KRATOS_VER }}'
+
+    user: root
     entrypoint: [ ]
     command: kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out --dev
 
@@ -117,6 +123,8 @@ services:
     hostname: oathkeeper
 
     image: 'docker.io/oryd/oathkeeper:{{ OATHKEEPER_VER }}'
+
+    user: root
     entrypoint: [ ]
     command: oathkeeper serve -c /etc/oathkeeper/config.yaml --sqa-opt-out
 
@@ -158,6 +166,7 @@ services:
         COPY --from=builder /app/node_modules node_modules/
         COPY package.json .
 
+    user: root
     entrypoint: [ ]
     command: node build
 
@@ -217,6 +226,7 @@ services:
           {% endfor %}
         {% endfor %}
 
+    user: root
     entrypoint: [ ]
     command: sh -c 'umask 002; /filebrowser -c /etc/filebrowser/settings.yaml'
 
@@ -261,6 +271,7 @@ services:
           {% endfor %}
         {% endfor %}
 
+    user: root
     entrypoint: [ ]
     command: sh -c 'umask 002; /init'
 
