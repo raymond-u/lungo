@@ -2,7 +2,6 @@ import time
 from typing import Any
 
 import requests
-from requests import ConnectTimeout
 from typer import Exit
 
 from .console import Console
@@ -18,12 +17,11 @@ class HttpApiClient:
             try:
                 requests.get(url, headers={"Accept": "application/json"}).raise_for_status()
                 break
-            except ConnectTimeout:
-                time.sleep(1)
-                continue
             except Exception as e:
-                self.console.print_error(f"Failed to connect to {format_path(url)} ({e}).")
-                raise Exit(code=1)
+                self.console.print_debug(f"Waiting for {format_path(url)} to be reachable ({e})...")
+                time.sleep(2)
+
+                continue
 
     def get(self, url: str) -> Any:
         try:
