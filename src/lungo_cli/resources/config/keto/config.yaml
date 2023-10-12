@@ -17,5 +17,4 @@ namespaces:
     name: role
 
 limit:
-  max_read_width: 200
   max_read_depth: 10
