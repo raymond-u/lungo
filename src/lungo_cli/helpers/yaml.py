@@ -16,10 +16,10 @@ def parse_yaml(path: str | PathLike[str], model: Type[T]) -> T:
     try:
         return parse_yaml_file_as(model, path)
     except ValidationError as e:
-        error_msg = f"Failed to parse {format_path(path)}:"
+        error_msg = f"Failed to parse {format_path(path)}."
 
         for error in e.errors():
-            error_msg += "\n  "
+            error_msg += "\n  * "
 
             if error["loc"]:
                 for loc in error["loc"]:
