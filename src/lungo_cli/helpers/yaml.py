@@ -21,13 +21,13 @@ def parse_yaml(path: str | PathLike[str], model: Type[T]) -> T:
         for error in e.errors():
             error_msg += "\n  "
 
-            for loc in error.loc:
+            for loc in error["loc"]:
                 if type(loc) is int:
                     error_msg += f"[{loc}]"
                 else:
                     error_msg += f".{loc}"
 
-            error_msg += f": {error.msg}"
+            error_msg += f": {error['msg']}"
 
         console().print_error(error_msg)
         raise Exit(code=1)
