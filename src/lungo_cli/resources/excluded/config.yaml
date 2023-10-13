@@ -70,6 +70,12 @@
 # network:
 # ========
 
+#   # Hostname of the website
+#   # Type: string
+#   # Default: none
+#   # Required: yes
+#   hostname: lungo.com
+
 #   # Subnet to use for the internal network, in CIDR notation (must have a minimum of 256 addresses)
 #   # Type: string
 #   # Default: 192.168.2.0/24

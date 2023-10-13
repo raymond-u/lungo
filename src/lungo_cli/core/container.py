@@ -4,7 +4,7 @@ from os import PathLike
 from typer import Exit
 
 from .console import Console
-from .constants import DOCKER_URL, PODMAN_COMPOSE_URL, PODMAN_URL
+from .constants import APP_NAME_CAPITALIZED, DOCKER_URL, PODMAN_COMPOSE_URL, PODMAN_URL
 from .file import FileUtils
 from .storage import Storage
 from ..helpers.common import format_command, format_program, program_exists
@@ -105,7 +105,7 @@ class Container:
     def up(self, working_dir: str | PathLike[str] | None = None) -> None:
         if self.storage.lock_file.is_file():
             self.console.print_error(
-                "An existing instance of Lungo is currently running. Please stop it before proceeding. "
+                f"An existing instance of {APP_NAME_CAPITALIZED} is running. Please stop it before proceeding. "
                 f"Or, you can remove the restriction forcibly by using the {format_command('--remove-lock')} option."
             )
             raise Exit(code=1)

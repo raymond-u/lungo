@@ -1,6 +1,8 @@
+{% set network = config.network %}
+
 - id: app
   match:
-    url: 'https://<.*>/app/<.*>'
+    url: 'https://{{ network.hostname }}/app/<.*>'
     methods:
       - GET
       - POST
@@ -19,7 +21,7 @@
 
 - id: catch-all
   match:
-    url: 'https://<.*>'
+    url: 'https://{{ network.hostname }}/'
   authenticators:
     - handler: noop
   errors:

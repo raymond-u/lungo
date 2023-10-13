@@ -40,6 +40,7 @@ class Https(Base):
 
 
 class Network(Base):
+    hostname: str
     subnet: IPv4Network = "192.168.2.0/24"
     http: Http = Http()
     https: Https = Https()
@@ -72,6 +73,6 @@ class Smtp(Base):
 class Config(Base):
     branding: Branding = Branding()
     directories: Directories = Directories()
-    network: Network = Network()
+    network: Network
     rules: Rules = Rules()
     smtp: Smtp
