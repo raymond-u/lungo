@@ -106,12 +106,12 @@ class Storage:
         return self.data_latest_dir / ".lock"
 
     @property
-    def utils_keto_admin_dir(self) -> Path:
-        return self.bundled_dir / "utils" / "keto_admin"
+    def service_keto_admin_dir(self) -> Path:
+        return self.bundled_dir / "dockerfiles" / "keto_admin"
 
     @property
-    def utils_kratos_admin_dir(self) -> Path:
-        return self.bundled_dir / "utils" / "kratos_admin"
+    def service_kratos_admin_dir(self) -> Path:
+        return self.bundled_dir / "dockerfiles" / "kratos_admin"
 
     @property
     def template_config_rel(self) -> Path:

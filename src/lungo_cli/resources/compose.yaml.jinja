@@ -2,9 +2,6 @@
 {% set KETO_VER = 'v0.11.1' %}
 {% set KRATOS_VER = 'v1.0.0' %}
 {% set OATHKEEPER_VER = 'v0.40.6' %}
-{% set NODE_VER = '20.8.0-alpine' %}
-{% set FILEBROWSER_VER = 'v2.25.0' %}
-{% set RSTUDIO_VER = '4.3.1' %}
 
 {% set accounts = users.accounts %}
 {% set branding = config.branding %}
@@ -157,20 +154,6 @@ services:
 
     build:
       context: ./web
-      dockerfile_inline: |
-        FROM docker.io/library/node:{{ NODE_VER }} AS builder
-        WORKDIR /app
-        COPY package*.json .
-        RUN npm ci
-        COPY . .
-        RUN npm run build
-        RUN npm prune --production
-
-        FROM docker.io/library/node:{{ NODE_VER }}
-        WORKDIR /app
-        COPY --from=builder /app/build build/
-        COPY --from=builder /app/node_modules node_modules/
-        COPY package.json .
 
     user: root
     entrypoint: [ ]
@@ -222,15 +205,7 @@ services:
 
     build:
       context: .
-      dockerfile_inline: |
-        FROM docker.io/filebrowser/filebrowser:{{ FILEBROWSER_VER }}
-        {% for account in accounts %}
-        RUN mkdir -p '/root/home/{{ account.username }}'
-        RUN ln -s '/mnt/home/{{ account.username }}' '/root/home/{{ account.username }}/home'
-          {% for shared_dir in directories.shared_dirs %}
-        RUN ln -s '/mnt/{{ shared_dir.name }}' '/root/home/{{ account.username }}/{{ shared_dir.name }}'
-          {% endfor %}
-        {% endfor %}
+      dockerfile: ./dockerfiles/filebrowser.Dockerfile
 
     user: root
     entrypoint: [ ]
@@ -266,16 +241,7 @@ services:
 
     build:
       context: .
-      dockerfile_inline: |
-        FROM docker.io/rocker/verse:{{ RSTUDIO_VER }}
-        {% for account in accounts %}
-        RUN useradd -g root -G sudo -m '{{ account.username }}'
-        RUN echo '{{ account.username }}:passwd' | chpasswd
-        RUN ln -s '/mnt/home/{{ account.username }}' '/home/{{ account.username }}/home'
-          {% for shared_dir in directories.shared_dirs %}
-        RUN ln -s '/mnt/{{ shared_dir.name }}' '/home/{{ account.username }}/{{ shared_dir.name }}'
-          {% endfor %}
-        {% endfor %}
+      dockerfile: ./dockerfiles/rstudio.Dockerfile
 
     user: root
     entrypoint: [ ]

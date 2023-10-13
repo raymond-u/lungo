@@ -58,11 +58,11 @@ class AccountManager:
 
     def update(self, accounts: list[Account], privileges: Privileges) -> None:
         # Ensure that the container can always be started even if it failed last time
-        self.container.down(self.storage.utils_keto_admin_dir)
-        self.container.down(self.storage.utils_kratos_admin_dir)
+        self.container.down(self.storage.service_keto_admin_dir)
+        self.container.down(self.storage.service_kratos_admin_dir)
 
-        self.container.up(self.storage.utils_keto_admin_dir)
-        self.container.up(self.storage.utils_kratos_admin_dir)
+        self.container.up(self.storage.service_keto_admin_dir)
+        self.container.up(self.storage.service_kratos_admin_dir)
 
         self.console.print_debug("Connecting to Keto Admin API...")
         self.client.ensure_reachable(f"{KETO_ADMIN_API_BASE_URL}/health/ready")
@@ -203,7 +203,7 @@ class AccountManager:
         self.console.print_debug("Creating new relation tuples...")
         self.client.patch(f"{KETO_ADMIN_API_BASE_URL}/admin/relation-tuples", data)
 
-        self.container.down(self.storage.utils_keto_admin_dir)
+        self.container.down(self.storage.service_keto_admin_dir)
 
         self.console.print_debug("Connecting to Kratos Admin API...")
         self.client.ensure_reachable(f"{KRATOS_ADMIN_API_BASE_URL}/health/ready")
@@ -248,4 +248,4 @@ class AccountManager:
             self.console.print_debug(f"Creating account {format_path(new_account.username)}...")
             self.client.post(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities", data)
 
-        self.container.down(self.storage.utils_kratos_admin_dir)
+        self.container.down(self.storage.service_kratos_admin_dir)

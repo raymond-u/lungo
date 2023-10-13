@@ -1,0 +1,11 @@
+{% set RSTUDIO_VER = '4.3.1' %}
+
+FROM docker.io/rocker/verse:{{ RSTUDIO_VER }}
+{% for account in accounts %}
+RUN useradd -g root -G sudo -m '{{ account.username }}'
+RUN echo '{{ account.username }}:passwd' | chpasswd
+RUN ln -s '/mnt/home/{{ account.username }}' '/home/{{ account.username }}/home'
+  {% for shared_dir in directories.shared_dirs %}
+RUN ln -s '/mnt/{{ shared_dir.name }}' '/home/{{ account.username }}/{{ shared_dir.name }}'
+  {% endfor %}
+{% endfor %}
