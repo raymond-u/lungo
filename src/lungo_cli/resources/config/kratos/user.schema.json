@@ -15,13 +15,13 @@
                         "credentials": {
                             "password": {
                                 "identifier": true
+                            },
+                            "webauthn": {
+                                "identifier": true
+                            },
+                            "totp": {
+                                "account_name": true
                             }
-                        },
-                        "webauthn": {
-                            "identifier": true
-                        },
-                        "totp": {
-                            "account_name": true
                         }
                     }
                 },
