@@ -10,8 +10,8 @@ services:
     user: root
     entrypoint: [ ]
     command: >
-      kratos migrate sql -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml -y;
-      kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out
+      sh -c 'kratos migrate sql -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml -y;
+      kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out'
 
     ports:
       - '3940:8080'

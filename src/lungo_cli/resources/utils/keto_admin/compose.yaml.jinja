@@ -10,8 +10,8 @@ services:
     user: root
     entrypoint: [ ]
     command: >
-      keto migrate up -c /etc/keto/config.yaml -y;
-      keto serve -c /etc/keto/config.yaml --sqa-opt-out
+      sh -c 'keto migrate up -c /etc/keto/config.yaml -y;
+      keto serve -c /etc/keto/config.yaml --sqa-opt-out'
 
     ports:
       - '3939:8080'
