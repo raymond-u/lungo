@@ -74,7 +74,9 @@ services:
 
     user: root
     entrypoint: [ ]
-    command: keto serve -c /etc/keto/config.yaml --sqa-opt-out
+    command: >
+      keto migrate up -c /etc/keto/config.yaml -y;
+      keto serve -c /etc/keto/config.yaml --sqa-opt-out
 
     networks:
       static:
@@ -98,7 +100,9 @@ services:
 
     user: root
     entrypoint: [ ]
-    command: kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out --dev
+    command: >
+      kratos migrate sql -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml -y;
+      kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out
 
     networks:
       static:
