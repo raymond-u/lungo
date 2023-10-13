@@ -233,8 +233,11 @@ class AccountManager:
                 self.console.print_debug(f"Removing account {format_input(old_account['traits']['username'])}...")
                 self.client.delete(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities/{old_account['id']}")
 
+        self.console.print_debug("we're here 0")
         for new_account in accounts:
             # Create the account
+            self.console.print_debug("we're here 1")
+            self.console.print_debug(new_account)
             data = {
                 "schema_id": "user",
                 "state": "active" if new_account.enabled else "inactive",
@@ -244,8 +247,11 @@ class AccountManager:
                     "name": {"first": new_account.name.first, "last": new_account.name.last},
                 },
             }
+            self.console.print_debug("we're here 2")
 
             self.console.print_debug(f"Creating account {format_path(new_account.username)}...")
             self.client.post(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities", data)
 
+        self.console.print_debug("we're here 3")
         self.container.down(self.storage.service_kratos_admin_dir)
+        self.console.print_debug("we're here 4")
