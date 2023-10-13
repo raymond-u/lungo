@@ -34,7 +34,7 @@ def main(
 
     with console().status(
         "Starting the service (if this is the first time, it may take up to an hour "
-        "depending on your internet connection, please be patient)..."
+        "depending on your internet connection, so please be patient)..."
     ):
         container().up()
 
