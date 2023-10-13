@@ -38,6 +38,8 @@ authenticators:
     enabled: true
 
 authorizers:
+  allow:
+    enabled: true
   remote_json:
     enabled: true
     config:
@@ -53,6 +55,8 @@ authorizers:
         {% endraw %}
 
 mutators:
+  noop:
+    enabled: true
   header:
     enabled: true
     config:

@@ -24,5 +24,9 @@
     url: 'https://{{ network.hostname }}/'
   authenticators:
     - handler: noop
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: noop
   errors:
     - handler: json
