@@ -38,4 +38,4 @@ def main(
     ):
         container().up()
 
-    console().print(f"Service is now online. To stop it, run {format_command(APP_NAME, 'down')}")
+    console().print(f"Service is now online. To stop it, run {format_command(APP_NAME, 'down')}.")
