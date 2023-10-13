@@ -282,9 +282,9 @@ secrets:
   NGINX_PRIVATE_KEY:
     file: >-
       {% if network.https.tls %}
-      '{{ network.https.tls.key }}'
+      {{ network.https.tls.key }}
       {% else %}
-      '{{ app_dirs.generated_dir }}/nginx/lungo.key'
+      {{ app_dirs.generated_dir }}/nginx/lungo.key
       {% endif %}
   KRATOS_SECRETS:
     file: '{{ app_dirs.generated_dir }}/kratos/secrets.yaml'
