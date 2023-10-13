@@ -9,7 +9,7 @@ services:
 
     user: root
     entrypoint: [ ]
-    command: >
+    command: >-
       sh -c 'kratos migrate sql -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml -e -y;
       kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out'
 

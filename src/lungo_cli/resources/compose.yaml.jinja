@@ -55,6 +55,7 @@ services:
       - keto
       - kratos
       - oathkeeper
+      - node
       - filebrowser
       - rstudio
     restart: 'no'
@@ -71,7 +72,7 @@ services:
 
     user: root
     entrypoint: [ ]
-    command: >
+    command: >-
       sh -c 'keto migrate up -c /etc/keto/config.yaml -y;
       keto serve -c /etc/keto/config.yaml --sqa-opt-out'
 
@@ -97,7 +98,7 @@ services:
 
     user: root
     entrypoint: [ ]
-    command: >
+    command: >-
       sh -c 'kratos migrate sql -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml -e -y;
       kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out'
 
@@ -279,7 +280,7 @@ networks:
 
 secrets:
   NGINX_PRIVATE_KEY:
-    file: |
+    file: >-
       {% if network.https.tls %}
       '{{ network.https.tls.key }}'
       {% else %}

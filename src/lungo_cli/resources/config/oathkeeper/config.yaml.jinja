@@ -42,7 +42,7 @@ authorizers:
     enabled: true
     config:
       remote: 'http://{{ ip_addresses.keto }}:80/check'
-      payload: |
+      payload: >-
         {% raw %}
         {
           "namespace": "app",

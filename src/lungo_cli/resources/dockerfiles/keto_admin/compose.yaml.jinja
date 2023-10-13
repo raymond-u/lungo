@@ -9,7 +9,7 @@ services:
 
     user: root
     entrypoint: [ ]
-    command: >
+    command: >-
       sh -c 'keto migrate up -c /etc/keto/config.yaml -y;
       keto serve -c /etc/keto/config.yaml --sqa-opt-out'
 
