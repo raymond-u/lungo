@@ -10,7 +10,7 @@ services:
     user: root
     entrypoint: [ ]
     command: >
-      sh -c 'kratos migrate sql sqlite:///var/lib/kratos/db.sqlite3?_fk=true&mode=rwc -c /etc/kratos/config.yaml -y;
+      sh -c 'kratos migrate sql -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml -e -y;
       kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out'
 
     ports:
@@ -20,6 +20,8 @@ services:
       - '../../config/kratos:/etc/kratos:ro'
       - '{{ app_dirs.managed_dir }}/kratos:/var/lib/kratos:rw'
 
+    environment:
+      - DSN='sqlite:///var/lib/kratos/db.sqlite3?_fk=true&mode=rwc'
     secrets:
       - source: KRATOS_SECRETS
         target: /etc/kratos/secrets.yaml
