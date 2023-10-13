@@ -101,7 +101,7 @@ services:
     user: root
     entrypoint: [ ]
     command: >
-      sh -c 'kratos migrate sql -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml -y;
+      sh -c 'kratos migrate sql sqlite:///var/lib/kratos/db.sqlite3?_fk=true&mode=rwc -c /etc/kratos/config.yaml -y;
       kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out'
 
     networks:
