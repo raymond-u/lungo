@@ -39,10 +39,6 @@
                             },
                             "totp": {
                                 "account_name": true
-                            },
-                            "code": {
-                                "identifier": true,
-                                "via": "email"
                             }
                         },
                         "recovery": {
