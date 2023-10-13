@@ -32,5 +32,10 @@ def main(
 
     ensure_application_data(config, users)
 
-    container().up()
+    with console().status(
+        "Starting the service (if this is the first time, it may take up to an hour "
+        "depending on your internet connection, please be patient)..."
+    ):
+        container().up()
+
     console().print(f"Service is now online. To stop it, run {format_command(APP_NAME, 'down')}")

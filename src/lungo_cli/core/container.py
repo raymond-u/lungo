@@ -105,8 +105,8 @@ class Container:
     def up(self, working_dir: str | PathLike[str] | None = None) -> None:
         if self.storage.lock_file.is_file():
             self.console.print_error(
-                "Another instance of Lungo is already running. Please stop it first. "
-                f"Or, you can forcefully remove the lock by using the {format_command('--remove-lock')} option."
+                "An existing instance of Lungo is currently running. Please stop it before proceeding. "
+                f"Or, you can remove the restriction forcibly by using the {format_command('--remove-lock')} option."
             )
             raise Exit(code=1)
 
