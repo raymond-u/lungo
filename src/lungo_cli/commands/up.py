@@ -4,9 +4,9 @@ from typing import Annotated, Optional
 from typer import Option
 
 from ..app.state import console, container
-from ..core.constants import APP_NAME
+from ..core.constants import APP_NAME, APP_NAME_CAPITALIZED
 from ..helpers.app import ensure_application_data, load_config, process_args, process_args_delayed
-from ..helpers.common import format_command
+from ..helpers.common import format_command, format_path
 
 
 def main(
@@ -38,4 +38,7 @@ def main(
     ):
         container().up()
 
-    console().print(f"Service is now online. To stop it, run {format_command(APP_NAME, 'down')}.")
+    console().print(
+        f"{APP_NAME_CAPITALIZED} is now available at {format_path(f'https://{config.network.hostname}/')}. "
+        f"To stop it, run {format_command(APP_NAME, 'down')}."
+    )

@@ -4,6 +4,7 @@ from typing import Annotated, Optional
 from typer import Option
 
 from ..app.state import console, container
+from ..core.constants import APP_NAME_CAPITALIZED
 from ..helpers.app import load_config, process_args, process_args_delayed
 
 
@@ -29,4 +30,4 @@ def main(
     with console().status("Stopping the service..."):
         container().down()
 
-    console().print("Service stopped.")
+    console().print(f"{APP_NAME_CAPITALIZED} stopped.")
