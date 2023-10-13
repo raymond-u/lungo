@@ -153,7 +153,7 @@ class AccountManager:
                             "action": "insert",
                             "relation_tuple": {
                                 "namespace": "app",
-                                "object": allowed_app.value,
+                                "object": allowed_app if type(allowed_app) is str else allowed_app.value,
                                 "relation": "access",
                                 "subject_set": {"namespace": "role", "object": role, "relation": "member"},
                             },
@@ -167,7 +167,7 @@ class AccountManager:
                     "action": "insert",
                     "relation_tuple": {
                         "namespace": "role",
-                        "object": account.role.value,
+                        "object": account.role if type(account.role) is str else account.role.value,
                         "relation": "member",
                         "subject_id": account.username,
                     },
@@ -193,7 +193,7 @@ class AccountManager:
                             "action": "insert",
                             "relation_tuple": {
                                 "namespace": "app",
-                                "object": allowed_app.value,
+                                "object": allowed_app if type(allowed_app) is str else allowed_app.value,
                                 "relation": "access",
                                 "subject_id": account.username,
                             },
