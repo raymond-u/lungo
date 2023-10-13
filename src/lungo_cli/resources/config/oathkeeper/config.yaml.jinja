@@ -46,7 +46,7 @@ authorizers:
         {% raw %}
         {
           "namespace": "app",
-          "object": "{{ printIndex .MatchContext.RegexpCaptureGroups 1 }}",
+          "object": "{{ printIndex .MatchContext.RegexpCaptureGroups 0 }}",
           "relation": "access",
           "subject_id": "{{ default .Subject .Extra.identity.traits.username }}"
         }
