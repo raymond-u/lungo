@@ -15,6 +15,7 @@ class HttpApiClient:
     def ensure_reachable(self, url: str) -> None:
         while True:
             try:
+                self.console.print_debug(f"Checking if {format_path(url)} is reachable...")
                 requests.get(url, headers={"Accept": "application/json"}).raise_for_status()
                 break
             except Exception as e:
@@ -25,6 +26,7 @@ class HttpApiClient:
 
     def get(self, url: str) -> Any:
         try:
+            self.console.print_debug(f"Sending GET request to {format_path(url)}...")
             response = requests.get(url, headers={"Accept": "application/json"})
             response.raise_for_status()
 
@@ -35,6 +37,7 @@ class HttpApiClient:
 
     def post(self, url: str, data: Any) -> Any:
         try:
+            self.console.print_debug(f"Sending POST request to {format_path(url)}...")
             response = requests.post(url, json=data, headers={"Accept": "application/json"})
             response.raise_for_status()
 
@@ -45,6 +48,7 @@ class HttpApiClient:
 
     def delete(self, url: str) -> None:
         try:
+            self.console.print_debug(f"Sending DELETE request to {format_path(url)}...")
             response = requests.delete(url, headers={"Accept": "application/json"})
             response.raise_for_status()
         except Exception as e:
@@ -53,6 +57,7 @@ class HttpApiClient:
 
     def patch(self, url: str, data: Any) -> None:
         try:
+            self.console.print_debug(f"Sending PATCH request to {format_path(url)}...")
             response = requests.patch(url, json=data, headers={"Accept": "application/json"})
             response.raise_for_status()
         except Exception as e:
