@@ -1,0 +1,4 @@
+{% set NGINX_VER = '1.21.4.2-alpine-apk' %}
+
+FROM docker.io/openresty/openresty:{{ NGINX_VER }}
+RUN adduser -D -H -S www-data
