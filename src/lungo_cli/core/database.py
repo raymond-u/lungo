@@ -211,9 +211,7 @@ class AccountManager:
         accounts = accounts[:]
 
         for old_account in self.client.get(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities"):
-            self.console.print_debug("Get 1")
             if new_account := next(filter(lambda x: x.username == old_account["traits"]["username"], accounts), None):
-                self.console.print_debug("Get 2")
                 # Update the account
                 accounts.remove(new_account)
                 data = []
@@ -226,7 +224,6 @@ class AccountManager:
                     data.append({"op": "replace", "path": "/traits/name/first", "value": new_account.name.first})
                 if old_account["traits"]["name"]["last"] != new_account.name.last:
                     data.append({"op": "replace", "path": "/traits/name/last", "value": new_account.name.last})
-                self.console.print_debug("Get 3")
 
                 if data:
                     self.console.print_debug(f"Updating account {format_input(new_account.username)}...")
@@ -235,8 +232,6 @@ class AccountManager:
                 # Remove the account
                 self.console.print_debug(f"Removing account {format_input(old_account['traits']['username'])}...")
                 self.client.delete(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities/{old_account['id']}")
-
-        self.console.print_debug("Get 5")
 
         for new_account in accounts:
             # Create the account
