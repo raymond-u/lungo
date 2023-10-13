@@ -118,11 +118,7 @@ def ensure_application_data(config: Config, users: Users) -> None:
             account_manager().verify(users.accounts, config.directories.user_dir)
             account_manager().update(users.accounts, config.rules.privileges)
 
-            console().print_debug("Database 0.")
             file_utils().write_text(storage().init_file, config_hash)
-            console().print_debug("Database updated.")
-
-    console().print_debug("Database updated!!!")
 
 
 def hash_config() -> str:
