@@ -23,6 +23,7 @@ identity:
       url: 'file:///etc/kratos/user.schema.json'
 
 selfservice:
+  default_browser_return_url: '/'
   flows:
     registration:
       enabled: false
@@ -38,7 +39,6 @@ selfservice:
   methods:
     code:
       enabled: true
-      passwordless_enabled: true
     password:
       enabled: true
     profile:
