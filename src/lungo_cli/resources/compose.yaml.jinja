@@ -117,7 +117,7 @@ services:
       - '{{ app_dirs.managed_dir }}/kratos:/var/lib/kratos:rw'
 
     environment:
-      - DSN='sqlite:///var/lib/kratos/db.sqlite3?_fk=true&mode=rwc'
+      - DSN=sqlite:///var/lib/kratos/db.sqlite3?_fk=true&mode=rwc
     secrets:
       - source: KRATOS_SECRETS
         target: /etc/kratos/secrets.yaml
@@ -206,9 +206,9 @@ services:
       - PROTOCOL_HEADER=X-Forwarded-Proto
       - XFF_DEPTH=1
 
-      - KETO_API_BASE_URL='http://{{ ip_addresses.keto }}:80/'
-      - KRATOS_API_BASE_URL='http://{{ ip_addresses.kratos }}:80/'
-      - PUBLIC_SITE_TITLE='{{ branding.name }}'
+      - KETO_API_BASE_URL=http://{{ ip_addresses.keto }}:80/
+      - KRATOS_API_BASE_URL=http://{{ ip_addresses.kratos }}:80/
+      - PUBLIC_SITE_TITLE={{ branding.name }}
 
     restart: 'no'
 
