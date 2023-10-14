@@ -19,9 +19,19 @@ function wrapFetch(fetch: typeof global.fetch, cookies?: Cookies): typeof global
                 )
             }
 
+            console.log("####################")
+            console.log(`Fetching ${input}...`)
+            console.log(JSON.stringify(init))
+            console.log("####################")
+
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             const response = await fetch(input, init)
+
+            console.log("####################")
+            console.log("Response received.")
+            console.log(JSON.stringify(response))
+            console.log("####################")
 
             if (cookies) {
                 for (const cookie of parser.parse(response.headers.getSetCookie())) {

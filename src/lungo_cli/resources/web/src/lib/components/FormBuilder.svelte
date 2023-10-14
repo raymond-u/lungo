@@ -5,6 +5,16 @@
     import { PasswordInput } from "$lib/components"
     import type { KratosComponents } from "$lib/types"
 
+    const getFirstSubmitId = (nodes: KratosComponents["schemas"]["uiNodes"]) => {
+        const input = nodes.find(
+            (node) =>
+                (node.group === "default" || node.group === currentGroup) &&
+                node.type === "input" &&
+                node.attributes.type === "submit"
+        )
+
+        return getNodeId(input!)
+    }
     const getNodeId = (node: KratosComponents["schemas"]["uiNode"]) => {
         if (node.type === "input") {
             return node.meta.label?.id ?? node.attributes.name + node.attributes.value
@@ -75,15 +85,17 @@
                     </label>
                 {:else if node.attributes.type === "submit"}
                     <slot />
-                    {#each messages ?? [] as message (message.id)}
-                        <span
-                            class="text-sm"
-                            class:text-error={message.type === "error"}
-                            class:text-success={message.type === "success"}
-                        >
-                            {message.text}
-                        </span>
-                    {/each}
+                    {#if getNodeId(node) === getFirstSubmitId(nodes)}
+                        {#each messages ?? [] as message (message.id)}
+                            <span
+                                class="text-sm"
+                                class:text-error={message.type === "error"}
+                                class:text-success={message.type === "success"}
+                            >
+                                {message.text}
+                            </span>
+                        {/each}
+                    {/if}
                     <button
                         class="btn btn-primary mt-8"
                         name={node.attributes.name}
