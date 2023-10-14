@@ -1,4 +1,5 @@
-import { type Cookies, redirect } from "@sveltejs/kit"
+import type { Cookies } from "@sveltejs/kit"
+import { invalidateAll } from "$app/navigation"
 import { createKratosClient } from "$lib/server/api"
 
 export async function POST({ cookies, request }: { cookies: Cookies; request: Request }) {
@@ -9,5 +10,5 @@ export async function POST({ cookies, request }: { cookies: Cookies; request: Re
         params: { query: { token: data.get("logoutToken") as string } },
     })
 
-    throw redirect(302, "/")
+    await invalidateAll()
 }
