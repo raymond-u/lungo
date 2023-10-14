@@ -30,7 +30,6 @@ function wrapFetch(fetch: typeof global.fetch, cookies?: Cookies): typeof global
 
             console.log("#################")
             console.log(`response.status: ${response.status}`)
-            console.log(`response.body: ${await response.text()}`)
             console.log("#################")
 
             if (cookies) {
