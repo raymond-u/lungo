@@ -31,8 +31,7 @@
     }
 
     let disabled = false
-    let flow = $page.data.flow
-
+    let flow: string
     let actionNodes: KratosComponents["schemas"]["uiNodeInput"][]
     let messages: KratosComponents["schemas"]["uiTexts"]
     let nodes: KratosComponents["schemas"]["uiNodes"] = $page.data.nodes
@@ -46,6 +45,7 @@
             node.type === "input" &&
             node.attributes.type === "submit"
     ) as KratosComponents["schemas"]["uiNodeInput"][]
+    $: flow = $page.form?.flow ?? $page.data.flow
     $: messages = $page.form?.messages ?? $page.data.messages
     $: nodes = $page.form?.nodes ?? $page.data.nodes
     $: otherGroups = [

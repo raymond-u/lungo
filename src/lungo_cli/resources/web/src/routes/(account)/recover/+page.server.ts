@@ -20,21 +20,14 @@ export const actions = {
 
         switch (response.response.status) {
             case 200:
-                console.log("#################")
-                console.log(JSON.stringify(data.get("flow")))
-                console.log(JSON.stringify(data.get("csrf_token")))
-                console.log(JSON.stringify(data.get("method")))
-                console.log(JSON.stringify(data.get("email")))
-                console.log(JSON.stringify(data.get("code")))
-                console.log("#################")
-
                 if (data.get("code")) {
                     throw redirect(302, "/account")
                 }
 
                 return {
-                    messages: (response.data as KratosComponents["schemas"]["recoveryFlow"]).ui.messages,
-                    nodes: (response.data as KratosComponents["schemas"]["recoveryFlow"]).ui.nodes,
+                    flow: getFlow(response.data!.ui.action),
+                    messages: response.data!.ui.messages,
+                    nodes: response.data!.ui.nodes,
                 }
             case 303:
                 return fail(400, {
@@ -47,21 +40,11 @@ export const actions = {
                     ],
                 })
             case 400:
-                console.log("!!!!!!!!!!!!!")
-                console.log("!!!!!!!!!!!!!")
-                console.log("!!!!!!!!!!!!!")
-                console.log("!!!!!!!!!!!!!")
-                console.log("!!!!!!!!!!!!!")
-
                 return fail(400, {
                     messages: (response.error as KratosComponents["schemas"]["recoveryFlow"]).ui.messages,
                     nodes: (response.error as KratosComponents["schemas"]["recoveryFlow"]).ui.nodes,
                 })
             default:
-                console.log("!!!!!!!!!!!!!")
-                console.log("!!!!!!!!!!!!!")
-                console.log("!!!!!!!!!!!!!")
-
                 return fail(400, {
                     messages: [
                         {
@@ -81,7 +64,6 @@ export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof
 
     switch (response.response.status) {
         case 200:
-            console.log(JSON.stringify(response.data!.ui))
             return {
                 flow: getFlow(response.data!.ui.action),
                 messages: response.data!.ui.messages,

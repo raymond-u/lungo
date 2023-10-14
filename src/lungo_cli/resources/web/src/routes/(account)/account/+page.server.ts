@@ -20,8 +20,9 @@ export const actions = {
         switch (response.response.status) {
             case 200:
                 return {
-                    messages: (response.data as KratosComponents["schemas"]["settingsFlow"]).ui.messages,
-                    nodes: (response.data as KratosComponents["schemas"]["settingsFlow"]).ui.nodes,
+                    flow: getFlow(response.data!.ui.action),
+                    messages: response.data!.ui.messages,
+                    nodes: response.data!.ui.nodes,
                 }
             case 303:
                 return fail(400, {
