@@ -33,18 +33,16 @@ selfservice:
       enabled: false
     recovery:
       enabled: true
-      use: code
+      use: link
       notify_unknown_recipients: false
       after:
         hooks:
           - hook: revoke_active_sessions
   methods:
-    code:
-      enabled: true
     link:
       enabled: true
       config:
-        base_url: 'https://{{ network.hostname }}/reset/'
+        base_url: 'https://{{ network.hostname }}/recover/'
     password:
       enabled: true
     profile:
@@ -52,7 +50,7 @@ selfservice:
 
 courier:
   smtp:
-    connection_uri: 'smtp://{{ smtp.username }}:{{ smtp.password }}@{{ smtp.host }}:{{ smtp.port }}/'
+    connection_uri: 'smtp://{{ smtp.username|urlencode }}:{{ smtp.password }}@{{ smtp.host }}:{{ smtp.port }}/'
     from_address: '{{ smtp.sender }}'
     from_name: '{{ smtp.name }}'
   template_override_path: '/etc/kratos/email_templates'

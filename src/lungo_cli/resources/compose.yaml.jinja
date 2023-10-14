@@ -28,8 +28,6 @@ services:
     networks:
       static:
         ipv4_address: {{ ip_addresses.nginx }}
-    extra_hosts:
-      - 'nginx:{{ ip_addresses.nginx }}'
     ports:
       {% if network.http.enabled %}
       - '{{ network.http.port }}:80'
@@ -80,8 +78,6 @@ services:
     networks:
       static:
         ipv4_address: {{ ip_addresses.keto }}
-    extra_hosts:
-      - 'keto:{{ ip_addresses.keto }}'
     expose:
       - 80
 
@@ -101,13 +97,11 @@ services:
     entrypoint: [ ]
     command: >-
       sh -c 'kratos migrate sql -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml -e -y;
-      kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out'
+      kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out --watch-courier'
 
     networks:
       static:
         ipv4_address: {{ ip_addresses.kratos }}
-    extra_hosts:
-      - 'kratos:{{ ip_addresses.kratos }}'
     expose:
       - 80
 
@@ -136,8 +130,6 @@ services:
     networks:
       static:
         ipv4_address: {{ ip_addresses.oathkeeper }}
-    extra_hosts:
-      - 'oathkeeper:{{ ip_addresses.oathkeeper }}'
     expose:
       - 80
 
@@ -164,8 +156,6 @@ services:
     networks:
       static:
         ipv4_address: {{ ip_addresses.node }}
-    extra_hosts:
-      - 'node:{{ ip_addresses.node }}'
     expose:
       - 80
 
@@ -216,8 +206,6 @@ services:
     networks:
       static:
         ipv4_address: {{ ip_addresses.filebrowser }}
-    extra_hosts:
-      - 'filebrowser:{{ ip_addresses.filebrowser }}'
     expose:
       - 80
 
@@ -252,8 +240,6 @@ services:
     networks:
       static:
         ipv4_address: {{ ip_addresses.rstudio }}
-    extra_hosts:
-      - 'rstudio:{{ ip_addresses.rstudio }}'
     expose:
       - 80
 
