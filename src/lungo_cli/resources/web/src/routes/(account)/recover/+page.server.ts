@@ -18,13 +18,8 @@ export const actions = {
             },
         })
 
-        console.log("@@@@@@@@@@")
-        console.log(JSON.stringify(response.data))
-        console.log(JSON.stringify(response.error))
-        console.log("@@@@@@@@@@")
-
         switch (response.response.status) {
-            case 200:
+            case 200 | 422:
                 if (data.get("code")) {
                     throw redirect(302, "/account")
                 }
