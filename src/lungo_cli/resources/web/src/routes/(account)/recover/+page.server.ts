@@ -20,6 +20,14 @@ export const actions = {
 
         switch (response.response.status) {
             case 200:
+                console.log("#################")
+                console.log(JSON.stringify(data.get("flow")))
+                console.log(JSON.stringify(data.get("csrf_token")))
+                console.log(JSON.stringify(data.get("method")))
+                console.log(JSON.stringify(data.get("email")))
+                console.log(JSON.stringify(data.get("code")))
+                console.log("#################")
+
                 if (data.get("code")) {
                     throw redirect(302, "/account")
                 }
@@ -39,11 +47,21 @@ export const actions = {
                     ],
                 })
             case 400:
+                console.log("!!!!!!!!!!!!!")
+                console.log("!!!!!!!!!!!!!")
+                console.log("!!!!!!!!!!!!!")
+                console.log("!!!!!!!!!!!!!")
+                console.log("!!!!!!!!!!!!!")
+
                 return fail(400, {
                     messages: (response.error as KratosComponents["schemas"]["recoveryFlow"]).ui.messages,
                     nodes: (response.error as KratosComponents["schemas"]["recoveryFlow"]).ui.nodes,
                 })
             default:
+                console.log("!!!!!!!!!!!!!")
+                console.log("!!!!!!!!!!!!!")
+                console.log("!!!!!!!!!!!!!")
+
                 return fail(400, {
                     messages: [
                         {

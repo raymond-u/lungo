@@ -24,18 +24,8 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
             case 200:
                 allowedApps.push(app)
                 break
-            default:
-                break
         }
     }
-
-    console.log("@@@@@@@@@")
-    console.log(JSON.stringify(allowedApps))
-    console.log("@@@@@@@@@")
-    console.log(EApp.FileBrowser)
-    console.log("@@@@@@@@@")
-    console.log(EApp.RStudio)
-    console.log("@@@@@@@@@")
 
     if (EApp.FileBrowser in allowedApps) {
         apps.push({ name: "Files", href: "/app/files", icon: EIcon.Folder })
@@ -49,6 +39,10 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
     // if ("proxy" in allowedApps) {
     //     apps.push({ name: "Proxy", href: "/app/proxy", icon: EIcon.Proxy })
     // }
+
+    console.log("#################")
+    console.log(JSON.stringify(apps))
+    console.log("#################")
 
     return apps
 }
