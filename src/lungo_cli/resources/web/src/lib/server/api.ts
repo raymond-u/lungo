@@ -7,15 +7,16 @@ import type { KetoPaths, KratosPaths } from "$lib/types"
 function wrapFetch(fetch: typeof global.fetch, cookies?: Cookies): typeof global.fetch {
     return async (input, init?) => {
         try {
-            if (cookies) {
+            if (cookies && cookies.getAll().length > 0) {
                 init ??= {}
-                init.headers = {
-                    ...init.headers,
-                    Cookie: cookies
+                init.headers = new Headers(init.headers)
+                init.headers.set(
+                    "Cookie",
+                    cookies
                         .getAll()
                         .map(({ name, value }) => `${name}=${value}`)
-                        .join("; "),
-                }
+                        .join("; ")
+                )
             }
 
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
