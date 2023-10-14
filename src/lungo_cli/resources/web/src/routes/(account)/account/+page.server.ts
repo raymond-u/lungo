@@ -21,13 +21,8 @@ export const actions = {
         switch (response.response.status) {
             case 200:
                 return {
-                    messages: [
-                        {
-                            id: getRandomId(),
-                            text: "Account information updated.",
-                            type: "success",
-                        },
-                    ],
+                    messages: (response.data as KratosComponents["schemas"]["settingsFlow"]).ui.messages,
+                    nodes: (response.data as KratosComponents["schemas"]["settingsFlow"]).ui.nodes,
                 }
             case 303:
                 await invalidate(EDependency.Form)

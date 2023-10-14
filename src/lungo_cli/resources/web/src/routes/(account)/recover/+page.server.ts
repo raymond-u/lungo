@@ -20,15 +20,9 @@ export const actions = {
 
         switch (response.response.status) {
             case 200:
-                console.log(JSON.stringify(response.data!.ui))
                 return {
-                    messages: [
-                        {
-                            id: getRandomId(),
-                            text: "Recovery email sent. Please check your inbox.",
-                            type: "success",
-                        },
-                    ],
+                    messages: (response.data as KratosComponents["schemas"]["recoveryFlow"]).ui.messages,
+                    nodes: (response.data as KratosComponents["schemas"]["recoveryFlow"]).ui.nodes,
                 }
             case 303:
                 await invalidate(EDependency.Form)
