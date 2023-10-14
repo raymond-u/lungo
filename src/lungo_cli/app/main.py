@@ -3,7 +3,7 @@ from typing import Annotated
 from typer import Exit, Option, Typer
 
 from .state import console
-from ..commands import check, down, init, up
+from ..commands import check, down, up
 from ..core.constants import APP_NAME_CAPITALIZED
 from ..helpers.common import get_app_version
 
@@ -15,7 +15,6 @@ app = Typer(
 )
 
 app.command("check")(check.main)
-app.command("init")(init.main)
 app.command("up")(up.main)
 app.command("down")(down.main)
 

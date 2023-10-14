@@ -10,6 +10,7 @@ from ..helpers.common import format_command, format_path
 
 
 def main(
+    build_only: Annotated[bool, Option("--build-only", help="Only build the container.", show_default=False)] = False,
     config_dir: Annotated[
         Optional[Path], Option("--config-dir", "-c", help="Path to the configuration directory.", show_default=False)
     ] = None,
@@ -32,13 +33,22 @@ def main(
 
     ensure_application_data(config, users)
 
-    with console().status(
-        "Starting the service (if this is the first time, it may take up to an hour "
-        "depending on your internet connection, so please be patient)..."
-    ):
-        container().up()
+    if build_only:
+        with console().status(
+            "Building the container (if this is the first time, it may take up to an hour "
+            "depending on your internet connection)..."
+        ):
+            container().build()
 
-    console().print(
-        f"{APP_NAME_CAPITALIZED} is now available at {format_path(f'https://{config.network.hostname}/')}. "
-        f"To stop it, run {format_command(APP_NAME, 'down')}."
-    )
+        console().print("Build completed.")
+    else:
+        with console().status(
+            "Starting the service (if this is the first time, it may take up to an hour "
+            "depending on your internet connection)..."
+        ):
+            container().up()
+
+        console().print(
+            f"{APP_NAME_CAPITALIZED} is now available at {format_path(f'https://{config.network.hostname}/')}. "
+            f"To stop it, run {format_command(APP_NAME, 'down')}."
+        )
