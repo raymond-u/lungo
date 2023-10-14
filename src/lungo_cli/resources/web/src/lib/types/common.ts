@@ -7,11 +7,6 @@ export type App = {
     icon: EIcon
 }
 
-export enum EDependency {
-    Form = "form",
-    Session = "session",
-}
-
 export enum EIcon {
     Folder,
     Menu,

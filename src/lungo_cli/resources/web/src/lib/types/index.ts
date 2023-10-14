@@ -1,4 +1,4 @@
-export { type App, EDependency, EIcon, Store } from "./common"
+export { type App, EIcon, Store } from "./common"
 export type { components as KetoComponents } from "./keto"
 export type { components as KratosComponents } from "./kratos"
 export type { paths as KetoPaths } from "./keto"

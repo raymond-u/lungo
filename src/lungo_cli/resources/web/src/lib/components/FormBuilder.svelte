@@ -5,6 +5,9 @@
     import { PasswordInput } from "$lib/components"
     import type { KratosComponents } from "$lib/types"
 
+    const clipMessage = (msg: string) => {
+        return msg.slice(0, msg.indexOf(".") + 1)
+    }
     const getGroupActionTitle = (group: KratosComponents["schemas"]["uiNode"]["group"]) => {
         return (
             nodes.find((node) => node.group === group && node.type === "input" && node.attributes.type === "submit")
@@ -74,9 +77,9 @@
                             <span
                                 class="mt-1 text-sm"
                                 class:text-error={message.type === "error"}
-                                class:text-success={message.type === "success"}
+                                class:text-success={message.type === "info" || message.type === "success"}
                             >
-                                {message.text}
+                                {clipMessage(message.text)}
                             </span>
                         {/each}
                     </label>
@@ -98,9 +101,9 @@
                             <span
                                 class="mt-1 text-sm"
                                 class:text-error={message.type === "error"}
-                                class:text-success={message.type === "success"}
+                                class:text-success={message.type === "info" || message.type === "success"}
                             >
-                                {message.text}
+                                {clipMessage(message.text)}
                             </span>
                         {/each}
                     </label>
@@ -123,9 +126,9 @@
         <span
             class="text-sm"
             class:text-error={message.type === "error"}
-            class:text-success={message.type === "success"}
+            class:text-success={message.type === "info" || message.type === "success"}
         >
-            {message.text}
+            {clipMessage(message.text)}
         </span>
     {/each}
     <div class="mt-8"></div>

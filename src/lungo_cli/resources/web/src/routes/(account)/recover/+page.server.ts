@@ -1,7 +1,6 @@
 import { type Cookies, fail, redirect } from "@sveltejs/kit"
-import { invalidate } from "$app/navigation"
 import { createKratosClient } from "$lib/server/api"
-import { EDependency, type KratosComponents } from "$lib/types"
+import type { KratosComponents } from "$lib/types"
 import { getFlow, getRandomId } from "$lib/utils"
 
 export const actions = {
@@ -26,12 +25,11 @@ export const actions = {
                     nodes: (response.data as KratosComponents["schemas"]["recoveryFlow"]).ui.nodes,
                 }
             case 303:
-                await invalidate(EDependency.Form)
                 return fail(400, {
                     messages: [
                         {
                             id: getRandomId(),
-                            text: "Session expired. Please try again.",
+                            text: "Session expired. Please refresh the page and try again.",
                             type: "error",
                         },
                     ],
@@ -42,7 +40,6 @@ export const actions = {
                     nodes: (response.error as KratosComponents["schemas"]["recoveryFlow"]).ui.nodes,
                 })
             default:
-                await invalidate(EDependency.Form)
                 return fail(400, {
                     messages: [
                         {
@@ -56,17 +53,7 @@ export const actions = {
     },
 }
 
-export async function load({
-    cookies,
-    depends,
-    fetch,
-}: {
-    cookies: Cookies
-    depends: (...deps: string[]) => void
-    fetch: typeof global.fetch
-}) {
-    depends(EDependency.Form)
-
+export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof global.fetch }) {
     const client = createKratosClient(cookies, fetch)
     const response = await client.GET("/self-service/recovery/browser", { params: {} })
 

@@ -1,7 +1,7 @@
 import type { Cookies } from "@sveltejs/kit"
 import { createKetoClient, createKratosClient } from "$lib/server/api"
 import { EApp } from "$lib/server/types"
-import { type App, EDependency, EIcon, type User } from "$lib/types"
+import { type App, EIcon, type User } from "$lib/types"
 
 async function getAllowedApps(fetch: typeof global.fetch, username?: string): Promise<App[]> {
     const client = createKetoClient(fetch)
@@ -45,17 +45,7 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
     return apps
 }
 
-export async function load({
-    cookies,
-    depends,
-    fetch,
-}: {
-    cookies: Cookies
-    depends: (...deps: string[]) => void
-    fetch: typeof global.fetch
-}) {
-    depends(EDependency.Session)
-
+export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof global.fetch }) {
     const client = createKratosClient(cookies, fetch)
     const response = await client.GET("/sessions/whoami", { params: {} })
 
