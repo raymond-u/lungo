@@ -20,6 +20,10 @@ export const actions = {
 
         switch (response.response.status) {
             case 200:
+                if (data.get("code")) {
+                    throw redirect(302, "/account")
+                }
+
                 return {
                     messages: (response.data as KratosComponents["schemas"]["recoveryFlow"]).ui.messages,
                     nodes: (response.data as KratosComponents["schemas"]["recoveryFlow"]).ui.nodes,

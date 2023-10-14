@@ -1,5 +1,4 @@
 import type { Cookies } from "@sveltejs/kit"
-import { invalidateAll } from "$app/navigation"
 import { createKratosClient } from "$lib/server/api"
 
 export async function POST({ cookies, request }: { cookies: Cookies; request: Request }) {
@@ -9,6 +8,4 @@ export async function POST({ cookies, request }: { cookies: Cookies; request: Re
     await client.GET("/self-service/logout", {
         params: { query: { token: data.get("logoutToken") as string } },
     })
-
-    await invalidateAll()
 }

@@ -29,6 +29,14 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
         }
     }
 
+    console.log("@@@@@@@@@")
+    console.log(JSON.stringify(allowedApps))
+    console.log("@@@@@@@@@")
+    console.log(EApp.FileBrowser)
+    console.log("@@@@@@@@@")
+    console.log(EApp.RStudio)
+    console.log("@@@@@@@@@")
+
     if (EApp.FileBrowser in allowedApps) {
         apps.push({ name: "Files", href: "/app/files", icon: EIcon.Folder })
     }

@@ -131,7 +131,7 @@
             {clipMessage(message.text)}
         </span>
     {/each}
-    <div class="mt-8"></div>
+    <div class="my-3"></div>
     {#each actionNodes as actionNode (getNodeId(actionNode))}
         <button
             class="btn btn-primary"

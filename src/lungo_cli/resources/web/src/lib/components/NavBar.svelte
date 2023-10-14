@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { invalidateAll } from "$app/navigation"
     import { page } from "$app/stores"
     import { safeClick, syncScroll } from "$lib/actions"
     import { Avatar, SwapIcon } from "$lib/components"
@@ -17,6 +18,8 @@
                 "Content-Type": "application/x-www-form-urlencoded",
             },
         })
+
+        await invalidateAll()
     }
     const handleSwitchTheme = () => {
         $darkTheme = !$darkTheme
