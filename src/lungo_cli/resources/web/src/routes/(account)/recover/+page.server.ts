@@ -20,6 +20,7 @@ export const actions = {
 
         switch (response.response.status) {
             case 200:
+                console.log(JSON.stringify(response.data!.ui))
                 return {
                     messages: [
                         {
