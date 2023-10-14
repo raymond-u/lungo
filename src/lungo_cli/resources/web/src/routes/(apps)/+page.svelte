@@ -1,5 +1,6 @@
 <script lang="ts">
     import { HeroFrame } from "$lib/components"
+    import { SITE_TITLE } from "$lib/constants"
     import { getRandomElement, getTitle } from "$lib/utils"
 
     export let data
@@ -28,7 +29,7 @@
                     <h1 class="text-4xl font-bold">Welcome, {name.first} {name.last}</h1>
                     <p class="pt-4 text-lg">{getRandomElement(quotes)}</p>
                 {:else}
-                    <h1 class="text-4xl font-bold">Welcome to Lungo</h1>
+                    <h1 class="text-4xl font-bold">Welcome to {SITE_TITLE}</h1>
                     <p class="pb-20 pt-4 text-lg">{getRandomElement(quotes)}</p>
                     <a class="btn btn-primary" href="/login">Sign in</a>
                 {/if}
