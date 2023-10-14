@@ -22,6 +22,14 @@
 - id: catch-all
   match:
     url: 'https://{{ network.hostname }}/<.*>'
+    methods:
+      - GET
+      - POST
+      - DELETE
+      - PATCH
+      - PUT
+      - HEAD
+      - OPTIONS
   authenticators:
     - handler: noop
   authorizer:
