@@ -76,7 +76,7 @@ export async function load({
 
     switch (response.response.status) {
         case 200:
-            console.log(response.data!.ui)
+            console.log(JSON.stringify(response.data!.ui))
             return {
                 flow: getFlow(response.data!.ui.action),
                 messages: response.data!.ui.messages,

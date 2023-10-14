@@ -20,5 +20,6 @@ class ERole(str, Enum):
 
 
 AllowedApps = Literal["all"] | list[EApp]
+NameStr = Annotated[str, Field(max_length=32)]
 Port = Annotated[int, Field(ge=1, le=65535)]
 Username = Annotated[str, Field(pattern=r"^[a-z_](?:[a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\$)$")]

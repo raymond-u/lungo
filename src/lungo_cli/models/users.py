@@ -1,11 +1,11 @@
 from pydantic import DirectoryPath, EmailStr, NewPath
 
-from .base import AllowedApps, Base, ERole, Username
+from .base import AllowedApps, Base, ERole, NameStr, Username
 
 
 class Name(Base):
-    first: str
-    last: str
+    first: NameStr
+    last: NameStr
 
 
 class Extra(Base):

@@ -33,16 +33,14 @@ selfservice:
       enabled: false
     recovery:
       enabled: true
-      use: link
+      use: code
       notify_unknown_recipients: false
       after:
         hooks:
           - hook: revoke_active_sessions
   methods:
-    link:
+    code:
       enabled: true
-      config:
-        base_url: 'https://{{ network.hostname }}/recover/'
     password:
       enabled: true
     profile:

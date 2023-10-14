@@ -47,8 +47,7 @@
                         "verification": {
                             "via": "email"
                         }
-                    },
-                    "maxLength": 256
+                    }
                 },
                 "name": {
                     "type": "object",
