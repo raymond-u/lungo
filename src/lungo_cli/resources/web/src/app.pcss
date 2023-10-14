@@ -24,7 +24,12 @@
     }
 
     .drawer-toggle:checked ~ .drawer-side > .drawer-overlay {
-        @apply bg-black/80;
+        @apply bg-black/60;
+    }
+
+    .modal:not(dialog:not(.modal-open)),
+    .modal::backdrop {
+        @apply bg-black/60;
     }
 
     .swap > * {

@@ -1,7 +1,7 @@
 <script lang="ts">
     import "../app.pcss"
     import { onMount } from "svelte"
-    import { NavBar } from "$lib/components"
+    import { LoadingIndicator, NavBar } from "$lib/components"
     import { createStore } from "$lib/utils"
 
     const { allowScroll, darkTheme } = createStore()
@@ -23,6 +23,7 @@
 </script>
 
 <div data-theme={typeof $darkTheme === "undefined" ? undefined : $darkTheme ? "dark" : "light"}>
+    <LoadingIndicator />
     <header>
         <div class="h-16">
             <NavBar />
