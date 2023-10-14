@@ -19,7 +19,7 @@ export const actions = {
         })
 
         switch (response.response.status) {
-            case 200 | 422:
+            case 200:
                 if (data.get("code")) {
                     throw redirect(302, "/account")
                 }
@@ -45,6 +45,12 @@ export const actions = {
                     messages: (response.error as KratosComponents["schemas"]["recoveryFlow"]).ui.messages,
                     nodes: (response.error as KratosComponents["schemas"]["recoveryFlow"]).ui.nodes,
                 })
+            case 422:
+                if (data.get("code")) {
+                    throw redirect(302, "/account")
+                }
+
+                break
             default:
                 return fail(400, {
                     messages: [
