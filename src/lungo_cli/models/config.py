@@ -1,6 +1,6 @@
 from ipaddress import IPv4Network
 
-from pydantic import DirectoryPath, EmailStr, FilePath, NewPath, SecretStr
+from pydantic import DirectoryPath, EmailStr, FilePath, NewPath
 
 from .base import AllowedApps, Base, EApp, Port
 
@@ -65,7 +65,7 @@ class Smtp(Base):
     host: str
     port: Port
     username: str
-    password: SecretStr
+    password: str
     name: str = "Lungo"
     sender: EmailStr
 
