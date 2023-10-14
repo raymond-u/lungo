@@ -5,15 +5,11 @@
     import { PasswordInput } from "$lib/components"
     import type { KratosComponents } from "$lib/types"
 
-    const getFirstSubmitId = (nodes: KratosComponents["schemas"]["uiNodes"]) => {
-        const input = nodes.find(
-            (node) =>
-                (node.group === "default" || node.group === currentGroup) &&
-                node.type === "input" &&
-                node.attributes.type === "submit"
+    const getGroupActionTitle = (group: KratosComponents["schemas"]["uiNode"]["group"]) => {
+        return (
+            nodes.find((node) => node.group === group && node.type === "input" && node.attributes.type === "submit")
+                ?.meta.label?.text ?? ""
         )
-
-        return getNodeId(input!)
     }
     const getNodeId = (node: KratosComponents["schemas"]["uiNode"]) => {
         if (node.type === "input") {
@@ -21,12 +17,6 @@
         } else {
             return node.attributes.id
         }
-    }
-    const getSwitchGroupTitle = (group: KratosComponents["schemas"]["uiNode"]["group"]) => {
-        return (
-            nodes.find((node) => node.group === group && node.type === "input" && node.attributes.type === "submit")
-                ?.meta.label?.text ?? ""
-        )
     }
     const noReload = () => {
         disabled = true
@@ -40,12 +30,19 @@
     let disabled = false
     let flow = $page.data.flow
 
-    let messages: KratosComponents["schemas"]["uiTexts"] = $page.data.messages
+    let actionNodes: KratosComponents["schemas"]["uiNodeInput"][]
+    let messages: KratosComponents["schemas"]["uiTexts"]
     let nodes: KratosComponents["schemas"]["uiNodes"] = $page.data.nodes
     let currentGroup: KratosComponents["schemas"]["uiNode"]["group"] =
         nodes.find((node) => node.group !== "default")?.group ?? "default"
     let otherGroups: KratosComponents["schemas"]["uiNode"]["group"][]
 
+    $: actionNodes = nodes.filter(
+        (node) =>
+            (node.group === "default" || node.group === currentGroup) &&
+            node.type === "input" &&
+            node.attributes.type === "submit"
+    ) as KratosComponents["schemas"]["uiNodeInput"][]
     $: messages = $page.form?.messages ?? $page.data.messages
     $: nodes = $page.form?.nodes ?? $page.data.nodes
     $: otherGroups = [
@@ -59,9 +56,9 @@
         {#if node.group === "default" || node.group === currentGroup}
             {#if node.type === "input"}
                 {#if node.attributes.type === "button"}
-                    <!--  TODO  -->
+                    <!--  Not implemented  -->
                 {:else if node.attributes.type === "checkbox"}
-                    <!--  TODO  -->
+                    <!--  Not implemented  -->
                 {:else if node.attributes.type === "password"}
                     <!-- svelte-ignore a11y-label-has-associated-control -->
                     <label class="inline-flex flex-col">
@@ -84,27 +81,7 @@
                         {/each}
                     </label>
                 {:else if node.attributes.type === "submit"}
-                    <slot />
-                    {#if getNodeId(node) === getFirstSubmitId(nodes)}
-                        {#each messages ?? [] as message (message.id)}
-                            <span
-                                class="text-sm"
-                                class:text-error={message.type === "error"}
-                                class:text-success={message.type === "success"}
-                            >
-                                {message.text}
-                            </span>
-                        {/each}
-                    {/if}
-                    <button
-                        class="btn btn-primary mt-8"
-                        name={node.attributes.name}
-                        type={node.attributes.type}
-                        value={node.attributes.value ?? ""}
-                        {disabled}
-                    >
-                        {node.meta.label?.text ?? ""}
-                    </button>
+                    <!--  Skip  -->
                 {:else if node.meta.label}
                     <label class="inline-flex flex-col">
                         <input
@@ -141,6 +118,28 @@
             {/if}
         {/if}
     {/each}
+    <slot />
+    {#each messages ?? [] as message (message.id)}
+        <span
+            class="text-sm"
+            class:text-error={message.type === "error"}
+            class:text-success={message.type === "success"}
+        >
+            {message.text}
+        </span>
+    {/each}
+    <div class="mt-8"></div>
+    {#each actionNodes as actionNode (getNodeId(actionNode))}
+        <button
+            class="btn btn-primary"
+            name={actionNode.attributes.name}
+            type="submit"
+            value={actionNode.attributes.value ?? ""}
+            {disabled}
+        >
+            {actionNode.meta.label?.text ?? ""}
+        </button>
+    {/each}
     {#each otherGroups as group (group)}
         <button
             class="btn btn-secondary"
@@ -149,7 +148,7 @@
                 currentGroup = group
             }}
         >
-            {getSwitchGroupTitle(group)} with {group}
+            {getGroupActionTitle(group)} with {group}
         </button>
     {/each}
 </form>

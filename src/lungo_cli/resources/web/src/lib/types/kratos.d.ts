@@ -2128,7 +2128,14 @@ export interface components {
          * @description Nodes are represented as HTML elements or their native UI equivalents. For example,
          * a node can be an `<img>` tag, or an `<input element>` but also `some plain text`.
          */
-        uiNode: {
+        uiNode:
+            | components["schemas"]["uiNodeText"]
+            | components["schemas"]["uiNodeInput"]
+            | components["schemas"]["uiNodeImage"]
+            | components["schemas"]["uiNodeAnchor"]
+            | components["schemas"]["uiNodeScript"]
+        /** Anchor represents an anchor node. */
+        uiNodeAnchor: {
             /**
              * @description Group specifies which group (e.g. password authenticator) this node belongs to.
              * default DefaultGroup
@@ -2145,28 +2152,9 @@ export interface components {
             group: "default" | "password" | "oidc" | "profile" | "link" | "code" | "totp" | "lookup_secret" | "webauthn"
             messages: components["schemas"]["uiTexts"]
             meta: components["schemas"]["uiNodeMeta"]
-        } & (
-            | {
-                  attributes: components["schemas"]["uiNodeTextAttributes"]
-                  type: "text"
-              }
-            | {
-                  attributes: components["schemas"]["uiNodeInputAttributes"]
-                  type: "input"
-              }
-            | {
-                  attributes: components["schemas"]["uiNodeImageAttributes"]
-                  type: "img"
-              }
-            | {
-                  attributes: components["schemas"]["uiNodeAnchorAttributes"]
-                  type: "a"
-              }
-            | {
-                  attributes: components["schemas"]["uiNodeScriptAttributes"]
-                  type: "script"
-              }
-        )
+            attributes: components["schemas"]["uiNodeAnchorAttributes"]
+            type: "a"
+        }
         /** AnchorAttributes represents the attributes of an anchor node. */
         uiNodeAnchorAttributes: {
             /**
@@ -2183,6 +2171,27 @@ export interface components {
              */
             node_type: string
             title: components["schemas"]["uiText"]
+        }
+        /** Image represents an image node. */
+        uiNodeImage: {
+            /**
+             * @description Group specifies which group (e.g. password authenticator) this node belongs to.
+             * default DefaultGroup
+             * password PasswordGroup
+             * oidc OpenIDConnectGroup
+             * profile ProfileGroup
+             * link LinkGroup
+             * code CodeGroup
+             * totp TOTPGroup
+             * lookup_secret LookupGroup
+             * webauthn WebAuthnGroup
+             * @enum {string}
+             */
+            group: "default" | "password" | "oidc" | "profile" | "link" | "code" | "totp" | "lookup_secret" | "webauthn"
+            messages: components["schemas"]["uiTexts"]
+            meta: components["schemas"]["uiNodeMeta"]
+            attributes: components["schemas"]["uiNodeImageAttributes"]
+            type: "img"
         }
         /** ImageAttributes represents the attributes of an image node. */
         uiNodeImageAttributes: {
@@ -2209,6 +2218,27 @@ export interface components {
              * @description Width of the image
              */
             width: number
+        }
+        /** Input represents an input node. */
+        uiNodeInput: {
+            /**
+             * @description Group specifies which group (e.g. password authenticator) this node belongs to.
+             * default DefaultGroup
+             * password PasswordGroup
+             * oidc OpenIDConnectGroup
+             * profile ProfileGroup
+             * link LinkGroup
+             * code CodeGroup
+             * totp TOTPGroup
+             * lookup_secret LookupGroup
+             * webauthn WebAuthnGroup
+             * @enum {string}
+             */
+            group: "default" | "password" | "oidc" | "profile" | "link" | "code" | "totp" | "lookup_secret" | "webauthn"
+            messages: components["schemas"]["uiTexts"]
+            meta: components["schemas"]["uiNodeMeta"]
+            attributes: components["schemas"]["uiNodeInputAttributes"]
+            type: "input"
         }
         /** @description InputAttributes represents the attributes of an input node */
         uiNodeInputAttributes: {
@@ -2282,6 +2312,27 @@ export interface components {
         uiNodeMeta: {
             label?: components["schemas"]["uiText"]
         }
+        /** Script represents a script node. */
+        uiNodeScript: {
+            /**
+             * @description Group specifies which group (e.g. password authenticator) this node belongs to.
+             * default DefaultGroup
+             * password PasswordGroup
+             * oidc OpenIDConnectGroup
+             * profile ProfileGroup
+             * link LinkGroup
+             * code CodeGroup
+             * totp TOTPGroup
+             * lookup_secret LookupGroup
+             * webauthn WebAuthnGroup
+             * @enum {string}
+             */
+            group: "default" | "password" | "oidc" | "profile" | "link" | "code" | "totp" | "lookup_secret" | "webauthn"
+            messages: components["schemas"]["uiTexts"]
+            meta: components["schemas"]["uiNodeMeta"]
+            attributes: components["schemas"]["uiNodeScriptAttributes"]
+            type: "script"
+        }
         /** ScriptAttributes represent script nodes which load javascript. */
         uiNodeScriptAttributes: {
             /** @description The script async type */
@@ -2311,6 +2362,27 @@ export interface components {
             src: string
             /** @description The script MIME type */
             type: string
+        }
+        /** Text represents a text node. */
+        uiNodeText: {
+            /**
+             * @description Group specifies which group (e.g. password authenticator) this node belongs to.
+             * default DefaultGroup
+             * password PasswordGroup
+             * oidc OpenIDConnectGroup
+             * profile ProfileGroup
+             * link LinkGroup
+             * code CodeGroup
+             * totp TOTPGroup
+             * lookup_secret LookupGroup
+             * webauthn WebAuthnGroup
+             * @enum {string}
+             */
+            group: "default" | "password" | "oidc" | "profile" | "link" | "code" | "totp" | "lookup_secret" | "webauthn"
+            messages: components["schemas"]["uiTexts"]
+            meta: components["schemas"]["uiNodeMeta"]
+            attributes: components["schemas"]["uiNodeTextAttributes"]
+            type: "text"
         }
         /** TextAttributes represents the attributes of a text node. */
         uiNodeTextAttributes: {
