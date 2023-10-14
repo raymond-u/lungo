@@ -36,6 +36,7 @@ export const actions = {
                 })
             case 400:
                 return fail(400, {
+                    flow: getFlow((response.error as KratosComponents["schemas"]["settingsFlow"]).ui.action),
                     messages: (response.error as KratosComponents["schemas"]["settingsFlow"]).ui.messages,
                     nodes: (response.error as KratosComponents["schemas"]["settingsFlow"]).ui.nodes,
                 })

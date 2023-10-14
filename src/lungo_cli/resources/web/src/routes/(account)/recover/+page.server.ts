@@ -18,6 +18,11 @@ export const actions = {
             },
         })
 
+        console.log("@@@@@@@@@@")
+        console.log(JSON.stringify(response.data))
+        console.log(JSON.stringify(response.error))
+        console.log("@@@@@@@@@@")
+
         switch (response.response.status) {
             case 200:
                 if (data.get("code")) {
@@ -41,6 +46,7 @@ export const actions = {
                 })
             case 400:
                 return fail(400, {
+                    flow: getFlow((response.error as KratosComponents["schemas"]["recoveryFlow"]).ui.action),
                     messages: (response.error as KratosComponents["schemas"]["recoveryFlow"]).ui.messages,
                     nodes: (response.error as KratosComponents["schemas"]["recoveryFlow"]).ui.nodes,
                 })
