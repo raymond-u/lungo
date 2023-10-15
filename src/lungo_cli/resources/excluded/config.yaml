@@ -10,6 +10,13 @@
 #   # Required: no
 #   name: Lungo
 
+#   # Custom subtitle for the landing page
+#   # Type: array
+#   # Default: [ 'a hug in a mug', 'a poetry of aroma', 'a quiet solitude', 'a whisper of inspiration' ]
+#   # Required: no
+#   subtitle:
+#     - a hug in a mug
+
 #   # Custom cover image for the landing page
 #   # Type: path
 #   # Default: none

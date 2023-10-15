@@ -7,6 +7,7 @@ from .base import AllowedApps, Base, EApp, Port
 
 class Branding(Base):
     name: str = "Lungo"
+    subtitle: list[str] = ["a hug in a mug", "a poetry of aroma", "a quiet solitude", "a whisper of inspiration"]
     cover: FilePath | None = None
     logo: FilePath | None = None
 

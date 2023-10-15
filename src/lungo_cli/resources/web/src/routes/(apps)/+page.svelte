@@ -1,21 +1,18 @@
 <script lang="ts">
+    import { assets } from "$app/paths"
     import { HeroFrame } from "$lib/components"
     import { SITE_SUBTITLE, SITE_TITLE } from "$lib/constants"
-    import { getRandomElement, getTitle } from "$lib/utils"
+    import { getRandomElement } from "$lib/utils"
 
     export let data
 
     const subtitle = getRandomElement(JSON.parse(SITE_SUBTITLE))
 </script>
 
-<svelte:head>
-    <title>{getTitle("Home")}</title>
-</svelte:head>
-
 <HeroFrame>
     <div class="hero h-full">
         <div class="hero-content flex-col gap-32 lg:flex-row-reverse">
-            <img src="./cover.jpg" alt="cover" class="w-80 rounded-2xl shadow-2xl" />
+            <img src="{assets}/cover.jpg" alt="cover" class="w-80 rounded-2xl shadow-2xl" />
             <div>
                 {#if data.userInfo}
                     {@const { name } = data.userInfo}

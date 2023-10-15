@@ -1,5 +1,8 @@
 branding:
   name: Lungo
+  subtitle:
+    - a hug in a mug
+    - a poetry of aroma
   cover: /assets/cover.png
   logo: /assets/favicon.png
 

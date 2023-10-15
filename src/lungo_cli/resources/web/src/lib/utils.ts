@@ -35,6 +35,6 @@ export function getRandomId(): number {
     return Number(Math.round(Math.random() * 100000).toString() + Date.now().toString().slice(-5))
 }
 
-export function getTitle(title: string): string {
-    return `${title} | ${SITE_TITLE}`
+export function getTitleFromSlug(slug: string): string {
+    return `${slug[0].toUpperCase() + slug.slice(1)} | ${SITE_TITLE}`
 }

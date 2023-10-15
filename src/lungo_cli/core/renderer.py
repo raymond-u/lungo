@@ -22,6 +22,7 @@ class Renderer:
     def env(self) -> Environment:
         if not self._env:
             self._env = Environment(
+                autoescape=True,
                 lstrip_blocks=True,
                 trim_blocks=True,
                 loader=FileSystemLoader(self.storage.bundled_dir),

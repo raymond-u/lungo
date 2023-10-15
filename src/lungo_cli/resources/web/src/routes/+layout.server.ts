@@ -28,7 +28,7 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
     }
 
     if (allowedApps.includes(EApp.FileBrowser)) {
-        apps.push({ name: "Files", href: `/app/${EApp.FileBrowser}`, icon: EIcon.Folder })
+        apps.push({ name: "File Browser", href: `/app/${EApp.FileBrowser}`, icon: EIcon.Folder })
     }
     // if (allowedApps.includes(EApp.Terminal)) {
     //     apps.push({ name: "Terminal", href: "/app/terminal", icon: EIcon.Terminal })
@@ -43,7 +43,9 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
     return apps
 }
 
-export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof global.fetch }) {
+export async function load({ cookies, fetch, url }: { cookies: Cookies; fetch: typeof global.fetch; url: URL }) {
+    const title = url.pathname.split("/").pop() || "home"
+
     const client = createKratosClient(cookies, fetch)
     const response = await client.GET("/sessions/whoami", { params: {} })
 
@@ -54,6 +56,7 @@ export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof
             return {
                 apps: await getAllowedApps(fetch),
                 logoutToken: undefined,
+                title,
                 userInfo: undefined,
             }
     }
@@ -65,12 +68,14 @@ export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof
             return {
                 apps: await getAllowedApps(fetch, (response.data!.identity as User).traits!.username),
                 logoutToken: response2.data!.logout_token,
+                title,
                 userInfo: (response.data!.identity as User).traits,
             }
         default:
             return {
                 apps: await getAllowedApps(fetch),
                 logoutToken: undefined,
+                title,
                 userInfo: undefined,
             }
     }
@@ -78,6 +83,7 @@ export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof
     // return {
     //     apps: [],
     //     logoutToken: "abc123",
+    //     title: url.pathname.split("/").pop() || "home",
     //     userInfo: {
     //         username: "test",
     //         email: "testuser12345@gmail.com",

@@ -183,6 +183,7 @@ services:
 
       - KETO_API_BASE_URL=http://{{ ip_addresses.keto }}:80/
       - KRATOS_API_BASE_URL=http://{{ ip_addresses.kratos }}:80/
+      - PUBLIC_SITE_SUBTITLE={{ branding.subtitle|tojson }}
       - PUBLIC_SITE_TITLE={{ branding.name }}
 
     restart: 'no'

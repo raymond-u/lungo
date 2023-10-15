@@ -55,7 +55,7 @@ settings:
 
 server:
   root: /
-  baseurl: /filebrowser
+  baseurl: /app/filebrowser
   socket: ""
   tlskey: ""
   tlscert: ""
@@ -69,4 +69,4 @@ server:
   authhook: ""
 
 auther:
-  header: Remote-User
+  header: X-Remote-User

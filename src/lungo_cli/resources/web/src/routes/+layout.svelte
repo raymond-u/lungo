@@ -1,8 +1,9 @@
 <script lang="ts">
     import "../app.pcss"
     import { onMount } from "svelte"
+    import { page } from "$app/stores"
     import { LoadingIndicator, NavBar } from "$lib/components"
-    import { createStore } from "$lib/utils"
+    import { createStore, getTitleFromSlug } from "$lib/utils"
 
     const { allowScroll, darkTheme } = createStore()
 
@@ -37,6 +38,7 @@
 </div>
 
 <svelte:head>
+    <title>{getTitleFromSlug($page.data.title)}</title>
     {#if !$allowScroll}
         <style>
             body {

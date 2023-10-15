@@ -67,6 +67,8 @@ export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof
             throw redirect(302, "/")
     }
 
+    // await new Promise((resolve) => setTimeout(resolve, 5000))
+    //
     // return {
     //     flow: getFlow("https://playground.com/self-service/login?flow=33f6079a-ef14-4084-af13-34a91e53cd6c"),
     //     messages: [
