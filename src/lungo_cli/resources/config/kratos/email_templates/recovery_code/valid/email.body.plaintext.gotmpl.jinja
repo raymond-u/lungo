@@ -1,0 +1,15 @@
+Recover your account
+
+{{ config.branding.name }} ( https://{{ config.network.hostname }}/ )
+
+************
+Hi {% raw %}{{ .Identity.traits.name.first }}{% endraw %},
+************
+
+Please use the code below to validate your identity. If you didn't request one, please feel free to ignore this email.
+
+{% raw %}{{ .RecoveryCode }}{% endraw %}
+
+This code will expire in one hour.
+
+© 2023 {{ config.branding.name }}. All rights reserved.
