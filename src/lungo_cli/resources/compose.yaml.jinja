@@ -216,10 +216,10 @@ services:
 
     volumes:
       - './config/filebrowser:/etc/filebrowser:ro'
-      - '{{ app_dirs.user_dir }}:/mnt/home:rw'
+      - '{{ app_dirs.user_dir }}:/mnt/__home__:rw'
       {% for account in accounts %}
         {% if account.extra.user_dir %}
-      - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
+      - '{{ account.extra.user_dir }}:/mnt/__home__/{{ account.username }}:rw'
         {% endif %}
       {% endfor %}
       - '{{ app_dirs.cache_dir }}/filebrowser:/var/log/filebrowser:rw'
@@ -251,10 +251,10 @@ services:
     volumes:
       - './config/rstudio/rserver.conf:/etc/rstudio/rserver.conf:ro'
       - './config/rstudio/rsession.conf:/etc/rstudio/rsession.conf:ro'
-      - '{{ app_dirs.user_dir }}:/mnt/home:rw'
+      - '{{ app_dirs.user_dir }}:/mnt/__home__:rw'
       {% for account in accounts %}
         {% if account.extra.user_dir %}
-      - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
+      - '{{ account.extra.user_dir }}:/mnt/__home__/{{ account.username }}:rw'
         {% endif %}
       {% endfor %}
       - '{{ app_dirs.managed_dir }}/rstudio:/var/lib/rstudio-server:rw'

@@ -4,7 +4,7 @@ FROM docker.io/rocker/verse:{{ RSTUDIO_VER }}
 {% for account in accounts %}
 RUN useradd -g root -G sudo -m '{{ account.username }}'
 RUN echo '{{ account.username }}:passwd' | chpasswd
-RUN ln -s '/mnt/home/{{ account.username }}' '/home/{{ account.username }}/home'
+RUN ln -s '/mnt/__home__/{{ account.username }}' '/home/{{ account.username }}/home'
   {% for shared_dir in directories.shared_dirs %}
 RUN ln -s '/mnt/{{ shared_dir.name }}' '/home/{{ account.username }}/{{ shared_dir.name }}'
   {% endfor %}
