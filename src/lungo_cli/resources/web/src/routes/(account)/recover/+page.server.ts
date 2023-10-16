@@ -18,6 +18,14 @@ export const actions = {
             },
         })
 
+        console.log("@@@@@@@@@@")
+        console.log(response.response.status)
+        console.log("@@@@@@@@@@")
+        console.log(response.data)
+        console.log("@@@@@@@@@@")
+        console.log(response.error)
+        console.log("@@@@@@@@@@")
+
         switch (response.response.status) {
             case 200:
                 if (data.get("code")) {
@@ -68,14 +76,6 @@ export const actions = {
 export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof global.fetch }) {
     const client = createKratosClient(cookies, fetch)
     const response = await client.GET("/self-service/recovery/browser", { params: {} })
-
-    console.log("@@@@@@@@@@")
-    console.log(response.response.status)
-    console.log("@@@@@@@@@@")
-    console.log(response.data)
-    console.log("@@@@@@@@@@")
-    console.log(response.error)
-    console.log("@@@@@@@@@@")
 
     switch (response.response.status) {
         case 200:
