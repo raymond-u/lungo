@@ -45,8 +45,8 @@ class AccountManager:
                     "that require authentication. Please change the username if not intended."
                 )
 
-            if not (path := user_dir / account.username).is_dir():
-                if os.access(user_dir, os.W_OK):
+            if not (path := (account.extra.user_dir or user_dir / account.username)).is_dir():
+                if os.access(path.parent, os.W_OK):
                     self.console.print_info(f"Creating user directory at {format_path(path)}...")
                     self.file_utils.create_dir(path)
                 else:
