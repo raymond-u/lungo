@@ -221,7 +221,7 @@ services:
       - '{{ app_dirs.user_dir }}:/mnt/__home__:rw'
       {% for account in accounts %}
         {% if account.extra.user_dir %}
-      - '{{ account.extra.user_dir }}:/mnt/__home__/{{ account.username }}:rw'
+      - '{{ account.extra.user_dir }}:/mnt/__custom_home__/{{ account.username }}:rw'
         {% endif %}
       {% endfor %}
       {% for shared_dir in directories.shared_dirs %}
@@ -255,7 +255,7 @@ services:
       - '{{ app_dirs.user_dir }}:/mnt/__home__:rw'
       {% for account in accounts %}
         {% if account.extra.user_dir %}
-      - '{{ account.extra.user_dir }}:/mnt/__home__/{{ account.username }}:rw'
+      - '{{ account.extra.user_dir }}:/mnt/__custom_home__/{{ account.username }}:rw'
         {% endif %}
       {% endfor %}
       {% for shared_dir in directories.shared_dirs %}
