@@ -19,11 +19,7 @@ export function asSearchParams(form: HTMLFormElement): URLSearchParams {
     )
 }
 
-export function getFlow(url: string | undefined): string {
-    if (typeof url === "undefined") {
-        return ""
-    }
-
+export function getFlow(url: string): string {
     return new URL(url).searchParams.get("flow") ?? ""
 }
 
