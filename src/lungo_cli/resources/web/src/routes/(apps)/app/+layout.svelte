@@ -8,12 +8,21 @@
 
     let iframe: HTMLIFrameElement | undefined
 
-    $: {
+    let oldHref: string | undefined = ""
+    let oldReferer: string | undefined = ""
+
+    setInterval(() => {
+        if (iframe?.contentWindow?.location.href === oldHref && iframe?.contentDocument?.referrer === oldReferer) {
+            return
+        }
+
+        oldHref = iframe?.contentWindow?.location.href
+        oldReferer = iframe?.contentDocument?.referrer
+
         console.log("###")
-        console.log("Href changed to: " + iframe?.contentWindow?.location.href)
-        console.log("Referer changed to: " + iframe?.contentDocument?.referrer)
-        console.log("History changed to: " + iframe?.contentWindow?.history.state)
-    }
+        console.log("Href changed to: " + oldHref)
+        console.log("Referer changed to: " + oldReferer)
+    }, 1)
 
     // $: if (iframe && iframe.contentWindow) {
     //     goto(iframe.contentWindow.location.pathname, { replaceState: true })
