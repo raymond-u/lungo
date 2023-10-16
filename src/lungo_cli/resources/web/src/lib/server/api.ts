@@ -26,7 +26,7 @@ function wrapFetch(fetch: typeof global.fetch, cookies?: Cookies): typeof global
             if (cookies) {
                 for (const cookie of parser.parse(response.headers.getSetCookie())) {
                     cookies.set(cookie.name, cookie.value, {
-                        path: cookie.path?.startsWith("/app") ? cookie.path : "/",
+                        path: "/",
                         expires: cookie.expires,
                         maxAge: cookie.maxAge,
                     })
