@@ -50,7 +50,7 @@ authorizers:
           "namespace": "app",
           "object": "{{ printIndex .MatchContext.RegexpCaptureGroups 0 }}",
           "relation": "access",
-          "subject_id": "{{ default .Subject .Extra.identity.traits.username }}"
+          "subject_id": "{{ if .Extra.identity }}{{ .Extra.identity.traits.username }}{{ else }}{{ .Subject }}{{ end }}"
         }
         {% endraw %}
 
