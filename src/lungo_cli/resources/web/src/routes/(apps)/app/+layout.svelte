@@ -9,6 +9,8 @@
     const handleLoad = (e: Event) => {
         const iframe = e.target as HTMLIFrameElement
 
+        console.log("iframe loaded with url: ", iframe.contentWindow!.location.href)
+
         Object.defineProperty(iframe.contentWindow!.history, "pushState", {
             value: (
                 data: Parameters<typeof history.pushState>[0],
