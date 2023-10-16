@@ -43,7 +43,7 @@ authorizers:
   remote_json:
     enabled: true
     config:
-      remote: 'http://{{ ip_addresses.keto }}:80/check'
+      remote: 'http://{{ ip_addresses.keto }}:80/relation-tuples/check'
       payload: >-
         {% raw %}
         {
