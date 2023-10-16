@@ -21,7 +21,7 @@
 
 - id: catch-all
   match:
-    url: 'https://{{ network.hostname }}/<.*>'
+    url: 'https://{{ network.hostname }}/<(?!app/)><.*>'
     methods:
       - GET
       - POST
