@@ -6,6 +6,8 @@
 
     const { currentApp } = useStore()
 
+    const src = $page.url.pathname + "?iframe=1"
+
     let iframe: HTMLIFrameElement | undefined
 
     onMount(() => {
@@ -49,8 +51,6 @@
             },
             writable: false,
         })
-
-        iframe!.src = $page.url.pathname + "?iframe=1"
     })
 
     // $: if (iframe && iframe.contentWindow) {
@@ -60,6 +60,6 @@
 
 <div class="relative flex-1 overflow-y-auto px-6 py-12">
     {#if $currentApp}
-        <iframe title={$currentApp.name} class="h-full w-full" bind:this={iframe} />
+        <iframe {src} title={$currentApp.name} class="h-full w-full" bind:this={iframe} />
     {/if}
 </div>
