@@ -40,7 +40,7 @@
                 </span>
             </label>
         </div>
-        <div class="drawer-side top-16 z-10 h-[calc(100vh-4rem)]">
+        <div class="drawer-side top-16 z-20 h-[calc(100vh-4rem)]">
             <label for="nav-drawer" class="drawer-overlay"></label>
             <div class="pointer-events-none absolute z-10 h-12 w-80 bg-gradient-to-b from-base-100"></div>
             <div

@@ -1,16 +1,12 @@
 <script lang="ts">
     import { onMount } from "svelte"
-    import { goto } from "$app/navigation"
+    // import { goto } from "$app/navigation"
     import { page } from "$app/stores"
     import { useStore } from "$lib/utils"
 
     const { currentApp } = useStore()
 
-    const src = $page.url.pathname + "?iframe=1"
-
-    let iframe: HTMLIFrameElement | undefined
-
-    onMount(() => {
+    const handleLoad = () => {
         Object.defineProperty(iframe!.contentWindow!.history, "pushState", {
             value: (
                 data: Parameters<typeof history.pushState>[0],
@@ -51,6 +47,17 @@
             },
             writable: false,
         })
+    }
+
+    let iframe: HTMLIFrameElement | undefined
+
+    onMount(() => {
+        iframe!.addEventListener("load", handleLoad)
+        iframe!.src = $page.url.pathname + "?iframe=1"
+
+        return () => {
+            iframe!.removeEventListener("load", handleLoad)
+        }
     })
 
     // $: if (iframe && iframe.contentWindow) {
@@ -58,8 +65,9 @@
     // }
 </script>
 
-<div class="relative flex-1 overflow-y-auto px-6 py-12">
+<div class="relative z-10 flex-1 overflow-y-auto">
     {#if $currentApp}
-        <iframe {src} title={$currentApp.name} class="h-full w-full" bind:this={iframe} />
+        <iframe title={$currentApp.name} class="h-full w-full" bind:this={iframe} />
     {/if}
+    <slot />
 </div>

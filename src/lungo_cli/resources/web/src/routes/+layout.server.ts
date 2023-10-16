@@ -81,9 +81,9 @@ export async function load({ cookies, fetch, url }: { cookies: Cookies; fetch: t
     }
 
     // return {
-    //     apps: [],
+    //     apps: [{ name: "Files", href: `/app/${EApp.FileBrowser}`, icon: EIcon.Folder }],
     //     logoutToken: "abc123",
-    //     title: url.pathname.split("/").pop() || "home",
+    //     title,
     //     userInfo: {
     //         username: "test",
     //         email: "testuser12345@gmail.com",
