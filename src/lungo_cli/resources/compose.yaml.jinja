@@ -202,7 +202,11 @@ services:
 
     user: root
     entrypoint: [ ]
-    command: sh -c 'umask 002; /filebrowser -c /etc/filebrowser/settings.yaml'
+    command: >-
+      sh -c '/filebrowser -c /etc/filebrowser/settings.yaml config init --auth.method=noauth;
+      /filebrowser -c /etc/filebrowser/settings.yaml config import /etc/filebrowser/config_export.yaml;
+      /filebrowser -c /etc/filebrowser/settings.yaml users import /etc/filebrowser/users_export.yaml;
+      umask 002; /filebrowser -c /etc/filebrowser/settings.yaml'
 
     networks:
       static:
