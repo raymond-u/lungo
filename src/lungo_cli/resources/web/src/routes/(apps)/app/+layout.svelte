@@ -8,9 +8,9 @@
 
     let iframe: HTMLIFrameElement | undefined
 
-    $: if (iframe && iframe.contentWindow) {
-        goto(iframe.contentWindow.location.pathname, { replaceState: true })
-    }
+    // $: if (iframe && iframe.contentWindow) {
+    //     goto(iframe.contentWindow.location.pathname, { replaceState: true })
+    // }
 </script>
 
 <div class="flex-1 overflow-y-auto px-6 py-12">
