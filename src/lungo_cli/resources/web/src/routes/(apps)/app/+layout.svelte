@@ -6,8 +6,10 @@
 
     const { currentApp } = useStore()
 
-    const handleLoad = () => {
-        Object.defineProperty(iframe!.contentWindow!.history, "pushState", {
+    const handleLoad = (e: Event) => {
+        const iframe = e.target as HTMLIFrameElement
+
+        Object.defineProperty(iframe.contentWindow!.history, "pushState", {
             value: (
                 data: Parameters<typeof history.pushState>[0],
                 unused: Parameters<typeof history.pushState>[1],
@@ -20,14 +22,13 @@
                         newUrl.searchParams.set("iframe", "1")
                     }
 
-                    iframe!.contentWindow!.history.pushState(data, unused, newUrl)
+                    iframe.contentWindow!.history.pushState(data, unused, newUrl)
                 } else {
-                    iframe!.contentWindow!.history.pushState(data, unused)
+                    iframe.contentWindow!.history.pushState(data, unused)
                 }
             },
-            writable: false,
         })
-        Object.defineProperty(iframe!.contentWindow!.history, "replaceState", {
+        Object.defineProperty(iframe.contentWindow!.history, "replaceState", {
             value: (
                 data: Parameters<typeof history.replaceState>[0],
                 unused: Parameters<typeof history.replaceState>[1],
@@ -40,12 +41,11 @@
                         newUrl.searchParams.set("iframe", "1")
                     }
 
-                    iframe!.contentWindow!.history.replaceState(data, unused, newUrl)
+                    iframe.contentWindow!.history.replaceState(data, unused, newUrl)
                 } else {
-                    iframe!.contentWindow!.history.replaceState(data, unused)
+                    iframe.contentWindow!.history.replaceState(data, unused)
                 }
             },
-            writable: false,
         })
     }
 
