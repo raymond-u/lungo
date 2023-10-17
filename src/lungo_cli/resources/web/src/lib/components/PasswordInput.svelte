@@ -26,7 +26,7 @@
         {autocomplete}
         {placeholder}
     />
-    <button class="absolute right-3 top-3 h-6 w-6" on:click|preventDefault={handleClick}>
+    <button class="absolute right-3 top-3 h-6 w-6" type="button" on:click={handleClick}>
         <SwapIcon active={visible} icon={EIcon.Visibility} />
     </button>
 </span>

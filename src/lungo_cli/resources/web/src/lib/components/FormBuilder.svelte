@@ -146,8 +146,9 @@
     {#each otherGroups as group (group)}
         <button
             class="btn btn-secondary"
+            type="button"
             {disabled}
-            on:click|preventDefault={() => {
+            on:click={() => {
                 currentGroup = group
             }}
         >
