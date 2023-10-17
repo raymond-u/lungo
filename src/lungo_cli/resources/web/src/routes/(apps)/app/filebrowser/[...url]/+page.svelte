@@ -10,12 +10,12 @@
         if (typeof url === "string") {
             let [path, query] = url.split("?", 2)
 
-            if (!query.includes("iframe=1")) {
-                if (query) {
+            if (query) {
+                if (!query.includes("iframe=1")) {
                     query = "iframe=1&" + query
-                } else {
-                    query = "iframe=1"
                 }
+            } else {
+                query = "iframe=1"
             }
 
             return `${path}?${query}`
