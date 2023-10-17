@@ -4,7 +4,7 @@ import { type Cookies, error } from "@sveltejs/kit"
 import { KETO_API_BASE_URL, KRATOS_API_BASE_URL } from "$lib/server/constants"
 import type { KetoPaths, KratosPaths } from "$lib/types"
 
-function wrapFetch(fetch: typeof global.fetch, cookies?: Cookies): typeof global.fetch {
+export function wrapFetch(fetch: typeof global.fetch, cookies?: Cookies): typeof global.fetch {
     return async (input, init?) => {
         try {
             if (cookies && cookies.getAll().length > 0) {
