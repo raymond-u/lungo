@@ -205,7 +205,7 @@ services:
     command: >-
       sh -c '/filebrowser -c /etc/filebrowser/settings.yaml config init --auth.method=noauth;
       /filebrowser -c /etc/filebrowser/settings.yaml config import /etc/filebrowser/config_export.yaml;
-      /filebrowser -c /etc/filebrowser/settings.yaml users import /etc/filebrowser/users_export.yaml;
+      /filebrowser -c /etc/filebrowser/settings.yaml users import --replace /etc/filebrowser/users_export.yaml;
       umask 002; /filebrowser -c /etc/filebrowser/settings.yaml'
 
     networks:
