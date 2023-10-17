@@ -23,49 +23,88 @@
         //         iframe.contentWindow!.history.replaceState(iframe.contentWindow!.history.state, "", url)
         //     }
         // })
+        iframe.contentWindow!.history.pushState = (
+            data: Parameters<typeof history.pushState>[0],
+            unused: Parameters<typeof history.pushState>[1],
+            url: Parameters<typeof history.pushState>[2] = undefined
+        ) => {
+            console.log("pushState called with url: ", url)
 
-        Object.defineProperty(iframe.contentWindow!.history, "pushState", {
-            value: (
-                data: Parameters<typeof history.pushState>[0],
-                unused: Parameters<typeof history.pushState>[1],
-                url: Parameters<typeof history.pushState>[2] = undefined
-            ) => {
-                console.log("pushState called with url: ", url)
+            if (url) {
+                const newUrl = new URL(url)
 
-                if (url) {
-                    let newUrl = new URL(url)
-
-                    if (!newUrl.searchParams.has("iframe", "1")) {
-                        newUrl.searchParams.set("iframe", "1")
-                    }
-
-                    iframe.contentWindow!.history.pushState(data, unused, newUrl)
-                } else {
-                    iframe.contentWindow!.history.pushState(data, unused)
+                if (!newUrl.searchParams.has("iframe", "1")) {
+                    newUrl.searchParams.set("iframe", "1")
                 }
-            },
-        })
-        Object.defineProperty(iframe.contentWindow!.history, "replaceState", {
-            value: (
-                data: Parameters<typeof history.replaceState>[0],
-                unused: Parameters<typeof history.replaceState>[1],
-                url: Parameters<typeof history.replaceState>[2] = undefined
-            ) => {
-                console.log("replaceState called with url: ", url)
 
-                if (url) {
-                    let newUrl = new URL(url)
+                iframe.contentWindow!.history.pushState(data, unused, newUrl)
+            } else {
+                iframe.contentWindow!.history.pushState(data, unused)
+            }
+        }
 
-                    if (!newUrl.searchParams.has("iframe", "1")) {
-                        newUrl.searchParams.set("iframe", "1")
-                    }
+        iframe.contentWindow!.history.replaceState = (
+            data: Parameters<typeof history.replaceState>[0],
+            unused: Parameters<typeof history.replaceState>[1],
+            url: Parameters<typeof history.replaceState>[2] = undefined
+        ) => {
+            console.log("replaceState called with url: ", url)
 
-                    iframe.contentWindow!.history.replaceState(data, unused, newUrl)
-                } else {
-                    iframe.contentWindow!.history.replaceState(data, unused)
+            if (url) {
+                const newUrl = new URL(url)
+
+                if (!newUrl.searchParams.has("iframe", "1")) {
+                    newUrl.searchParams.set("iframe", "1")
                 }
-            },
-        })
+
+                iframe.contentWindow!.history.replaceState(data, unused, newUrl)
+            } else {
+                iframe.contentWindow!.history.replaceState(data, unused)
+            }
+        }
+
+        // Object.defineProperty(iframe.contentWindow!.history, "pushState", {
+        //     value: (
+        //         data: Parameters<typeof history.pushState>[0],
+        //         unused: Parameters<typeof history.pushState>[1],
+        //         url: Parameters<typeof history.pushState>[2] = undefined
+        //     ) => {
+        //         console.log("pushState called with url: ", url)
+        //
+        //         if (url) {
+        //             let newUrl = new URL(url)
+        //
+        //             if (!newUrl.searchParams.has("iframe", "1")) {
+        //                 newUrl.searchParams.set("iframe", "1")
+        //             }
+        //
+        //             iframe.contentWindow!.history.pushState(data, unused, newUrl)
+        //         } else {
+        //             iframe.contentWindow!.history.pushState(data, unused)
+        //         }
+        //     },
+        // })
+        // Object.defineProperty(iframe.contentWindow!.history, "replaceState", {
+        //     value: (
+        //         data: Parameters<typeof history.replaceState>[0],
+        //         unused: Parameters<typeof history.replaceState>[1],
+        //         url: Parameters<typeof history.replaceState>[2] = undefined
+        //     ) => {
+        //         console.log("replaceState called with url: ", url)
+        //
+        //         if (url) {
+        //             let newUrl = new URL(url)
+        //
+        //             if (!newUrl.searchParams.has("iframe", "1")) {
+        //                 newUrl.searchParams.set("iframe", "1")
+        //             }
+        //
+        //             iframe.contentWindow!.history.replaceState(data, unused, newUrl)
+        //         } else {
+        //             iframe.contentWindow!.history.replaceState(data, unused)
+        //         }
+        //     },
+        // })
     }
 
     let iframe: HTMLIFrameElement | undefined
