@@ -6,16 +6,23 @@
 
     const { currentApp } = useStore()
 
-    const getOriginalUrl = (url: string) => {
-        const [path, query] = url.split("?", 2)
-        const params = new URLSearchParams(query)
-        params.delete("iframe", "1")
+    const getOriginalUrl = (url: string | URL) => {
+        if (typeof url === "string") {
+            const [path, query] = url.split("?", 2)
+            const params = new URLSearchParams(query)
+            params.delete("iframe", "1")
 
-        if (params.size > 0) {
-            return `${path}?${params.toString()}`
+            if (params.size > 0) {
+                return `${path}?${params.toString()}`
+            }
+
+            return path
+        } else {
+            const newUrl = new URL(url.href)
+            newUrl.searchParams.delete("iframe", "1")
+
+            return newUrl.href
         }
-
-        return path
     }
 
     const getModifiedUrl = (url: string | URL) => {
@@ -49,7 +56,7 @@
         ) => {
             console.log("pushState called with url: ", url)
             if (url) {
-                goto(url, { replaceState: true })
+                goto(getOriginalUrl(url), { replaceState: true })
                 pushState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))
             } else {
                 pushState.call(iframe.contentWindow!.history, data, unused)
@@ -62,7 +69,7 @@
         ) => {
             console.log("replaceState called with url: ", url)
             if (url) {
-                goto(url, { replaceState: true })
+                goto(getOriginalUrl(url), { replaceState: true })
                 replaceState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))
             } else {
                 replaceState.call(iframe.contentWindow!.history, data, unused)
@@ -73,17 +80,23 @@
     let iframe: HTMLIFrameElement | undefined
 
     onMount(() => {
+        console.log("onMount!!!")
+
         iframe!.addEventListener("load", handleLoad)
         iframe!.src = $page.url.pathname + "?iframe=1"
 
+        const unsubscribe = currentApp.subscribe((value) => {
+            if (value) {
+                console.log("currentApp changed: ", value)
+                iframe!.src = value.href + "?iframe=1"
+            }
+        })
+
         return () => {
+            unsubscribe()
             iframe!.removeEventListener("load", handleLoad)
         }
     })
-
-    $: if (iframe?.src && $currentApp) {
-        iframe.src = $currentApp.href + "?iframe=1"
-    }
 </script>
 
 <div class="relative z-10 flex-1 overflow-y-auto">
