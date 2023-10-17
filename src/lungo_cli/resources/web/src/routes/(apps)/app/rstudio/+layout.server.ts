@@ -30,7 +30,7 @@ export async function load({
         const { userInfo } = await parent()
 
         const response2 = await wrappedFetch("/app/rstudio/js/encrypt.min.js?iframe=1")
-        eval?.(`"use strict"; ${await response2.text()}`)
+        eval(await response2.text())
 
         const username = userInfo?.traits?.username ?? "anonymous"
         const password = "passwd"
