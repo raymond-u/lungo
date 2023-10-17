@@ -88,7 +88,10 @@
         const unsubscribe = currentApp.subscribe((value) => {
             if (value) {
                 console.log("currentApp changed: ", value)
-                iframe!.src = value.href + "?iframe=1"
+
+                if (!iframe!.src.startsWith(value.href)) {
+                    iframe!.src = value.href + "?iframe=1"
+                }
             }
         })
 
