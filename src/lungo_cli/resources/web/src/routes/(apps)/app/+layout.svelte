@@ -17,6 +17,8 @@
                 unused: Parameters<typeof history.pushState>[1],
                 url: Parameters<typeof history.pushState>[2] = undefined
             ) => {
+                console.log("pushState called with url: ", url)
+
                 if (url) {
                     let newUrl = new URL(url)
 
@@ -36,6 +38,8 @@
                 unused: Parameters<typeof history.replaceState>[1],
                 url: Parameters<typeof history.replaceState>[2] = undefined
             ) => {
+                console.log("replaceState called with url: ", url)
+
                 if (url) {
                     let newUrl = new URL(url)
 
