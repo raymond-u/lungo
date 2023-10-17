@@ -34,44 +34,24 @@
 
     const handleLoad = (e: Event) => {
         const iframe = e.target as HTMLIFrameElement
-
-        console.log("iframe loaded with url: ", iframe.contentWindow!.location.href)
-
-        // iframe.contentWindow!.history.pushState = () => {
-        //     History.prototype.pushState.apply(iframe.contentWindow!.history, arguments)
-        // }
-        //
-        // iframe.contentWindow!.history.replaceState = () => {
-        //     History.prototype.replaceState.apply(iframe.contentWindow!.history, arguments)
-        // }
-
-        // iframe.contentWindow!.addEventListener("popstate", () => {
-        //     console.log("popstate called with url: ", iframe.contentWindow!.location.href)
-        //
-        //     const url = new URL(iframe.contentWindow!.location.href)
-        //
-        //     if (!url.searchParams.has("iframe", "1")) {
-        //         url.searchParams.set("iframe", "1")
-        //
-        //         iframe.contentWindow!.history.replaceState(iframe.contentWindow!.history.state, "", url)
-        //     }
-        // })
+        const pushState = iframe.contentWindow!.history.pushState
+        const replaceState = iframe.contentWindow!.history.replaceState
 
         iframe.contentWindow!.history.pushState = (
-            data: Parameters<typeof history.pushState>[0],
-            unused: Parameters<typeof history.pushState>[1],
-            url: Parameters<typeof history.pushState>[2] = undefined
+            data: Parameters<typeof pushState>[0],
+            unused: Parameters<typeof pushState>[1],
+            url: Parameters<typeof pushState>[2] = undefined
         ) => {
             console.log("pushState called with url: ", url)
-            iframe.contentWindow!.history.pushState(data, unused, getModifiedUrl(url))
+            pushState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))
         }
         iframe.contentWindow!.history.replaceState = (
-            data: Parameters<typeof history.replaceState>[0],
-            unused: Parameters<typeof history.replaceState>[1],
-            url: Parameters<typeof history.replaceState>[2] = undefined
+            data: Parameters<typeof replaceState>[0],
+            unused: Parameters<typeof replaceState>[1],
+            url: Parameters<typeof replaceState>[2] = undefined
         ) => {
             console.log("replaceState called with url: ", url)
-            iframe.contentWindow!.history.replaceState(data, unused, getModifiedUrl(url))
+            replaceState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))
         }
 
         // Object.defineProperty(iframe.contentWindow!.history, "pushState", {
