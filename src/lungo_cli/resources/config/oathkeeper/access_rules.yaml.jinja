@@ -2,13 +2,15 @@
 
 - id: app
   match:
-    url: 'https://{{ network.hostname }}/app/<[^/]*><.*>'
+    url: 'https://{{ network.hostname }}/app/<(?!filebrowser/(?:api/public|share|static))[^/]*><.*>'
     methods:
       - GET
       - POST
       - DELETE
       - PATCH
       - PUT
+      - HEAD
+      - OPTIONS
   authenticators:
     - handler: cookie_session
     - handler: anonymous
@@ -16,6 +18,26 @@
     handler: remote_json
   mutators:
     - handler: header
+  errors:
+    - handler: json
+
+- id: public
+  match:
+    url: 'https://{{ network.hostname }}/app/filebrowser/<(?:api/public|share|static)>/<.*>'
+    methods:
+      - GET
+      - POST
+      - DELETE
+      - PATCH
+      - PUT
+      - HEAD
+      - OPTIONS
+  authenticators:
+    - handler: noop
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: noop
   errors:
     - handler: json
 
