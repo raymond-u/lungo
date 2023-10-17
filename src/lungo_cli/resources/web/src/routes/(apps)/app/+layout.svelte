@@ -10,6 +10,7 @@
         const iframe = e.target as HTMLIFrameElement
 
         console.log("iframe loaded with url: ", iframe.contentWindow!.location.href)
+        console.log("original history pushState(): ", iframe.contentWindow!.history.pushState)
 
         // iframe.contentWindow!.addEventListener("popstate", () => {
         //     console.log("popstate called with url: ", iframe.contentWindow!.location.href)
