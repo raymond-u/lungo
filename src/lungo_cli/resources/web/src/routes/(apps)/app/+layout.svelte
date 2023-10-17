@@ -45,9 +45,6 @@
         const pushState = iframe.contentWindow!.history.pushState
         const replaceState = iframe.contentWindow!.history.replaceState
 
-        console.log("iframe loaded: ", iframe.contentWindow!.location.href)
-        console.log("goto: ", getOriginalUrl(iframe.contentWindow!.location.href))
-
         goto(getOriginalUrl(iframe.contentWindow!.location.href), { replaceState: true })
 
         iframe.contentWindow!.history.pushState = (
@@ -55,9 +52,7 @@
             unused: Parameters<typeof pushState>[1],
             url: Parameters<typeof pushState>[2] = undefined
         ) => {
-            console.log("pushState called with url: ", url)
             if (url) {
-                console.log("goto: ", getOriginalUrl(url))
                 goto(getOriginalUrl(url), { replaceState: true })
                 pushState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))
             } else {
@@ -69,9 +64,7 @@
             unused: Parameters<typeof replaceState>[1],
             url: Parameters<typeof replaceState>[2] = undefined
         ) => {
-            console.log("replaceState called with url: ", url)
             if (url) {
-                console.log("goto: ", getOriginalUrl(url))
                 goto(getOriginalUrl(url), { replaceState: true })
                 replaceState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))
             } else {
@@ -89,7 +82,6 @@
         const unsubscribe = currentApp.subscribe((value) => {
             if (value) {
                 if (!iframe!.src.match(`^(?:https?://[^/]+)?${value.href}`)) {
-                    console.log("iframe src changed: ", iframe!.src + " => " + value.href + "?iframe=1")
                     iframe!.src = value.href + "?iframe=1"
                 }
             }
