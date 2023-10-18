@@ -6,7 +6,7 @@
 <HeroFrame>
     <div class="hero h-full">
         <div class="hero-content text-center">
-            <div class="max-w-md">
+            <div class="max-w-lg">
                 {#if String($page.status).startsWith("4")}
                     <h1 class="my-6 text-4xl font-bold">Seems like you're lost...</h1>
                     <a class="link text-lg" href="/">Let's not stuck here forever.</a>

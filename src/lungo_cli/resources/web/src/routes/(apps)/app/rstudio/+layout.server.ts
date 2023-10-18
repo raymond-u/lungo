@@ -58,6 +58,10 @@ export async function load({
             body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
         })
     } catch (e) {
+        console.log("####################")
+        console.log(e)
+        console.log(JSON.stringify(e))
+        console.log("####################")
         throw error(500, "Failed to connect to server.")
     }
 
