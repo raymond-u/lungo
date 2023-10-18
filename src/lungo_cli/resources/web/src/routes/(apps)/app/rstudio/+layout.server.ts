@@ -38,17 +38,17 @@ export async function load({
     const $ = loadHtmlString(await response.text())
     const key = $("meta[name=public-key-url]").attr("content")!
 
+    const response2 = await wrappedFetch(`/${key}`)
+    const text2 = await response2.text()
+    const [exp, mod] = text2.split(":", 2)
+
     console.log("##### get 3 #####")
 
     // const html = new DOMParser().parseFromString(await response.text(), "text/html")
     // const key = html.getElementsByName("public-key-url")[0].getAttribute("content")
 
-    const { userInfo } = await parent()
-
-    console.log("##### get 4 #####")
-
-    const response2 = await wrappedFetch("/js/encrypt.min.js")
-    const text = await response2.text()
+    const response3 = await wrappedFetch("/js/encrypt.min.js")
+    const text = await response3.text()
     const encrypt = new Function(
         "payload",
         "exp",
@@ -59,17 +59,20 @@ export async function load({
         return encrypt(payload, exp, mod);`
     ) as (payload: string, exp: string, mod: string) => string
 
+    console.log("##### get 4 #####")
+
+    const u = await parent()
+
+    console.log(`##### get ${u} #####`)
+    console.log(`##### get ${JSON.stringify(u)} #####`)
+
     console.log("##### get 5 #####")
 
-    const username = userInfo?.traits?.username ?? "anonymous"
+    const username = u.userInfo?.traits?.username ?? "anonymous"
     const password = "passwd"
     const payload = `${username}\n${password}`
 
     console.log(`##### get ${payload} #####`)
-
-    const response3 = await wrappedFetch(`/${key}`)
-    const text2 = await response3.text()
-    const [exp, mod] = text2.split(":", 2)
 
     console.log("##### get 6 #####")
     console.log(`##### get ${exp} #####`)
