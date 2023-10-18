@@ -102,12 +102,14 @@ export async function load({
             clientPath: "/app/rstudio/auth-sign-in",
             v: encrypt(payload, exp, mod),
         }).toString(),
-        // body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
     })
 
+    console.log(`##### get ${response4.status} #####`)
     console.log(`##### get ${await response4.text()} #####`)
+    response4.headers.forEach((value, key) => console.log(key + ": " + value))
+    console.log("###########")
 
-    const response0 = await testFetch("/post", {
+    let response0 = await testFetch("/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -119,7 +121,47 @@ export async function load({
                 v: encrypt(payload, exp, mod),
             }).toString(),
         }),
-        // body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
+    })
+
+    console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
+
+    response0 = await testFetch("/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+            persist: "0",
+            [csrf.attr("name")!]: csrf.attr("value")!,
+            appUri: "/",
+            clientPath: "/app/rstudio/auth-sign-in",
+            v: encrypt(payload, exp, mod),
+        }).toString(),
+    })
+
+    console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
+
+    response0 = await testFetch("/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+            persist: "0",
+            [csrf.attr("name")!]: csrf.attr("value")!,
+            appUri: "/",
+            clientPath: "/app/rstudio/auth-sign-in",
+            v: encrypt(payload, exp, mod),
+        }),
+    })
+
+    console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
+
+    response0 = await testFetch("/post", {
+        method: "POST",
+        body: new URLSearchParams({
+            persist: "0",
+            [csrf.attr("name")!]: csrf.attr("value")!,
+            appUri: "/",
+            clientPath: "/app/rstudio/auth-sign-in",
+            v: encrypt(payload, exp, mod),
+        }),
     })
 
     console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
