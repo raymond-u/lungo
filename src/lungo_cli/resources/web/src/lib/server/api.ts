@@ -86,6 +86,8 @@ export function wrapFetch({
 
         if (ensureOk && !(response.status >= 200 && response.status < 400)) {
             console.log(response.status, response.statusText)
+            response.headers.forEach((value, key) => console.log(key + ": " + value))
+            console.log(await response.text())
             throw error(500)
         }
 
