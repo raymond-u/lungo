@@ -16,7 +16,7 @@ export async function load({
 }) {
     const wrappedFetch = wrapFetch({
         fetch,
-        baseUrl: RSTUDIO_BASE_URL,
+        baseUrl: "",
         cookies,
         cookiePath: "/app/rstudio",
         credentials: "include",
@@ -31,8 +31,6 @@ export async function load({
         ensureOk: true,
     })
 
-    console.log("##### get 1 #####")
-
     const response = await wrappedFetch("/auth-sign-in", { redirect: "manual" })
 
     // If the user is already logged in, return
@@ -42,16 +40,12 @@ export async function load({
         }
     }
 
-    console.log("##### get 2 #####")
-
     const $ = loadHtmlString(await response.text())
     const key = $("meta[name=public-key-url]").attr("content")!
 
     const response2 = await wrappedFetch(`/${key}`)
     const text2 = await response2.text()
     const [exp, mod] = text2.split(":", 2)
-
-    console.log("##### get 3 #####")
 
     // const html = new DOMParser().parseFromString(await response.text(), "text/html")
     // const key = html.getElementsByName("public-key-url")[0].getAttribute("content")
@@ -68,21 +62,13 @@ export async function load({
         return encrypt(payload, exp, mod);`
     ) as (payload: string, exp: string, mod: string) => string
 
-    console.log("##### get 4 #####")
-
     const { userInfo } = await parent()
-
-    console.log("##### get 5 #####")
 
     const username = userInfo?.username ?? "anonymous"
     const password = "passwd"
     const payload = `${username}\n${password}`
 
     console.log(`##### get ${payload} #####`)
-
-    console.log("##### get 6 #####")
-    console.log(`##### get ${exp} #####`)
-    console.log(`##### get ${mod} #####`)
 
     const csrfNode = $("form[name=realform] > input:eq(1)")
     const csrfToken = csrfNode.attr("value")!
@@ -106,7 +92,6 @@ export async function load({
     })
 
     console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
-    console.log("##### get @@@ #####")
 
     const response4 = await wrappedFetch("/auth-do-sign-in", {
         method: "POST",
@@ -123,7 +108,6 @@ export async function load({
     })
 
     console.log(`##### get ${await response4.text()} #####`)
-    console.log("##### get 7 #####")
 
     return {
         title: "R Studio",
