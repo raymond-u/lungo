@@ -8,6 +8,7 @@ export function wrapFetch({
     fetch,
     baseUrl,
     cookies,
+    cookiePath,
     credentials,
     headers,
     ensureOk,
@@ -15,6 +16,7 @@ export function wrapFetch({
     fetch: typeof global.fetch
     baseUrl?: string
     cookies?: Cookies
+    cookiePath?: string
     credentials?: RequestCredentials
     headers?: HeadersInit
     ensureOk?: boolean
@@ -71,7 +73,7 @@ export function wrapFetch({
             if (cookies) {
                 for (const cookie of parser.parse(response.headers.getSetCookie())) {
                     cookies.set(cookie.name, cookie.value, {
-                        path: cookie.path?.startsWith("/app") ? cookie.path : "/",
+                        path: cookiePath || "/",
                         expires: cookie.expires,
                         maxAge: cookie.maxAge,
                     })

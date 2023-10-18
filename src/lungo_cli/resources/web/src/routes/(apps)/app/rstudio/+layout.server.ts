@@ -12,12 +12,13 @@ export async function load({
 }: {
     cookies: Cookies
     fetch: typeof global.fetch
-    parent: () => Promise<{ userInfo: User | undefined }>
+    parent: () => Promise<{ userInfo: User["traits"] | undefined }>
 }) {
     const wrappedFetch = wrapFetch({
         fetch,
         baseUrl: RSTUDIO_BASE_URL,
         cookies,
+        cookiePath: "/app/rstudio",
         credentials: "include",
         ensureOk: true,
     })
@@ -61,14 +62,11 @@ export async function load({
 
     console.log("##### get 4 #####")
 
-    const u = await parent()
-
-    console.log(`##### get ${u} #####`)
-    console.log(`##### get ${JSON.stringify(u)} #####`)
+    const { userInfo } = await parent()
 
     console.log("##### get 5 #####")
 
-    const username = u.userInfo?.traits?.username ?? "anonymous"
+    const username = userInfo?.username ?? "anonymous"
     const password = "passwd"
     const payload = `${username}\n${password}`
 
