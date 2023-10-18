@@ -92,14 +92,16 @@ export async function load({
 
     const response0 = await testFetch("/post", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-            persist: "0",
-            [csrfNode.attr("name")!]: csrfToken,
-            appUri: "/",
-            clientPath: "/app/rstudio/auth-sign-in",
-            v: encrypt(payload, exp, mod),
-        }).toString(),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            a: new URLSearchParams({
+                persist: "0",
+                [csrfNode.attr("name")!]: csrfToken,
+                appUri: "/",
+                clientPath: "/app/rstudio/auth-sign-in",
+                v: encrypt(payload, exp, mod),
+            }).toString(),
+        }),
         // body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
     })
 
