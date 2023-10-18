@@ -1,4 +1,5 @@
 import type { Cookies } from "@sveltejs/kit"
+import { DOMParser } from "@xmldom/xmldom"
 import type { User } from "$lib/types"
 import { asSearchParams } from "$lib/utils"
 import { wrapFetch } from "$lib/server/api"
