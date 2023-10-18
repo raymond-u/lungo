@@ -1,7 +1,7 @@
 import { load as loadHtmlString } from "cheerio"
 import type { Cookies } from "@sveltejs/kit"
 import { wrapFetch } from "$lib/server/api"
-import { RSTUDIO_BASE_URL } from "$lib/server/constants"
+// import { RSTUDIO_BASE_URL } from "$lib/server/constants"
 import type { User } from "$lib/types"
 // import { asSearchParams } from "$lib/utils"
 
@@ -16,7 +16,6 @@ export async function load({
 }) {
     const wrappedFetch = wrapFetch({
         fetch,
-        baseUrl: "",
         cookies,
         cookiePath: "/app/rstudio",
         credentials: "include",
@@ -31,7 +30,7 @@ export async function load({
         ensureOk: true,
     })
 
-    const response = await wrappedFetch("/auth-sign-in", { redirect: "manual" })
+    const response = await wrappedFetch("/app/rstudio/auth-sign-in?iframe=1", { redirect: "manual" })
 
     // If the user is already logged in, return
     if (response.status == 302) {
@@ -43,14 +42,14 @@ export async function load({
     const $ = loadHtmlString(await response.text())
     const key = $("meta[name=public-key-url]").attr("content")!
 
-    const response2 = await wrappedFetch(`/${key}`)
+    const response2 = await wrappedFetch(`/app/rstudio/${key}?iframe=1`)
     const text2 = await response2.text()
     const [exp, mod] = text2.split(":", 2)
 
     // const html = new DOMParser().parseFromString(await response.text(), "text/html")
     // const key = html.getElementsByName("public-key-url")[0].getAttribute("content")
 
-    const response3 = await wrappedFetch("/js/encrypt.min.js")
+    const response3 = await wrappedFetch("/app/rstudio/js/encrypt.min.js?iframe=1")
     const text = await response3.text()
     const encrypt = new Function(
         "payload",
@@ -70,11 +69,26 @@ export async function load({
 
     console.log(`##### get ${payload} #####`)
 
-    const csrfNode = $("form[name=realform] > input:eq(1)")
-    const csrfToken = csrfNode.attr("value")!
+    const csrf = $("form[name=realform] > input:eq(1)")
     // ;(html.getElementById("clientPath") as HTMLInputElement).value = "/app/rstudio/auth-sign-in"
     // ;(html.getElementById("package") as HTMLInputElement).value = encrypt(payload, exp, mod)
     // ;(html.getElementById("persist") as HTMLInputElement).value = "0"
+
+    const response4 = await wrappedFetch("/app/rstudio/auth-do-sign-in?iframe=1", {
+        method: "POST",
+        redirect: "manual",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+            persist: "0",
+            [csrf.attr("name")!]: csrf.attr("value")!,
+            appUri: "/",
+            clientPath: "/app/rstudio/auth-sign-in",
+            v: encrypt(payload, exp, mod),
+        }).toString(),
+        // body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
+    })
+
+    console.log(`##### get ${await response4.text()} #####`)
 
     const response0 = await testFetch("/post", {
         method: "POST",
@@ -82,7 +96,7 @@ export async function load({
         body: JSON.stringify({
             a: new URLSearchParams({
                 persist: "0",
-                [csrfNode.attr("name")!]: csrfToken,
+                [csrf.attr("name")!]: csrf.attr("value")!,
                 appUri: "/",
                 clientPath: "/app/rstudio/auth-sign-in",
                 v: encrypt(payload, exp, mod),
@@ -92,22 +106,6 @@ export async function load({
     })
 
     console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
-
-    const response4 = await wrappedFetch("/auth-do-sign-in", {
-        method: "POST",
-        redirect: "manual",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-            persist: "0",
-            [csrfNode.attr("name")!]: csrfToken,
-            appUri: "/",
-            clientPath: "/app/rstudio/auth-sign-in",
-            v: encrypt(payload, exp, mod),
-        }).toString(),
-        // body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
-    })
-
-    console.log(`##### get ${await response4.text()} #####`)
 
     return {
         title: "R Studio",
