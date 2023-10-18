@@ -85,10 +85,10 @@ export async function load({
     console.log(`##### get ${csrf.attr("value")} #####`)
     console.log(`##### get ${encrypt(payload, exp, mod)} #####`)
 
-    await wrappedFetch("/auth-do-sign-in", {
+    const response4 = await wrappedFetch("/auth-do-sign-in", {
         method: "POST",
         redirect: "manual",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: { "Content-Type": "application/x-www-form-urlencoded", "X-RStudio-Root-Path": "/app/rstudio" },
         body: new URLSearchParams({
             persist: "0",
             [csrf.attr("name")!]: csrf.attr("value")!,
@@ -98,6 +98,9 @@ export async function load({
         }),
         // body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
     })
+
+    console.log(`##### get ${response4.status} #####`)
+    console.log(`##### get ${await response4.text()} #####`)
 
     console.log("##### get 7 #####")
 
