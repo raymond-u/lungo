@@ -105,7 +105,7 @@ export async function load({
         // body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
     })
 
-    console.log(`##### get ${await response0.json()} #####`)
+    console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
     console.log("##### get 7@@@ #####")
 
     const response4 = await wrappedFetch("/auth-do-sign-in", {
