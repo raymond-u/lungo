@@ -13,6 +13,11 @@ serve:
     metric_name_prefix: 'ory_oathkeeper_'
     metrics_path: '/'
 
+log:
+  leak_sensitive_values: true
+  redaction_text: '*redacted*'
+  level: debug
+
 access_rules:
   matching_strategy: regexp
   repositories:

@@ -10,6 +10,11 @@ serve:
   admin:
     port: 8080
 
+log:
+  leak_sensitive_values: true
+  redaction_text: '*redacted*'
+  level: debug
+
 session:
   cookie:
     name: 'lungo_session'

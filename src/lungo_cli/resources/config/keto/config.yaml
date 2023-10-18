@@ -10,6 +10,11 @@ serve:
   opl:
     port: 8082
 
+log:
+  leak_sensitive_values: true
+  redaction_text: '*redacted*'
+  level: debug
+
 namespaces:
   - id: 0
     name: app
