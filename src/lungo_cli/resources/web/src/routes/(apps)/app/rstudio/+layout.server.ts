@@ -1,7 +1,7 @@
 import type { Cookies } from "@sveltejs/kit"
-import { DOMParser } from "@xmldom/xmldom"
+import * as cheerio from "cheerio"
 import type { User } from "$lib/types"
-import { asSearchParams } from "$lib/utils"
+// import { asSearchParams } from "$lib/utils"
 import { wrapFetch } from "$lib/server/api"
 import { error } from "@sveltejs/kit"
 
@@ -26,8 +26,11 @@ export async function load({
             }
         }
 
-        const html = new DOMParser().parseFromString(await response.text(), "text/html")
-        const key = html.getElementsByName("public-key-url")[0].getAttribute("content")
+        const $ = cheerio.load(await response.text())
+        const key = $("meta[name=public-key-url]").attr("content")!
+
+        // const html = new DOMParser().parseFromString(await response.text(), "text/html")
+        // const key = html.getElementsByName("public-key-url")[0].getAttribute("content")
 
         const { userInfo } = await parent()
 
@@ -48,15 +51,23 @@ export async function load({
         const text2 = await response3.text()
         const [exp, mod] = text2.split(":", 2)
 
-        ;(html.getElementById("clientPath") as HTMLInputElement).value = "/app/rstudio/auth-sign-in"
-        ;(html.getElementById("package") as HTMLInputElement).value = encrypt(payload, exp, mod)
-        ;(html.getElementById("persist") as HTMLInputElement).value = "0"
+        const csrf = $("form[name=realform] > input:eq(1)")
+        // ;(html.getElementById("clientPath") as HTMLInputElement).value = "/app/rstudio/auth-sign-in"
+        // ;(html.getElementById("package") as HTMLInputElement).value = encrypt(payload, exp, mod)
+        // ;(html.getElementById("persist") as HTMLInputElement).value = "0"
 
         await wrappedFetch("/app/rstudio/auth-do-sign-in?iframe=1", {
             method: "POST",
             redirect: "manual",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
+            body: new URLSearchParams({
+                persist: "0",
+                [csrf.attr("name")!]: csrf.attr("value")!,
+                appUri: "/",
+                clientPath: "/app/rstudio/auth-sign-in",
+                v: encrypt(payload, exp, mod),
+            }),
+            // body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
         })
     } catch (e) {
         console.log("####################")

@@ -38,7 +38,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@xmldom/xmldom": "^0.8.10",
+    "cheerio": "^1.0.0-rc.12",
     "openapi-fetch": "^0.7.9",
     "set-cookie-parser": "^2.6.0"
   }
