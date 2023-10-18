@@ -48,7 +48,10 @@ export async function load({
             "payload",
             "exp",
             "mod",
-            `"use strict"; ${text.replace("window.encrypt", "var encrypt")}; return encrypt(payload, exp, mod);`
+            `"use strict";
+            const navigator = { appName: "Netscape", appVersion: "5.0" };
+            ${text.replace("window.encrypt", "var encrypt")};
+            return encrypt(payload, exp, mod);`
         ) as (payload: string, exp: string, mod: string) => string
 
         console.log("##### get 5 #####")
