@@ -84,20 +84,18 @@ export async function load({
     console.log(`##### get ${exp} #####`)
     console.log(`##### get ${mod} #####`)
 
-    const csrf = $("form[name=realform] > input[name=rs-csrf-token]").attr("value")!
+    const csrfNode = $("form[name=realform] > input:eq(1)")
+    const csrfToken = csrfNode.attr("value")!
     // ;(html.getElementById("clientPath") as HTMLInputElement).value = "/app/rstudio/auth-sign-in"
     // ;(html.getElementById("package") as HTMLInputElement).value = encrypt(payload, exp, mod)
     // ;(html.getElementById("persist") as HTMLInputElement).value = "0"
 
-    console.log(`##### get ${csrf} #####`)
-    console.log(`##### get ${encrypt(payload, exp, mod)} #####`)
-
     const response0 = await testFetch("/post", {
         method: "POST",
-        headers: { Cookie: `csrf-token=${csrf}; rs-csrf-token=${csrf}` },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
             persist: "0",
-            "rs-csrf-token": csrf,
+            [csrfNode.attr("name")!]: csrfToken,
             appUri: "/",
             clientPath: "/app/rstudio/auth-sign-in",
             v: encrypt(payload, exp, mod),
@@ -106,15 +104,15 @@ export async function load({
     })
 
     console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
-    console.log("##### get 7@@@ #####")
+    console.log("##### get @@@ #####")
 
     const response4 = await wrappedFetch("/auth-do-sign-in", {
         method: "POST",
         redirect: "manual",
-        headers: { Cookie: `csrf-token=${csrf}; rs-csrf-token=${csrf}` },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
             persist: "0",
-            "rs-csrf-token": csrf,
+            [csrfNode.attr("name")!]: csrfToken,
             appUri: "/",
             clientPath: "/app/rstudio/auth-sign-in",
             v: encrypt(payload, exp, mod),
