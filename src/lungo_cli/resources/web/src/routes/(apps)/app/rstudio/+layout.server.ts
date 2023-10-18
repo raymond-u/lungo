@@ -99,7 +99,7 @@ export async function load({
             appUri: "/",
             clientPath: "/app/rstudio/auth-sign-in",
             v: encrypt(payload, exp, mod),
-        }),
+        }).toString(),
         // body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
     })
 
@@ -116,7 +116,7 @@ export async function load({
             appUri: "/",
             clientPath: "/app/rstudio/auth-sign-in",
             v: encrypt(payload, exp, mod),
-        }),
+        }).toString(),
         // body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
     })
 
