@@ -30,6 +30,8 @@ export async function load({
         ensureOk: true,
     })
 
+    console.log("##### get 1 #####")
+
     const response = await wrappedFetch("/app/rstudio/auth-sign-in?iframe=1", { redirect: "manual" })
 
     // If the user is already logged in, return
@@ -39,12 +41,18 @@ export async function load({
         }
     }
 
+    console.log("##### get 2 #####")
+
     const $ = loadHtmlString(await response.text())
     const key = $("meta[name=public-key-url]").attr("content")!
+
+    console.log("##### get 3 #####")
 
     const response2 = await wrappedFetch(`/app/rstudio/${key}?iframe=1`)
     const text2 = await response2.text()
     const [exp, mod] = text2.split(":", 2)
+
+    console.log("##### get 4 #####")
 
     // const html = new DOMParser().parseFromString(await response.text(), "text/html")
     // const key = html.getElementsByName("public-key-url")[0].getAttribute("content")
@@ -60,6 +68,8 @@ export async function load({
         ${text.replace("window.encrypt", "var encrypt")};
         return encrypt(payload, exp, mod);`
     ) as (payload: string, exp: string, mod: string) => string
+
+    console.log("##### get 5 #####")
 
     const { userInfo } = await parent()
 

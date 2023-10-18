@@ -80,10 +80,12 @@ export function wrapFetch({
                 }
             }
         } catch (e) {
+            console.log(e)
             throw error(500)
         }
 
         if (ensureOk && !(response.status >= 200 && response.status < 400)) {
+            console.log(response.status, response.statusText)
             throw error(500)
         }
 
