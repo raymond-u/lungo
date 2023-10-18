@@ -66,7 +66,7 @@ mutators:
     enabled: true
     config:
       headers:
-        X-Remote-User: {% raw %}"{{ default .Subject .Extra.identity.traits.username }}"{% endraw %}
+        X-Remote-User: {% raw %}"{{ if .Extra.identity }}{{ .Extra.identity.traits.username }}{{ else }}{{ .Subject }}{{ end }}"{% endraw %}
 
 errors:
   handlers:
