@@ -23,6 +23,14 @@ export async function load({
         ensureOk: true,
     })
 
+    const testFetch = wrapFetch({
+        fetch,
+        baseUrl: "https://httpbin.org/",
+        cookies,
+        credentials: "include",
+        ensureOk: true,
+    })
+
     console.log("##### get 1 #####")
 
     const response = await wrappedFetch("/auth-sign-in", { redirect: "manual" })
@@ -83,6 +91,22 @@ export async function load({
 
     console.log(`##### get ${csrf} #####`)
     console.log(`##### get ${encrypt(payload, exp, mod)} #####`)
+
+    const response0 = await testFetch("/post", {
+        method: "POST",
+        headers: { Cookie: `csrf-token=${csrf}; rs-csrf-token=${csrf}` },
+        body: new URLSearchParams({
+            persist: "0",
+            "rs-csrf-token": csrf,
+            appUri: "/",
+            clientPath: "/app/rstudio/auth-sign-in",
+            v: encrypt(payload, exp, mod),
+        }),
+        // body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
+    })
+
+    console.log(`##### get ${await response0.json()} #####`)
+    console.log("##### get 7@@@ #####")
 
     const response4 = await wrappedFetch("/auth-do-sign-in", {
         method: "POST",
