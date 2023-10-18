@@ -1,9 +1,8 @@
 import { load as loadHtmlString } from "cheerio"
 import type { Cookies } from "@sveltejs/kit"
 import { wrapFetch } from "$lib/server/api"
-// import { RSTUDIO_BASE_URL } from "$lib/server/constants"
+import { RSTUDIO_BASE_URL } from "$lib/server/constants"
 import type { User } from "$lib/types"
-// import { asSearchParams } from "$lib/utils"
 
 export async function load({
     cookies,
@@ -16,6 +15,7 @@ export async function load({
 }) {
     const wrappedFetch = wrapFetch({
         fetch,
+        baseUrl: RSTUDIO_BASE_URL,
         cookies,
         cookiePath: "/app/rstudio",
         credentials: "include",
@@ -32,7 +32,7 @@ export async function load({
 
     console.log("##### get 1 #####")
 
-    const response = await wrappedFetch("http://192.168.2.101:80/app/rstudio/auth-sign-in?iframe=1", {
+    const response = await wrappedFetch("/auth-sign-in", {
         redirect: "manual",
     })
 
@@ -50,7 +50,7 @@ export async function load({
 
     console.log("##### get 3 #####")
 
-    const response2 = await wrappedFetch(`http://192.168.2.101:80/app/rstudio/${key}?iframe=1`)
+    const response2 = await wrappedFetch(`/${key}`)
     const text2 = await response2.text()
     const [exp, mod] = text2.split(":", 2)
 
@@ -59,7 +59,7 @@ export async function load({
     // const html = new DOMParser().parseFromString(await response.text(), "text/html")
     // const key = html.getElementsByName("public-key-url")[0].getAttribute("content")
 
-    const response3 = await wrappedFetch("http://192.168.2.101:80/app/rstudio/js/encrypt.min.js?iframe=1")
+    const response3 = await wrappedFetch("/js/encrypt.min.js")
     const text = await response3.text()
     const encrypt = new Function(
         "payload",
@@ -86,10 +86,15 @@ export async function load({
     // ;(html.getElementById("package") as HTMLInputElement).value = encrypt(payload, exp, mod)
     // ;(html.getElementById("persist") as HTMLInputElement).value = "0"
 
-    const response4 = await wrappedFetch("http://192.168.2.101:80/app/rstudio/auth-do-sign-in?iframe=1", {
+    const response4 = await wrappedFetch("/auth-do-sign-in", {
         method: "POST",
         redirect: "manual",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-RStudio-Root-Path": "/app/rstudio",
+            "X-Forwarded-Proto": "https",
+            "X-Forwarded-Host": "172.16.39.102",
+        },
         body: new URLSearchParams({
             persist: "0",
             [csrf.attr("name")!]: csrf.attr("value")!,
