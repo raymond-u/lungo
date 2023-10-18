@@ -88,7 +88,6 @@ export async function load({
     const response4 = await wrappedFetch("/auth-do-sign-in", {
         method: "POST",
         redirect: "manual",
-        headers: { "Content-Type": "application/x-www-form-urlencoded", "X-RStudio-Root-Path": "/app/rstudio" },
         body: new URLSearchParams({
             persist: "0",
             [csrf.attr("name")!]: csrf.attr("value")!,
