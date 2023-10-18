@@ -76,21 +76,21 @@ export async function load({
     console.log(`##### get ${exp} #####`)
     console.log(`##### get ${mod} #####`)
 
-    const csrf = $("form[name=realform] > input:eq(1)")
+    const csrf = $("form[name=realform] > input[name=rs-csrf-token]").attr("value")!
     // ;(html.getElementById("clientPath") as HTMLInputElement).value = "/app/rstudio/auth-sign-in"
     // ;(html.getElementById("package") as HTMLInputElement).value = encrypt(payload, exp, mod)
     // ;(html.getElementById("persist") as HTMLInputElement).value = "0"
 
-    console.log(`##### get ${csrf.attr("name")} #####`)
-    console.log(`##### get ${csrf.attr("value")} #####`)
+    console.log(`##### get ${csrf} #####`)
     console.log(`##### get ${encrypt(payload, exp, mod)} #####`)
 
     const response4 = await wrappedFetch("/auth-do-sign-in", {
         method: "POST",
         redirect: "manual",
+        headers: { Cookie: `csrf-token=${csrf}; rs-csrf-token=${csrf}` },
         body: new URLSearchParams({
             persist: "0",
-            [csrf.attr("name")!]: csrf.attr("value")!,
+            "rs-csrf-token": csrf,
             appUri: "/",
             clientPath: "/app/rstudio/auth-sign-in",
             v: encrypt(payload, exp, mod),
@@ -98,9 +98,7 @@ export async function load({
         // body: asSearchParams(html.getElementsByName("realform")[0] as HTMLFormElement),
     })
 
-    console.log(`##### get ${response4.status} #####`)
     console.log(`##### get ${await response4.text()} #####`)
-
     console.log("##### get 7 #####")
 
     return {

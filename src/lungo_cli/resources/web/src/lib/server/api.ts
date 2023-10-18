@@ -41,18 +41,6 @@ export function wrapFetch({
                 }
             }
 
-            if (cookies && cookies.getAll().length > 0) {
-                init ??= {}
-                init.headers = new Headers(init.headers)
-                init.headers.set(
-                    "Cookie",
-                    cookies
-                        .getAll()
-                        .map(({ name, value }) => `${name}=${value}`)
-                        .join("; ")
-                )
-            }
-
             if (credentials) {
                 init ??= {}
                 init.credentials = credentials
@@ -64,6 +52,19 @@ export function wrapFetch({
                 for (const [key, value] of Object.entries(headers)) {
                     init.headers.set(key, value)
                 }
+            }
+
+            if (cookies && cookies.getAll().length > 0) {
+                init ??= {}
+                init.headers = new Headers(init.headers)
+                init.headers.set(
+                    "Cookie",
+                    cookies
+                        .getAll()
+                        .map(({ name, value }) => `${name}=${value}`)
+                        .concat(init.headers.get("Cookie") ?? [])
+                        .join("; ")
+                )
             }
 
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
