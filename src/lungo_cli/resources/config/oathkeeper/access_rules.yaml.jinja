@@ -9,13 +9,27 @@
       - DELETE
       - PATCH
       - PUT
-      - HEAD
       - OPTIONS
   authenticators:
     - handler: cookie_session
     - handler: anonymous
   authorizer:
     handler: remote_json
+  mutators:
+    - handler: header
+  errors:
+    - handler: json
+
+- id: fix-head-bug
+  match:
+    url: 'https://{{ network.hostname }}/app/<(?!filebrowser/(?:api/public|share|static))[^/]*><.*>'
+    methods:
+      - HEAD
+  authenticators:
+    - handler: cookie_session
+    - handler: anonymous
+  authorizer:
+    handler: allow
   mutators:
     - handler: header
   errors:
