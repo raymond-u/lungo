@@ -14,9 +14,11 @@ serve:
     metrics_path: '/'
 
 log:
-  leak_sensitive_values: true
   redaction_text: '*redacted*'
+  {% if dev %}
+  leak_sensitive_values: true
   level: debug
+  {% endif %}
 
 access_rules:
   matching_strategy: regexp

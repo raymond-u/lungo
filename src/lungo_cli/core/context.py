@@ -96,6 +96,6 @@ class ContextManager:
             users=self.users,
             app_dirs=self.app_dirs,
             ip_addresses=self.ip_addresses,
-            debug=self.dev,
+            dev=self.dev,
             rstudio_password=self.rstudio_password,
         )

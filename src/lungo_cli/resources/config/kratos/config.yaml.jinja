@@ -11,14 +11,16 @@ serve:
     port: 8080
 
 log:
-  leak_sensitive_values: true
   redaction_text: '*redacted*'
+  {% if dev %}
+  leak_sensitive_values: true
   level: debug
+  {% endif %}
 
 session:
   cookie:
     name: 'lungo_session'
-  earliest_possible_extend: 12h
+  earliest_possible_extend: 16h
   lifespan: 24h
   whoami:
     required_aal: aal1

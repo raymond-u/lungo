@@ -11,9 +11,11 @@ serve:
     port: 8082
 
 log:
-  leak_sensitive_values: true
   redaction_text: '*redacted*'
+  {% if dev %}
+  leak_sensitive_values: true
   level: debug
+  {% endif %}
 
 namespaces:
   - id: 0
