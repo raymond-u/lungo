@@ -74,7 +74,7 @@ class AppManager:
 
             if not self.storage.bundled_dir.is_dir() or self.context_manager.dev:
                 self.console.print_info("Updating bundled data...")
-                self.copy_app_resources("../helpers", self.storage.bundled_dir)
+                self.copy_app_resources(".", self.storage.bundled_dir)
                 self.file_utils.remove(self.storage.init_file)
 
             if not self.storage.nginx_cert_file.is_file() or not self.storage.nginx_key_file.is_file():
