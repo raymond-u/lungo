@@ -28,7 +28,7 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
     }
 
     if (allowedApps.includes(EApp.FileBrowser)) {
-        apps.push({ name: "Files", href: `/app/${EApp.FileBrowser}`, icon: EIcon.Folder })
+        apps.push({ name: "File Browser", href: `/app/${EApp.FileBrowser}`, icon: EIcon.Folder })
     }
     // if (allowedApps.includes(EApp.Terminal)) {
     //     apps.push({ name: "Terminal", href: "/app/terminal", icon: EIcon.Terminal })

@@ -1,6 +1,6 @@
 from ipaddress import IPv4Address
 
-from pydantic import DirectoryPath
+from pydantic import ConfigDict, DirectoryPath
 
 from .base import Base
 from .config import Config
@@ -24,8 +24,11 @@ class IpAddresses(Base):
 
 
 class Context(Base):
+    model_config = ConfigDict(frozen=False)
+
     config: Config
     users: Users
     app_dirs: AppDirs
     ip_addresses: IpAddresses
+    debug: bool
     rstudio_password: str
