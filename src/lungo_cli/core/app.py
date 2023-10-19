@@ -100,7 +100,11 @@ class AppManager:
                 self.storage.users_file
             )
 
-            if not self.storage.init_file.is_file() or self.file_utils.read_text(self.storage.init_file) != config_hash:
+            if (
+                not self.storage.init_file.is_file()
+                or self.file_utils.read_text(self.storage.init_file) != config_hash
+                or self.context_manager.dev
+            ):
                 self.file_utils.remove(self.storage.init_file)
 
                 self.renderer.render_all(self.context_manager.context)
