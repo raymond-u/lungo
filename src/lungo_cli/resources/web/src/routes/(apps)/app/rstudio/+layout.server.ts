@@ -22,13 +22,13 @@ export async function load({
         ensureOk: true,
     })
 
-    const testFetch = wrapFetch({
-        fetch,
-        baseUrl: "https://httpbin.org/",
-        cookies,
-        credentials: "include",
-        ensureOk: true,
-    })
+    // const testFetch = wrapFetch({
+    //     fetch,
+    //     baseUrl: "https://httpbin.org/",
+    //     cookies,
+    //     credentials: "include",
+    //     ensureOk: true,
+    // })
 
     console.log("##### get 1 #####")
 
@@ -108,63 +108,64 @@ export async function load({
     console.log(`##### get ${await response4.text()} #####`)
     response4.headers.forEach((value, key) => console.log(key + ": " + value))
     console.log("###########")
+    console.log(JSON.stringify(response4.headers.getSetCookie()))
 
-    let response0 = await testFetch("/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            a: new URLSearchParams({
-                persist: "0",
-                [csrf.attr("name")!]: csrf.attr("value")!,
-                appUri: "/",
-                clientPath: "/app/rstudio/auth-sign-in",
-                v: encrypt(payload, exp, mod),
-            }).toString(),
-        }),
-    })
-
-    console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
-
-    response0 = await testFetch("/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-            persist: "0",
-            [csrf.attr("name")!]: csrf.attr("value")!,
-            appUri: "/",
-            clientPath: "/app/rstudio/auth-sign-in",
-            v: encrypt(payload, exp, mod),
-        }).toString(),
-    })
-
-    console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
-
-    response0 = await testFetch("/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-            persist: "0",
-            [csrf.attr("name")!]: csrf.attr("value")!,
-            appUri: "/",
-            clientPath: "/app/rstudio/auth-sign-in",
-            v: encrypt(payload, exp, mod),
-        }),
-    })
-
-    console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
-
-    response0 = await testFetch("/post", {
-        method: "POST",
-        body: new URLSearchParams({
-            persist: "0",
-            [csrf.attr("name")!]: csrf.attr("value")!,
-            appUri: "/",
-            clientPath: "/app/rstudio/auth-sign-in",
-            v: encrypt(payload, exp, mod),
-        }),
-    })
-
-    console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
+    // let response0 = await testFetch("/post", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({
+    //         a: new URLSearchParams({
+    //             persist: "0",
+    //             [csrf.attr("name")!]: csrf.attr("value")!,
+    //             appUri: "/",
+    //             clientPath: "/app/rstudio/auth-sign-in",
+    //             v: encrypt(payload, exp, mod),
+    //         }).toString(),
+    //     }),
+    // })
+    //
+    // console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
+    //
+    // response0 = await testFetch("/post", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    //     body: new URLSearchParams({
+    //         persist: "0",
+    //         [csrf.attr("name")!]: csrf.attr("value")!,
+    //         appUri: "/",
+    //         clientPath: "/app/rstudio/auth-sign-in",
+    //         v: encrypt(payload, exp, mod),
+    //     }).toString(),
+    // })
+    //
+    // console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
+    //
+    // response0 = await testFetch("/post", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    //     body: new URLSearchParams({
+    //         persist: "0",
+    //         [csrf.attr("name")!]: csrf.attr("value")!,
+    //         appUri: "/",
+    //         clientPath: "/app/rstudio/auth-sign-in",
+    //         v: encrypt(payload, exp, mod),
+    //     }),
+    // })
+    //
+    // console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
+    //
+    // response0 = await testFetch("/post", {
+    //     method: "POST",
+    //     body: new URLSearchParams({
+    //         persist: "0",
+    //         [csrf.attr("name")!]: csrf.attr("value")!,
+    //         appUri: "/",
+    //         clientPath: "/app/rstudio/auth-sign-in",
+    //         v: encrypt(payload, exp, mod),
+    //     }),
+    // })
+    //
+    // console.log(`##### get ${JSON.stringify(await response0.json())} #####`)
 
     return {
         title: "R Studio",
