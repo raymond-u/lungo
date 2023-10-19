@@ -150,11 +150,7 @@ class AccountManager:
                 for allowed_app in privilege.allowed_apps:
                     # Pydantic does not distinguish between a string and a enum value
                     if type(allowed_app) is str:
-                        try:
-                            allowed_app = EApp(allowed_app)
-                        except ValueError:
-                            self.console.print_error(f"Invalid app {format_input(allowed_app)}.")
-                            raise Exit(code=1)
+                        allowed_app = EApp(allowed_app)
 
                     if allowed_app in enabled_apps:
                         data.append(
@@ -201,11 +197,7 @@ class AccountManager:
                 for allowed_app in account.extra.allowed_apps:
                     # Pydantic does not distinguish between a string and a enum value
                     if type(allowed_app) is str:
-                        try:
-                            allowed_app = EApp(allowed_app)
-                        except ValueError:
-                            self.console.print_error(f"Invalid app {format_input(allowed_app)}.")
-                            raise Exit(code=1)
+                        allowed_app = EApp(allowed_app)
 
                     if allowed_app in enabled_apps:
                         data.append(
