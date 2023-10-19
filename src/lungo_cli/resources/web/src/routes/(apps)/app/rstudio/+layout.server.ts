@@ -107,7 +107,6 @@ export async function load({
             }).toString(),
         })
 
-        console.log(`##### get ${response4.status} #####`)
         console.log(`##### get ${await response4.text()} #####`)
         response4.headers.forEach((value, key) => console.log(key + ": " + value))
         console.log("###########")

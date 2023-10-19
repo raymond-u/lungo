@@ -71,8 +71,9 @@ export function wrapFetch({
             response = await fetch(input, init)
 
             if (cookies) {
-                for (const cookie of parser.parse(response.headers.getSetCookie())) {
+                for (const cookie of parser.parse(response.headers.getSetCookie(), { decodeValues: false })) {
                     cookies.set(cookie.name, cookie.value, {
+                        encode: (value) => value,
                         path: cookiePath || "/",
                         expires: cookie.expires,
                         maxAge: cookie.maxAge,
@@ -80,14 +81,10 @@ export function wrapFetch({
                 }
             }
         } catch (e) {
-            console.log(e)
             throw error(500)
         }
 
         if (ensureOk && !(response.status >= 200 && response.status < 400)) {
-            console.log(response.status, response.statusText)
-            response.headers.forEach((value, key) => console.log(key + ": " + value))
-            console.log(await response.text())
             throw error(500)
         }
 
