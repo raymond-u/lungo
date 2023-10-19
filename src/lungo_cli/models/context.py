@@ -30,5 +30,4 @@ class Context(Base):
     users: Users
     app_dirs: AppDirs
     ip_addresses: IpAddresses
-    debug: bool
     rstudio_password: str
