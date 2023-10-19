@@ -35,18 +35,18 @@ export async function load({
     const key = $("meta[name=public-key-url]").attr("content")!
 
     const response2 = await wrappedFetch(`/${key}`)
-    const text2 = await response2.text()
-    const [exp, mod] = text2.split(":", 2)
+    const [exp, mod] = (await response2.text()).split(":", 2)
 
     const response3 = await wrappedFetch("/js/encrypt.min.js")
-    const text = await response3.text()
+    const script = await response3.text()
+
     const encrypt = new Function(
         "payload",
         "exp",
         "mod",
         `"use strict";
         const navigator = { appName: "Netscape", appVersion: "5.0" };
-        ${text.replace("window.encrypt", "var encrypt")};
+        ${script.replace("window.encrypt", "var encrypt")};
         return encrypt(payload, exp, mod);`
     ) as (payload: string, exp: string, mod: string) => string
 
@@ -62,12 +62,7 @@ export async function load({
         const response4 = await wrappedFetch("/auth-do-sign-in", {
             method: "POST",
             redirect: "manual",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                // "X-RStudio-Root-Path": "/app/rstudio",
-                // "X-Forwarded-Proto": "https",
-                // "X-Forwarded-Host": "172.16.39.102",
-            },
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams({
                 persist: "0",
                 [csrf.attr("name")!]: csrf.attr("value")!,
