@@ -113,7 +113,7 @@ export async function load({
         console.log("###########")
         console.log(JSON.stringify(response4.headers.getSetCookie()))
 
-        for (const cookie of parser.parse(response.headers.getSetCookie())) {
+        for (const cookie of parser.parse(response4.headers.getSetCookie())) {
             console.log(cookie.name + ": " + cookie.value)
         }
 
