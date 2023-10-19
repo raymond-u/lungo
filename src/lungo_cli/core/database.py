@@ -15,6 +15,8 @@ from ..models.users import Users
 
 
 class AccountManager:
+    """Validate and update user accounts."""
+
     def __init__(
         self, console: Console, file_utils: FileUtils, storage: Storage, client: HttpApiClient, container: Container
     ):

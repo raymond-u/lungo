@@ -11,7 +11,7 @@ from ..helpers.common import format_path
 
 
 class Storage:
-    """Represent the application files."""
+    """Contain all the paths used by the application."""
 
     def __init__(self, console: Console, file_utils: FileUtils):
         self.console = console

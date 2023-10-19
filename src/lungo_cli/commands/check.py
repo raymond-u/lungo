@@ -1,27 +1,16 @@
-from pathlib import Path
-from typing import Annotated, Optional
-
-from typer import Option
-
-from ..app.state import console
-from ..helpers.app import load_config, process_args
+from .base import config_dir_type, quiet_type, verbosity_type
+from ..app.state import app_manager, console
 
 
 def main(
-    config_dir: Annotated[
-        Optional[Path], Option("--config-dir", "-c", help="Path to the configuration directory.", show_default=False)
-    ] = None,
-    quiet: Annotated[
-        bool, Option("--quiet", "-q", help="Suppress all output except for errors.", show_default=False)
-    ] = False,
-    verbosity: Annotated[
-        int, Option("--verbose", "-v", count=True, help="Increase verbosity.", show_default=False)
-    ] = 0,
+    config_dir: config_dir_type = None,
+    quiet: quiet_type = False,
+    verbosity: verbosity_type = 0,
 ) -> None:
     """
     Check if the configuration is valid.
     """
-    process_args(config_dir, quiet, verbosity)
-    load_config()
+    app_manager().process_args(config_dir, quiet, verbosity)
+    app_manager().load_config()
 
     console().print("Configuration is valid.")

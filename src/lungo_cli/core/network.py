@@ -9,6 +9,8 @@ from ..helpers.common import format_path
 
 
 class HttpApiClient:
+    """HTTP API client for sending and receiving JSON data."""
+
     def __init__(self, console: Console):
         self.console = console
 

@@ -10,7 +10,7 @@ TEnum = TypeVar("TEnum", bound=Enum)
 
 
 class LogLevels(int, Enum):
-    """Log levels."""
+    """Log levels for console output."""
 
     TRACE = 0
     DEBUG = 1
@@ -20,7 +20,7 @@ class LogLevels(int, Enum):
 
 
 class Console:
-    """A managed console for text output."""
+    """Console for text output."""
 
     def __init__(self):
         self.is_empty = True

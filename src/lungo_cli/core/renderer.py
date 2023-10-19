@@ -12,6 +12,8 @@ from ..models.context import Context
 
 
 class Renderer:
+    """Render Jinja templates."""
+
     def __init__(self, console: Console, file_utils: FileUtils, storage: Storage):
         self.console = console
         self.file_utils = file_utils

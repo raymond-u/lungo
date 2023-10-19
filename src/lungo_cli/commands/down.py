@@ -1,31 +1,20 @@
-from pathlib import Path
-from typing import Annotated, Optional
-
-from typer import Option
-
-from ..app.state import console, container
+from .base import config_dir_type, dev_type, quiet_type, verbosity_type
+from ..app.state import app_manager, console, container
 from ..core.constants import APP_NAME_CAPITALIZED
-from ..helpers.app import load_config, process_args, process_args_delayed
 
 
 def main(
-    config_dir: Annotated[
-        Optional[Path], Option("--config-dir", "-c", help="Path to the configuration directory.", show_default=False)
-    ] = None,
-    dev: Annotated[bool, Option("--dev", help="Use the development configuration.", show_default=False)] = False,
-    quiet: Annotated[
-        bool, Option("--quiet", "-q", help="Suppress all output except for errors.", show_default=False)
-    ] = False,
-    verbosity: Annotated[
-        int, Option("--verbose", "-v", count=True, help="Increase verbosity.", show_default=False)
-    ] = 0,
+    config_dir: config_dir_type = None,
+    dev: dev_type = False,
+    quiet: quiet_type = False,
+    verbosity: verbosity_type = 0,
 ):
     """
     Stop the service.
     """
-    process_args(config_dir, quiet, verbosity)
-    load_config()
-    process_args_delayed(dev)
+    app_manager().process_args(config_dir, quiet, verbosity)
+    app_manager().load_config()
+    app_manager().process_args_delayed(dev)
 
     with console().status("Stopping the service..."):
         container().down()

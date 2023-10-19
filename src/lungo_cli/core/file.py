@@ -2,14 +2,21 @@ import hashlib
 import shutil
 from os import PathLike
 from pathlib import Path
+from typing import Type, TypeVar
 
+from pydantic import BaseModel, ValidationError
+from pydantic_yaml import parse_yaml_file_as
 from typer import Exit
 
 from .console import Console
 from ..helpers.common import format_path
 
+T = TypeVar("T", bound=BaseModel)
+
 
 class FileUtils:
+    """File utilities."""
+
     def __init__(self, console: Console):
         self.console = console
 
@@ -108,4 +115,31 @@ class FileUtils:
                 return hashlib.file_digest(f, "sha256").hexdigest()
         except Exception as e:
             self.console.print_error(f"Failed to hash {format_path(path.name)} ({e}).")
+            raise Exit(code=1)
+
+    def parse_yaml(self, path: str | PathLike[str], model: Type[T]) -> T:
+        """Parse a YAML file as a Pydantic model."""
+        try:
+            return parse_yaml_file_as(model, path)
+        except ValidationError as e:
+            error_msg = f"Failed to parse {format_path(path)}."
+
+            for error in e.errors():
+                error_msg += "\n  * "
+
+                if error["loc"]:
+                    for loc in error["loc"]:
+                        if type(loc) is int:
+                            error_msg += f"[{loc}]"
+                        else:
+                            error_msg += f".{loc}"
+                else:
+                    error_msg += "root"
+
+                error_msg += f": {error['msg']}"
+
+            self.console.print_error(error_msg)
+            raise Exit(code=1)
+        except Exception as e:
+            self.console.print_error(f"Failed to parse {format_path(path)} ({e}).")
             raise Exit(code=1)

@@ -1,4 +1,5 @@
 import subprocess
+from enum import auto, Enum
 from os import PathLike
 
 from typer import Exit
@@ -8,7 +9,6 @@ from .constants import APP_NAME_CAPITALIZED, DOCKER_URL, PODMAN_COMPOSE_URL, POD
 from .file import FileUtils
 from .storage import Storage
 from ..helpers.common import format_command, format_program, program_exists
-from ..models.container import EContainerService, EContainerTool
 
 docker = format_program("Docker")
 podman = format_program("Podman")
@@ -16,6 +16,21 @@ podman_compose = format_program("podman-compose")
 docker_link = f"[link={DOCKER_URL}]{docker}[/link]"
 podman_link = f"[link={PODMAN_URL}]{podman}[/link]"
 podman_compose_link = f"[link={PODMAN_COMPOSE_URL}]{podman_compose}[/link]"
+
+
+class EContainerService(str, Enum):
+    NGINX = "nginx"
+    KETO = "keto"
+    KRATOS = "kratos"
+    OATHKEEPER = "oathkeeper"
+    NODE = "node"
+    FILEBROWSER = "filebrowser"
+    RSTUDIO = "rstudio"
+
+
+class EContainerTool(Enum):
+    DOCKER = auto()
+    PODMAN = auto()
 
 
 class Container:
