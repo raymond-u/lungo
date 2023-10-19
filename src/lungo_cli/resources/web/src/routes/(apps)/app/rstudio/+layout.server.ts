@@ -1,7 +1,7 @@
 import { load as loadHtmlString } from "cheerio"
 import type { Cookies } from "@sveltejs/kit"
 import { wrapFetch } from "$lib/server/api"
-import { RSTUDIO_BASE_URL } from "$lib/server/constants"
+import { RSTUDIO_BASE_URL, RSTUDIO_PASSWORD } from "$lib/server/constants"
 import type { User } from "$lib/types"
 
 export async function load({
@@ -53,8 +53,7 @@ export async function load({
     const { userInfo } = await parent()
 
     const username = userInfo?.username ?? "anonymous"
-    const password = "passwd"
-    const payload = `${username}\n${password}`
+    const payload = `${username}\n${RSTUDIO_PASSWORD}`
 
     const csrf = $("form[name=realform] > input:eq(1)")
 

@@ -11,7 +11,6 @@ class AppDirs(Base):
     cache_dir: DirectoryPath
     generated_dir: DirectoryPath
     managed_dir: DirectoryPath
-    user_dir: DirectoryPath
 
 
 class IpAddresses(Base):
@@ -29,3 +28,4 @@ class Context(Base):
     users: Users
     app_dirs: AppDirs
     ip_addresses: IpAddresses
+    rstudio_password: str

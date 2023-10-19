@@ -6,10 +6,14 @@ upstream node {
     server {{ ip_addresses.node }}:80;
 }
 
+{% if config.modules.filebrowser.enabled %}
 upstream filebrowser {
     server {{ ip_addresses.filebrowser }}:80;
 }
+{% endif %}
 
+{% if config.modules.rstudio.enabled %}
 upstream rstudio {
     server {{ ip_addresses.rstudio }}:80;
 }
+{% endif %}

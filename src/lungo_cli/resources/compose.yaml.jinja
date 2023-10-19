@@ -5,6 +5,7 @@
 {% set accounts = users.accounts %}
 {% set branding = config.branding %}
 {% set directories = config.directories %}
+{% set modules = config.modules %}
 {% set network = config.network %}
 
 services:
@@ -55,8 +56,12 @@ services:
       - kratos
       - oathkeeper
       - node
+      {% if modules.filebrowser.enabled %}
       - filebrowser
+      {% endif %}
+      {% if modules.rstudio.enabled %}
       - rstudio
+      {% endif %}
     restart: 'no'
 
   # ============================== #
@@ -184,6 +189,7 @@ services:
       - KETO_API_BASE_URL=http://{{ ip_addresses.keto }}:80/
       - KRATOS_API_BASE_URL=http://{{ ip_addresses.kratos }}:80/
       - RSTUDIO_BASE_URL=http://{{ ip_addresses.rstudio }}:80/
+      - RSTUDIO_PASSWORD={{ rstudio_password }}
       - PUBLIC_SITE_SUBTITLE={{ branding.subtitle|tojson }}
       - PUBLIC_SITE_TITLE={{ branding.name }}
 
@@ -193,6 +199,7 @@ services:
   # Applications #
   # ============ #
 
+  {% if modules.filebrowser.enabled %}
   filebrowser:
     container_name: filebrowser
     hostname: filebrowser
@@ -220,10 +227,11 @@ services:
       - './config/filebrowser:/etc/filebrowser:ro'
       - '{{ app_dirs.cache_dir }}/filebrowser:/var/log/filebrowser:rw'
       - '{{ app_dirs.managed_dir }}/filebrowser:/var/lib/filebrowser:rw'
-      - '{{ app_dirs.user_dir }}:/mnt/__home__:rw'
       {% for account in accounts %}
         {% if account.extra.user_dir %}
-      - '{{ account.extra.user_dir }}:/mnt/__custom_home__/{{ account.username }}:rw'
+      - '{{ account.extra.user_dir }}:/mnt/__home__/{{ account.username }}:rw'
+        {% else %}
+      - '{{ directories.users_dir }}/{{ account.username }}:/mnt/__home__/{{ account.username }}:rw'
         {% endif %}
       {% endfor %}
       {% for shared_dir in directories.shared_dirs %}
@@ -231,7 +239,9 @@ services:
       {% endfor %}
 
     restart: 'no'
+  {% endif %}
 
+  {% if modules.rstudio.enabled %}
   rstudio:
     container_name: rstudio
     hostname: rstudio
@@ -254,10 +264,11 @@ services:
       - './config/rstudio/rserver.conf:/etc/rstudio/rserver.conf:ro'
       - './config/rstudio/rsession.conf:/etc/rstudio/rsession.conf:ro'
       - '{{ app_dirs.managed_dir }}/rstudio:/var/lib/rstudio-server:rw'
-      - '{{ app_dirs.user_dir }}:/mnt/__home__:rw'
       {% for account in accounts %}
         {% if account.extra.user_dir %}
-      - '{{ account.extra.user_dir }}:/mnt/__custom_home__/{{ account.username }}:rw'
+      - '{{ account.extra.user_dir }}:/mnt/__home__/{{ account.username }}:rw'
+        {% else %}
+      - '{{ directories.users_dir }}/{{ account.username }}:/mnt/__home__/{{ account.username }}:rw'
         {% endif %}
       {% endfor %}
       {% for shared_dir in directories.shared_dirs %}
@@ -265,6 +276,7 @@ services:
       {% endfor %}
 
     restart: 'no'
+  {% endif %}
 
 networks:
   static:

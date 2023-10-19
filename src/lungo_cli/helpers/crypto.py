@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from os import PathLike
 from secrets import token_urlsafe
 
 from cryptography import x509
@@ -7,11 +6,10 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 
-from ..app.state import file_utils
 from ..core.constants import APP_NAME_CAPITALIZED
 
 
-def generate_self_signed_cert(cert_file: str | PathLike[str], key_file: str | PathLike[str]) -> None:
+def generate_self_signed_cert() -> tuple[bytes, bytes]:
     """Generate a self-signed certificate."""
     key = rsa.generate_private_key(public_exponent=65537, key_size=2048, backend=default_backend())
     name = x509.Name([x509.NameAttribute(x509.oid.NameOID.ORGANIZATION_NAME, APP_NAME_CAPITALIZED)])
@@ -38,8 +36,7 @@ def generate_self_signed_cert(cert_file: str | PathLike[str], key_file: str | Pa
         encryption_algorithm=serialization.NoEncryption(),
     )
 
-    file_utils().write_bytes(cert_file, cert_pem)
-    file_utils().write_bytes(key_file, key_pem)
+    return cert_pem, key_pem
 
 
 def generate_random_string() -> str:

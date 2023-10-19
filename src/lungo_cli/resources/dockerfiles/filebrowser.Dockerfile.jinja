@@ -3,11 +3,7 @@
 FROM docker.io/filebrowser/filebrowser:{{ FILEBROWSER_VER }}
 {% for account in users.accounts %}
 RUN mkdir -p '/root/home/{{ account.username }}'
-  {% if account.extra.user_dir %}
-RUN ln -s '/mnt/__custom_home__/{{ account.username }}' '/root/home/{{ account.username }}/home'
-  {% else %}
 RUN ln -s '/mnt/__home__/{{ account.username }}' '/root/home/{{ account.username }}/home'
-  {% endif %}
   {% for shared_dir in config.directories.shared_dirs %}
 RUN ln -s '/mnt/{{ shared_dir.name }}' '/root/home/{{ account.username }}/{{ shared_dir.name }}'
   {% endfor %}

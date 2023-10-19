@@ -21,7 +21,7 @@ class SharedDir(Base):
 class Directories(Base):
     cache_dir: DirectoryPath | NewPath | None = None
     data_dir: DirectoryPath | NewPath | None = None
-    user_dir: DirectoryPath | NewPath | None = None
+    users_dir: DirectoryPath | NewPath
     shared_dirs: list[SharedDir] = []
 
 
@@ -38,6 +38,19 @@ class Tls(Base):
 class Https(Base):
     port: Port = 443
     tls: Tls | None = None
+
+
+class FileBrowserSettings(Base):
+    enabled: bool = True
+
+
+class RStudioSettings(Base):
+    enabled: bool = True
+
+
+class Modules(Base):
+    filebrowser: FileBrowserSettings = FileBrowserSettings()
+    rstudio: RStudioSettings = RStudioSettings()
 
 
 class Network(Base):
@@ -73,7 +86,8 @@ class Smtp(Base):
 
 class Config(Base):
     branding: Branding = Branding()
-    directories: Directories = Directories()
+    directories: Directories
+    modules: Modules = Modules()
     network: Network
     rules: Rules = Rules()
     smtp: Smtp

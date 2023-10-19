@@ -1,3 +1,4 @@
+{% if config.modules.filebrowser.enabled %}
 location = /app/filebrowser {
     include snippets/proxy.conf;
     include snippets/auth.conf;
@@ -43,3 +44,4 @@ location @filebrowser {
     proxy_pass http://filebrowser$uri?$filtered_args;
     proxy_redirect ~*^(?:https?://[^/]+)?/app/filebrowser([^?]*)\??(.*)$ /app/filebrowser$1?iframe=1&$2;
 }
+{% endif %}

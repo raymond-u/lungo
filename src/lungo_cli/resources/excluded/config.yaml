@@ -47,9 +47,9 @@
 
 #   # Directory to store user data (e.g. user joe will have its data stored in joe/ inside this directory)
 #   # Type: path
-#   # Default: (platform specific)
-#   # Required: no
-#   user_dir: /home
+#   # Default: none
+#   # Required: yes
+#   users_dir: /home
 
 #   # Directories to mount that are shared between apps and users
 #   shared_dirs:
@@ -72,6 +72,28 @@
 #         # Default: false
 #         # Required: no
 #         read_only: true
+
+# ========
+# modules:
+# ========
+
+#   # Settings for the File Browser module
+#   filebrowser:
+
+#     # Enable or disable the module
+#     # Type: boolean
+#     # Default: true
+#     # Required: no
+#     enabled: true
+
+#   # Settings for the R Studio module
+#   rstudio:
+
+#     # Enable or disable the module
+#     # Type: boolean
+#     # Default: true
+#     # Required: no
+#     enabled: true
 
 # ========
 # network:

@@ -9,13 +9,19 @@ branding:
 directories:
   cache_dir: ~/.cache/lungo
   data_dir: ~/.local/share/lungo
-  user_dir: /home
+  users_dir: /home
   shared_dirs:
     - name: shared
       source: /mnt/data/shared
     - name: shared_readonly
       source: /mnt/data/shared_readonly
       read_only: true
+
+modules:
+  filebrowser:
+    enabled: true
+  rstudio:
+    enabled: false
 
 network:
   hostname: lungo.com

@@ -1,3 +1,4 @@
+{% if config.modules.rstudio.enabled %}
 location = /app/rstudio {
     include snippets/proxy.conf;
     include snippets/auth.conf;
@@ -37,30 +38,4 @@ location @rstudio {
     proxy_pass http://rstudio;
     proxy_redirect ~*^(?:https?://[^/]+)?/app/rstudio([^?]*)\??(.*)$ /app/rstudio$1?iframe=1&$2;
 }
-
-# location /rstudio/ {
-#     include snippets/proxy.conf;
-#     include snippets/auth.conf;
-#
-#     proxy_set_header X-RStudio-Root-Path /rstudio;
-#     proxy_pass http://rstudio/;
-#     proxy_redirect default;
-# }
-#
-# location = /rstudio/auth-sign-in {
-#     include snippets/proxy.conf;
-#     include snippets/auth.conf;
-#
-#     if ($http_x_bypass != 1) {
-#         rewrite ^.*$ /internal/rstudio-auth last;
-#     }
-#
-#     proxy_set_header X-RStudio-Root-Path /rstudio;
-#     proxy_pass http://rstudio/auth-sign-in;
-#     proxy_redirect default;
-# }
-#
-# location = /internal/rstudio-auth {
-#     internal;
-#     try_files /protected/rstudio-auth.html =404;
-# }
+{% endif %}

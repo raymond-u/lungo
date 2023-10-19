@@ -137,6 +137,10 @@ class Storage:
     def kratos_secrets_file(self) -> Path:
         return self.generated_dir / "kratos" / "secrets.yaml"
 
+    @property
+    def rstudio_password_file(self) -> Path:
+        return self.generated_dir / "rstudio" / "password"
+
     def validate(self) -> None:
         if self.data_latest_dir.is_dir():
             return

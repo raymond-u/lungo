@@ -1,5 +1,4 @@
 import os
-from os import PathLike
 
 from typer import Exit
 
@@ -9,9 +8,10 @@ from .container import Container
 from .file import FileUtils
 from .network import HttpApiClient
 from .storage import Storage
-from ..helpers.common import format_input, format_path, get_user_dir
-from ..models.config import Privilege, Privileges
-from ..models.users import Account
+from ..helpers.common import format_input, format_path
+from ..models.base import EApp
+from ..models.config import Config, Privilege
+from ..models.users import Users
 
 
 class AccountManager:
@@ -24,20 +24,18 @@ class AccountManager:
         self.client = client
         self.container = container
 
-    def verify(self, accounts: list[Account], user_dir: str | PathLike[str] | None) -> None:
-        if len(accounts) == 0:
+    def verify(self, config: Config, users: Users) -> None:
+        if len(users.accounts) == 0:
             self.console.print_error("At least one account must be defined.")
             raise Exit(code=1)
 
-        usernames = list(map(lambda x: x.username, accounts))
+        usernames = list(map(lambda x: x.username, users.accounts))
 
         if len(usernames) != len(set(usernames)):
             self.console.print_error("Username of each account must be unique.")
             raise Exit(code=1)
 
-        user_dir = get_user_dir(user_dir)
-
-        for account in accounts:
+        for account in users.accounts:
             if account.username == "anonymous":
                 self.console.print_warning(
                     f"Username {format_input('anonymous')} detected. "
@@ -45,7 +43,7 @@ class AccountManager:
                     "that require authentication. Please change the username if not intended."
                 )
 
-            if not (path := (account.extra.user_dir or user_dir / account.username)).is_dir():
+            if not (path := (account.extra.user_dir or config.directories.users_dir / account.username)).is_dir():
                 if os.access(path.parent, os.W_OK):
                     self.console.print_info(f"Creating user directory at {format_path(path)}...")
                     self.file_utils.create_dir(path)
@@ -56,7 +54,7 @@ class AccountManager:
                     )
                     raise Exit(code=1)
 
-    def update(self, accounts: list[Account], privileges: Privileges) -> None:
+    def update(self, config: Config, users: Users) -> None:
         # Ensure that the container can always be started even if it failed last time
         self.container.down(self.storage.service_keto_admin_dir)
         self.container.down(self.storage.service_kratos_admin_dir)
@@ -74,24 +72,6 @@ class AccountManager:
 
         # Add base relation tuples
         data = [
-            {
-                "action": "insert",
-                "relation_tuple": {
-                    "namespace": "app",
-                    "object": "filebrowser",
-                    "relation": "access",
-                    "subject_set": {"namespace": "app", "object": "all", "relation": "access"},
-                },
-            },
-            {
-                "action": "insert",
-                "relation_tuple": {
-                    "namespace": "app",
-                    "object": "rstudio",
-                    "relation": "access",
-                    "subject_set": {"namespace": "app", "object": "all", "relation": "access"},
-                },
-            },
             {
                 "action": "insert",
                 "relation_tuple": {
@@ -130,9 +110,29 @@ class AccountManager:
             },
         ]
 
+        enabled_apps = []
+
+        if config.modules.filebrowser.enabled:
+            enabled_apps.append(EApp.FILEBROWSER)
+        if config.modules.rstudio.enabled:
+            enabled_apps.append(EApp.RSTUDIO)
+
+        for app in enabled_apps:
+            data.append(
+                {
+                    "action": "insert",
+                    "relation_tuple": {
+                        "namespace": "app",
+                        "object": app.value,
+                        "relation": "access",
+                        "subject_set": {"namespace": "app", "object": "all", "relation": "access"},
+                    },
+                }
+            )
+
         # Add role privileges
         for role in ["unregistered", "guest", "user", "admin"]:
-            privilege: Privilege = getattr(privileges, role)
+            privilege: Privilege = getattr(config.rules.privileges, role)
 
             if privilege.allowed_apps == "all":
                 data.append(
@@ -148,31 +148,42 @@ class AccountManager:
                 )
             else:
                 for allowed_app in privilege.allowed_apps:
-                    data.append(
-                        {
-                            "action": "insert",
-                            "relation_tuple": {
-                                "namespace": "app",
-                                "object": allowed_app if type(allowed_app) is str else allowed_app.value,
-                                "relation": "access",
-                                "subject_set": {"namespace": "role", "object": role, "relation": "member"},
+                    # Pydantic does not distinguish between a string and a enum value
+                    if type(allowed_app) is str:
+                        try:
+                            allowed_app = EApp(allowed_app)
+                        except ValueError:
+                            self.console.print_error(f"Invalid app {format_input(allowed_app)}.")
+                            raise Exit(code=1)
+
+                    if allowed_app in enabled_apps:
+                        data.append(
+                            {
+                                "action": "insert",
+                                "relation_tuple": {
+                                    "namespace": "app",
+                                    "object": allowed_app.value,
+                                    "relation": "access",
+                                    "subject_set": {"namespace": "role", "object": role, "relation": "member"},
+                                },
                             },
-                        },
-                    )
+                        )
 
         # Add account privileges
-        for account in accounts:
-            data.append(
-                {
-                    "action": "insert",
-                    "relation_tuple": {
-                        "namespace": "role",
-                        "object": account.role if type(account.role) is str else account.role.value,
-                        "relation": "member",
-                        "subject_id": account.username,
+        for account in users.accounts:
+            # Anonymous account is covered by base relation tuples
+            if account.username != "anonymous":
+                data.append(
+                    {
+                        "action": "insert",
+                        "relation_tuple": {
+                            "namespace": "role",
+                            "object": account.role if type(account.role) is str else account.role.value,
+                            "relation": "member",
+                            "subject_id": account.username,
+                        },
                     },
-                },
-            )
+                )
 
             if account.extra.allowed_apps == "all":
                 data.append(
@@ -188,17 +199,26 @@ class AccountManager:
                 )
             else:
                 for allowed_app in account.extra.allowed_apps:
-                    data.append(
-                        {
-                            "action": "insert",
-                            "relation_tuple": {
-                                "namespace": "app",
-                                "object": allowed_app if type(allowed_app) is str else allowed_app.value,
-                                "relation": "access",
-                                "subject_id": account.username,
+                    # Pydantic does not distinguish between a string and a enum value
+                    if type(allowed_app) is str:
+                        try:
+                            allowed_app = EApp(allowed_app)
+                        except ValueError:
+                            self.console.print_error(f"Invalid app {format_input(allowed_app)}.")
+                            raise Exit(code=1)
+
+                    if allowed_app in enabled_apps:
+                        data.append(
+                            {
+                                "action": "insert",
+                                "relation_tuple": {
+                                    "namespace": "app",
+                                    "object": allowed_app.value,
+                                    "relation": "access",
+                                    "subject_id": account.username,
+                                },
                             },
-                        },
-                    )
+                        )
 
         self.console.print_debug("Creating new relation tuples...")
         self.client.patch(f"{KETO_ADMIN_API_BASE_URL}/admin/relation-tuples", data)
@@ -208,7 +228,7 @@ class AccountManager:
         self.console.print_debug("Connecting to Kratos Admin API...")
         self.client.ensure_reachable(f"{KRATOS_ADMIN_API_BASE_URL}/health/ready")
 
-        accounts = accounts[:]
+        accounts = users.accounts[:]
 
         for old_account in self.client.get(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities"):
             if new_account := next(filter(lambda x: x.username == old_account["traits"]["username"], accounts), None):

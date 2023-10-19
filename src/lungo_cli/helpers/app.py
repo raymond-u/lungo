@@ -5,7 +5,7 @@ from pathlib import Path
 from importlib_resources import as_file, files
 from typer import Exit
 
-from .common import format_input, format_path, get_user_dir
+from .common import format_input, format_path
 from .crypto import generate_random_string, generate_self_signed_cert
 from .yaml import parse_yaml
 from ..app.state import account_manager, console, file_utils, renderer, storage
@@ -79,10 +79,15 @@ def create_context(config: Config, users: Users) -> Context:
         cache_dir=storage().cache_latest_dir,
         generated_dir=storage().generated_dir,
         managed_dir=storage().managed_dir,
-        user_dir=get_user_dir(config.directories.user_dir),
     )
 
-    return Context(config=config, users=users, app_dirs=app_dirs, ip_addresses=get_ip_addresses(config.network.subnet))
+    return Context(
+        config=config,
+        users=users,
+        app_dirs=app_dirs,
+        ip_addresses=get_ip_addresses(config.network.subnet),
+        rstudio_password=file_utils().read_text(storage().rstudio_password_file),
+    )
 
 
 def ensure_application_data(config: Config, users: Users) -> None:
@@ -98,7 +103,9 @@ def ensure_application_data(config: Config, users: Users) -> None:
 
         if not storage().nginx_cert_file.is_file() or not storage().nginx_key_file.is_file():
             console().print_info("Generating self-signed certificate...")
-            generate_self_signed_cert(storage().nginx_cert_file, storage().nginx_key_file)
+            cert, key = generate_self_signed_cert()
+            file_utils().write_bytes(storage().nginx_cert_file, cert)
+            file_utils().write_bytes(storage().nginx_key_file, key)
 
         if not storage().kratos_secrets_file.is_file():
             console().print_info("Generating Kratos secrets...")
@@ -108,6 +115,10 @@ def ensure_application_data(config: Config, users: Users) -> None:
                 secret_cookie=generate_random_string(),
             )
 
+        if not storage().rstudio_password_file.is_file():
+            console().print_info("Generating RStudio password...")
+            file_utils().write_text(storage().rstudio_password_file, generate_random_string())
+
     with console().status("Updating database..."):
         config_hash = hash_config()
 
@@ -115,8 +126,8 @@ def ensure_application_data(config: Config, users: Users) -> None:
             file_utils().remove(storage().init_file)
 
             renderer().render_all(create_context(config, users))
-            account_manager().verify(users.accounts, config.directories.user_dir)
-            account_manager().update(users.accounts, config.rules.privileges)
+            account_manager().verify(config, users)
+            account_manager().update(config, users)
 
             file_utils().write_text(storage().init_file, config_hash)
 
