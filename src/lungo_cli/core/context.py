@@ -87,7 +87,7 @@ class ContextManager:
 
     @property
     def rstudio_password(self) -> str:
-        return self.file_utils.read_text(self.storage.rstudio_password_file)
+        return self.config.modules.rstudio.password or self.file_utils.read_text(self.storage.rstudio_password_file)
 
     @property
     def context(self) -> Context:

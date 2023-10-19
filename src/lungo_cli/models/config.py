@@ -46,6 +46,7 @@ class FileBrowserSettings(Base):
 
 class RStudioSettings(Base):
     enabled: bool = True
+    password: str | None = None
 
 
 class Modules(Base):
