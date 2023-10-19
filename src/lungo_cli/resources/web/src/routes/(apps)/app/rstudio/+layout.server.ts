@@ -3,6 +3,7 @@ import type { Cookies } from "@sveltejs/kit"
 import { wrapFetch } from "$lib/server/api"
 import { RSTUDIO_BASE_URL } from "$lib/server/constants"
 import type { User } from "$lib/types"
+import parser from "set-cookie-parser"
 
 export async function load({
     cookies,
@@ -86,29 +87,40 @@ export async function load({
     // ;(html.getElementById("package") as HTMLInputElement).value = encrypt(payload, exp, mod)
     // ;(html.getElementById("persist") as HTMLInputElement).value = "0"
 
-    const response4 = await wrappedFetch("/auth-do-sign-in", {
-        method: "POST",
-        redirect: "manual",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "X-RStudio-Root-Path": "/app/rstudio",
-            "X-Forwarded-Proto": "https",
-            "X-Forwarded-Host": "172.16.39.102",
-        },
-        body: new URLSearchParams({
-            persist: "0",
-            [csrf.attr("name")!]: csrf.attr("value")!,
-            appUri: "/",
-            clientPath: "/app/rstudio/auth-sign-in",
-            v: encrypt(payload, exp, mod),
-        }).toString(),
-    })
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+        const response4 = await wrappedFetch("/auth-do-sign-in", {
+            method: "POST",
+            redirect: "manual",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-RStudio-Root-Path": "/app/rstudio",
+                "X-Forwarded-Proto": "https",
+                "X-Forwarded-Host": "172.16.39.102",
+            },
+            body: new URLSearchParams({
+                persist: "0",
+                [csrf.attr("name")!]: csrf.attr("value")!,
+                appUri: "/",
+                clientPath: "/app/rstudio/auth-sign-in",
+                v: encrypt(payload, exp, mod),
+            }).toString(),
+        })
 
-    console.log(`##### get ${response4.status} #####`)
-    console.log(`##### get ${await response4.text()} #####`)
-    response4.headers.forEach((value, key) => console.log(key + ": " + value))
-    console.log("###########")
-    console.log(JSON.stringify(response4.headers.getSetCookie()))
+        console.log(`##### get ${response4.status} #####`)
+        console.log(`##### get ${await response4.text()} #####`)
+        response4.headers.forEach((value, key) => console.log(key + ": " + value))
+        console.log("###########")
+        console.log(JSON.stringify(response4.headers.getSetCookie()))
+
+        for (const cookie of parser.parse(response.headers.getSetCookie())) {
+            console.log(cookie.name + ": " + cookie.value)
+        }
+
+        if (response4.headers.getSetCookie().length > 0) {
+            break
+        }
+    }
 
     // let response0 = await testFetch("/post", {
     //     method: "POST",
