@@ -81,7 +81,10 @@ export async function load({ cookies, fetch, url }: { cookies: Cookies; fetch: t
     }
 
     // return {
-    //     apps: [{ name: "Files", href: `/app/${EApp.FileBrowser}`, icon: EIcon.Folder }],
+    //     apps: [
+    //         { name: "File Browser", href: `/app/${EApp.FileBrowser}`, icon: EIcon.Folder },
+    //         { name: "R Studio", href: `/app/${EApp.RStudio}`, icon: EIcon.RStudio },
+    //     ],
     //     logoutToken: "abc123",
     //     title,
     //     userInfo: {

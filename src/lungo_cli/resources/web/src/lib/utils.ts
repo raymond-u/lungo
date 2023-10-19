@@ -13,12 +13,6 @@ export function useStore(): Store {
     return getContext<Store>("globalStore")
 }
 
-export function asSearchParams(form: HTMLFormElement): URLSearchParams {
-    return new URLSearchParams(
-        Array.from(new FormData(form), ([key, value]: [string, FormDataEntryValue]) => [key, value as string])
-    )
-}
-
 export function getFlow(url: string): string {
     return new URL(url).searchParams.get("flow") ?? ""
 }
@@ -37,4 +31,12 @@ export function getRandomId(): number {
 
 export function getTitleFromSlug(slug: string): string {
     return `${slug[0].toUpperCase() + slug.slice(1)} | ${SITE_TITLE}`
+}
+
+export function getTruncateTitle(title: string, length: number): string {
+    if (title.length > length) {
+        return title.split(" ")[0]
+    } else {
+        return title
+    }
 }

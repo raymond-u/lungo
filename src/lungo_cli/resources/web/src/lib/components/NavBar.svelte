@@ -30,7 +30,7 @@
     $: $allowScroll = !checked
 </script>
 
-<div class="navbar gap-1.5 bg-base-100 px-4 py-2">
+<div class="navbar gap-1.5 bg-base-100 p-2">
     <div class="drawer w-12 flex-none">
         <input id="nav-drawer" type="checkbox" class="drawer-toggle" bind:checked />
         <div class="drawer-content">
@@ -67,7 +67,7 @@
             </div>
         </div>
     </div>
-    <div class="flex-1 px-2">
+    <div class="flex-1 px-6">
         <a class="text-xl" href="/">{SITE_TITLE}</a>
     </div>
     <div class="mr-1 flex-none">
@@ -80,9 +80,9 @@
     <div class="mr-4 flex-none">
         {#if $page.data.userInfo}
             {@const { email, name } = $page.data.userInfo}
-            <div class="dropdown dropdown-end dropdown-bottom">
+            <div class="dropdown-end dropdown-bottom dropdown">
                 <Avatar button placeholder={getPlaceholder(name.first, name.last)} />
-                <ul class="menu dropdown-content z-20 mt-2 rounded-2xl bg-base-300 p-2 shadow">
+                <ul class="dropdown-content menu z-20 mt-2 rounded-2xl bg-base-300 p-2 shadow">
                     <li>
                         <div class="pointer-events-none flex">
                             <Avatar large placeholder={getPlaceholder(name.first, name.last)} />
