@@ -94,23 +94,40 @@
     onMount(() => {
         iframe!.addEventListener("load", handleLoad)
 
-        console.log("before assign a src", iframe!.contentWindow, typeof iframe!.contentWindow === "undefined")
+        console.log(
+            "before assign a src",
+            iframe!.contentWindow?.location.href,
+            iframe!.contentWindow === undefined || iframe!.contentWindow === null
+        )
+
+        try {
+            iframe!.contentWindow!.addEventListener("unload", handleUnload)
+        } catch (e) {
+            console.log("error", e)
+        }
 
         iframe!.src = $page.url.pathname + "?iframe=1"
 
-        console.log("after assign a src", iframe!.contentWindow, typeof iframe!.contentWindow === "undefined")
+        console.log(
+            "after assign a src",
+            iframe!.contentWindow?.location.href,
+            iframe!.contentWindow === undefined || iframe!.contentWindow === null
+        )
+
+        try {
+            iframe!.contentWindow!.addEventListener("unload", handleUnload)
+        } catch (e) {
+            console.log("error", e)
+        }
 
         setTimeout(() => {
             console.log(
                 "timeout 0 iframe with url: ",
-                iframe!.contentWindow,
-                typeof iframe!.contentWindow === "undefined"
+                iframe!.contentWindow?.location.href,
+                iframe!.contentWindow === undefined || iframe!.contentWindow === null
             )
+            iframe!.contentWindow!.addEventListener("unload", handleUnload)
         }, 0)
-
-        setTimeout(() => {
-            console.log("timeout 1 iframe with url: ", iframe!.contentWindow?.location.href, iframe!.contentWindow)
-        }, 1)
 
         const unsubscribe = currentApp.subscribe((value) => {
             if (value) {
