@@ -45,6 +45,8 @@
         const pushState = iframe.contentWindow!.history.pushState
         const replaceState = iframe.contentWindow!.history.replaceState
 
+        iframe.contentWindow!.addEventListener("unload", handleUnload)
+
         console.log("iframe loaded with url: ", iframe.contentWindow!.location.href)
 
         goto(getOriginalUrl(iframe.contentWindow!.location.href), { replaceState: true })
@@ -91,19 +93,19 @@
 
     onMount(() => {
         iframe!.addEventListener("load", handleLoad)
-        iframe!.addEventListener("unload", handleUnload)
-        iframe!.addEventListener("readystatechange", () => {
-            console.log(
-                "iframe readystatechange with url: ",
-                iframe!.contentWindow?.location.href,
-                iframe!.contentWindow
-            )
-        })
+
+        console.log("before assign a src", iframe!.contentWindow, typeof iframe!.contentWindow === "undefined")
 
         iframe!.src = $page.url.pathname + "?iframe=1"
 
+        console.log("after assign a src", iframe!.contentWindow, typeof iframe!.contentWindow === "undefined")
+
         setTimeout(() => {
-            console.log("timeout 0 iframe with url: ", iframe!.contentWindow?.location.href, iframe!.contentWindow)
+            console.log(
+                "timeout 0 iframe with url: ",
+                iframe!.contentWindow,
+                typeof iframe!.contentWindow === "undefined"
+            )
         }, 0)
 
         setTimeout(() => {
@@ -121,7 +123,6 @@
         return () => {
             unsubscribe()
             iframe!.removeEventListener("load", handleLoad)
-            iframe!.removeEventListener("unload", handleUnload)
         }
     })
 </script>
