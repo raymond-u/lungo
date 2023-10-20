@@ -10,6 +10,13 @@ proxy_set_header X-Real-IP $remote_addr;
 proxy_set_header Upgrade $http_upgrade;
 proxy_set_header Connection $connection_upgrade;
 
+## Remove unwanted headers
+proxy_hide_header Access-Control-Allow-Origin;
+proxy_hide_header Content-Security-Policy;
+proxy_hide_header Server;
+proxy_hide_header X-Frame-Options;
+proxy_hide_header X-Powered-By;
+
 ## Basic Proxy Configuration
 client_body_buffer_size 128k;
 proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;
