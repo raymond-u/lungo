@@ -2,4 +2,5 @@
 
 FROM docker.io/privatebin/fs:{{ PRIVATEBIN_VER }}
 USER root
+RUN apk add libcap2-bin
 RUN setcap 'cap_net_bind_service=+ep' /usr/sbin/nginx
