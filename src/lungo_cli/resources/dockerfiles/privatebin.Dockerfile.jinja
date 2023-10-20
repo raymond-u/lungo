@@ -1,5 +1,5 @@
 {% set PRIVATEBIN_VER = '1.6.0' %}
 
 FROM docker.io/privatebin/fs:{{ PRIVATEBIN_VER }}
-COPY config/privatebin/conf.php /srv/cfg/conf.php
-RUN chown 65534:82 /srv/cfg/conf.php
+USER root
+RUN sysctl -w net.ipv4.ip_unprivileged_port_start=80

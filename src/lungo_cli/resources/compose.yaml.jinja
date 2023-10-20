@@ -255,7 +255,7 @@ services:
       context: .
       dockerfile: ./dockerfiles/privatebin.Dockerfile
 
-    user: root
+    user: 'nobody:www-data'
     entrypoint: [ ]
     command: /etc/init.d/rc.local
 
@@ -266,8 +266,12 @@ services:
       - 80
 
     volumes:
+      - './config/privatebin/conf.php:/etc/privatebin/conf.php:ro'
       - './config/privatebin/site.conf:/etc/nginx/http.d/site.conf:ro'
       - '{{ app_dirs.managed_dir }}/privatebin:/srv/data:rw'
+
+    environment:
+      - CONFIG_PATH=/etc/privatebin
 
     restart: 'no'
   {% endif %}
