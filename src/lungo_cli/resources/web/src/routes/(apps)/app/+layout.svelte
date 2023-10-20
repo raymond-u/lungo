@@ -45,6 +45,8 @@
         const pushState = iframe.contentWindow!.history.pushState
         const replaceState = iframe.contentWindow!.history.replaceState
 
+        console.log("iframe loaded with url: ", iframe.contentWindow!.location.href)
+
         goto(getOriginalUrl(iframe.contentWindow!.location.href), { replaceState: true })
 
         iframe.contentWindow!.history.pushState = (
@@ -52,6 +54,8 @@
             unused: Parameters<typeof pushState>[1],
             url: Parameters<typeof pushState>[2] = undefined
         ) => {
+            console.log("pushState called with url: ", url)
+
             if (url) {
                 goto(getOriginalUrl(url), { replaceState: true })
                 pushState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))
@@ -64,6 +68,8 @@
             unused: Parameters<typeof replaceState>[1],
             url: Parameters<typeof replaceState>[2] = undefined
         ) => {
+            console.log("replaceState called with url: ", url)
+
             if (url) {
                 goto(getOriginalUrl(url), { replaceState: true })
                 replaceState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))

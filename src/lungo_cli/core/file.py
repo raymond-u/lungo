@@ -107,6 +107,15 @@ class FileUtils:
             self.console.print_error(f"Failed to write {format_path(path.name)} ({e}).")
             raise Exit(code=1)
 
+    def change_mode(self, path: str | PathLike[str], mode: int) -> None:
+        path = Path(path)
+
+        try:
+            path.chmod(mode)
+        except Exception as e:
+            self.console.print_error(f"Failed to change mode of {format_path(path.name)} ({e}).")
+            raise Exit(code=1)
+
     def hash_sha256(self, path: str | PathLike[str]) -> str:
         path = Path(path)
 
