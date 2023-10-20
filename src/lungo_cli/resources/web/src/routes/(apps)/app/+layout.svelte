@@ -46,7 +46,10 @@
         const replaceState = iframe.contentWindow!.history.replaceState
 
         if (!iframe.contentWindow!.location.search.includes("iframe=1")) {
-            pushState(null, "", getModifiedUrl(iframe.contentWindow!.location.href))
+            console.log(getModifiedUrl(iframe.contentWindow!.location.href))
+            console.log(replaceState)
+            iframe.contentWindow!.history.replaceState(null, "", getModifiedUrl(iframe.contentWindow!.location.href))
+            console.log("we're here")
         }
 
         goto(getOriginalUrl(iframe.contentWindow!.location.href), { replaceState: true })
