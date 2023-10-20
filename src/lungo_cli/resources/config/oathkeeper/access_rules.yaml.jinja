@@ -1,8 +1,6 @@
-{% set network = config.network %}
-
 - id: app
   match:
-    url: 'https://{{ network.hostname }}/app/<(?!filebrowser/(?:api/public|share|static))[^/]*><.*>'
+    url: '{{ base_url }}app/<(?!filebrowser/(?:api/public|share|static))[^/]*><.*>'
     methods:
       - GET
       - POST
@@ -23,7 +21,7 @@
 
 - id: public
   match:
-    url: 'https://{{ network.hostname }}/app/filebrowser/<(?:api/public|share|static)>/<.*>'
+    url: '{{ base_url }}app/filebrowser/<(?:api/public|share|static)>/<.*>'
     methods:
       - GET
       - POST
@@ -43,7 +41,7 @@
 
 - id: catch-all
   match:
-    url: 'https://{{ network.hostname }}/<(?!app/).*>'
+    url: '{{ base_url }}<(?!app/).*>'
     methods:
       - GET
       - POST

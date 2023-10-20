@@ -1,6 +1,6 @@
 from ipaddress import IPv4Address
 
-from pydantic import DirectoryPath
+from pydantic import AnyHttpUrl, DirectoryPath
 
 from .base import Base
 from .config import Config
@@ -20,6 +20,7 @@ class IpAddresses(Base):
     oathkeeper: IPv4Address
     node: IPv4Address
     filebrowser: IPv4Address
+    privatebin: IPv4Address
     rstudio: IPv4Address
 
 
@@ -27,6 +28,7 @@ class Context(Base):
     config: Config
     users: Users
     app_dirs: AppDirs
+    base_url: AnyHttpUrl
     ip_addresses: IpAddresses
     dev: bool
     rstudio_password: str

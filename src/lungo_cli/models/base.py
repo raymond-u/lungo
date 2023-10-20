@@ -10,6 +10,7 @@ class Base(BaseModel):
 
 class EApp(str, Enum):
     FILEBROWSER = "filebrowser"
+    PRIVATEBIN = "privatebin"
     RSTUDIO = "rstudio"
 
 

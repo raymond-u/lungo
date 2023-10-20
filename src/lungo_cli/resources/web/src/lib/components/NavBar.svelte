@@ -5,7 +5,7 @@
     import { Avatar, SwapIcon } from "$lib/components"
     import { SITE_TITLE } from "$lib/constants"
     import { LogoutIcon, SettingsIcon } from "$lib/icons"
-    import { EIcon } from "$lib/types/common"
+    import { EIcon } from "$lib/types"
     import { getPlaceholder, useStore } from "$lib/utils"
 
     const { allowScroll, currentApp, darkTheme, syncedScrollTops } = useStore()
@@ -80,9 +80,9 @@
     <div class="mr-4 flex-none">
         {#if $page.data.userInfo}
             {@const { email, name } = $page.data.userInfo}
-            <div class="dropdown-end dropdown-bottom dropdown">
+            <div class="dropdown dropdown-end dropdown-bottom">
                 <Avatar button placeholder={getPlaceholder(name.first, name.last)} />
-                <ul class="dropdown-content menu z-20 mt-2 rounded-2xl bg-base-300 p-2 shadow">
+                <ul class="menu dropdown-content z-20 mt-2 rounded-2xl bg-base-300 p-2 shadow">
                     <li>
                         <div class="pointer-events-none flex">
                             <Avatar large placeholder={getPlaceholder(name.first, name.last)} />

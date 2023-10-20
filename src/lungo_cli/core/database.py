@@ -116,6 +116,8 @@ class AccountManager:
 
         if config.modules.filebrowser.enabled:
             enabled_apps.append(EApp.FILEBROWSER)
+        if config.modules.privatebin.enabled:
+            enabled_apps.append(EApp.PRIVATEBIN)
         if config.modules.rstudio.enabled:
             enabled_apps.append(EApp.RSTUDIO)
 

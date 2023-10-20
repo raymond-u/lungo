@@ -44,6 +44,10 @@ class FileBrowserSettings(Base):
     enabled: bool = True
 
 
+class PrivateBin(Base):
+    enabled: bool = True
+
+
 class RStudioSettings(Base):
     enabled: bool = True
     password: str | None = None
@@ -51,6 +55,7 @@ class RStudioSettings(Base):
 
 class Modules(Base):
     filebrowser: FileBrowserSettings = FileBrowserSettings()
+    privatebin: PrivateBin = PrivateBin()
     rstudio: RStudioSettings = RStudioSettings()
 
 
@@ -66,7 +71,7 @@ class Privilege(Base):
 
 
 class Privileges(Base):
-    unregistered: Privilege = Privilege(allowed_apps=[])
+    unregistered: Privilege = Privilege(allowed_apps=[EApp.PRIVATEBIN])
     guest: Privilege = Privilege(allowed_apps=[EApp.FILEBROWSER])
     user: Privilege = Privilege(allowed_apps=[EApp.RSTUDIO])
     admin: Privilege = Privilege(allowed_apps="all")

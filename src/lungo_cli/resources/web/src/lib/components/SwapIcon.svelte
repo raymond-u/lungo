@@ -6,6 +6,8 @@
         FolderSolidIcon,
         LightModeIcon,
         MenuIcon,
+        PastebinOutlineIcon,
+        PastebinSolidIcon,
         ProxyOutlineIcon,
         ProxySolidIcon,
         RStudioOutlineIcon,
@@ -15,7 +17,7 @@
         VisibilityOffIcon,
         VisibilityOnIcon,
     } from "$lib/icons"
-    import { EIcon } from "$lib/types/common"
+    import { EIcon } from "$lib/types"
 
     export let icon: EIcon
     export let active = false
@@ -30,6 +32,10 @@
         [EIcon.Menu]: {
             normal: MenuIcon,
             active: CloseIcon,
+        },
+        [EIcon.Pastebin]: {
+            normal: PastebinOutlineIcon,
+            active: PastebinSolidIcon,
         },
         [EIcon.Proxy]: {
             normal: ProxyOutlineIcon,

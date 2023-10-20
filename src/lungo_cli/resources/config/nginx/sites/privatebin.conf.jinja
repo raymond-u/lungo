@@ -1,0 +1,40 @@
+{% if config.modules.privatebin.enabled %}
+location = /app/privatebin {
+    include snippets/proxy.conf;
+    include snippets/auth.conf;
+
+    if ($arg_iframe) {
+        return 307 $scheme://$host/app/privatebin/?$args;
+    }
+
+    proxy_pass http://node;
+}
+
+location /app/privatebin/ {
+    include snippets/proxy.conf;
+    include snippets/auth.conf;
+
+    if ($arg_iframe) {
+        return 480;
+    }
+
+    if ($http_referer ~* \?.*iframe=1.*$) {
+        return 307 $scheme://$host$uri?iframe=1&$args;
+    }
+
+    error_page 480 = @privatebin;
+    proxy_pass http://node;
+}
+
+location @privatebin {
+    include snippets/proxy.conf;
+    include snippets/auth.conf;
+
+    # Break into two lines to avoid regex capturing group being overwritten
+    rewrite ^.*$ $uri?$filtered_args?;
+    rewrite ^/app/privatebin/(.*)$ /$1 break;
+
+    proxy_pass http://privatebin;
+    proxy_redirect ~*^(?:https?://[^/]+)?/app/privatebin([^?]*)\??(.*)$ /app/privatebin?iframe=1&$2;
+}
+{% endif %}

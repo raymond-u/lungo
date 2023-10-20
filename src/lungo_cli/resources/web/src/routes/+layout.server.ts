@@ -30,12 +30,15 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
     if (allowedApps.includes(EApp.FileBrowser)) {
         apps.push({ name: "File Browser", href: `/app/${EApp.FileBrowser}`, icon: EIcon.Folder })
     }
-    // if (allowedApps.includes(EApp.Terminal)) {
-    //     apps.push({ name: "Terminal", href: "/app/terminal", icon: EIcon.Terminal })
-    // }
+    if (allowedApps.includes(EApp.PrivateBin)) {
+        apps.push({ name: "Pastebin", href: `/app/${EApp.PrivateBin}`, icon: EIcon.Pastebin })
+    }
     if (allowedApps.includes(EApp.RStudio)) {
         apps.push({ name: "R Studio", href: `/app/${EApp.RStudio}`, icon: EIcon.RStudio })
     }
+    // if (allowedApps.includes(EApp.Terminal)) {
+    //     apps.push({ name: "Terminal", href: "/app/terminal", icon: EIcon.Terminal })
+    // }
     // if (allowedApps.includes(EApp.Proxy)) {
     //     apps.push({ name: "Proxy", href: "/app/proxy", icon: EIcon.Proxy })
     // }

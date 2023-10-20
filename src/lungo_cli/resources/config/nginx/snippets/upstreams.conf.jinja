@@ -1,3 +1,5 @@
+{% set modules = config.modules %}
+
 upstream oathkeeper {
     server {{ ip_addresses.oathkeeper }}:80;
 }
@@ -6,13 +8,19 @@ upstream node {
     server {{ ip_addresses.node }}:80;
 }
 
-{% if config.modules.filebrowser.enabled %}
+{% if modules.filebrowser.enabled %}
 upstream filebrowser {
     server {{ ip_addresses.filebrowser }}:80;
 }
 {% endif %}
 
-{% if config.modules.rstudio.enabled %}
+{% if modules.privatebin.enabled %}
+upstream privatebin {
+    server {{ ip_addresses.privatebin }}:80;
+}
+{% endif %}
+
+{% if modules.rstudio.enabled %}
 upstream rstudio {
     server {{ ip_addresses.rstudio }}:80;
 }

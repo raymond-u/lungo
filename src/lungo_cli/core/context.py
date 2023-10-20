@@ -55,6 +55,11 @@ class ContextManager:
         )
 
     @property
+    def base_url(self) -> str:
+        port = f":{self.config.network.https.port}" if self.config.network.https.port != 443 else ""
+        return f"https://{self.config.network.hostname}{port}/"
+
+    @property
     def ip_addresses(self) -> IpAddresses:
         subnet = IPv4Network(self.config.network.subnet)
 
@@ -74,7 +79,8 @@ class ContextManager:
             oathkeeper=hosts[103],
             node=hosts[104],
             filebrowser=hosts[105],
-            rstudio=hosts[106],
+            privatebin=hosts[106],
+            rstudio=hosts[107],
         )
 
     @property
@@ -95,6 +101,7 @@ class ContextManager:
             config=self.config,
             users=self.users,
             app_dirs=self.app_dirs,
+            base_url=self.base_url,
             ip_addresses=self.ip_addresses,
             dev=self.dev,
             rstudio_password=self.rstudio_password,

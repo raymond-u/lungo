@@ -1,6 +1,7 @@
 {% set KETO_VER = 'v0.11.1' %}
 {% set KRATOS_VER = 'v1.0.0' %}
 {% set OATHKEEPER_VER = 'v0.40.6' %}
+{% set PRIVATEBIN_VER = '1.6.0' %}
 
 {% set accounts = users.accounts %}
 {% set branding = config.branding %}
@@ -60,6 +61,9 @@ services:
       - node
       {% if modules.filebrowser.enabled %}
       - filebrowser
+      {% endif %}
+      {% if modules.privatebin.enabled %}
+      - privatebin
       {% endif %}
       {% if modules.rstudio.enabled %}
       - rstudio
@@ -239,6 +243,34 @@ services:
       {% for shared_dir in directories.shared_dirs %}
       - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
       {% endfor %}
+
+    restart: 'no'
+  {% endif %}
+
+  {% if modules.privatebin.enabled %}
+  privatebin:
+    container_name: privatebin
+    hostname: privatebin
+
+    image: 'docker.io/privatebin/fs:{{ PRIVATEBIN_VER }}'
+
+    user: root
+    entrypoint: [ ]
+    command: /etc/init.d/rc.local
+
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses.privatebin }}
+    expose:
+      - 80
+
+    volumes:
+      - './config/privatebin/conf.php:/etc/privatebin/conf.php:ro'
+      - './config/privatebin/site.conf:/etc/nginx/http.d/site.conf:ro'
+      - '{{ app_dirs.managed_dir }}/privatebin:/srv/data:rw'
+
+    environment:
+      - CONFIG_PATH=/etc/privatebin/conf.php
 
     restart: 'no'
   {% endif %}

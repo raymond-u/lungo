@@ -39,7 +39,8 @@ network:
 rules:
   privileges:
     unregistered:
-      allowed_apps: [ ]
+      allowed_apps:
+        - privatebin
     guest:
       allowed_apps:
         - filebrowser

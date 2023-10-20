@@ -86,6 +86,15 @@
 #     # Required: no
 #     enabled: true
 
+#   # Settings for the Private Bin module
+#   privatebin:
+
+#     # Enable or disable the module
+#     # Type: boolean
+#     # Default: true
+#     # Required: no
+#     enabled: true
+
 #   # Settings for the R Studio module
 #   rstudio:
 
