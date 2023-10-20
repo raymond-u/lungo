@@ -40,63 +40,47 @@
         }
     }
 
-    const handleFullyLoad = (e: Event) => {
-        const iframe = e.target as HTMLIFrameElement
-        goto(getOriginalUrl(iframe.contentWindow!.location.href), { replaceState: true })
-    }
-
     const handleLoad = (e: Event) => {
-        const iframeWindow = e.target as Window
-        const pushState = iframeWindow.history.pushState
-        const replaceState = iframeWindow.history.replaceState
+        const iframe = e.target as HTMLIFrameElement
+        const pushState = iframe.contentWindow!.history.pushState
+        const replaceState = iframe.contentWindow!.history.replaceState
 
-        iframeWindow.addEventListener("unload", handleUnload, { once: true })
+        if (!iframe.contentWindow!.location.search.includes("iframe=1")) {
+            pushState(null, "", getModifiedUrl(iframe.contentWindow!.location.href))
+        }
 
-        console.log("iframe loaded with url: ", iframeWindow.location.href)
+        goto(getOriginalUrl(iframe.contentWindow!.location.href), { replaceState: true })
 
-        iframeWindow.history.pushState = (
+        iframe.contentWindow!.history.pushState = (
             data: Parameters<typeof pushState>[0],
             unused: Parameters<typeof pushState>[1],
             url: Parameters<typeof pushState>[2] = undefined
         ) => {
-            console.log("pushState called with url: ", url)
-
             if (url) {
                 goto(getOriginalUrl(url), { replaceState: true })
-                pushState.call(iframeWindow.history, data, unused, getModifiedUrl(url))
+                pushState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))
             } else {
-                pushState.call(iframeWindow.history, data, unused)
+                pushState.call(iframe.contentWindow!.history, data, unused)
             }
         }
-        iframeWindow.history.replaceState = (
+        iframe.contentWindow!.history.replaceState = (
             data: Parameters<typeof replaceState>[0],
             unused: Parameters<typeof replaceState>[1],
             url: Parameters<typeof replaceState>[2] = undefined
         ) => {
-            console.log("replaceState called with url: ", url)
-
             if (url) {
                 goto(getOriginalUrl(url), { replaceState: true })
-                replaceState.call(iframeWindow.history, data, unused, getModifiedUrl(url))
+                replaceState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))
             } else {
-                replaceState.call(iframeWindow.history, data, unused)
+                replaceState.call(iframe.contentWindow!.history, data, unused)
             }
         }
-    }
-
-    const handleUnload = (e: Event) => {
-        console.log("iframe unloaded with url: ", (e.target as Window)?.location.href)
-
-        setTimeout(() => {
-            handleLoad(e)
-        }, 0)
     }
 
     let iframe: HTMLIFrameElement | undefined
 
     onMount(() => {
-        iframe!.addEventListener("load", handleFullyLoad)
-        iframe!.contentWindow!.addEventListener("unload", handleUnload, { once: true })
+        iframe!.addEventListener("load", handleLoad)
         iframe!.src = $page.url.pathname + "?iframe=1"
 
         const unsubscribe = currentApp.subscribe((value) => {
@@ -109,8 +93,7 @@
 
         return () => {
             unsubscribe()
-            iframe!.removeEventListener("load", handleFullyLoad)
-            iframe!.contentWindow!.removeEventListener("unload", handleUnload)
+            iframe!.removeEventListener("load", handleLoad)
         }
     })
 </script>
