@@ -2,3 +2,26 @@
 
 FROM docker.io/openresty/openresty:{{ NGINX_VER }}
 RUN adduser -D -H -S www-data
+RUN apk add logrotate
+COPY <<EOT /etc/logrotate.d/nginx
+/var/log/nginx/*.log {
+  daily
+  compress
+  delaycompress
+  rotate 30
+  missingok
+  nocreate
+  sharedscripts
+  postrotate
+    test ! -f /var/run/nginx.pid || kill -USR1 `cat /var/run/nginx.pid`
+  endscript
+}
+EOT
+COPY <<EOT /etc/periodic/daily/logrotate
+#!/bin/sh
+if [ -f /etc/conf.d/logrotate ]; then
+	. /etc/conf.d/logrotate
+fi
+logrotate /etc/logrotate.d/nginx
+EOT
+RUN chmod +x /etc/periodic/daily/logrotate

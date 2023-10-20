@@ -24,7 +24,9 @@ services:
 
     user: root
     entrypoint: [ ]
-    command: openresty -c /etc/nginx/nginx.conf -e /var/log/nginx/error.log -g 'daemon off;' -p /etc/nginx
+    command: >-
+      sh -c 'crond -b;
+      openresty -c /etc/nginx/nginx.conf -e /var/log/nginx/error.log -g "daemon off;" -p /etc/nginx'
 
     networks:
       static:
