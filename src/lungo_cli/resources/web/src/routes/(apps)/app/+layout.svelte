@@ -2,21 +2,21 @@
     import { onMount } from "svelte"
     import { goto } from "$app/navigation"
     import { page } from "$app/stores"
-    import { useStore } from "$lib/utils"
+    import { getUrlParts, useStore } from "$lib/utils"
 
     const { currentApp } = useStore()
 
     const getOriginalUrl = (url: string | URL) => {
         if (typeof url === "string") {
-            const [path, query] = url.split("?", 2)
+            const { path, query, hash } = getUrlParts(url)
             const params = new URLSearchParams(query)
             params.delete("iframe", "1")
 
             if (params.size > 0) {
-                return `${path}?${params.toString()}`
+                return `${path}?${params.toString()}${hash}`
             }
 
-            return path
+            return `${path}${hash}`
         } else {
             const newUrl = new URL(url.href)
             newUrl.searchParams.delete("iframe", "1")
@@ -27,11 +27,11 @@
 
     const getModifiedUrl = (url: string | URL) => {
         if (typeof url === "string") {
-            const [path, query] = url.split("?", 2)
+            const { path, query, hash } = getUrlParts(url)
             const params = new URLSearchParams(query)
             params.set("iframe", "1")
 
-            return `${path}?${params.toString()}`
+            return `${path}?${params.toString()}${hash}`
         } else {
             const newUrl = new URL(url.href)
             newUrl.searchParams.set("iframe", "1")

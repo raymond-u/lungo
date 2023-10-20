@@ -40,3 +40,23 @@ export function getTruncateTitle(title: string, length: number): string {
         return title
     }
 }
+
+export function getUrlParts(url: string): { path: string; query: string; hash: string } {
+    const [path, other] = url.split("?", 2)
+
+    if (other) {
+        const [query, hash] = other.split("#", 2)
+
+        return {
+            path,
+            query: `?${query}`,
+            hash: hash ? `#${hash}` : "",
+        }
+    }
+
+    return {
+        path,
+        query: "",
+        hash: "",
+    }
+}
