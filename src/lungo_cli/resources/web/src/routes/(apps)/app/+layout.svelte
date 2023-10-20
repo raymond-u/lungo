@@ -40,18 +40,21 @@
         }
     }
 
-    const handleLoad = (e: Event) => {
+    const handleFullyLoad = (e: Event) => {
         const iframe = e.target as HTMLIFrameElement
-        const pushState = iframe.contentWindow!.history.pushState
-        const replaceState = iframe.contentWindow!.history.replaceState
-
-        iframe.contentWindow!.addEventListener("unload", handleUnload)
-
-        console.log("iframe loaded with url: ", iframe.contentWindow!.location.href)
-
         goto(getOriginalUrl(iframe.contentWindow!.location.href), { replaceState: true })
+    }
 
-        iframe.contentWindow!.history.pushState = (
+    const handleLoad = (e: Event) => {
+        const iframeWindow = e.target as Window
+        const pushState = iframeWindow.history.pushState
+        const replaceState = iframeWindow.history.replaceState
+
+        iframeWindow.addEventListener("unload", handleUnload, { once: true })
+
+        console.log("iframe loaded with url: ", iframeWindow.location.href)
+
+        iframeWindow.history.pushState = (
             data: Parameters<typeof pushState>[0],
             unused: Parameters<typeof pushState>[1],
             url: Parameters<typeof pushState>[2] = undefined
@@ -60,12 +63,12 @@
 
             if (url) {
                 goto(getOriginalUrl(url), { replaceState: true })
-                pushState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))
+                pushState.call(iframeWindow.history, data, unused, getModifiedUrl(url))
             } else {
-                pushState.call(iframe.contentWindow!.history, data, unused)
+                pushState.call(iframeWindow.history, data, unused)
             }
         }
-        iframe.contentWindow!.history.replaceState = (
+        iframeWindow.history.replaceState = (
             data: Parameters<typeof replaceState>[0],
             unused: Parameters<typeof replaceState>[1],
             url: Parameters<typeof replaceState>[2] = undefined
@@ -74,60 +77,27 @@
 
             if (url) {
                 goto(getOriginalUrl(url), { replaceState: true })
-                replaceState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))
+                replaceState.call(iframeWindow.history, data, unused, getModifiedUrl(url))
             } else {
-                replaceState.call(iframe.contentWindow!.history, data, unused)
+                replaceState.call(iframeWindow.history, data, unused)
             }
         }
     }
 
     const handleUnload = (e: Event) => {
-        const iframe = e.target as HTMLIFrameElement
-        console.log("iframe unloaded with url: ", iframe.contentWindow?.location.href)
+        console.log("iframe unloaded with url: ", (e.target as Window)?.location.href)
+
         setTimeout(() => {
-            console.log("timeout 0 iframe unloaded with url: ", iframe.contentWindow?.location.href)
+            handleLoad(e)
         }, 0)
     }
 
     let iframe: HTMLIFrameElement | undefined
 
     onMount(() => {
-        iframe!.addEventListener("load", handleLoad)
-
-        console.log(
-            "before assign a src",
-            iframe!.contentWindow?.location.href,
-            iframe!.contentWindow === undefined || iframe!.contentWindow === null
-        )
-
-        try {
-            iframe!.contentWindow!.addEventListener("unload", handleUnload)
-        } catch (e) {
-            console.log("error", e)
-        }
-
+        iframe!.addEventListener("load", handleFullyLoad)
+        iframe!.contentWindow!.addEventListener("unload", handleUnload, { once: true })
         iframe!.src = $page.url.pathname + "?iframe=1"
-
-        console.log(
-            "after assign a src",
-            iframe!.contentWindow?.location.href,
-            iframe!.contentWindow === undefined || iframe!.contentWindow === null
-        )
-
-        try {
-            iframe!.contentWindow!.addEventListener("unload", handleUnload)
-        } catch (e) {
-            console.log("error", e)
-        }
-
-        setTimeout(() => {
-            console.log(
-                "timeout 0 iframe with url: ",
-                iframe!.contentWindow?.location.href,
-                iframe!.contentWindow === undefined || iframe!.contentWindow === null
-            )
-            iframe!.contentWindow!.addEventListener("unload", handleUnload)
-        }, 0)
 
         const unsubscribe = currentApp.subscribe((value) => {
             if (value) {
@@ -139,7 +109,8 @@
 
         return () => {
             unsubscribe()
-            iframe!.removeEventListener("load", handleLoad)
+            iframe!.removeEventListener("load", handleFullyLoad)
+            iframe!.contentWindow!.removeEventListener("unload", handleUnload)
         }
     })
 </script>
