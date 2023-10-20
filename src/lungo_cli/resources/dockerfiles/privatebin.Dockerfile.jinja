@@ -1,0 +1,5 @@
+{% set PRIVATEBIN_VER = '1.6.0' %}
+
+FROM docker.io/privatebin/fs:{{ PRIVATEBIN_VER }}
+COPY config/privatebin/conf.php /srv/cfg/conf.php
+RUN chown nobody:www-data /srv/cfg/conf.php
