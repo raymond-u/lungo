@@ -14,6 +14,17 @@ class EApp(str, Enum):
     RSTUDIO = "rstudio"
 
 
+class EService(str, Enum):
+    NGINX = "nginx"
+    KETO = "keto"
+    KRATOS = "kratos"
+    OATHKEEPER = "oathkeeper"
+    NODE = "node"
+    FILEBROWSER = "filebrowser"
+    PRIVATEBIN = "privatebin"
+    RSTUDIO = "rstudio"
+
+
 class ERole(str, Enum):
     GUEST = "guest"
     USER = "user"

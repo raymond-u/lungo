@@ -9,6 +9,7 @@ from .constants import APP_NAME_CAPITALIZED, DOCKER_URL, PODMAN_COMPOSE_URL, POD
 from .file import FileUtils
 from .storage import Storage
 from ..helpers.common import format_command, format_program, program_exists
+from ..models.base import EService
 
 docker = format_program("Docker")
 podman = format_program("Podman")
@@ -16,16 +17,6 @@ podman_compose = format_program("podman-compose")
 docker_link = f"[link={DOCKER_URL}]{docker}[/link]"
 podman_link = f"[link={PODMAN_URL}]{podman}[/link]"
 podman_compose_link = f"[link={PODMAN_COMPOSE_URL}]{podman_compose}[/link]"
-
-
-class EContainerService(str, Enum):
-    NGINX = "nginx"
-    KETO = "keto"
-    KRATOS = "kratos"
-    OATHKEEPER = "oathkeeper"
-    NODE = "node"
-    FILEBROWSER = "filebrowser"
-    RSTUDIO = "rstudio"
 
 
 class EContainerTool(Enum):
@@ -95,7 +86,7 @@ class Container:
     def build(
         self,
         working_dir: str | PathLike[str] | None = None,
-        service: EContainerService | None = None,
+        service: EService | None = None,
         force_build: bool = False,
     ) -> None:
         match self.choose_tool():
