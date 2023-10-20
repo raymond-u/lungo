@@ -79,11 +79,36 @@
         }
     }
 
+    const handleUnload = (e: Event) => {
+        const iframe = e.target as HTMLIFrameElement
+        console.log("iframe unloaded with url: ", iframe.contentWindow?.location.href)
+        setTimeout(() => {
+            console.log("timeout 0 iframe unloaded with url: ", iframe.contentWindow?.location.href)
+        }, 0)
+    }
+
     let iframe: HTMLIFrameElement | undefined
 
     onMount(() => {
         iframe!.addEventListener("load", handleLoad)
+        iframe!.addEventListener("unload", handleUnload)
+        iframe!.addEventListener("readystatechange", () => {
+            console.log(
+                "iframe readystatechange with url: ",
+                iframe!.contentWindow?.location.href,
+                iframe!.contentWindow
+            )
+        })
+
         iframe!.src = $page.url.pathname + "?iframe=1"
+
+        setTimeout(() => {
+            console.log("timeout 0 iframe with url: ", iframe!.contentWindow?.location.href, iframe!.contentWindow)
+        }, 0)
+
+        setTimeout(() => {
+            console.log("timeout 1 iframe with url: ", iframe!.contentWindow?.location.href, iframe!.contentWindow)
+        }, 1)
 
         const unsubscribe = currentApp.subscribe((value) => {
             if (value) {
@@ -96,6 +121,7 @@
         return () => {
             unsubscribe()
             iframe!.removeEventListener("load", handleLoad)
+            iframe!.removeEventListener("unload", handleUnload)
         }
     })
 </script>
