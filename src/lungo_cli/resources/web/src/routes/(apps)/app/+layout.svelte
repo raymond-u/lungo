@@ -42,11 +42,11 @@
 
     const handleLoad = (e: Event) => {
         const iframe = e.target as HTMLIFrameElement
-        const pushState = iframe.contentWindow!.history.pushState
-        const replaceState = iframe.contentWindow!.history.replaceState
+        const pushState = iframe.contentWindow!.history.pushState.bind(iframe.contentWindow!.history)
+        const replaceState = iframe.contentWindow!.history.replaceState.bind(iframe.contentWindow!.history)
 
         if (!iframe.contentWindow!.location.search.includes("iframe=1")) {
-            iframe.contentWindow!.history.replaceState(null, "", getModifiedUrl(iframe.contentWindow!.location.href))
+            replaceState(null, "", getModifiedUrl(iframe.contentWindow!.location.href))
         }
 
         goto(getOriginalUrl(iframe.contentWindow!.location.href), { replaceState: true })
@@ -58,9 +58,9 @@
         ) => {
             if (url) {
                 goto(getOriginalUrl(url), { replaceState: true })
-                pushState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))
+                pushState(data, unused, getModifiedUrl(url))
             } else {
-                pushState.call(iframe.contentWindow!.history, data, unused)
+                pushState(data, unused)
             }
         }
         iframe.contentWindow!.history.replaceState = (
@@ -70,9 +70,9 @@
         ) => {
             if (url) {
                 goto(getOriginalUrl(url), { replaceState: true })
-                replaceState.call(iframe.contentWindow!.history, data, unused, getModifiedUrl(url))
+                replaceState(data, unused, getModifiedUrl(url))
             } else {
-                replaceState.call(iframe.contentWindow!.history, data, unused)
+                replaceState(data, unused)
             }
         }
     }
@@ -81,7 +81,7 @@
 
     onMount(() => {
         iframe!.addEventListener("load", handleLoad)
-        iframe!.src = $page.url.pathname + "?iframe=1"
+        iframe!.src = getModifiedUrl($page.url)
 
         const unsubscribe = currentApp.subscribe((value) => {
             if (value) {
