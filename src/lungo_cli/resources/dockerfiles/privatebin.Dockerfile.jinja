@@ -2,4 +2,4 @@
 
 FROM docker.io/privatebin/fs:{{ PRIVATEBIN_VER }}
 USER root
-RUN sysctl -w net.ipv4.ip_unprivileged_port_start=80
+RUN setcap 'cap_net_bind_service=+ep' /usr/sbin/nginx
