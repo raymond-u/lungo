@@ -1,6 +1,6 @@
 from ipaddress import IPv4Network
 
-from pydantic import DirectoryPath, EmailStr, FilePath, NewPath
+from pydantic import DirectoryPath, EmailStr, field_validator, FilePath, NewPath
 
 from .base import AllowedApps, Base, EApp, FileName, Port
 
@@ -16,6 +16,15 @@ class SharedDir(Base):
     name: FileName
     source: DirectoryPath | FilePath
     read_only: bool = False
+
+    # noinspection PyNestedDecorators
+    @field_validator("name")
+    @classmethod
+    def name_must_not_be_home(cls, v: str) -> str:
+        if v == "home":
+            raise ValueError("must not be 'home'")
+
+        return v
 
 
 class Directories(Base):

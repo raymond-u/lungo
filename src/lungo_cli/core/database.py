@@ -27,16 +27,6 @@ class AccountManager:
         self.container = container
 
     def verify(self, config: Config, users: Users) -> None:
-        if len(users.accounts) == 0:
-            self.console.print_error("At least one account must be defined.")
-            raise Exit(code=1)
-
-        usernames = list(map(lambda x: x.username, users.accounts))
-
-        if len(usernames) != len(set(usernames)):
-            self.console.print_error("Username of each account must be unique.")
-            raise Exit(code=1)
-
         for account in users.accounts:
             if account.username == "anonymous":
                 self.console.print_warning(

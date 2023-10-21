@@ -34,7 +34,7 @@ class ERole(str, Enum):
 
 
 AllowedApps = Literal["all"] | list[EApp]
-FileName = Annotated[str, Field(pattern=r"^(?!home$)[a-zA-Z0-9._-]+$")]
+FileName = Annotated[str, Field(pattern=r"^[a-zA-Z0-9._-]+$")]
 NameStr = Annotated[str, Field(max_length=32)]
 Port = Annotated[int, Field(ge=1, le=65535)]
 Username = Annotated[str, Field(pattern=r"^[a-z_](?:[a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\$)$")]
