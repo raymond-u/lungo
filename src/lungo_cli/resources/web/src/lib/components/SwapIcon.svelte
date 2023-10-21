@@ -7,8 +7,8 @@
         FolderSolidIcon,
         LightModeIcon,
         MenuIcon,
-        PastebinOutlineIcon,
-        PastebinSolidIcon,
+        NoteOutlineIcon,
+        NoteSolidIcon,
         ProxyOutlineIcon,
         ProxySolidIcon,
         RStudioOutlineIcon,
@@ -38,8 +38,8 @@
             active: CloseIcon,
         },
         [EIcon.Pastebin]: {
-            normal: PastebinOutlineIcon,
-            active: PastebinSolidIcon,
+            normal: NoteOutlineIcon,
+            active: NoteSolidIcon,
         },
         [EIcon.Proxy]: {
             normal: ProxyOutlineIcon,
