@@ -26,9 +26,7 @@ export async function load({
 
     // If the user is already logged in, return
     if (response.status == 302) {
-        return {
-            title: "R Studio",
-        }
+        return
     }
 
     const $ = loadHtmlString(await response.text())
@@ -74,9 +72,5 @@ export async function load({
         if (response4.headers.getSetCookie().length > 0) {
             break
         }
-    }
-
-    return {
-        title: "R Studio",
     }
 }
