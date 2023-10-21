@@ -4,7 +4,7 @@
     import { SwapIcon } from "$lib/components"
     import { getTruncateTitle, useStore } from "$lib/utils"
 
-    const { currentApp, syncedScrollTops } = useStore()
+    const { currentApp, darkTheme, syncedScrollTops } = useStore()
 </script>
 
 <nav class="scrollbar-none w-16 overflow-y-auto py-10" use:syncScroll={{ id: "nav", stores: syncedScrollTops }}>
@@ -12,8 +12,8 @@
         {#each $page.data.apps as { name, href, icon } (name)}
             {@const active = $currentApp?.name === name}
             <li class="mt-3 h-8 w-14 transition" class:-translate-y-3={active}>
-                <a class="rounded-full py-1" class:active {href}>
-                    <SwapIcon {active} {icon} />
+                <a class="rounded-full py-1" class:!active={active} {href}>
+                    <SwapIcon class={active && $darkTheme === false ? "fill-neutral-content" : ""} {active} {icon} />
                 </a>
             </li>
             <li

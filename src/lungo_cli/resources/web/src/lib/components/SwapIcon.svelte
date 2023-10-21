@@ -1,3 +1,4 @@
+<!--suppress ReservedWordAsName -->
 <script lang="ts">
     import {
         CloseIcon,
@@ -18,6 +19,9 @@
         VisibilityOnIcon,
     } from "$lib/icons"
     import { EIcon } from "$lib/types"
+
+    let classString = ""
+    export { classString as class }
 
     export let icon: EIcon
     export let active = false
@@ -61,6 +65,6 @@
 </script>
 
 <span class="swap" class:swap-active={active} class:swap-flip={flip} class:swap-rotate={rotate}>
-    <svelte:component this={icons[icon].normal} class="swap-off" />
-    <svelte:component this={icons[icon].active} class="swap-on" />
+    <svelte:component this={icons[icon].normal} class="swap-off {classString}" />
+    <svelte:component this={icons[icon].active} class="swap-on {classString}" />
 </span>

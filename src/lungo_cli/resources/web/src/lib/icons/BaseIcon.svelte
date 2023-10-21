@@ -7,7 +7,7 @@
 <svg
     class="fill-base-content {classString}"
     height="100%"
-    style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+    style="fill-rule:evenodd; clip-rule:evenodd; stroke-linejoin:round; stroke-miterlimit:2"
     viewBox="0 0 24 24"
     width="100%"
     xml:space="preserve"

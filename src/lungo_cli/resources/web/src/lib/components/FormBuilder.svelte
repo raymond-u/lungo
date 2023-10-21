@@ -134,7 +134,7 @@
     <div class="my-3"></div>
     {#each actionNodes as actionNode (getNodeId(actionNode))}
         <button
-            class="btn btn-primary"
+            class="btn btn-primary text-white"
             name={actionNode.attributes.name}
             type="submit"
             value={actionNode.attributes.value ?? ""}
@@ -145,7 +145,7 @@
     {/each}
     {#each otherGroups as group (group)}
         <button
-            class="btn btn-secondary"
+            class="btn btn-secondary text-white"
             type="button"
             {disabled}
             on:click={() => {

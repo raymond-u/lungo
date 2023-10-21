@@ -53,11 +53,15 @@
                         <li class="mx-0 h-14 w-full rounded-full">
                             <a
                                 class="flex h-full items-center justify-between rounded-full px-5 py-1"
-                                class:active
+                                class:!active={active}
                                 {href}
                             >
                                 <span class="h-6 w-6">
-                                    <SwapIcon {active} {icon} />
+                                    <SwapIcon
+                                        class={active && $darkTheme === false ? "fill-neutral-content" : ""}
+                                        {active}
+                                        {icon}
+                                    />
                                 </span>
                                 <span class="p-0 text-xs font-semibold">{name}</span>
                             </a>
