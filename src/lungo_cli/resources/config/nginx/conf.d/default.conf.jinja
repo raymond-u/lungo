@@ -63,6 +63,8 @@ server {
         deny all;
     }
 
+    add_header Cross-Origin-Opener-Policy same-origin always;
+    add_header Cross-Origin-Resource-Policy same-origin always;
     add_header X-Frame-Options SAMEORIGIN always;
 
     include h5bp/security/referrer-policy.conf;
