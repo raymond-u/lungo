@@ -12,7 +12,7 @@ from .file import FileUtils
 from .renderer import Renderer
 from .storage import Storage
 from ..helpers.common import format_path
-from ..helpers.crypto import generate_random_string, generate_self_signed_cert
+from ..helpers.crypto import generate_random_hex_string, generate_self_signed_cert
 from ..models.config import Config
 from ..models.users import Users
 
@@ -88,12 +88,20 @@ class AppManager:
                 self.renderer.render(
                     self.storage.template_kratos_secrets_rel,
                     self.storage.kratos_secrets_file,
-                    secret_cookie=generate_random_string(),
+                    secret_cookie=generate_random_hex_string(),
                 )
+
+            if not self.storage.jupyterhub_cookie_secret_file.is_file():
+                self.console.print_info("Generating JupyterHub cookie secret...")
+                self.file_utils.write_text(self.storage.jupyterhub_cookie_secret_file, generate_random_hex_string())
+
+            if not self.storage.jupyterhub_password_file.is_file():
+                self.console.print_info("Generating JupyterHub password...")
+                self.file_utils.write_text(self.storage.jupyterhub_password_file, generate_random_hex_string())
 
             if not self.storage.rstudio_password_file.is_file():
                 self.console.print_info("Generating RStudio password...")
-                self.file_utils.write_text(self.storage.rstudio_password_file, generate_random_string())
+                self.file_utils.write_text(self.storage.rstudio_password_file, generate_random_hex_string())
 
         with self.console.status("Updating database..."):
             config_hash = self.file_utils.hash_sha256(self.storage.config_file) + self.file_utils.hash_sha256(

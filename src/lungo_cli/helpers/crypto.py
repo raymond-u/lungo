@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from secrets import token_urlsafe
+from secrets import token_hex
 
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
@@ -39,6 +39,6 @@ def generate_self_signed_cert() -> tuple[bytes, bytes]:
     return cert_pem, key_pem
 
 
-def generate_random_string() -> str:
-    """Generate a random string."""
-    return token_urlsafe(64)
+def generate_random_hex_string() -> str:
+    """Generate a random hex string."""
+    return token_hex(32)

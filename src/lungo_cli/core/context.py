@@ -79,8 +79,9 @@ class ContextManager:
             oathkeeper=hosts[103],
             node=hosts[104],
             filebrowser=hosts[105],
-            privatebin=hosts[106],
-            rstudio=hosts[107],
+            jupyterhub=hosts[106],
+            privatebin=hosts[107],
+            rstudio=hosts[108],
         )
 
     @property
@@ -90,6 +91,12 @@ class ContextManager:
     @dev.setter
     def dev(self, value: bool):
         self._dev = value
+
+    @property
+    def jupyterhub_password(self) -> str:
+        return self.config.modules.jupyterhub.password or self.file_utils.read_text(
+            self.storage.jupyterhub_password_file
+        )
 
     @property
     def rstudio_password(self) -> str:
@@ -104,5 +111,6 @@ class ContextManager:
             base_url=self.base_url,
             ip_addresses=self.ip_addresses,
             dev=self.dev,
+            jupyterhub_password=self.jupyterhub_password,
             rstudio_password=self.rstudio_password,
         )

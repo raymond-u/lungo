@@ -2,7 +2,7 @@ from ipaddress import IPv4Network
 
 from pydantic import DirectoryPath, EmailStr, FilePath, NewPath
 
-from .base import AllowedApps, Base, EApp, Port
+from .base import AllowedApps, Base, EApp, FileName, Port
 
 
 class Branding(Base):
@@ -13,7 +13,7 @@ class Branding(Base):
 
 
 class SharedDir(Base):
-    name: str
+    name: FileName
     source: DirectoryPath | FilePath
     read_only: bool = False
 
@@ -44,6 +44,11 @@ class FileBrowserSettings(Base):
     enabled: bool = True
 
 
+class JupyterHubSettings(Base):
+    enabled: bool = True
+    password: str | None = None
+
+
 class PrivateBin(Base):
     enabled: bool = True
 
@@ -55,6 +60,7 @@ class RStudioSettings(Base):
 
 class Modules(Base):
     filebrowser: FileBrowserSettings = FileBrowserSettings()
+    jupyterhub: JupyterHubSettings = JupyterHubSettings()
     privatebin: PrivateBin = PrivateBin()
     rstudio: RStudioSettings = RStudioSettings()
 
@@ -73,7 +79,7 @@ class Privilege(Base):
 class Privileges(Base):
     unregistered: Privilege = Privilege(allowed_apps=[EApp.PRIVATEBIN])
     guest: Privilege = Privilege(allowed_apps=[EApp.FILEBROWSER])
-    user: Privilege = Privilege(allowed_apps=[EApp.RSTUDIO])
+    user: Privilege = Privilege(allowed_apps=[EApp.JUPYTERHUB, EApp.RSTUDIO])
     admin: Privilege = Privilege(allowed_apps="all")
 
 

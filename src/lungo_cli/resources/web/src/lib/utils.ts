@@ -35,7 +35,10 @@ export function getTitleFromSlug(slug: string): string {
 
 export function getTruncateTitle(title: string, length: number): string {
     if (title.length > length) {
-        return title.split(" ")[0]
+        const capitalSplit = title[0] + title.slice(1).split(/[A-Z]/)[0]
+        const spaceSplit = title.split(" ")[0]
+
+        return capitalSplit.length < spaceSplit.length ? capitalSplit : spaceSplit
     } else {
         return title
     }

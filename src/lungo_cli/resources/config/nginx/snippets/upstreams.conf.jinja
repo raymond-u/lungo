@@ -14,6 +14,12 @@ upstream filebrowser {
 }
 {% endif %}
 
+{% if modules.jupyterhub.enabled %}
+upstream jupyterhub {
+    server {{ ip_addresses.jupyterhub }}:80;
+}
+{% endif %}
+
 {% if modules.privatebin.enabled %}
 upstream privatebin {
     server {{ ip_addresses.privatebin }}:80;

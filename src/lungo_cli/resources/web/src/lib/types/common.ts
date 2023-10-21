@@ -9,6 +9,7 @@ export type App = {
 
 export enum EIcon {
     Folder,
+    Jupyter,
     Menu,
     Note,
     Proxy,

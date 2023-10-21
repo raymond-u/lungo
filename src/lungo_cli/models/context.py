@@ -20,6 +20,7 @@ class IpAddresses(Base):
     oathkeeper: IPv4Address
     node: IPv4Address
     filebrowser: IPv4Address
+    jupyterhub: IPv4Address
     privatebin: IPv4Address
     rstudio: IPv4Address
 
@@ -31,4 +32,5 @@ class Context(Base):
     base_url: AnyHttpUrl
     ip_addresses: IpAddresses
     dev: bool
+    jupyterhub_password: str
     rstudio_password: str

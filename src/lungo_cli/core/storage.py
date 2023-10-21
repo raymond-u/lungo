@@ -139,6 +139,14 @@ class Storage:
         return self.generated_dir / "kratos" / "secrets.yaml"
 
     @property
+    def jupyterhub_cookie_secret_file(self) -> Path:
+        return self.generated_dir / "jupyterhub" / "cookie_secret"
+
+    @property
+    def jupyterhub_password_file(self) -> Path:
+        return self.generated_dir / "jupyterhub" / "password"
+
+    @property
     def rstudio_password_file(self) -> Path:
         return self.generated_dir / "rstudio" / "password"
 

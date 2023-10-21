@@ -1,7 +1,6 @@
-- id: app
-  match:
-    url: '{{ base_url }}app/<(?!filebrowser/(?:api/public|share|static))[^/]*><.*>'
-    methods:
+#file: noinspection YAMLDuplicatedKeys
+#@formatter:off
+{% set ALL %}
       - GET
       - POST
       - DELETE
@@ -9,6 +8,8 @@
       - PUT
       - HEAD
       - OPTIONS
+{% endset %}
+{% set AUTH -%}
   authenticators:
     - handler: cookie_session
     - handler: anonymous
@@ -18,18 +19,8 @@
     - handler: header
   errors:
     - handler: json
-
-- id: public
-  match:
-    url: '{{ base_url }}app/filebrowser/<(?:api/public|share|static)>/<.*>'
-    methods:
-      - GET
-      - POST
-      - DELETE
-      - PATCH
-      - PUT
-      - HEAD
-      - OPTIONS
+{% endset %}
+{% set PASS -%}
   authenticators:
     - handler: noop
   authorizer:
@@ -38,23 +29,47 @@
     - handler: noop
   errors:
     - handler: json
+{% endset %}
+
+- id: apps
+  match:
+    url: '{{ base_url }}app/<(?!filebrowser|privatebin)[^/]*><.*>'
+    methods: {{ ALL }}
+  {{ AUTH }}
+
+- id: filebrowser-private
+  match:
+    url: '{{ base_url }}app/<filebrowser><(?!/(?:api/public|share|static)/).*>'
+    methods: {{ ALL }}
+  {{ AUTH }}
+
+- id: filebrowser-public
+  match:
+    url: '{{ base_url }}app/filebrowser<(?=/(?:api/public|share|static)/).*>'
+    methods: {{ ALL }}
+  {{ PASS }}
+
+- id: privatebin-private
+  match:
+    url: '{{ base_url }}app/<privatebin><.*>'
+    methods:
+      - POST
+      - DELETE
+      - PATCH
+      - PUT
+      - HEAD
+      - OPTIONS
+  {{ AUTH }}
+
+- id: privatebin-public
+  match:
+    url: '{{ base_url }}app/privatebin<.*>'
+    methods:
+      - GET
+  {{ PASS }}
 
 - id: catch-all
   match:
     url: '{{ base_url }}<(?!app/).*>'
-    methods:
-      - GET
-      - POST
-      - DELETE
-      - PATCH
-      - PUT
-      - HEAD
-      - OPTIONS
-  authenticators:
-    - handler: noop
-  authorizer:
-    handler: allow
-  mutators:
-    - handler: noop
-  errors:
-    - handler: json
+    methods: {{ ALL }}
+  {{ PASS }}

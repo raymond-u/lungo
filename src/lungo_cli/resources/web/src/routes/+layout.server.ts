@@ -33,8 +33,11 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
     if (allowedApps.includes(EApp.PrivateBin)) {
         apps.push({ name: "Pastebin", href: `/app/${EApp.PrivateBin}`, icon: EIcon.Note })
     }
+    if (allowedApps.includes(EApp.JupyterHub)) {
+        apps.push({ name: "JupyterHub", href: `/app/${EApp.JupyterHub}`, icon: EIcon.Jupyter })
+    }
     if (allowedApps.includes(EApp.RStudio)) {
-        apps.push({ name: "R Studio", href: `/app/${EApp.RStudio}`, icon: EIcon.RStudio })
+        apps.push({ name: "RStudio", href: `/app/${EApp.RStudio}`, icon: EIcon.RStudio })
     }
     // if (allowedApps.includes(EApp.Terminal)) {
     //     apps.push({ name: "Terminal", href: "/app/terminal", icon: EIcon.Terminal })
@@ -86,7 +89,7 @@ export async function load({ cookies, fetch, url }: { cookies: Cookies; fetch: t
     // return {
     //     apps: [
     //         { name: "File Browser", href: `/app/${EApp.FileBrowser}`, icon: EIcon.Folder },
-    //         { name: "R Studio", href: `/app/${EApp.RStudio}`, icon: EIcon.RStudio },
+    //         { name: "RStudio", href: `/app/${EApp.RStudio}`, icon: EIcon.RStudio },
     //     ],
     //     logoutToken: "abc123",
     //     title,

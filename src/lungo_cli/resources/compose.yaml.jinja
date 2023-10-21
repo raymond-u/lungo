@@ -234,9 +234,9 @@ services:
       - '{{ app_dirs.managed_dir }}/filebrowser:/var/lib/filebrowser:rw'
       {% for account in accounts %}
         {% if account.extra.user_dir %}
-      - '{{ account.extra.user_dir }}:/mnt/__home__/{{ account.username }}:rw'
+      - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
         {% else %}
-      - '{{ directories.users_dir }}/{{ account.username }}:/mnt/__home__/{{ account.username }}:rw'
+      - '{{ directories.users_dir }}/{{ account.username }}:/mnt/home/{{ account.username }}:rw'
         {% endif %}
       {% endfor %}
       {% for shared_dir in directories.shared_dirs %}
@@ -244,6 +244,48 @@ services:
       {% endfor %}
 
     restart: 'no'
+  {% endif %}
+
+  {% if modules.jupyterhub.enabled %}
+    jupyterhub:
+      container_name: jupyterhub
+      hostname: jupyterhub
+
+      build:
+        context: .
+        dockerfile: ./dockerfiles/jupyterhub.Dockerfile
+
+      user: root
+      entrypoint: [ ]
+      command: >-
+        sh -c ''
+
+      networks:
+        static:
+          ipv4_address: {{ ip_addresses.jupyterhub }}
+      expose:
+        - 80
+
+      volumes:
+        - './config/jupyterhub:/etc/jupyterhub:ro'
+        - '{{ app_dirs.managed_dir }}/jupyterhub:/var/lib/jupyterhub:rw'
+        {% for account in accounts %}
+          {% if account.extra.user_dir %}
+        - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
+          {% else %}
+        - '{{ directories.users_dir }}/{{ account.username }}:/mnt/home/{{ account.username }}:rw'
+          {% endif %}
+        {% endfor %}
+        {% for shared_dir in directories.shared_dirs %}
+        - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
+        {% endfor %}
+
+      secrets:
+        - source: JUPYTERHUB_COOKIE_SECRET
+          target: /etc/jupyterhub/cookie_secret
+          mode: 0400
+
+      restart: 'no'
   {% endif %}
 
   {% if modules.privatebin.enabled %}
@@ -301,9 +343,9 @@ services:
       - '{{ app_dirs.managed_dir }}/rstudio:/var/lib/rstudio-server:rw'
       {% for account in accounts %}
         {% if account.extra.user_dir %}
-      - '{{ account.extra.user_dir }}:/mnt/__home__/{{ account.username }}:rw'
+      - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
         {% else %}
-      - '{{ directories.users_dir }}/{{ account.username }}:/mnt/__home__/{{ account.username }}:rw'
+      - '{{ directories.users_dir }}/{{ account.username }}:/mnt/home/{{ account.username }}:rw'
         {% endif %}
       {% endfor %}
       {% for shared_dir in directories.shared_dirs %}
@@ -329,3 +371,5 @@ secrets:
       {% endif %}
   KRATOS_SECRETS:
     file: '{{ app_dirs.generated_dir }}/kratos/secrets.yaml'
+  JUPYTERHUB_COOKIE_SECRET:
+    file: '{{ app_dirs.generated_dir }}/jupyterhub/cookie_secret'

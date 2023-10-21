@@ -5,6 +5,7 @@
         DarkModeIcon,
         FolderOutlineIcon,
         FolderSolidIcon,
+        JupyterIcon,
         LightModeIcon,
         MenuIcon,
         NoteOutlineIcon,
@@ -32,6 +33,10 @@
         [EIcon.Folder]: {
             normal: FolderOutlineIcon,
             active: FolderSolidIcon,
+        },
+        [EIcon.Jupyter]: {
+            normal: JupyterIcon,
+            active: JupyterIcon,
         },
         [EIcon.Menu]: {
             normal: MenuIcon,
