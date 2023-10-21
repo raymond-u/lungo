@@ -10,7 +10,7 @@ export type App = {
 export enum EIcon {
     Folder,
     Menu,
-    Pastebin,
+    Note,
     Proxy,
     RStudio,
     Terminal,

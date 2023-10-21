@@ -37,7 +37,7 @@
             normal: MenuIcon,
             active: CloseIcon,
         },
-        [EIcon.Pastebin]: {
+        [EIcon.Note]: {
             normal: NoteOutlineIcon,
             active: NoteSolidIcon,
         },
