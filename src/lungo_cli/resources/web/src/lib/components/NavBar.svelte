@@ -19,7 +19,7 @@
             },
         })
 
-        await invalidateAll()
+        location.reload()
     }
     const handleSwitchTheme = () => {
         $darkTheme = !$darkTheme
