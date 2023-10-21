@@ -45,7 +45,11 @@ server {
     include h5bp/tls/policy_balanced.conf;
 
     include snippets/certificate.conf;
-    # include snippets/websocket.conf;
+
+    {% if dev %}
+    error_log /dev/stdout debug;
+    rewrite_log on;
+    {% endif %}
 
     location / {
         include snippets/proxy.conf;
