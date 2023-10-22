@@ -27,7 +27,7 @@ c.JupyterHub.cookie_secret_file = '/etc/jupyterhub/cookie_secret'
 # c.JupyterHub.data_files_path = '/home/docs/checkouts/readthedocs.org/user_builds/jupyterhub/checkouts/stable/share/jupyterhub'
 
 ## Include any kwargs to pass to the database connection
-# c.JupyterHub.db_kwargs = {'connect_args': {'mode': 'rwc'}}
+c.JupyterHub.db_kwargs = {'connect_args': {'mode': 'rwc'}}
 
 ## URL for the database
 c.JupyterHub.db_url = 'sqlite:///var/lib/jupyterhub/db.sqlite3'
@@ -39,7 +39,7 @@ c.JupyterHub.spawner_class = 'jupyterhub.spawner.LocalProcessSpawner'
 c.JupyterHub.trusted_downstream_ips = ['{{ ip_addresses.nginx }}']
 
 ## Upgrade the database automatically on start
-c.JupyterHub.upgrade_db = True
+# c.JupyterHub.upgrade_db = True
 
 # ------------------------------------------------------------------------------
 # Spawner(LoggingConfigurable) configuration
