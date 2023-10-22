@@ -33,6 +33,10 @@ server {
     listen [::]:80 default_server deferred;
     listen 80 default_server deferred;
 
+    if ($http_upgrade = websocket) {
+        return 301 wss://$host$request_uri;
+    }
+
     return 301 https://$host$request_uri;
 }
 
