@@ -250,44 +250,44 @@ services:
   {% endif %}
 
   {% if modules.jupyterhub.enabled %}
-    jupyterhub:
-      container_name: jupyterhub
-      hostname: jupyterhub
+  jupyterhub:
+    container_name: jupyterhub
+    hostname: jupyterhub
 
-      build:
-        context: .
-        dockerfile: ./dockerfiles/jupyterhub.Dockerfile
+    build:
+      context: .
+      dockerfile: ./dockerfiles/jupyterhub.Dockerfile
 
-      user: root
-      entrypoint: [ ]
-      command: sh -c 'umask 002; jupyterhub'
+    user: root
+    entrypoint: [ ]
+    command: sh -c 'umask 002; jupyterhub'
 
-      networks:
-        static:
-          ipv4_address: {{ ip_addresses.jupyterhub }}
-      expose:
-        - 80
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses.jupyterhub }}
+    expose:
+      - 80
 
-      volumes:
-        - './config/jupyterhub:/etc/jupyterhub:ro'
-        - '{{ app_dirs.managed_dir }}/jupyterhub:/var/lib/jupyterhub:rw'
-        {% for account in accounts %}
-          {% if account.extra.user_dir %}
-        - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
-          {% else %}
-        - '{{ directories.users_dir }}/{{ account.username }}:/mnt/home/{{ account.username }}:rw'
-          {% endif %}
-        {% endfor %}
-        {% for shared_dir in directories.shared_dirs %}
-        - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
-        {% endfor %}
+    volumes:
+      - './config/jupyterhub:/etc/jupyterhub:ro'
+      - '{{ app_dirs.managed_dir }}/jupyterhub:/var/lib/jupyterhub:rw'
+      {% for account in accounts %}
+        {% if account.extra.user_dir %}
+      - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
+        {% else %}
+      - '{{ directories.users_dir }}/{{ account.username }}:/mnt/home/{{ account.username }}:rw'
+        {% endif %}
+      {% endfor %}
+      {% for shared_dir in directories.shared_dirs %}
+      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
+      {% endfor %}
 
-      secrets:
-        - source: JUPYTERHUB_COOKIE_SECRET
-          target: /etc/jupyterhub/cookie_secret
-          mode: 0400
+    secrets:
+      - source: JUPYTERHUB_COOKIE_SECRET
+        target: /etc/jupyterhub/cookie_secret
+        mode: 0400
 
-      restart: 'no'
+    restart: 'no'
   {% endif %}
 
   {% if modules.privatebin.enabled %}
