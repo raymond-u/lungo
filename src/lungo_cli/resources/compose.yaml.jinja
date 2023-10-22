@@ -270,7 +270,7 @@ services:
 
     volumes:
       - './config/jupyterhub:/etc/jupyterhub:ro'
-      - '{{ app_dirs.managed_dir }}/jupyterhub:/var/lib/jupyterhub:rw'
+      - '{{ app_dirs.managed_dir }}/jupyterhub:/srv/jupyterhub:rw'
       {% for account in accounts %}
         {% if account.extra.user_dir %}
       - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
