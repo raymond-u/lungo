@@ -39,7 +39,7 @@ c.JupyterHub.spawner_class = 'jupyterhub.spawner.LocalProcessSpawner'
 c.JupyterHub.trusted_downstream_ips = ['{{ ip_addresses.nginx }}']
 
 ## Upgrade the database automatically on start
-# c.JupyterHub.upgrade_db = True
+c.JupyterHub.upgrade_db = True
 
 # ------------------------------------------------------------------------------
 # Spawner(LoggingConfigurable) configuration
