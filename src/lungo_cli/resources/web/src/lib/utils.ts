@@ -13,6 +13,14 @@ export function useStore(): Store {
     return getContext<Store>("globalStore")
 }
 
+export function isSameDomain(url: string | URL, host: string): boolean {
+    if (typeof url === "string" && !url.match("^https?://")) {
+        return true
+    }
+
+    return new URL(url).host === host
+}
+
 export function getFlow(url: string): string {
     return new URL(url).searchParams.get("flow") ?? ""
 }

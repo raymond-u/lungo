@@ -2,7 +2,7 @@
     import { onMount } from "svelte"
     import { goto } from "$app/navigation"
     import { page } from "$app/stores"
-    import { getUrlParts, useStore } from "$lib/utils"
+    import { getUrlParts, isSameDomain, useStore } from "$lib/utils"
 
     const { currentApp } = useStore()
 
@@ -42,15 +42,18 @@
 
     const handleLoad = (e: Event) => {
         const iframe = e.target as HTMLIFrameElement
+        const open = iframe.contentWindow!.open.bind(iframe.contentWindow!)
         const pushState = iframe.contentWindow!.history.pushState.bind(iframe.contentWindow!.history)
         const replaceState = iframe.contentWindow!.history.replaceState.bind(iframe.contentWindow!.history)
 
+        // In case the History API is called before the iframe is loaded
         if (!iframe.contentWindow!.location.search.includes("iframe=1")) {
             replaceState(null, "", getModifiedUrl(iframe.contentWindow!.location.href))
         }
 
         goto(getOriginalUrl(iframe.contentWindow!.location.href), { replaceState: true })
 
+        // Patch the History API
         iframe.contentWindow!.history.pushState = (
             data: Parameters<typeof pushState>[0],
             unused: Parameters<typeof pushState>[1],
@@ -73,6 +76,40 @@
                 replaceState(data, unused, getModifiedUrl(url))
             } else {
                 replaceState(data, unused)
+            }
+        }
+
+        // Patch the open() method
+        iframe.contentWindow!.open = (
+            url: Parameters<typeof open>[0] = undefined,
+            target: Parameters<typeof open>[1] = undefined,
+            windowFeatures: Parameters<typeof open>[2] = undefined
+        ) => {
+            if (url) {
+                if (isSameDomain(url, $page.url.host)) {
+                    url = getModifiedUrl(url)
+                    target = "_self"
+                }
+
+                if (target === "_top") {
+                    target = "_self"
+                }
+
+                return open(url, target, windowFeatures)
+            } else {
+                return open(url, target, windowFeatures)
+            }
+        }
+
+        // Modify all links
+        for (const anchor of iframe.contentDocument!.querySelectorAll("a")) {
+            if (isSameDomain(anchor.href, $page.url.host)) {
+                anchor.href = getModifiedUrl(anchor.href)
+                anchor.target = "_self"
+            }
+
+            if (anchor.target === "_top") {
+                anchor.target = "_self"
             }
         }
     }
