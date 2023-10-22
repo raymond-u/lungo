@@ -30,7 +30,7 @@ export function getRandomId(): number {
 }
 
 export function getTitleFromSlug(slug: string): string {
-    return `${slug[0].toUpperCase() + slug.slice(1)} | ${SITE_TITLE}`
+    return `${slug[0]?.toUpperCase() ?? ""}${slug.slice(1)} | ${SITE_TITLE}`
 }
 
 export function getTruncateTitle(title: string, length: number): string {

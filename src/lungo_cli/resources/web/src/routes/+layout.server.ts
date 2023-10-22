@@ -1,7 +1,8 @@
 import type { Cookies } from "@sveltejs/kit"
 import { createKetoClient, createKratosClient } from "$lib/server/api"
 import { EApp } from "$lib/server/types"
-import { type App, EIcon, type User } from "$lib/types"
+import { createApp } from "$lib/server/utils"
+import type { App, User } from "$lib/types"
 
 async function getAllowedApps(fetch: typeof global.fetch, username?: string): Promise<App[]> {
     const client = createKetoClient(fetch)
@@ -28,16 +29,16 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
     }
 
     if (allowedApps.includes(EApp.FileBrowser)) {
-        apps.push({ name: "File Browser", href: `/app/${EApp.FileBrowser}`, icon: EIcon.Folder })
+        apps.push(createApp(EApp.FileBrowser))
     }
     if (allowedApps.includes(EApp.PrivateBin)) {
-        apps.push({ name: "Pastebin", href: `/app/${EApp.PrivateBin}`, icon: EIcon.Note })
+        apps.push(createApp(EApp.PrivateBin))
     }
     if (allowedApps.includes(EApp.JupyterHub)) {
-        apps.push({ name: "JupyterHub", href: `/app/${EApp.JupyterHub}`, icon: EIcon.Jupyter })
+        apps.push(createApp(EApp.JupyterHub))
     }
     if (allowedApps.includes(EApp.RStudio)) {
-        apps.push({ name: "RStudio", href: `/app/${EApp.RStudio}`, icon: EIcon.RStudio })
+        apps.push(createApp(EApp.RStudio))
     }
     // if (allowedApps.includes(EApp.Terminal)) {
     //     apps.push({ name: "Terminal", href: "/app/terminal", icon: EIcon.Terminal })

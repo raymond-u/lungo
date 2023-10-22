@@ -1,6 +1,7 @@
-import type { App } from "$lib/types"
+import { EApp } from "$lib/server/types"
+import { createApp } from "$lib/server/utils"
 
-export async function load({ parent, url }: { parent: () => Promise<{ apps: App[] }>; url: URL }) {
+export async function load({ url }: { url: URL }) {
     const pathBase = url.pathname.match("^/app/[^/]+")
 
     if (!pathBase) {
@@ -9,9 +10,17 @@ export async function load({ parent, url }: { parent: () => Promise<{ apps: App[
         }
     }
 
-    const { apps } = await parent()
+    for (const app in EApp) {
+        const { href, name } = createApp(EApp[app as keyof typeof EApp])
+
+        if (href === pathBase[0]) {
+            return {
+                title: name,
+            }
+        }
+    }
 
     return {
-        title: apps.find((app) => app.href === pathBase[0])?.name ?? "",
+        title: "",
     }
 }
