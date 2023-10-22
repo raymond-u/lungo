@@ -13,7 +13,7 @@ export function useStore(): Store {
     return getContext<Store>("globalStore")
 }
 
-export function isSameDomain(url: string | URL, host: string): boolean {
+export function isSameHost(url: string | URL, host: string): boolean {
     if (typeof url === "string" && !url.match("^(?:https?|wss?)://")) {
         return true
     }
