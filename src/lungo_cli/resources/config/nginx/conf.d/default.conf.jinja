@@ -11,8 +11,8 @@ client_max_body_size 128m;
 
 # Support proxying of web-socket connections
 map $http_upgrade $connection_upgrade {
-    default upgrade;
-    ""      close;
+    default Upgrade;
+    ""      "";
 }
 
 # Remove unwanted query parameters

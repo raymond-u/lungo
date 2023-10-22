@@ -112,6 +112,21 @@
                 anchor.target = "_self"
             }
         }
+
+        // Patch the WebSocket constructor
+        Object.defineProperty(
+            iframe.contentWindow!,
+            "WebSocket",
+            class extends WebSocket {
+                constructor(url: string, protocols?: string | string[]) {
+                    if (isSameDomain(url, $page.url.host)) {
+                        url = getModifiedUrl(url)
+                    }
+
+                    super(url, protocols)
+                }
+            }
+        )
     }
 
     let iframe: HTMLIFrameElement | undefined
