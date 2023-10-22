@@ -260,9 +260,7 @@ services:
 
     user: root
     entrypoint: [ ]
-    command: >-
-      sh -c 'touch /var/lib/jupyterhub/db.sqlite3;
-      umask 002; jupyterhub -f /etc/jupyterhub/config.py'
+    command: sh -c 'umask 002; jupyterhub -f /etc/jupyterhub/config.py'
 
     networks:
       static:
