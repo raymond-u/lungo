@@ -145,15 +145,15 @@ class AppManager:
         if files_missing:
             raise Exit(code=1)
 
-        if get_file_permissions(self.storage.config_file)[1:] != "00":
+        if (permission := get_file_permissions(self.storage.config_file))[1:] != "00":
             self.console.print_warning(
                 f"{format_path(self.storage.config_file)} should not be readable or writable by other users "
-                "(recommended permission: 600)."
+                f"(recommended permission: 600, current permission: {permission})."
             )
-        if get_file_permissions(self.storage.users_file)[1:] != "00":
+        if (permission := get_file_permissions(self.storage.users_file))[1:] != "00":
             self.console.print_warning(
                 f"{format_path(self.storage.users_file)} should not be readable or writable by other users "
-                "(recommended permission: 600)."
+                f"(recommended permission: 600, current permission: {permission})."
             )
 
         config = self.file_utils.parse_yaml(self.storage.config_file, Config)
