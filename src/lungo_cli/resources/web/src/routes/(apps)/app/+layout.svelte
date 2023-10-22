@@ -45,7 +45,6 @@
         const open = iframe.contentWindow!.open.bind(iframe.contentWindow!)
         const pushState = iframe.contentWindow!.history.pushState.bind(iframe.contentWindow!.history)
         const replaceState = iframe.contentWindow!.history.replaceState.bind(iframe.contentWindow!.history)
-        const send = iframe.contentWindow!.WebSocket.prototype.send
 
         // In case the History API is called before the iframe is loaded
         if (!iframe.contentWindow!.location.search.includes("iframe=1")) {
@@ -113,33 +112,6 @@
                 anchor.target = "_self"
             }
         }
-
-        console.log("before patching WebSocket")
-
-        // Patch the WebSocket constructor
-        iframe.contentWindow!.WebSocket.prototype.send = function (data: Parameters<WebSocket["send"]>[0]) {
-            if (isSameHost(this.url, $page.url.host)) {
-                Object.defineProperty(this, "url", getModifiedUrl(this.url))
-            }
-
-            console.log(`Sending data to '${this.url}'`)
-
-            return send.call(this, data)
-        }
-
-        iframe.contentWindow!.WebSocket = class extends WebSocket {
-            constructor(url: string, protocols?: string | string[]) {
-                if (isSameHost(url, $page.url.host)) {
-                    url = getModifiedUrl(url)
-                }
-
-                console.log(`WebSocket connection to '${url}'`)
-
-                super(url, protocols)
-            }
-        }
-
-        console.log("after patching WebSocket")
     }
 
     let iframe: HTMLIFrameElement | undefined
