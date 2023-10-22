@@ -54,8 +54,6 @@ class FileUtils:
             else:
                 self.console.print_error(f"{format_path(src.name)} is not a file or directory.")
                 raise Exit(code=1)
-        except Exit:
-            raise
         except Exception as e:
             self.console.print_error(f"Failed to copy {format_path(src.name)} to {format_path(dst.name)} ({e}).")
             raise Exit(code=1)
@@ -87,22 +85,28 @@ class FileUtils:
             self.console.print_error(f"Failed to read {format_path(path.name)} ({e}).")
             raise Exit(code=1)
 
-    def write_bytes(self, path: str | PathLike[str], data: bytes) -> None:
+    def write_bytes(self, path: str | PathLike[str], data: bytes, secret: bool = False) -> None:
         path = Path(path)
 
         try:
             self.create_dir(path.parent)
             path.write_bytes(data)
+
+            if secret:
+                self.change_mode(path, 0o600)
         except Exception as e:
             self.console.print_error(f"Failed to write {format_path(path.name)} ({e}).")
             raise Exit(code=1)
 
-    def write_text(self, path: str | PathLike[str], text: str) -> None:
+    def write_text(self, path: str | PathLike[str], text: str, secret: bool = False) -> None:
         path = Path(path)
 
         try:
             self.create_dir(path.parent)
             path.write_text(text)
+
+            if secret:
+                self.change_mode(path, 0o600)
         except Exception as e:
             self.console.print_error(f"Failed to write {format_path(path.name)} ({e}).")
             raise Exit(code=1)

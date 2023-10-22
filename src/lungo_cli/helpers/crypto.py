@@ -39,6 +39,6 @@ def generate_self_signed_cert() -> tuple[bytes, bytes]:
     return cert_pem, key_pem
 
 
-def generate_random_hex_string() -> str:
+def generate_random_hex() -> str:
     """Generate a random hex string."""
     return token_hex(32)
