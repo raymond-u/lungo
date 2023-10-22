@@ -1,6 +1,6 @@
 #file: noinspection YAMLDuplicatedKeys
 #@formatter:off
-{% set ALL %}
+{% set ALL -%}
       - GET
       - POST
       - DELETE
@@ -34,19 +34,22 @@
 - id: apps
   match:
     url: '{{ base_url }}app/<(?!filebrowser|privatebin)[^/]*><.*>'
-    methods: {{ ALL }}
+    methods:
+      {{ ALL }}
   {{ AUTH }}
 
 - id: filebrowser-private
   match:
     url: '{{ base_url }}app/<filebrowser><(?!/(?:api/public|share|static)/).*>'
-    methods: {{ ALL }}
+    methods:
+      {{ ALL }}
   {{ AUTH }}
 
 - id: filebrowser-public
   match:
     url: '{{ base_url }}app/filebrowser<(?=/(?:api/public|share|static)/).*>'
-    methods: {{ ALL }}
+    methods:
+      {{ ALL }}
   {{ PASS }}
 
 - id: privatebin-private
@@ -71,5 +74,6 @@
 - id: catch-all
   match:
     url: '{{ base_url }}<(?!app/).*>'
-    methods: {{ ALL }}
+    methods:
+      {{ ALL }}
   {{ PASS }}
