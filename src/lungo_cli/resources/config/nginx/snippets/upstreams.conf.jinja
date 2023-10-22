@@ -2,32 +2,38 @@
 
 upstream oathkeeper {
     server {{ ip_addresses.oathkeeper }}:80;
+    keepalive 4;
 }
 
 upstream node {
     server {{ ip_addresses.node }}:80;
+    keepalive 4;
 }
 
 {% if modules.filebrowser.enabled %}
 upstream filebrowser {
     server {{ ip_addresses.filebrowser }}:80;
+    keepalive 4;
 }
 {% endif %}
 
 {% if modules.jupyterhub.enabled %}
 upstream jupyterhub {
     server {{ ip_addresses.jupyterhub }}:80;
+    keepalive 4;
 }
 {% endif %}
 
 {% if modules.privatebin.enabled %}
 upstream privatebin {
     server {{ ip_addresses.privatebin }}:80;
+    keepalive 4;
 }
 {% endif %}
 
 {% if modules.rstudio.enabled %}
 upstream rstudio {
     server {{ ip_addresses.rstudio }}:80;
+    keepalive 4;
 }
 {% endif %}
