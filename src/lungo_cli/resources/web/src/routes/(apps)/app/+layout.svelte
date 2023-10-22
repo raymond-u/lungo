@@ -113,20 +113,22 @@
             }
         }
 
-        // Patch the WebSocket constructor
-        Object.defineProperty(
-            iframe.contentWindow!,
-            "WebSocket",
-            class extends WebSocket {
-                constructor(url: string, protocols?: string | string[]) {
-                    if (isSameDomain(url, $page.url.host)) {
-                        url = getModifiedUrl(url)
-                    }
+        console.log("before patching WebSocket")
 
-                    super(url, protocols)
+        // Patch the WebSocket constructor
+        iframe.contentWindow!.WebSocket = class extends WebSocket {
+            constructor(url: string, protocols?: string | string[]) {
+                if (isSameDomain(url, $page.url.host)) {
+                    url = getModifiedUrl(url)
                 }
+
+                console.log(`WebSocket connection to '${url}'`)
+
+                super(url, protocols)
             }
-        )
+        }
+
+        console.log("after patching WebSocket")
     }
 
     let iframe: HTMLIFrameElement | undefined

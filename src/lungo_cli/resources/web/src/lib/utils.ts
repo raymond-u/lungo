@@ -14,7 +14,7 @@ export function useStore(): Store {
 }
 
 export function isSameDomain(url: string | URL, host: string): boolean {
-    if (typeof url === "string" && !url.match("^https?://")) {
+    if (typeof url === "string" && !url.match("^(?:https?|wss?)://")) {
         return true
     }
 
