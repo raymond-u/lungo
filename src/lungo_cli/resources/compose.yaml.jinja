@@ -260,7 +260,7 @@ services:
 
     user: root
     entrypoint: [ ]
-    command: sh -c 'umask 002; jupyterhub'
+    command: sh -c 'umask 002; jupyterhub -f /etc/jupyterhub/config.py'
 
     networks:
       static:
