@@ -196,6 +196,8 @@ services:
 
       - KETO_API_BASE_URL=http://{{ ip_addresses.keto }}:80/
       - KRATOS_API_BASE_URL=http://{{ ip_addresses.kratos }}:80/
+      - JUPYTERHUB_BASE_URL=http://{{ ip_addresses.jupyterhub }}:80/
+      - JUPYTERHUB_PASSWORD={{ jupyterhub_password }}
       - RSTUDIO_BASE_URL=http://{{ ip_addresses.rstudio }}:80/
       - RSTUDIO_PASSWORD={{ rstudio_password }}
       - PUBLIC_SITE_SUBTITLE={{ branding.subtitle|tojson }}
