@@ -2,7 +2,7 @@
 
 FROM docker.io/openresty/openresty:{{ NGINX_VER }}
 RUN adduser -D -H -S www-data
-RUN apk add logrotate
+RUN apk --update add logrotate
 COPY <<EOT /etc/logrotate.d/nginx
 /var/log/nginx/*.log {
   daily

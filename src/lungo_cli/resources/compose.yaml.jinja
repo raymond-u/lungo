@@ -61,6 +61,9 @@ services:
       {% if modules.filebrowser.enabled %}
       - filebrowser
       {% endif %}
+      {% if modules.jupyterhub.enabled %}
+      - jupyterhub
+      {% endif %}
       {% if modules.privatebin.enabled %}
       - privatebin
       {% endif %}
@@ -257,8 +260,7 @@ services:
 
       user: root
       entrypoint: [ ]
-      command: >-
-        sh -c ''
+      command: sh -c 'umask 002; jupyterhub'
 
       networks:
         static:

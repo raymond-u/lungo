@@ -1,6 +1,9 @@
 {% set JUPYTERHUB_VER = '4.0.2' %}
+{% set JUPYTERLAB_VER = '4.0.7' %}
 
 FROM docker.io/jupyterhub/jupyterhub:{{ JUPYTERHUB_VER }}
+RUN python3 -m pip install --no-cache-dir --upgrade setuptools pip
+RUN python3 -m pip install --no-cache-dir 'jupyterlab=={{ JUPYTERLAB_VER }}'
 {% for account in users.accounts %}
   {% if account.role == 'admin' %}
 RUN useradd -g root -G sudo -m '{{ account.username }}'
