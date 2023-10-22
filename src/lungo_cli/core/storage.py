@@ -174,6 +174,7 @@ class Storage:
         self.file_utils.copy(from_ / self.managed_rel, self.managed_dir)
 
     def create_dirs(self) -> None:
+        app: EService
         for app in EService:
             self.file_utils.create_dir(self.cache_latest_dir / app.value)
             self.file_utils.create_dir(self.managed_dir / app.value)

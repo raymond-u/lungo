@@ -104,25 +104,21 @@ class AccountManager:
 
         enabled_apps = []
 
-        if config.modules.filebrowser.enabled:
-            enabled_apps.append(EApp.FILEBROWSER)
-        if config.modules.privatebin.enabled:
-            enabled_apps.append(EApp.PRIVATEBIN)
-        if config.modules.rstudio.enabled:
-            enabled_apps.append(EApp.RSTUDIO)
-
-        for app in enabled_apps:
-            data.append(
-                {
-                    "action": "insert",
-                    "relation_tuple": {
-                        "namespace": "app",
-                        "object": app.value,
-                        "relation": "access",
-                        "subject_set": {"namespace": "app", "object": "all", "relation": "access"},
-                    },
-                }
-            )
+        app: EApp
+        for app in EApp:
+            if getattr(config.modules, app.value).enabled:
+                enabled_apps.append(app)
+                data.append(
+                    {
+                        "action": "insert",
+                        "relation_tuple": {
+                            "namespace": "app",
+                            "object": app.value,
+                            "relation": "access",
+                            "subject_set": {"namespace": "app", "object": "all", "relation": "access"},
+                        },
+                    }
+                )
 
         # Add role privileges
         for role in ["unregistered", "guest", "user", "admin"]:
