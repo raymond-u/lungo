@@ -177,7 +177,9 @@ class Storage:
         app: EService
         for app in EService:
             self.file_utils.create_dir(self.cache_latest_dir / app.value)
+            self.file_utils.change_mode(self.cache_latest_dir / app.value, 0o700)
             self.file_utils.create_dir(self.managed_dir / app.value)
+            self.file_utils.change_mode(self.managed_dir / app.value, 0o700)
 
         # Allow the non-root container user to write
         self.file_utils.change_mode(self.managed_dir / EService.PRIVATEBIN.value, 0o777)

@@ -4,3 +4,7 @@ FROM docker.io/privatebin/fs:{{ PRIVATEBIN_VER }}
 USER root
 RUN apk --update add libcap
 RUN setcap 'cap_net_bind_service=+ep' /usr/sbin/nginx
+COPY config/privatebin/conf.php /etc/privatebin/conf.php
+COPY config/privatebin/site.conf /etc/nginx/http.d/site.conf
+RUN chown nobody:www-data /etc/privatebin/conf.php
+RUN chmod 644 /etc/nginx/http.d/site.conf

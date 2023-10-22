@@ -285,7 +285,6 @@ services:
     secrets:
       - source: JUPYTERHUB_COOKIE_SECRET
         target: /etc/jupyterhub/cookie_secret
-        mode: 0400
 
     restart: 'no'
   {% endif %}
@@ -310,8 +309,6 @@ services:
       - 80
 
     volumes:
-      - './config/privatebin/conf.php:/etc/privatebin/conf.php:ro'
-      - './config/privatebin/site.conf:/etc/nginx/http.d/site.conf:ro'
       - '{{ app_dirs.managed_dir }}/privatebin:/srv/data:rw'
 
     environment:

@@ -11,7 +11,7 @@ from .database import AccountManager
 from .file import FileUtils
 from .renderer import Renderer
 from .storage import Storage
-from ..helpers.common import format_path
+from ..helpers.common import format_path, get_file_permissions
 from ..helpers.crypto import generate_random_hex_string, generate_self_signed_cert
 from ..models.config import Config
 from ..models.users import Users
@@ -75,6 +75,7 @@ class AppManager:
             if not self.storage.bundled_dir.is_dir() or self.context_manager.dev:
                 self.console.print_info("Updating bundled data...")
                 self.copy_app_resources(".", self.storage.bundled_dir)
+                self.file_utils.change_mode(self.storage.bundled_dir, 0o700)
                 self.file_utils.remove(self.storage.init_file)
 
             if not self.storage.nginx_cert_file.is_file() or not self.storage.nginx_key_file.is_file():
@@ -143,6 +144,17 @@ class AppManager:
 
         if files_missing:
             raise Exit(code=1)
+
+        if get_file_permissions(self.storage.config_file)[1:] != "00":
+            self.console.print_warning(
+                f"{format_path(self.storage.config_file)} should not be readable or writable by other users "
+                "(recommended permission: 600)."
+            )
+        if get_file_permissions(self.storage.users_file)[1:] != "00":
+            self.console.print_warning(
+                f"{format_path(self.storage.users_file)} should not be readable or writable by other users "
+                "(recommended permission: 600)."
+            )
 
         config = self.file_utils.parse_yaml(self.storage.config_file, Config)
         users = self.file_utils.parse_yaml(self.storage.users_file, Users)
