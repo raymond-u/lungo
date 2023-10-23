@@ -1,16 +1,7 @@
-<br>
+# Lungo
 
-<h1 align="center">
-  <a href="https://github.com/raymond-u/lungo"><img src="https://github.com/raymond-u/lungo/assets/36328498/5a8a3696-61c1-46cc-a1b4-144141da2d36" alt="Lungo" width="120"></a>
-  <br>
-  <b>Lungo</b>
-</h1>
-
-<p align="center">
-  Lungo is a comprehensive home lab setup designed specifically for academic research purposes.
-  <br>
-  Deployable on a single machine, it offers secure access to a range of services through a unified single sign-on portal.
-</p>
+Lungo is a comprehensive home lab setup designed specifically for academic research purposes.
+Deployable on a single machine, it offers secure access to a range of services through a unified single sign-on portal.
 
 ## Featured services
 
@@ -23,29 +14,29 @@
 
 ### Prerequisites
 
-Lungo is built upon [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/). Please
-ensure they are installed on your machine.
+Lungo is built upon [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/).
+Please ensure they are installed on your machine.
 
 Alternatively, you can use [Podman](https://podman.io/)
-and [Podman Compose](https://github.com/containers/podman-compose). For installation instructions, refer to their
-respective documentation.
+and [Podman Compose](https://github.com/containers/podman-compose).
+For installation instructions, refer to their respective documentation.
 
 ### Rootless execution
 
-For enhanced security, Lungo should be run in a non-root user environment. To do so, the administrator must complete
-necessary configurations, as described in the [Docker guide](https://docs.docker.com/engine/security/rootless/) or
-the [Podman guide](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md).
+For enhanced security, Lungo should be run in a non-root user environment. To do so, the administrator must
+complete necessary configurations, as described in the [Docker guide](https://docs.docker.com/engine/security/rootless/)
+or the [Podman guide](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md).
 
-To enable non-root users to bind to port 80, modify the value of `net.ipv4.ip_unprivileged_port_start` using the
-following command:
+To enable non-root users to bind to port 80, modify the value of `net.ipv4.ip_unprivileged_port_start`
+using the following command:
 
 ```bash
 sudo sysctl net.ipv4.ip_unprivileged_port_start=80
 ```
 
-In a rootless environment, permissions need to be configured to allow non-root users to read and write files created by
-the containers. We recommend creating a dedicated user for Lungo and a group for sharing files between containers and
-the host. The following commands illustrate this process:
+In a rootless environment, permissions need to be configured to allow non-root users to read and write files
+created by the containers. We recommend creating a dedicated user for Lungo and a group for sharing files
+between containers and the host. The following commands illustrate this process:
 
 ```bash
 # Create a group for sharing files
@@ -66,11 +57,11 @@ sudo chmod g+s /home/shared
 sudo mkdir /home/shared_readonly
 ```
 
-Ensure that the directories `/home/shared` and `/home/shared_readonly` are created before running Lungo, as they will be
-mounted as volumes in the containers. If necessary, they can be symbolic links to other directories.
+Ensure that the directories `/home/shared` and `/home/shared_readonly` are created before running Lungo,
+as they will be mounted as volumes in the containers. If necessary, they can be symbolic links to other directories.
 
-Avoid using `sudo su lungo` to switch to the `lungo` user when launching Lungo in a rootless environment, as
-it [may not function properly](https://www.redhat.com/sysadmin/sudo-rootless-podman). Instead, set a password for
+Avoid using `sudo su lungo` to switch to the `lungo` user when launching Lungo in a rootless environment,
+as it [may not function properly](https://www.redhat.com/sysadmin/sudo-rootless-podman). Instead, set a password for
 the `lungo` user to log in without root privileges:
 
 ```bash
