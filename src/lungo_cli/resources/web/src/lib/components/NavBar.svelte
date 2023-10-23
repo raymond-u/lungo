@@ -29,7 +29,7 @@
     $: $allowScroll = !checked
 </script>
 
-<div class="navbar gap-1.5 bg-base-100 p-2">
+<div class="navbar gap-1.5 p-2">
     <div class="drawer w-12 flex-none">
         <input id="nav-drawer" type="checkbox" class="drawer-toggle" bind:checked />
         <div class="drawer-content">
@@ -41,9 +41,13 @@
         </div>
         <div class="drawer-side top-16 z-20 h-[calc(100vh-4rem)]">
             <label for="nav-drawer" class="drawer-overlay"></label>
-            <div class="pointer-events-none absolute z-10 h-12 w-80 bg-gradient-to-b from-base-100"></div>
+            <div
+                class="pointer-events-none absolute z-10 h-12 w-80 bg-gradient-to-b from-base-100"
+                class:from-base-200={!$darkTheme}
+            ></div>
             <div
                 class="scrollbar-none h-full w-80 overflow-y-auto bg-base-100 py-10"
+                class:bg-base-200={!$darkTheme}
                 use:syncScroll={{ id: "nav", stores: syncedScrollTops }}
             >
                 <ul class="menu items-center gap-2 p-2 pb-3">
@@ -83,9 +87,9 @@
     <div class="mr-4 flex-none">
         {#if $page.data.userInfo}
             {@const { email, name } = $page.data.userInfo}
-            <div class="dropdown dropdown-end dropdown-bottom">
+            <div class="dropdown-end dropdown-bottom dropdown">
                 <Avatar button placeholder={getPlaceholder(name.first, name.last)} />
-                <ul class="menu dropdown-content z-20 mt-2 rounded-2xl bg-base-300 p-2 shadow">
+                <ul class="dropdown-content menu z-20 mt-2 rounded-2xl bg-base-300 p-2 shadow">
                     <li>
                         <div class="pointer-events-none flex">
                             <Avatar large placeholder={getPlaceholder(name.first, name.last)} />
@@ -121,5 +125,6 @@
 </div>
 <div
     class="pointer-events-none absolute left-0 right-4 z-10 h-12 bg-gradient-to-b from-base-100"
+    class:from-base-200={!$darkTheme}
     class:opacity-0={checked}
 ></div>

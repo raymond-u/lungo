@@ -4,6 +4,9 @@
     import { page } from "$app/stores"
     import { PasswordInput } from "$lib/components"
     import type { KratosComponents } from "$lib/types"
+    import { useStore } from "$lib/utils"
+
+    const { darkTheme } = useStore()
 
     const clipMessage = (msg: string) => {
         return msg.slice(0, msg.indexOf(".") + 1)
@@ -88,6 +91,8 @@
                 {:else if node.meta.label}
                     <label class="inline-flex flex-col">
                         <input
+                            class="input"
+                            class:bg-base-200={!$darkTheme}
                             name={node.attributes.name}
                             type={node.attributes.type}
                             value={node.attributes.value ?? ""}
@@ -95,7 +100,6 @@
                             required={node.attributes.required}
                             autocomplete={node.attributes.autocomplete ?? "off"}
                             placeholder={node.meta.label.text ?? ""}
-                            class="input"
                         />
                         {#each node.messages ?? [] as message (message.id)}
                             <span
@@ -109,13 +113,14 @@
                     </label>
                 {:else}
                     <input
+                        class="input"
+                        class:bg-base-200={!$darkTheme}
                         name={node.attributes.name}
                         type={node.attributes.type}
                         value={node.attributes.value ?? ""}
                         disabled={node.attributes.disabled}
                         required={node.attributes.required}
                         autocomplete={node.attributes.autocomplete ?? "off"}
-                        class="input"
                     />
                 {/if}
             {/if}

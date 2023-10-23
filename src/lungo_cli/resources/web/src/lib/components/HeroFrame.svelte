@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { useStore } from "$lib/utils"
+
+    const { darkTheme } = useStore()
     export let wrapped: boolean = false
 </script>
 
@@ -7,6 +10,7 @@
         {#if wrapped}
             <div
                 class="flex max-w-md flex-1 flex-col items-center justify-center gap-4 rounded-2xl bg-base-200 px-12 py-16"
+                class:bg-base-300={!$darkTheme}
             >
                 <slot />
             </div>
