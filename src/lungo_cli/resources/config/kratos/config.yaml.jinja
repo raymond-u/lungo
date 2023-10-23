@@ -1,3 +1,4 @@
+{% set security = config.security %}
 {% set smtp = config.smtp %}
 
 dsn: 'sqlite:///var/lib/kratos/db.sqlite3?_fk=true&mode=rwc'
@@ -19,8 +20,8 @@ log:
 session:
   cookie:
     name: 'lungo_session'
-  earliest_possible_extend: 24h
-  lifespan: 48h
+  earliest_possible_extend: {{ security.session.lifetime.total_seconds()|int // 2 }}s
+  lifespan: {{ security.session.lifetime.total_seconds()|int }}s
   whoami:
     required_aal: aal1
 

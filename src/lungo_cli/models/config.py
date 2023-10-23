@@ -1,3 +1,4 @@
+from datetime import timedelta
 from ipaddress import IPv4Network
 
 from pydantic import DirectoryPath, EmailStr, field_validator, FilePath, NewPath
@@ -96,6 +97,14 @@ class Rules(Base):
     privileges: Privileges = Privileges()
 
 
+class Session(Base):
+    lifetime: timedelta = timedelta(days=1)
+
+
+class Security(Base):
+    session: Session = Session()
+
+
 class Smtp(Base):
     host: str
     port: Port
@@ -111,4 +120,5 @@ class Config(Base):
     modules: Modules = Modules()
     network: Network
     rules: Rules = Rules()
+    security: Security = Security()
     smtp: Smtp

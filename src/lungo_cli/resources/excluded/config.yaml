@@ -225,6 +225,19 @@
 #       # Required: no
 #       allowed_apps: all
 
+# =========
+# security:
+# =========
+
+#   # Session settings
+#   session:
+
+#     # Session lifetime (in seconds, or a string describing a time span in ISO 8601 format)
+#     # Type: int | string
+#     # Default: 'P1DT'
+#     # Required: no
+#     lifetime:
+
 # =====
 # smtp:
 # =====

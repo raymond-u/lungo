@@ -50,6 +50,10 @@ rules:
     admin:
       allowed_apps: all
 
+security:
+  session:
+    lifetime: P2DT
+
 smtp:
   host: smtp.gmail.com
   port: 587
