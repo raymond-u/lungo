@@ -1,7 +1,19 @@
-# Lungo
+<br>
 
-Lungo is a comprehensive home lab setup designed specifically for academic research purposes.
-Deployable on a single machine, it offers secure access to a range of services through a unified single sign-on portal.
+<h1 align="center">
+  <a href="https://github.com/raymond-u/lungo">
+      <img src="https://github.com/raymond-u/lungo/assets/36328498/5a8a3696-61c1-46cc-a1b4-144141da2d36" alt="Lungo" width="120">
+  </a>
+  <br>
+  <b>Lungo</b>
+  <br>
+</h1>
+
+<p align="center">
+  Lungo is a comprehensive home lab setup designed specifically for academic research purposes.
+  <br>
+  Deployable on a single machine, it offers secure access to a range of services through a unified single sign-on portal.
+</p>
 
 ## Featured services
 
