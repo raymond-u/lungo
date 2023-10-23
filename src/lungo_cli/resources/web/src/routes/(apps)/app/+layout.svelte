@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte"
+    import parser from "set-cookie-parser"
     import { goto } from "$app/navigation"
     import { page } from "$app/stores"
     import { getUrlParts, isSameHost, useStore } from "$lib/utils"
@@ -45,6 +46,9 @@
         const open = iframe.contentWindow!.open.bind(iframe.contentWindow!)
         const pushState = iframe.contentWindow!.history.pushState.bind(iframe.contentWindow!.history)
         const replaceState = iframe.contentWindow!.history.replaceState.bind(iframe.contentWindow!.history)
+        const cookie = Object.getOwnPropertyDescriptor(iframe.contentWindow!.Document.prototype, "cookie")!
+        const getCookie = cookie.get!.bind(iframe.contentDocument)
+        const setCookie = cookie.set!.bind(iframe.contentDocument)
 
         // In case the History API is called before the iframe is loaded
         if (!iframe.contentWindow!.location.search.includes("iframe=1")) {
@@ -101,17 +105,48 @@
             }
         }
 
-        // Modify all links
-        for (const anchor of iframe.contentDocument!.querySelectorAll("a")) {
-            if (isSameHost(anchor.href, $page.url.host)) {
-                anchor.href = getModifiedUrl(anchor.href)
-                anchor.target = "_self"
-            }
+        // Patch all links
+        for (const node of iframe.contentDocument!.querySelectorAll("a, area, base, form")) {
+            if (
+                node instanceof HTMLAnchorElement ||
+                node instanceof HTMLAreaElement ||
+                node instanceof HTMLBaseElement
+            ) {
+                if (isSameHost(node.href, $page.url.host)) {
+                    node.href = getModifiedUrl(node.href)
+                    node.target = "_self"
+                }
 
-            if (anchor.target === "_top") {
-                anchor.target = "_self"
+                if (node.target === "_top") {
+                    node.target = "_self"
+                }
+            } else if (node instanceof HTMLFormElement) {
+                if (node.target === "_blank" || node.target === "_top") {
+                    node.target = "_self"
+                }
             }
         }
+
+        // Patch the cookie setter
+        Object.defineProperty(iframe.contentDocument, "cookie", {
+            get: getCookie,
+            set: (value: string) => {
+                const oldCookie = parser.parse(value, { decodeValues: false })[0]
+                let newCookie = `${oldCookie.name}=${oldCookie.value}; Path=${$currentApp?.href ?? "/"}; Secure`
+
+                if (oldCookie.expires) {
+                    newCookie += `; Expires=${oldCookie.expires.toUTCString()}`
+                }
+                if (oldCookie.maxAge) {
+                    newCookie += `; Max-Age=${oldCookie.maxAge}`
+                }
+                if (oldCookie.httpOnly) {
+                    newCookie += "; HttpOnly"
+                }
+
+                setCookie(newCookie)
+            },
+        })
     }
 
     let iframe: HTMLIFrameElement | undefined

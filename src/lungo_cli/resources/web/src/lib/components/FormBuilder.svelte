@@ -4,12 +4,9 @@
     import { page } from "$app/stores"
     import { PasswordInput } from "$lib/components"
     import type { KratosComponents } from "$lib/types"
-    import { useStore } from "$lib/utils"
-
-    const { darkTheme } = useStore()
 
     const clipMessage = (msg: string) => {
-        return msg.slice(0, msg.indexOf(".") + 1)
+        return msg.slice(0, msg.indexOf(".") + 1 || msg.length)
     }
     const getGroupActionTitle = (group: KratosComponents["schemas"]["uiNode"]["group"]) => {
         return (
@@ -92,7 +89,6 @@
                     <label class="inline-flex flex-col">
                         <input
                             class="input"
-                            class:bg-base-200={!$darkTheme}
                             name={node.attributes.name}
                             type={node.attributes.type}
                             value={node.attributes.value ?? ""}
@@ -114,7 +110,6 @@
                 {:else}
                     <input
                         class="input"
-                        class:bg-base-200={!$darkTheme}
                         name={node.attributes.name}
                         type={node.attributes.type}
                         value={node.attributes.value ?? ""}
@@ -139,7 +134,7 @@
     <div class="my-3"></div>
     {#each actionNodes as actionNode (getNodeId(actionNode))}
         <button
-            class="btn btn-primary text-white"
+            class="btn btn-primary"
             name={actionNode.attributes.name}
             type="submit"
             value={actionNode.attributes.value ?? ""}
@@ -150,7 +145,7 @@
     {/each}
     {#each otherGroups as group (group)}
         <button
-            class="btn btn-secondary text-white"
+            class="btn btn-secondary"
             type="button"
             {disabled}
             on:click={() => {

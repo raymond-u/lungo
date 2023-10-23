@@ -26,12 +26,12 @@
 <div data-theme={typeof $darkTheme === "undefined" ? undefined : $darkTheme ? "dark" : "light"}>
     <LoadingIndicator />
     <header>
-        <div class="h-16 bg-base-100" class:bg-base-200={!$darkTheme}>
+        <div class="h-16">
             <NavBar />
         </div>
     </header>
     <main>
-        <div class="flex h-[calc(100vh-4rem)] bg-base-100" class:bg-base-200={!$darkTheme}>
+        <div class="flex h-[calc(100vh-4rem)]">
             <slot />
         </div>
     </main>

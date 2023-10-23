@@ -41,13 +41,9 @@
         </div>
         <div class="drawer-side top-16 z-20 h-[calc(100vh-4rem)]">
             <label for="nav-drawer" class="drawer-overlay"></label>
-            <div
-                class="pointer-events-none absolute z-10 h-12 w-80 bg-gradient-to-b from-base-100"
-                class:from-base-200={!$darkTheme}
-            ></div>
+            <div class="pointer-events-none absolute z-10 h-12 w-80 bg-gradient-to-b from-base-100"></div>
             <div
                 class="scrollbar-none h-full w-80 overflow-y-auto bg-base-100 py-10"
-                class:bg-base-200={!$darkTheme}
                 use:syncScroll={{ id: "nav", stores: syncedScrollTops }}
             >
                 <ul class="menu items-center gap-2 p-2 pb-3">
@@ -119,12 +115,11 @@
                 </ul>
             </div>
         {:else}
-            <a class="btn btn-block border-0 text-base" href="/login">Sign in</a>
+            <a class="btn" href="/login">Sign in</a>
         {/if}
     </div>
 </div>
 <div
     class="pointer-events-none absolute left-0 right-4 z-10 h-12 bg-gradient-to-b from-base-100"
-    class:from-base-200={!$darkTheme}
     class:opacity-0={checked}
 ></div>

@@ -1,7 +1,6 @@
 <script lang="ts">
     import { SwapIcon } from "$lib/components"
     import { EIcon } from "$lib/types"
-    import { useStore } from "$lib/utils"
 
     export let name = ""
     export let value = ""
@@ -9,8 +8,6 @@
     export let required = false
     export let autocomplete = "off"
     export let placeholder = ""
-
-    const { darkTheme } = useStore()
 
     const handleClick = () => {
         visible = !visible
@@ -22,7 +19,6 @@
 <span class="relative inline-flex">
     <input
         class="input flex-1 pr-12"
-        class:bg-base-200={!$darkTheme}
         {name}
         type={visible ? "text" : "password"}
         {value}
