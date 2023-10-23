@@ -131,16 +131,16 @@
         Object.defineProperty(iframe.contentDocument, "cookie", {
             get: getCookie,
             set: (value: string) => {
-                const oldCookie = parser.parse(value, { decodeValues: false })[0]
-                let newCookie = `${oldCookie.name}=${oldCookie.value}; Path=${$currentApp?.href ?? "/"}; Secure`
+                const old = parser.parse(value, { decodeValues: false })[0]
+                let newCookie = `${old.name}=${old.value}; Path=${$currentApp?.href ?? "/"}; SameSite=Lax; Secure`
 
-                if (oldCookie.expires) {
-                    newCookie += `; Expires=${oldCookie.expires.toUTCString()}`
+                if (old.expires) {
+                    newCookie += `; Expires=${old.expires.toUTCString()}`
                 }
-                if (oldCookie.maxAge) {
-                    newCookie += `; Max-Age=${oldCookie.maxAge}`
+                if (old.maxAge) {
+                    newCookie += `; Max-Age=${old.maxAge}`
                 }
-                if (oldCookie.httpOnly) {
+                if (old.httpOnly) {
                     newCookie += "; HttpOnly"
                 }
 
