@@ -3,9 +3,9 @@
 FROM docker.io/rocker/verse:{{ RSTUDIO_VER }}
 {% for account in users.accounts %}
   {% if account.role == 'admin' %}
-RUN useradd -g root -G sudo -m '{{ account.username }}'
+RUN useradd --no-log-init -g root -G sudo -m '{{ account.username }}'
   {% else %}
-RUN useradd -g root -m '{{ account.username }}'
+RUN useradd --no-log-init -g root -m '{{ account.username }}'
   {% endif %}
 RUN echo '{{ account.username }}:{{ rstudio_password }}' | chpasswd
 RUN ln -s '/mnt/home/{{ account.username }}' '/home/{{ account.username }}/home'

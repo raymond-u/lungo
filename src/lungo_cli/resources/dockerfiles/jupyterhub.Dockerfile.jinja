@@ -6,9 +6,9 @@ RUN python3 -m pip install --no-cache-dir --upgrade setuptools pip
 RUN python3 -m pip install --no-cache-dir 'jupyterlab=={{ JUPYTERLAB_VER }}'
 {% for account in users.accounts %}
   {% if account.role == 'admin' %}
-RUN useradd -g root -G sudo -m '{{ account.username }}'
+RUN useradd --no-log-init -g root -G sudo -m '{{ account.username }}'
   {% else %}
-RUN useradd -g root -m '{{ account.username }}'
+RUN useradd --no-log-init -g root -m '{{ account.username }}'
   {% endif %}
 RUN echo '{{ account.username }}:{{ jupyterhub_password }}' | chpasswd
 RUN ln -s '/mnt/home/{{ account.username }}' '/home/{{ account.username }}/home'
