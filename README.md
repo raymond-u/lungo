@@ -114,12 +114,15 @@ sudo chpasswd <<<'lungo:<password>'
 
 ### Configuration
 
-Before use, Lungo requires some configuration. You can find some examples [here](examples).
+Lungo has two essential configuration files: `config.yaml` and `users.yaml`. The `config.yaml` file contains
+general settings for Lungo, while the `users.yaml` file is dedicated to user management. The default location
+for these files is platform-dependent, i.e. `~/.config/lungo/` on Linux.
+You can override this location by passing the `--config-dir` option to Lungo.
 
-Please refer to [config.yaml](src/lungo_cli/resources/excluded/config.yaml)
-and [users.yaml](src/lungo_cli/resources/excluded/users.yaml) for a full list of available options.
+For a full list of available settings, please refer to [config.yaml](src/lungo_cli/resources/excluded/config.yaml)
+and [users.yaml](src/lungo_cli/resources/excluded/users.yaml). Also, you may find these [examples](examples) helpful.
 
-You can check the validity of the configuration file by running:
+You can verify the correctness of your configuration files by running:
 
 ```bash
 lungo check
