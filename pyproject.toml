@@ -3,7 +3,7 @@ line-length = 120
 
 [tool.poetry]
 name = "lungo-cli"
-version = "0.1.0.dev7"
+version = "0.1.0"
 description = ""
 authors = ["raymond-u <36328498+raymond-u@users.noreply.github.com>"]
 readme = "README.md"
@@ -15,7 +15,7 @@ typer = { extras = ["all"], version = "^0.9.0" }
 importlib-resources = "^6.0.1"
 platformdirs = "^3.10.0"
 cryptography = "^41.0.3"
-pydantic = {extras = ["email"], version = "^2.4.2"}
+pydantic = { extras = ["email"], version = "^2.4.2" }
 pydantic-yaml = "^1.2.0"
 jinja2 = "^3.1.2"
 requests = "^2.31.0"
