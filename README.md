@@ -16,6 +16,15 @@
   <br>
 </p>
 
+<p align="center">
+  <a href="https://pypi.org/project/lungo-cli/">
+    <img src="https://badge.fury.io/py/lungo-cli.svg" alt="PyPI version" height="18">
+  </a>
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="18">
+  </a>
+</p>
+
 <br>
 
 ## Features

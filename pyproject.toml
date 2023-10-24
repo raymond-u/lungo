@@ -3,10 +3,12 @@ line-length = 120
 
 [tool.poetry]
 name = "lungo-cli"
-version = "0.1.0"
-description = ""
+version = "0.1.1"
+description = "a fully-customizable home lab setup for small-to-mid-scale private on-premises deployments"
 authors = ["raymond-u <36328498+raymond-u@users.noreply.github.com>"]
 readme = "README.md"
+repository = "https://github.com/raymond-u/lungo"
+keywords = ["home lab", "self-hosting"]
 packages = [{ include = "lungo_cli", from = "src" }]
 
 [tool.poetry.dependencies]
