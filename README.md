@@ -50,7 +50,8 @@ Please ensure they are installed on your machine.
 
 Alternatively, you can use [Podman](https://podman.io/)
 and [Podman Compose](https://github.com/containers/podman-compose).
-For installation instructions, refer to their respective documentation.
+
+For installation instructions, please refer to their respective documentation.
 
 ### Rootless execution
 
@@ -105,6 +106,7 @@ sudo chpasswd <<<'lungo:<password>'
 ### Configuration
 
 Before use, Lungo requires some configuration. You can find some examples [here](examples).
+
 Please refer to [config.yaml](src/lungo_cli/resources/excluded/config.yaml)
 and [users.yaml](src/lungo_cli/resources/excluded/users.yaml) for a full list of available options.
 
