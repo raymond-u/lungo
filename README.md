@@ -10,17 +10,33 @@
 </h1>
 
 <p align="center">
-  Lungo is a comprehensive home lab setup designed specifically for academic research purposes.
+  A home lab setup for small-to-mid-scale private on-premises deployments,
   <br>
-  Deployable on a single machine, it offers secure access to a range of services through a unified single sign-on portal.
+  with everything configurable in human-readable YAML files.
 </p>
 
-## Featured services
+## Features
 
-- [Nginx](https://nginx.org/) as a reverse proxy
-- [Authelia](https://www.authelia.com/) as a single sign-on portal
-- [File Browser](https://filebrowser.org/) as a file manager
-- [R Studio](https://posit.co/products/open-source/rstudio-server/) as an IDE for R
+- Fully configurable via YAML files - everything including user management
+- Easy interoperability - single sign-on portal to access all applications
+- Batteries-included - comes with a variety of applications out of the box
+- Secure by default - is designed to be run in a non-root user environment
+
+## Installation
+
+The easiest way to install Lungo is via pip:
+
+```bash
+pip install lungo-cli
+```
+
+To install from source, run:
+
+```bash
+git clone --recurse-submodules https://github.com/raymond-u/lungo
+cd lungo
+poetry install --compile
+```
 
 ## Getting started
 
@@ -39,79 +55,60 @@ For enhanced security, Lungo should be run in a non-root user environment. To do
 complete necessary configurations, as described in the [Docker guide](https://docs.docker.com/engine/security/rootless/)
 or the [Podman guide](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md).
 
-To enable non-root users to bind to port 80, modify the value of `net.ipv4.ip_unprivileged_port_start`
-using the following command:
+To enable non-root users to bind to port 80, run:
 
 ```bash
+sudo setcap 'cap_net_bind_service=+ep' "$(command -v lungo)"
+```
+
+Or you can modify the value of `net.ipv4.ip_unprivileged_port_start` using the following command:
+
+```bash
+# This will allow any user to bind to port 80
 sudo sysctl net.ipv4.ip_unprivileged_port_start=80
 ```
 
-In a rootless environment, permissions need to be configured to allow non-root users to read and write files
-created by the containers. We recommend creating a dedicated user for Lungo and a group for sharing files
-between containers and the host. The following commands illustrate this process:
+In a rootless environment, permissions need to be configured to allow non-root users on the host machine to
+read and write files created by the container, and vice versa. We recommend creating a dedicated user for Lungo
+and a group for sharing files between the container and the host. The following commands illustrate this process:
 
 ```bash
 # Create a group for sharing files
-sudo groupadd share
+sudo groupadd shared
 
-# Create a user for Lungo
-sudo useradd -m -g share lungo
+# Create a dedicated user for Lungo
+sudo useradd -m -g shared lungo
 
-# Add existing users to the group
-sudo usermod -a -G share <username>
+# Add an existing user to the group
+sudo usermod -a -G shared <username>
 
 # Create a directory for shared files
-sudo mkdir /home/shared
-sudo chown lungo:share /home/shared
-sudo chmod g+s /home/shared
-
-# Create a directory for read-only shared files
-sudo mkdir /home/shared_readonly
+sudo mkdir /mnt/data/shared
+sudo chown lungo:shared /mnt/data/shared
+sudo chmod g+rws /mnt/data/shared
 ```
 
-Ensure that the directories `/home/shared` and `/home/shared_readonly` are created before running Lungo,
-as they will be mounted as volumes in the containers. If necessary, they can be symbolic links to other directories.
+You can read more about file permissions in a rootless
+environment [here](https://github.com/containers/podman/blob/main/troubleshooting.md#34-container-creates-a-file-that-is-not-owned-by-the-users-regular-uid).
 
 Avoid using `sudo su lungo` to switch to the `lungo` user when launching Lungo in a rootless environment,
 as it [may not function properly](https://www.redhat.com/sysadmin/sudo-rootless-podman). Instead, set a password for
-the `lungo` user to log in without root privileges:
+the `lungo` user and log in normally:
 
 ```bash
 sudo chpasswd <<<'lungo:<password>'
 ```
 
-### Installation
-
-The easiest way to install Lungo is via pip:
-
-```bash
-pip install lungo-cli
-```
-
-To install from source, clone the repository and run:
-
-```bash
-poetry install --compile
-```
-
 ### Configuration
 
-Before first use, Lungo requires some configuration. This can be done by running:
+Before use, Lungo requires some configuration. You can find some examples [here](examples).
+Please refer to [config.yaml](src/lungo_cli/resources/excluded/config.yaml)
+and [users.yaml](src/lungo_cli/resources/excluded/users.yaml) for a full list of available options.
+
+You can check the validity of the configuration file by running:
 
 ```bash
-lungo init
-```
-
-To add a new user, run:
-
-```bash
-lungo user add <username>
-```
-
-If the user does not exist on the host machine, it must be created. To do so, run:
-
-```bash
-sudo useradd -m -G share <username>
+lungo check
 ```
 
 ### Usage
