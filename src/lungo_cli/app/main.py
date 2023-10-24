@@ -44,6 +44,6 @@ def main(
     ] = False
 ):
     """
-    A CLI tool for managing Lungo, a self-hosted web application suite.
+    A CLI tool for interacting with Lungo, a home lab setup for small-to-mid-scale private on-premises deployments.
     """
     ...
