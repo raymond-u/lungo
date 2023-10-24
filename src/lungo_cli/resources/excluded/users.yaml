@@ -61,3 +61,25 @@
 #         # Default: none
 #         # Required: no
 #         user_dir: /mnt/somewhere/someone
+
+#         # User-specific shared directories
+#         shared_dirs:
+#           -
+
+#               # Name of the directory after mounted (must be unique)
+#               Type: string
+#               Default: none
+#               Required: yes
+#               name: shared_readonly
+
+#               # Path to the directory on the host
+#               # Type: path
+#               # Default: none
+#               # Required: yes
+#               source: /mnt/data/shared_readonly
+
+#               # Whether to mount the directory as read-only or not
+#               # Type: boolean
+#               # Default: false
+#               # Required: no
+#               read_only: true

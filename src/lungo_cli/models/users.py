@@ -1,6 +1,7 @@
 from pydantic import DirectoryPath, EmailStr, field_validator, NewPath
 
 from .base import AllowedApps, Base, ERole, NameStr, Username
+from .config import SharedDir
 
 
 class Name(Base):
@@ -11,6 +12,7 @@ class Name(Base):
 class Extra(Base):
     allowed_apps: AllowedApps = []
     user_dir: DirectoryPath | NewPath | None = None
+    shared_dirs: list[SharedDir] = []
 
 
 class Account(Base):

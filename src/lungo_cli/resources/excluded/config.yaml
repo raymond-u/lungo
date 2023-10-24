@@ -51,7 +51,7 @@
 #   # Required: yes
 #   users_dir: /home
 
-#   # Directories to mount that are shared between apps and users
+#   # Directories to mount that are shared between the container and the host
 #   shared_dirs:
 #     -
 

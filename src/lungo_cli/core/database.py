@@ -27,6 +27,8 @@ class AccountManager:
         self.container = container
 
     def verify(self, config: Config, users: Users) -> None:
+        shared_dirs = list(map(lambda x: x.name, config.directories.shared_dirs))
+
         for account in users.accounts:
             if account.username == "anonymous":
                 self.console.print_warning(
@@ -45,6 +47,12 @@ class AccountManager:
                         "Please create it with the appropriate permissions."
                     )
                     raise Exit(code=1)
+
+            shared_dirs.extend(map(lambda x: x.name, account.extra.shared_dirs))
+
+        if len(shared_dirs) != len(set(shared_dirs)):
+            self.console.print_error("Duplicate shared directories detected. Please use unique directory names.")
+            raise Exit(code=1)
 
     def update(self, config: Config, users: Users) -> None:
         # Ensure that the container can always be started even if it failed last time

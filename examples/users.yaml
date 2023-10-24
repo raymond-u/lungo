@@ -9,4 +9,3 @@ accounts:
     extra:
       allowed_apps:
         - rstudio
-      user_dir: /mnt/data/joe
