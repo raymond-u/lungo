@@ -2,6 +2,12 @@
 
 ## Nightly
 
+## 0.1.3
+
+### Patch changes
+
+- Fix an issue that submodules are not checked out when building the image
+
 ## 0.1.2
 
 ### Patch changes
