@@ -13,6 +13,7 @@
   A home lab setup for small-to-mid-scale private on-premises deployments,
   <br>
   with everything configurable in human-readable YAML files.
+  <br>
 </p>
 
 ## Features
