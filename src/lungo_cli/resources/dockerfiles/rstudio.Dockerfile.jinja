@@ -1,18 +1,20 @@
 {% set RSTUDIO_VER = '4.3.1' %}
 
 FROM docker.io/rocker/verse:{{ RSTUDIO_VER }}
-{% for account in users.accounts %}
-  {% if account.role == 'admin' %}
-RUN useradd --no-log-init -g root -G sudo -m '{{ account.username }}'
-  {% else %}
-RUN useradd --no-log-init -g root -m '{{ account.username }}'
-  {% endif %}
-RUN echo '{{ account.username }}:{{ rstudio_password }}' | chpasswd
-RUN ln -s '/mnt/home/{{ account.username }}' '/home/{{ account.username }}/home'
-  {% for shared_dir in account.extra.shared_dirs %}
-RUN ln -s '/mnt/{{ shared_dir.name }}' '/home/{{ account.username }}/{{ shared_dir.name }}'
-  {% endfor %}
-  {% for shared_dir in config.directories.shared_dirs %}
-RUN ln -s '/mnt/{{ shared_dir.name }}' '/home/{{ account.username }}/{{ shared_dir.name }}'
-  {% endfor %}
-{% endfor %}
+RUN : && \
+    {% for account in users.accounts %}
+        {% if account.role == 'admin' %}
+    useradd --no-log-init -g root -G sudo -m '{{ account.username }}' && \
+        {% else %}
+    useradd --no-log-init -g root -m '{{ account.username }}' && \
+        {% endif %}
+    echo '{{ account.username }}:{{ rstudio_password }}' | chpasswd && \
+    ln -s '/mnt/home/{{ account.username }}' '/home/{{ account.username }}/home' && \
+        {% for shared_dir in account.extra.shared_dirs %}
+    ln -s '/mnt/{{ shared_dir.name }}' '/home/{{ account.username }}/{{ shared_dir.name }}' && \
+        {% endfor %}
+        {% for shared_dir in config.directories.shared_dirs %}
+    ln -s '/mnt/{{ shared_dir.name }}' '/home/{{ account.username }}/{{ shared_dir.name }}' && \
+        {% endfor %}
+    {% endfor %}
+    :

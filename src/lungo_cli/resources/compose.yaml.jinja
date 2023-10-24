@@ -20,7 +20,7 @@ services:
 
     build:
       context: .
-      dockerfile: ./dockerfiles/nginx.Dockerfile
+      dockerfile: dockerfiles/nginx.Dockerfile
 
     user: root
     entrypoint: [ ]
@@ -39,6 +39,7 @@ services:
 
     volumes:
       - './config/nginx:/etc/nginx:ro'
+      - './config/nginx/logrotate.conf:/etc/logrotate.d/nginx:ro'
       - './third_party/server_configs_nginx/h5bp:/etc/nginx/h5bp:ro'
       - './third_party/server_configs_nginx/mime.types:/etc/nginx/mime.types:ro'
       - './third_party/server_configs_nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
@@ -216,7 +217,7 @@ services:
 
     build:
       context: .
-      dockerfile: ./dockerfiles/filebrowser.Dockerfile
+      dockerfile: dockerfiles/filebrowser.Dockerfile
 
     user: root
     entrypoint: [ ]
@@ -261,7 +262,7 @@ services:
 
     build:
       context: .
-      dockerfile: ./dockerfiles/jupyterhub.Dockerfile
+      dockerfile: dockerfiles/jupyterhub.Dockerfile
 
     user: root
     entrypoint: [ ]
@@ -304,7 +305,7 @@ services:
 
     build:
       context: .
-      dockerfile: ./dockerfiles/privatebin.Dockerfile
+      dockerfile: dockerfiles/privatebin.Dockerfile
 
     user: 'nobody:www-data'
     entrypoint: [ ]
@@ -332,7 +333,7 @@ services:
 
     build:
       context: .
-      dockerfile: ./dockerfiles/rstudio.Dockerfile
+      dockerfile: dockerfiles/rstudio.Dockerfile
 
     user: root
     entrypoint: [ ]
