@@ -19,7 +19,7 @@ location /app/filebrowser/ {
     }
 
     if ($http_referer ~* \?.*iframe=1.*$) {
-        return 307 $scheme://$host$uri?iframe=1&$args;
+        return 307 $scheme://$host$escaped_uri?iframe=1&$args;
     }
 
     error_page 480 = @filebrowser;
@@ -31,7 +31,7 @@ location /app/filebrowser/api/public {
     include snippets/auth.conf;
 
     if ($arg_iframe = "") {
-        return 307 $scheme://$host$uri?iframe=1&$args;
+        return 307 $scheme://$host$escaped_uri?iframe=1&$args;
     }
 
     proxy_pass http://filebrowser;
@@ -41,7 +41,7 @@ location @filebrowser {
     include snippets/proxy.conf;
     include snippets/auth.conf;
 
-    proxy_pass http://filebrowser$uri?$filtered_args;
+    proxy_pass http://filebrowser$escaped_uri?$filtered_args;
     proxy_redirect ~*^(?:https?://[^/]+)?/app/filebrowser([^?]*)\??(.*)$ /app/filebrowser$1?iframe=1&$2;
 }
 {% endif %}

@@ -55,6 +55,8 @@ server {
     rewrite_log on;
     {% endif %}
 
+    set_escape_uri $escaped_uri $uri;
+
     location / {
         include snippets/proxy.conf;
         include snippets/auth.conf;

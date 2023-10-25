@@ -19,7 +19,7 @@ location /app/privatebin/ {
     }
 
     if ($http_referer ~* \?.*iframe=1.*$) {
-        return 307 $scheme://$host$uri?iframe=1&$args;
+        return 307 $scheme://$host$escaped_uri?iframe=1&$args;
     }
 
     error_page 480 = @privatebin;
@@ -31,7 +31,7 @@ location @privatebin {
     include snippets/auth.conf;
 
     # Break into two lines to avoid regex capturing group being overwritten
-    rewrite ^.*$ $uri?$filtered_args?;
+    rewrite ^.*$ $escaped_uri?$filtered_args?;
     rewrite ^/app/privatebin/(.*)$ /$1 break;
 
     proxy_pass http://privatebin;
