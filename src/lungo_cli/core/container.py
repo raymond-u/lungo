@@ -8,15 +8,15 @@ from .console import Console
 from .constants import APP_NAME_CAPITALIZED, DOCKER_URL, PODMAN_COMPOSE_URL, PODMAN_URL
 from .file import FileUtils
 from .storage import Storage
-from ..helpers.common import format_command, format_program, program_exists
+from ..helpers.common import format_command, format_link, format_program, program_exists
 from ..models.base import EService
 
-docker = format_program("Docker")
-podman = format_program("Podman")
-podman_compose = format_program("podman-compose")
-docker_link = f"[link={DOCKER_URL}]{docker}[/link]"
-podman_link = f"[link={PODMAN_URL}]{podman}[/link]"
-podman_compose_link = f"[link={PODMAN_COMPOSE_URL}]{podman_compose}[/link]"
+_docker = format_program("Docker")
+_podman = format_program("Podman")
+_podman_compose = format_program("podman-compose")
+_docker_link = format_link(DOCKER_URL, _docker)
+_podman_link = format_link(PODMAN_URL, _podman)
+_podman_compose_link = format_link(PODMAN_COMPOSE_URL, _podman_compose)
 
 
 class EContainerTool(Enum):
@@ -58,27 +58,27 @@ class Container:
             return self.tool
 
         if program_exists("docker"):
-            self.console.print_info(f"Found {docker}. Use {docker} for the following operations.")
+            self.console.print_info(f"Found {_docker}. Use {_docker} for the following operations.")
             self.tool = EContainerTool.DOCKER
 
             return EContainerTool.DOCKER
         elif program_exists("podman"):
             if program_exists("podman-compose"):
-                self.console.print_info(f"Found {podman}. Use {podman} for the following operations.")
+                self.console.print_info(f"Found {_podman}. Use {_podman} for the following operations.")
                 self.tool = EContainerTool.PODMAN
 
                 return EContainerTool.PODMAN
             else:
                 self.console.print_error(
-                    f"{podman_link} is installed, but {podman_compose_link} is not. "
-                    f"Please install {podman_compose_link}."
+                    f"{_podman_link} is installed, but {_podman_compose_link} is not. "
+                    f"Please install {_podman_compose_link}."
                 )
                 raise Exit(code=1)
         else:
             self.console.print_error(
                 (
-                    f"Neither {docker_link} nor {podman_link} is installed."
-                    f"Please install one of them. For {podman_link}, you will also need {podman_compose_link}."
+                    f"Neither {_docker_link} nor {_podman_link} is installed."
+                    f"Please install one of them. For {_podman_link}, you will also need {_podman_compose_link}."
                 )
             )
             raise Exit(code=1)

@@ -42,6 +42,14 @@ def format_path(value: str | PathLike[str]) -> str:
     return f"[magenta]{value}[/magenta]"
 
 
+def format_link(value: str, title: str | None = None) -> str:
+    """Format a link for console output."""
+    if title:
+        return f"[link={value}]{title}[/link]"
+    else:
+        return f"[link={value}]{format_path(value)}[/link]"
+
+
 def format_input(value: str | Enum) -> str:
     """Format user input for console output."""
     if isinstance(value, Enum):
