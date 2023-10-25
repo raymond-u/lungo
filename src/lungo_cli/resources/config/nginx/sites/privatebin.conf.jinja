@@ -31,7 +31,7 @@ location @privatebin {
     include snippets/auth.conf;
 
     # Break into two lines to avoid regex capturing group being overwritten
-    rewrite ^.*$ $escaped_uri?$filtered_args?;
+    rewrite ^ $escaped_uri?$filtered_args?;
     rewrite ^/app/privatebin/(.*)$ /$1 break;
 
     proxy_pass http://privatebin;

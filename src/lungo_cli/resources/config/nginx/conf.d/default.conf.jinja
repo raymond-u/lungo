@@ -21,6 +21,12 @@ map $args $filtered_args {
     ~*^(.*)iframe=1&?(.*)$ $1$2;
 }
 
+# Escape the URL path
+map $request_uri $escaped_uri {
+    default       $request_uri;
+    ~*^([^?]*).*$ $1;
+}
+
 # Workaround for a bug in Oathkeeper
 map $request_method $auth_request_method {
     default $request_method;
@@ -54,8 +60,6 @@ server {
     error_log /dev/stdout debug;
     rewrite_log on;
     {% endif %}
-
-    set_escape_uri $escaped_uri $uri;
 
     location / {
         include snippets/proxy.conf;

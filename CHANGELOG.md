@@ -2,6 +2,12 @@
 
 ## Nightly
 
+## 0.1.5
+
+### Patch changes
+
+- Make Nginx handle encoded URL paths correctly
+
 ## 0.1.4
 
 ### Patch changes
