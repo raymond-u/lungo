@@ -2,6 +2,12 @@
 
 ## Nightly
 
+## 0.1.6
+
+### Patch changes
+
+- Update email template styles
+
 ## 0.1.5
 
 ### Patch changes
