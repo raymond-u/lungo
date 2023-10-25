@@ -2,6 +2,13 @@
 
 ## Nightly
 
+## 0.1.4
+
+### Patch changes
+
+- Set Bash as the default shell in the container
+- Make Nginx handle encoded URL paths correctly
+
 ## 0.1.3
 
 ### Patch changes
