@@ -87,7 +87,7 @@ services:
     entrypoint: [ ]
     command: >-
       sh -c 'keto migrate up -c /etc/keto/config.yaml -y;
-      keto serve -c /etc/keto/config.yaml --sqa-opt-out'
+      keto serve -c /etc/keto/config.yaml --sqa-opt-out >/var/log/keto/main.log 2>&1'
 
     networks:
       static:
@@ -97,6 +97,7 @@ services:
 
     volumes:
       - './config/keto:/etc/keto:ro'
+      - '{{ app_dirs.cache_dir }}/keto:/var/log/keto:rw'
       - '{{ app_dirs.managed_dir }}/keto:/var/lib/keto:rw'
 
     restart: 'no'
@@ -111,7 +112,8 @@ services:
     entrypoint: [ ]
     command: >-
       sh -c 'kratos migrate sql -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml -e -y;
-      kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out --watch-courier'
+      kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml
+        --sqa-opt-out --watch-courier >/var/log/kratos/main.log 2>&1'
 
     networks:
       static:
@@ -121,6 +123,7 @@ services:
 
     volumes:
       - './config/kratos:/etc/kratos:ro'
+      - '{{ app_dirs.cache_dir }}/kratos:/var/log/kratos:rw'
       - '{{ app_dirs.managed_dir }}/kratos:/var/lib/kratos:rw'
 
     environment:
@@ -139,7 +142,7 @@ services:
 
     user: root
     entrypoint: [ ]
-    command: oathkeeper serve -c /etc/oathkeeper/config.yaml --sqa-opt-out
+    command: oathkeeper serve -c /etc/oathkeeper/config.yaml --sqa-opt-out >/var/log/oathkeeper/main.log 2>&1
 
     networks:
       static:
@@ -149,6 +152,7 @@ services:
 
     volumes:
       - './config/oathkeeper:/etc/oathkeeper:ro'
+      - '{{ app_dirs.cache_dir }}/oathkeeper:/var/log/oathkeeper:rw'
 
     restart: 'no'
 
