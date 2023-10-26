@@ -2,6 +2,10 @@
 
 ## Nightly
 
+### Minor changes
+
+- Add logging to Keto, Kratos, and Oathkeeper
+
 ## 0.1.6
 
 ### Patch changes
