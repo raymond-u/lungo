@@ -5,6 +5,7 @@
 ### Minor changes
 
 - Add logging to Keto, Kratos, and Oathkeeper
+- Documentation
 
 ## 0.1.6
 

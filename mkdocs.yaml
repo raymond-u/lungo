@@ -1,0 +1,87 @@
+site_name: Lungo
+site_url: 'https://raymond-u.github.io/lungo/'
+repo_name: 'raymond-u/lungo'
+repo_url: 'https://github.com/raymond-u/lungo'
+remote_branch: gh-pages
+copyright: 'Copyright &copy; 2023 raymond-u'
+edit_uri: edit/main/docs/
+
+nav:
+  - Home: index.md
+  - Overview:
+      - Architecture: overview/architecture.md
+      - Security: overview/security.md
+      - Supported applications: overview/supported-applications.md
+  - Installation: installation.md
+  - Getting Started:
+      - Prerequisites: getting-started/prerequisites.md
+      - Configuring settings: getting-started/configuring-settings.md
+      - Managing users: getting-started/managing-users.md
+      - Launching the service: getting-started/launching-the-service.md
+  - Guides:
+      - Allowing anonymous access: guides/allowing-anonymous-access.md
+      - Using local home directories: guides/using-local-home-directories.md
+  - Configuration:
+      - Reference for config.yaml: configuration/reference-for-config-yaml.md
+      - Reference for users.yaml: configuration/reference-for-users-yaml.md
+  - CLI Reference: cli-reference.md
+  - Changelog: changelog.md
+
+theme:
+  favicon: assets/logo.png
+  logo: assets/logo.png
+  name: material
+  custom_dir: docs/overrides
+
+  features:
+    - content.action.edit
+    - content.action.view
+    - navigation.footer
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tabs
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - toc.follow
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - mkdocs-typer
+  - sane_lists
+  - tables
+  - toc:
+      permalink: '#'
+      toc_depth: 2
+  - pymdownx.betterem
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      line_spans: __span
+      pygments_lang_class: true
+      use_pygments: true
+  - pymdownx.saneheaders
+  - pymdownx.snippets
+  - pymdownx.striphtml
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+plugins:
+  - glightbox:
+      zoomable: false
+  - mike:
+      canonical_version: latest
+  - search
+
+extra:
+  generator: false
+  version:
+    provider: mike
+
+extra_css:
+  - css/extra.css

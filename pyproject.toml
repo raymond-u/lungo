@@ -13,20 +13,30 @@ packages = [{ include = "lungo_cli", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-typer = { extras = ["all"], version = "^0.9.0" }
-importlib-resources = "^6.0.1"
-platformdirs = "^3.10.0"
 cryptography = "^41.0.3"
+importlib-resources = "^6.0.1"
+jinja2 = "^3.1.2"
+platformdirs = "^3.10.0"
 pydantic = { extras = ["email"], version = "^2.4.2" }
 pydantic-yaml = "^1.2.0"
-jinja2 = "^3.1.2"
 requests = "^2.31.0"
-
-[tool.poetry.scripts]
-lungo = "lungo_cli.app.main:app_wrapper"
+typer = { extras = ["all"], version = "^0.9.0" }
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.9.1"
+
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+mike = "^2.0.0"
+mkdocs-glightbox = "^0.3.4"
+mkdocs-material = "^9.4.7"
+mkdocs-mermaid2-plugin = "^1.1.1"
+mkdocs-typer = "^0.0.3"
+
+[tool.poetry.scripts]
+lungo = "lungo_cli.app.main:app_wrapper"
 
 [build-system]
 requires = ["poetry-core"]
