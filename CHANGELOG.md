@@ -7,10 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.1.6...HEAD)
 
+## [0.1.7](https://github.com/raymond-u/lungo/compare/v0.1.6...v0.1.7) - 2023-11-4
+
 ### Added
 
 - Add logging to Keto, Kratos, and Oathkeeper
 - Documentation
+
+### Fixed
+
+- Do not pass anonymous account to Kratos
 
 ## [0.1.6](https://github.com/raymond-u/lungo/compare/v0.1.5...v0.1.6) - 2023-10-25
 
