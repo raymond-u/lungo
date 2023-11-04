@@ -188,6 +188,10 @@ class AccountManager:
 
         accounts = users.accounts[:]
 
+        # It makes no sense for the anonymous account to be managed by Kratos
+        if anonymous_account := next(filter(lambda x: x.username == "anonymous", accounts), None):
+            accounts.remove(anonymous_account)
+
         for old_account in self.client.get(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities"):
             if new_account := next(filter(lambda x: x.username == old_account["traits"]["username"], accounts), None):
                 # Update the account
