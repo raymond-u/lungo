@@ -1,7 +1,3 @@
-import os
-
-from typer import Exit
-
 from .console import Console
 from .constants import KETO_ADMIN_API_BASE_URL, KRATOS_ADMIN_API_BASE_URL
 from .container import Container
@@ -25,34 +21,6 @@ class AccountManager:
         self.storage = storage
         self.client = client
         self.container = container
-
-    def verify(self, config: Config, users: Users) -> None:
-        shared_dirs = list(map(lambda x: x.name, config.directories.shared_dirs))
-
-        for account in users.accounts:
-            if account.username == "anonymous":
-                self.console.print_warning(
-                    f"Username {format_input('anonymous')} detected. "
-                    "This account will be shared by all unregistered users when they access services "
-                    "that require authentication. Please change the username if not intended."
-                )
-
-            if not (path := (account.extra.user_dir or config.directories.users_dir / account.username)).is_dir():
-                if os.access(path.parent, os.W_OK):
-                    self.console.print_info(f"Creating user directory at {format_path(path)}...")
-                    self.file_utils.create_dir(path)
-                else:
-                    self.console.print_error(
-                        f"User directory at {format_path(path)} does not exist. "
-                        "Please create it with the appropriate permissions."
-                    )
-                    raise Exit(code=1)
-
-            shared_dirs.extend(map(lambda x: x.name, account.extra.shared_dirs))
-
-        if len(shared_dirs) != len(set(shared_dirs)):
-            self.console.print_error("Duplicate shared directories detected. Please use unique directory names.")
-            raise Exit(code=1)
 
     def update(self, config: Config, users: Users) -> None:
         # Ensure that the container can always be started even if it failed last time

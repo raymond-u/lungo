@@ -21,7 +21,8 @@ class SharedDir(Base):
     # noinspection PyNestedDecorators
     @field_validator("name")
     @classmethod
-    def name_must_not_be_home(cls, v: str) -> str:
+    def name_field_validator(cls, v: str) -> str:
+        # Name must not be "home" because it is used as a mount point for the user's home directory
         if v == "home":
             raise ValueError("must not be 'home'")
 
@@ -87,8 +88,8 @@ class Privilege(Base):
 
 
 class Privileges(Base):
-    unregistered: Privilege = Privilege(allowed_apps=[EApp.PRIVATEBIN])
-    guest: Privilege = Privilege(allowed_apps=[EApp.FILEBROWSER])
+    unregistered: Privilege = Privilege(allowed_apps=[])
+    guest: Privilege = Privilege(allowed_apps=[EApp.FILEBROWSER, EApp.PRIVATEBIN])
     user: Privilege = Privilege(allowed_apps=[EApp.JUPYTERHUB, EApp.RSTUDIO])
     admin: Privilege = Privilege(allowed_apps="all")
 

@@ -4,7 +4,7 @@ from typer import Exit, Option, Typer
 
 from .state import console
 from ..commands import check, down, up
-from ..core.constants import APP_NAME_CAPITALIZED
+from ..core.constants import APP_NAME, APP_NAME_CAPITALIZED
 from ..helpers.common import get_app_version
 
 app = Typer(
@@ -30,7 +30,7 @@ def version_callback(value: bool):
         raise Exit()
 
 
-@app.callback()
+@app.callback(APP_NAME)
 def main(
     version: Annotated[
         bool,
@@ -44,6 +44,6 @@ def main(
     ] = False
 ):
     """
-    A CLI tool for interacting with Lungo, a home lab setup for small-to-mid-scale private on-premises deployments.
+    A CLI tool for Lungo: a user-friendly home lab setup designed for small-to-mid-scale on-premises hosting.
     """
     ...

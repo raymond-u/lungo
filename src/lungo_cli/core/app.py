@@ -1,3 +1,4 @@
+import os
 from os import PathLike
 from pathlib import Path
 
@@ -11,8 +12,9 @@ from .database import AccountManager
 from .file import FileUtils
 from .renderer import Renderer
 from .storage import Storage
-from ..helpers.common import format_path, get_file_permissions
+from ..helpers.common import format_input, format_path, get_file_permissions
 from ..helpers.crypto import generate_random_hex, generate_self_signed_cert
+from ..models.base import EApp
 from ..models.config import Config
 from ..models.users import Users
 
@@ -118,7 +120,6 @@ class AppManager:
                 self.file_utils.remove(self.storage.init_file)
 
                 self.renderer.render_all(self.context_manager.context)
-                self.account_manager.verify(self.context_manager.config, self.context_manager.users)
                 self.account_manager.update(self.context_manager.config, self.context_manager.users)
 
                 self.file_utils.write_text(self.storage.init_file, config_hash)
@@ -165,5 +166,55 @@ class AppManager:
         if config.directories.data_dir:
             self.storage.data_dir = config.directories.data_dir.resolve()
 
+        self.verify_config(config, users)
+
         self.context_manager.config = config
         self.context_manager.users = users
+
+    def verify_config(self, config: Config, users: Users) -> None:
+        shared_dirs = list(map(lambda x: x.name, config.directories.shared_dirs))
+        anonymous_account_exists = False
+
+        for account in users.accounts:
+            if account.username == "anonymous":
+                self.console.print_info(
+                    f"Found username {format_input('anonymous')}. "
+                    "This user will serve as a shared account for anonymous access."
+                )
+                anonymous_account_exists = True
+
+            if not (path := (account.extra.user_dir or config.directories.users_dir / account.username)).is_dir():
+                if os.access(path.parent, os.W_OK):
+                    self.console.print_info(f"Creating user directory at {format_path(path)}...")
+                    self.file_utils.create_dir(path)
+                else:
+                    self.console.print_error(
+                        f"User directory at {format_path(path)} does not exist. "
+                        "Please create it with the appropriate permissions."
+                    )
+                    raise Exit(code=1)
+
+            shared_dirs.extend(map(lambda x: x.name, account.extra.shared_dirs))
+
+        if len(shared_dirs) != len(set(shared_dirs)):
+            self.console.print_error("Duplicate shared directories detected. Please use unique directory names.")
+            raise Exit(code=1)
+
+        if not anonymous_account_exists:
+            if config.rules.privileges.unregistered.allowed_apps == "all":
+                self.console.print_error(
+                    "An anonymous account is required when the unregistered role has access to all applications."
+                )
+                raise Exit(code=1)
+
+            for allowed_app in config.rules.privileges.unregistered.allowed_apps:
+                # Pydantic does not distinguish between a string and a enum value
+                if type(allowed_app) is str:
+                    allowed_app = EApp(allowed_app)
+
+                if allowed_app in (EApp.FILEBROWSER, EApp.JUPYTERHUB, EApp.RSTUDIO):
+                    self.console.print_error(
+                        "An anonymous account is required when the unregistered role "
+                        "has access to applications that require an account."
+                    )
+                    raise Exit(code=1)
