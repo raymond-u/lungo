@@ -41,6 +41,8 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git fetch origin gh-pages --depth=1
+          if (( $(git ls-remote --heads origin refs/heads/gh-pages | wc -l) )); then
+            git fetch origin gh-pages --depth=1
+          fi
           poetry run mike deploy --push --update-aliases ${{ steps.docs_version.outputs.docs_version }} latest
           poetry run mike set-default --push latest

@@ -25,9 +25,9 @@ jobs:
         id: changelog
         run: |
           {
-            echo "changelog<<'EOF'"
+            echo 'changelog<<EOF'
             sed "/^## ${GITHUB_REF_NAME#v}\$/,/^## /!d;//d;/./,\$!d" CHANGELOG.md  
-            echo EOF
+            echo 'EOF'
           } >> "$GITHUB_OUTPUT"
 
       - name: Create release
