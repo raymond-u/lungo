@@ -1,4 +1,4 @@
-## Lungo general configuration
+## Configuration file for general settings
 
 # =========
 # branding:
@@ -201,7 +201,7 @@
 
 #       # Allowed apps, or 'all' to allow all apps
 #       # Type: 'all' | array
-#       # Default: ['filebrowser']
+#       # Default: ['filebrowser', 'privatebin']
 #       # Required: no
 #       allowed_apps:
 #         - filebrowser
@@ -211,7 +211,7 @@
 
 #       # Allowed apps, or 'all' to allow all apps
 #       # Type: 'all' | array
-#       # Default: ['rstudio']
+#       # Default: ['jupyterhub', 'rstudio']
 #       # Required: no
 #       allowed_apps:
 #         - rstudio
