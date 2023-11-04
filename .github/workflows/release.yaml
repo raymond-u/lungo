@@ -9,6 +9,34 @@ permissions:
   contents: read
 
 jobs:
+  gh_release:
+    name: Create GitHub release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Get changelog
+        id: changelog
+        run: |
+          {
+            echo "changelog<<'EOF'"
+            sed "/^## ${GITHUB_REF_NAME#v}\$/,/^## /!d;//d;/./,\$!d" CHANGELOG.md  
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          body: ${{ steps.changelog.outputs.changelog }}
+          makeLatest: true
+
   pypi_release:
     name: Publish to PyPI
     runs-on: ubuntu-latest

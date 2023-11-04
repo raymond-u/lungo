@@ -1,0 +1,46 @@
+name: Docs
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy_docs:
+    name: Deploy docs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install dependencies
+        run: poetry install --with docs --no-interaction
+
+      - name: Get docs version
+        id: docs_version
+        run: |
+          stripped="${GITHUB_REF_NAME#v}"
+          minor="${stripped%.*}"
+          echo "docs_version=${minor}" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy docs
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git fetch origin gh-pages --depth=1
+          poetry run mike deploy --push --update-aliases ${{ steps.docs_version.outputs.docs_version }} latest
+          poetry run mike set-default --push latest
