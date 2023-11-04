@@ -26,7 +26,7 @@ jobs:
         run: |
           {
             echo 'changelog<<EOF'
-            sed '/^## \['${GITHUB_REF_NAME#v}'\].*$/,/^## /!d;//d;/./,$!d;s/###/#/' CHANGELOG.md
+            sed '/^## \['${GITHUB_REF_NAME#v}'\].*$/,/^## /!d;//d;/./,$!d' CHANGELOG.md
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
 
