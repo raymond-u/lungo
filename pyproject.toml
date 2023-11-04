@@ -9,7 +9,7 @@ authors = ["raymond-u <36328498+raymond-u@users.noreply.github.com>"]
 readme = "README.md"
 repository = "https://github.com/raymond-u/lungo"
 documentation = "https://raymond-u.github.io/lungo/"
-keywords = ["home lab", "self-hosting"]
+keywords = ["homelab", "self-host"]
 packages = [{ include = "lungo_cli", from = "src" }]
 
 [tool.poetry.dependencies]
