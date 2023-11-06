@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.1.8...HEAD)
 
+### Changed
+
+- Update File Browser to 2.26.0
+- Update JupyterLab to 4.0.8
+- Update RStudio to 4.3.2
+
 ### Fixed
 
 - Do not print local variables in panic messages
