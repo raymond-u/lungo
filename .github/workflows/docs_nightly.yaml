@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - '.github/workflows/docs_nightly.yaml'
       - 'docs/**'
       - 'src/lungo_cli/app/main.py'
       - 'src/lungo_cli/commands/*.py'
@@ -42,4 +43,4 @@ jobs:
           if (( $(git ls-remote --heads origin refs/heads/gh-pages | wc -l) )); then
             git fetch origin gh-pages --depth=1
           fi
-          poetry run mike deploy --push nightly
+          poetry run mike deploy --push nightly nightly
