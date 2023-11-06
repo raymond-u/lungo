@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'docs/**'
+      - 'src/lungo_cli/app/main.py'
+      - 'src/lungo_cli/commands/*.py'
       - 'src/lungo_cli/resources/excluded/config.yaml'
       - 'src/lungo_cli/resources/excluded/users.yaml'
       - 'CHANGELOG.md'
