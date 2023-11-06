@@ -82,6 +82,9 @@ extra:
   generator: false
   version:
     provider: mike
+    default:
+      - nightly
+      - stable
 
 extra_css:
   - css/extra.css
