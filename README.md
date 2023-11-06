@@ -64,6 +64,8 @@ command:
 lungo up
 ```
 
+## Documentation
+
 For more information, please refer to the [documentation](https://raymond-u.github.io/lungo/).
 
 ## License
