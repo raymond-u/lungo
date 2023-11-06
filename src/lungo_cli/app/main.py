@@ -10,7 +10,7 @@ from ..helpers.common import get_app_version
 app = Typer(
     context_settings={"help_option_names": ["-h", "--help"]},
     no_args_is_help=True,
-    pretty_exceptions_show_locals=True,
+    pretty_exceptions_show_locals=False,
     rich_markup_mode="rich",
 )
 
