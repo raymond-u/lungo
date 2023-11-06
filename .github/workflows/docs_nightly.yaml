@@ -43,4 +43,4 @@ jobs:
           if (( $(git ls-remote --heads origin refs/heads/gh-pages | wc -l) )); then
             git fetch origin gh-pages --depth=1
           fi
-          poetry run mike deploy --push nightly continuous
+          poetry run mike deploy --push nightly

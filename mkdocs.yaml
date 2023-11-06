@@ -83,7 +83,7 @@ extra:
   version:
     provider: mike
     default:
-      - continuous
+      - nightly
       - stable
 
 extra_css:
