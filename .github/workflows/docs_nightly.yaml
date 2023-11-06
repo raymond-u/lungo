@@ -1,0 +1,43 @@
+name: Docs nightly
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - 'src/lungo_cli/resources/excluded/config.yaml'
+      - 'src/lungo_cli/resources/excluded/users.yaml'
+      - 'CHANGELOG.md'
+      - 'mkdocs.yaml'
+
+jobs:
+  deploy-docs:
+    name: Deploy docs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install dependencies
+        run: poetry install --with docs --no-interaction
+
+      - name: Deploy docs
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          if (( $(git ls-remote --heads origin refs/heads/gh-pages | wc -l) )); then
+            git fetch origin gh-pages --depth=1
+          fi
+          poetry run mike deploy --push nightly

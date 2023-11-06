@@ -2,14 +2,13 @@ name: Release
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
-permissions:
-  contents: read
-
 jobs:
-  gh_release:
+  gh-release:
     name: Create GitHub release
     runs-on: ubuntu-latest
     permissions:
@@ -37,9 +36,11 @@ jobs:
           body: ${{ steps.changelog.outputs.changelog }}
           makeLatest: true
 
-  pypi_release:
+  pypi-release:
     name: Publish to PyPI
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout repo
