@@ -7,7 +7,7 @@ hide:
 
 ## With pipx
 
-The recommended way to install Lungo is using [pipx](https://pypa.github.io/pipx/):
+The recommended way to install Lungo is with [pipx](https://pypa.github.io/pipx/):
 
 ```bash linenums="1" title="Terminal"
 pipx install lungo-cli
@@ -15,7 +15,7 @@ pipx install lungo-cli
 
 ## With pip
 
-To install Lungo using pip, run:
+To install Lungo with pip, run:
 
 ```bash linenums="1" title="Terminal"
 pip install lungo-cli
