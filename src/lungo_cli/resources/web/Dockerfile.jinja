@@ -2,11 +2,10 @@
 
 FROM docker.io/library/node:{{ NODE_VER }} AS builder
 WORKDIR /app
-COPY package*.json .
-RUN npm ci
+COPY package.json pnpm-lock.yaml .
+RUN corepack enable && pnpm install --frozen-lockfile
 COPY . .
-RUN npm run build
-RUN npm prune --production
+RUN pnpm run build && pnpm prune --prod
 
 FROM docker.io/library/node:{{ NODE_VER }}
 WORKDIR /app

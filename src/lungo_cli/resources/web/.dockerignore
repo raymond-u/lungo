@@ -1,6 +1,7 @@
 Dockerfile
 Dockerfile.jinja
 .dockerignore
+.env
 .git
 .gitignore
 .eslintignore

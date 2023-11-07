@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.1.9...HEAD)
 
+### Fixed
+
+- Fix the outdated warning in the documentation
+
+### Changed
+
+- Migrate to pnpm
+
 ## [0.1.9](https://github.com/raymond-u/lungo/compare/v0.1.8...v0.1.9) - 2023-11-7
 
 ### Changed
