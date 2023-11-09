@@ -1,16 +1,18 @@
+{% set APP_NAME = 'rstudio' %}
+
 {% if config.modules.rstudio.enabled %}
-location = /app/rstudio {
+location = /app/{{ APP_NAME }} {
     include snippets/proxy.conf;
     include snippets/auth.conf;
 
     if ($arg_iframe) {
-        return 307 $scheme://$host/app/rstudio/?$args;
+        return 307 $scheme://$host/app/{{ APP_NAME }}/?$args;
     }
 
     proxy_pass http://node;
 }
 
-location /app/rstudio/ {
+location /app/{{ APP_NAME }}/ {
     include snippets/proxy.conf;
     include snippets/auth.conf;
 
@@ -27,20 +29,20 @@ location /app/rstudio/ {
         return 307 $scheme://$host$escaped_uri?iframe=1&$args;
     }
 
-    error_page 480 = @rstudio;
+    error_page 480 = @{{ APP_NAME }};
     proxy_pass http://node;
 }
 
-location @rstudio {
+location @{{ APP_NAME }} {
     include snippets/proxy.conf;
     include snippets/auth.conf;
 
     # Break into two lines to avoid regex capturing group being overwritten
     rewrite ^ $escaped_uri?$filtered_args?;
-    rewrite ^/app/rstudio/(.*)$ /$1 break;
+    rewrite ^/app/{{ APP_NAME }}/(.*)$ /$1 break;
 
-    proxy_set_header X-RStudio-Root-Path /app/rstudio;
-    proxy_pass http://rstudio;
-    proxy_redirect ~*^(?:https?://[^/]+)?/app/rstudio([^?]*)\??(.*)$ /app/rstudio$1?iframe=1&$2;
+    proxy_set_header X-RStudio-Root-Path /app/{{ APP_NAME }};
+    proxy_pass http://{{ APP_NAME }};
+    proxy_redirect ~*^(?:https?://[^/]+)?/app/{{ APP_NAME }}([^?]*)\??(.*)$ /app/{{ APP_NAME }}$1?iframe=1&$2;
 }
 {% endif %}
