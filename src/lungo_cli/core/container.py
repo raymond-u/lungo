@@ -1,6 +1,7 @@
 import subprocess
 from os import PathLike
 
+from packaging.specifiers import SpecifierSet
 from typer import Exit
 
 from .console import Console
@@ -36,13 +37,20 @@ class Container:
         self.preferred_tool = tool
 
     def run_shell_command(
-        self, *command: str, cwd: str | PathLike[str] | None = None, show_output: bool = False
-    ) -> None:
+        self, *command: str, cwd: str | PathLike[str] | None = None, capture_output: bool = False
+    ) -> str | None:
         command = list(filter(None, command))
 
         try:
-            if show_output:
-                subprocess.run(command, check=True, cwd=cwd or self.storage.bundled_dir)
+            if capture_output:
+                result = subprocess.run(
+                    command,
+                    capture_output=True,
+                    check=True,
+                    cwd=cwd or self.storage.bundled_dir,
+                    text=True,
+                )
+                return result.stdout
             else:
                 subprocess.run(
                     command,
@@ -51,6 +59,7 @@ class Container:
                     stderr=subprocess.DEVNULL,
                     stdout=subprocess.DEVNULL,
                 )
+                return None
         except Exception as e:
             self.console.print_error(f"Failed to run command {format_command(*command)} ({e}).")
             raise Exit(code=1)
@@ -75,9 +84,15 @@ class Container:
                 self.console.print_info(f"Found {_podman}. Use {_podman} for the following operations.")
                 self.tool = EContainer.PODMAN
 
-                if self.context_manager.config.security.rate_limiting.enabled and not program_exists("passt"):
-                    self.console.print_error(f"The rate limiting feature requires {_passt_link} to be installed.")
-                    raise Exit(code=1)
+                if self.context_manager.config.security.rate_limiting.enabled:
+                    if (
+                        self.run_shell_command("podman", "--version", capture_output=True).rsplit(" ", 1)[1]
+                    ) not in SpecifierSet(">=4.3.2"):
+                        self.console.print_error(f"The rate limiting feature requires {_podman_link} >= 4.3.2.")
+                        raise Exit(code=1)
+                    if not program_exists("passt"):
+                        self.console.print_error(f"The rate limiting feature requires {_passt_link} to be installed.")
+                        raise Exit(code=1)
 
                 return EContainer.PODMAN
             else:
