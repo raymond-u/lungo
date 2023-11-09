@@ -154,7 +154,7 @@ class Container:
             case EContainer.PODMAN:
                 if self.context_manager.config.security.rate_limiting.enabled:
                     self.run_shell_command(
-                        "podman-compose", "--podman-run-args", "--net=pasta", "up", "-d", "--build", cwd=working_dir
+                        "podman-compose", "--podman-run-args=--net=pasta", "up", "-d", "--build", cwd=working_dir
                     )
                 else:
                     self.run_shell_command("podman-compose", "up", "-d", "--build", cwd=working_dir)
