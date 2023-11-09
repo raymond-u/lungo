@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.1.9...HEAD)
 
+### Added
+
+- Add a new option to rate limit requests per IP address
+
 ### Fixed
 
 - Fix the outdated warning in the documentation
+- Fix a bug where the lock file may persist if the container tool binary cannot be found
 
 ### Changed
 

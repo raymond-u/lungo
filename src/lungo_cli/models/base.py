@@ -15,6 +15,11 @@ class EApp(str, Enum):
     RSTUDIO = "rstudio"
 
 
+class EContainer(str, Enum):
+    DOCKER = "docker"
+    PODMAN = "podman"
+
+
 class EService(str, Enum):
     NGINX = "nginx"
     KETO = "keto"

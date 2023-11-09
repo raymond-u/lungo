@@ -1,3 +1,5 @@
+{% set security = config.security %}
+
 # See Move default writable paths to a dedicated directory (#119)
 # https://github.com/openresty/docker-openresty/issues/119
 client_body_temp_path /var/run/openresty/nginx-client-body;
@@ -6,10 +8,10 @@ fastcgi_temp_path     /var/run/openresty/nginx-fastcgi;
 uwsgi_temp_path       /var/run/openresty/nginx-uwsgi;
 scgi_temp_path        /var/run/openresty/nginx-scgi;
 
-# Support for large file uploads
+# Support uploading large files
 client_max_body_size 128m;
 
-# Support proxying of web-socket connections
+# Support forwarding websocket connections
 map $http_upgrade $connection_upgrade {
     default Upgrade;
     ""      "";
@@ -32,6 +34,13 @@ map $request_method $auth_request_method {
     default $request_method;
     HEAD    GET;
 }
+
+{% if security.rate_limiting.enabled %}
+limit_conn_zone $binary_remote_addr zone=global:10m;
+limit_req_zone $binary_remote_addr zone=account:10m rate=1r/s;
+
+limit_conn global {{ security.rate_limiting.max_connections }};
+{% endif %}
 
 include snippets/upstreams.conf;
 
@@ -57,7 +66,7 @@ server {
     include snippets/certificate.conf;
 
     {% if dev %}
-    error_log /dev/stdout debug;
+    error_log /var/log/nginx/error.log debug;
     rewrite_log on;
     {% endif %}
 
@@ -67,6 +76,17 @@ server {
 
         proxy_pass http://node;
     }
+
+    {% if security.rate_limiting.enabled %}
+    # Rate limit login and password recovery requests
+    location ~* /(?:login|recover) {
+        include snippets/proxy.conf;
+        include snippets/auth.conf;
+
+        limit_req zone=account burst=1;
+        proxy_pass http://node;
+    }
+    {% endif %}
 
     # Files in this directory can only be accessed internally
     location /internal {

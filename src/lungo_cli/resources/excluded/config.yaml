@@ -229,6 +229,21 @@
 # security:
 # =========
 
+#   # Rate limiting settings
+#   rate_limiting:
+
+#     # Enable or disable rate limiting
+#     # Type: boolean
+#     # Default: false
+#     # Required: no
+#     enabled: false
+
+#     # Maximum number of concurrent connections per IP address
+#     # Type: int
+#     # Default: 8
+#     # Required: no
+#     max_connections: 8
+
 #   # Session settings
 #   session:
 
@@ -236,7 +251,7 @@
 #     # Type: int | string
 #     # Default: 'P1DT'
 #     # Required: no
-#     lifetime:
+#     lifetime: 'P1DT'
 
 # =====
 # smtp:

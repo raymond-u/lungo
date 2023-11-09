@@ -1,7 +1,7 @@
 from datetime import timedelta
 from ipaddress import IPv4Network
 
-from pydantic import DirectoryPath, EmailStr, field_validator, FilePath, NewPath
+from pydantic import DirectoryPath, EmailStr, field_validator, FilePath, NewPath, PositiveInt
 
 from .base import AllowedApps, Base, EApp, FileName, Port
 
@@ -98,11 +98,17 @@ class Rules(Base):
     privileges: Privileges = Privileges()
 
 
+class RateLimiting(Base):
+    enabled: bool = False
+    max_connections: PositiveInt = 8
+
+
 class Session(Base):
     lifetime: timedelta = timedelta(days=1)
 
 
 class Security(Base):
+    rate_limiting: RateLimiting = RateLimiting()
     session: Session = Session()
 
 
