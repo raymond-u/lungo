@@ -127,12 +127,12 @@ class Storage:
         return self.excluded_rel / "kratos" / "secrets.yaml.jinja"
 
     @property
-    def nginx_cert_file(self) -> Path:
-        return self.generated_dir / "nginx" / "lungo.crt"
+    def nginx_gateway_cert_file(self) -> Path:
+        return self.generated_dir / "nginx_gateway" / "lungo.crt"
 
     @property
-    def nginx_key_file(self) -> Path:
-        return self.generated_dir / "nginx" / "lungo.key"
+    def nginx_gateway_key_file(self) -> Path:
+        return self.generated_dir / "nginx_gateway" / "lungo.key"
 
     @property
     def kratos_secrets_file(self) -> Path:

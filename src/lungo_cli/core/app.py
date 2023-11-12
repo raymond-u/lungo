@@ -80,11 +80,11 @@ class AppManager:
                 self.file_utils.change_mode(self.storage.bundled_dir, 0o700)
                 self.file_utils.remove(self.storage.init_file)
 
-            if not self.storage.nginx_cert_file.is_file() or not self.storage.nginx_key_file.is_file():
+            if not self.storage.nginx_gateway_cert_file.is_file() or not self.storage.nginx_gateway_key_file.is_file():
                 self.console.print_info("Generating self-signed certificate...")
                 cert, key = generate_self_signed_cert()
-                self.file_utils.write_bytes(self.storage.nginx_cert_file, cert)
-                self.file_utils.write_bytes(self.storage.nginx_key_file, key, True)
+                self.file_utils.write_bytes(self.storage.nginx_gateway_cert_file, cert)
+                self.file_utils.write_bytes(self.storage.nginx_gateway_key_file, key, True)
 
             if not self.storage.kratos_secrets_file.is_file():
                 self.console.print_info("Generating Kratos secrets...")

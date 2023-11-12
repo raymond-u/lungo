@@ -21,6 +21,7 @@ class EContainer(str, Enum):
 
 
 class EService(str, Enum):
+    NGINX_GATEWAY = "nginx_gateway"
     NGINX = "nginx"
     KETO = "keto"
     KRATOS = "kratos"

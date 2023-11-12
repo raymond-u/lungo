@@ -6,7 +6,7 @@ location = /app/{{ APP_NAME }} {
     include snippets/auth.conf;
 
     if ($arg_iframe) {
-        return 307 $scheme://$host/app/{{ APP_NAME }}/?$args;
+        return 307 $http_x_forwarded_proto://$http_x_forwarded_host/app/{{ APP_NAME }}/?$args;
     }
 
     proxy_pass http://node;
@@ -21,7 +21,7 @@ location /app/{{ APP_NAME }}/ {
     }
 
     if ($http_referer ~* \?.*iframe=1.*$) {
-        return 307 $scheme://$host$escaped_uri?iframe=1&$args;
+        return 307 $http_x_forwarded_proto://$http_x_forwarded_host$escaped_uri?iframe=1&$args;
     }
 
     error_page 480 = @{{ APP_NAME }};
@@ -33,7 +33,7 @@ location /app/{{ APP_NAME }}/api/public {
     include snippets/auth.conf;
 
     if ($arg_iframe = "") {
-        return 307 $scheme://$host$escaped_uri?iframe=1&$args;
+        return 307 $http_x_forwarded_proto://$http_x_forwarded_host$escaped_uri?iframe=1&$args;
     }
 
     proxy_pass http://{{ APP_NAME }};

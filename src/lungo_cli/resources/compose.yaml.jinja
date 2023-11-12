@@ -14,6 +14,48 @@ services:
   # Reverse proxy #
   # ============= #
 
+  nginx_gateway:
+    container_name: nginx_gateway
+    hostname: nginx_gateway
+
+    build:
+      context: .
+      dockerfile: dockerfiles/nginx.Dockerfile
+
+    user: root
+    entrypoint: [ ]
+    command: >-
+      sh -c 'crond -b;
+      openresty -c /etc/nginx/nginx.conf -e /var/log/nginx/error.log -g "daemon off;" -p /etc/nginx'
+
+    network_mode: 'slirp4netns:port_handler=slirp4netns'
+    ports:
+      {% if network.http.enabled %}
+      - '{{ network.http.port }}:80'
+      {% endif %}
+      - '{{ network.https.port }}:443'
+
+    volumes:
+      - './config/nginx_gateway:/etc/nginx:ro'
+      - './third_party/server_configs_nginx/h5bp:/etc/nginx/h5bp:ro'
+      - './third_party/server_configs_nginx/mime.types:/etc/nginx/mime.types:ro'
+      - './third_party/server_configs_nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
+      - '{{ app_dirs.cache_dir }}/nginx_gateway:/var/log/nginx:rw'
+      - '{{ app_dirs.managed_dir }}/nginx_gateway/sockets:/var/run/nginx/sockets:rw'
+      {% if network.https.tls %}
+      - '{{ network.https.tls.cert }}:/etc/ssl/certs/lungo.crt:ro'
+      {% else %}
+      - '{{ app_dirs.generated_dir }}/nginx_gateway/lungo.crt:/etc/ssl/certs/lungo.crt:ro'
+      {% endif %}
+
+    secrets:
+      - source: NGINX_PRIVATE_KEY
+        target: /etc/ssl/private/lungo.key
+
+    depends_on:
+      - nginx
+    restart: 'no'
+
   nginx:
     container_name: nginx
     hostname: nginx
@@ -31,28 +73,14 @@ services:
     networks:
       static:
         ipv4_address: {{ ip_addresses.nginx }}
-    ports:
-      {% if network.http.enabled %}
-      - '{{ network.http.port }}:80'
-      {% endif %}
-      - '{{ network.https.port }}:443'
 
     volumes:
       - './config/nginx:/etc/nginx:ro'
-      - './config/nginx/logrotate.conf:/etc/logrotate.d/nginx:ro'
       - './third_party/server_configs_nginx/h5bp:/etc/nginx/h5bp:ro'
       - './third_party/server_configs_nginx/mime.types:/etc/nginx/mime.types:ro'
       - './third_party/server_configs_nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
       - '{{ app_dirs.cache_dir }}/nginx:/var/log/nginx:rw'
-      {% if network.https.tls %}
-      - '{{ network.https.tls.cert }}:/etc/ssl/certs/lungo.crt:ro'
-      {% else %}
-      - '{{ app_dirs.generated_dir }}/nginx/lungo.crt:/etc/ssl/certs/lungo.crt:ro'
-      {% endif %}
-
-    secrets:
-      - source: NGINX_PRIVATE_KEY
-        target: /etc/ssl/private/lungo.key
+      - '{{ app_dirs.managed_dir }}/nginx_gateway/sockets:/var/run/nginx/sockets:rw'
 
     depends_on:
       - keto
@@ -382,7 +410,7 @@ secrets:
       {% if network.https.tls %}
       {{ network.https.tls.key }}
       {% else %}
-      {{ app_dirs.generated_dir }}/nginx/lungo.key
+      {{ app_dirs.generated_dir }}/nginx_gateway/lungo.key
       {% endif %}
   KRATOS_SECRETS:
     file: '{{ app_dirs.generated_dir }}/kratos/secrets.yaml'

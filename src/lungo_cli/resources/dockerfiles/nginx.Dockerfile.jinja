@@ -3,10 +3,23 @@
 FROM docker.io/openresty/openresty:{{ NGINX_VER }}
 RUN adduser -D -H -S www-data && \
     apk --update add logrotate && \
+    printf '%s\n' >/etc/logrotate.d/nginx \
+        '/var/log/nginx/*.log {' \
+        '    daily' \
+        '    compress' \
+        '    delaycompress' \
+        '    rotate 30' \
+        '    missingok' \
+        '    nocreate' \
+        '    sharedscripts' \
+        '    postrotate' \
+        '        test ! -f /var/run/nginx.pid || kill -USR1 `cat /var/run/nginx.pid`' \
+        '    endscript' \
+        '}' && \
     printf '%s\n' >/etc/periodic/daily/logrotate \
-    '#!/bin/sh' \
-    'if [ -f /etc/conf.d/logrotate ]; then' \
-    '    . /etc/conf.d/logrotate' \
-    'fi' \
-    'logrotate /etc/logrotate.d/nginx' && \
+        '#!/bin/sh' \
+        'if [ -f /etc/conf.d/logrotate ]; then' \
+        '    . /etc/conf.d/logrotate' \
+        'fi' \
+        'logrotate /etc/logrotate.d/nginx' && \
     chmod +x /etc/periodic/daily/logrotate
