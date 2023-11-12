@@ -12,8 +12,9 @@ from .database import AccountManager
 from .file import FileUtils
 from .renderer import Renderer
 from .storage import Storage
-from ..helpers.common import format_input, format_path, get_file_permissions
+from ..helpers.common import get_file_permissions
 from ..helpers.crypto import generate_random_hex, generate_self_signed_cert
+from ..helpers.format import format_input, format_path
 from ..models.base import EApp
 from ..models.config import Config
 from ..models.users import Users

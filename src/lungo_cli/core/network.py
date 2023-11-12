@@ -5,7 +5,7 @@ import requests
 from typer import Exit
 
 from .console import Console
-from ..helpers.common import format_path
+from ..helpers.format import format_path
 
 
 class HttpApiClient:

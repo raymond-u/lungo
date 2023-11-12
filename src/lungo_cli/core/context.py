@@ -5,7 +5,7 @@ from typer import Exit
 from .console import Console
 from .file import FileUtils
 from .storage import Storage
-from ..helpers.common import format_input
+from ..helpers.format import format_input
 from ..models.config import Config
 from ..models.context import AppDirs, Context, IpAddresses
 from ..models.users import Users

@@ -7,7 +7,7 @@ from typer import Exit
 from .console import Console
 from .file import FileUtils
 from .storage import Storage
-from ..helpers.common import format_path
+from ..helpers.format import format_path
 from ..models.context import Context
 
 

@@ -8,7 +8,8 @@ from .constants import APP_NAME_CAPITALIZED, DOCKER_URL, PODMAN_COMPOSE_URL, POD
 from .context import ContextManager
 from .file import FileUtils
 from .storage import Storage
-from ..helpers.common import format_command, format_link, format_program, program_exists
+from ..helpers.common import program_exists
+from ..helpers.format import format_command, format_link, format_program
 from ..models.base import EContainer, EService
 
 _docker = format_program("Docker")

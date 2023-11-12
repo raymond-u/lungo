@@ -7,7 +7,7 @@ from platformdirs import user_cache_path, user_config_path, user_data_path
 from .console import Console
 from .constants import APP_AUTHOR, APP_NAME, STORAGE_PREFIX, STORAGE_VERSION
 from .file import FileUtils
-from ..helpers.common import format_path
+from ..helpers.format import format_path
 from ..models.base import EService
 
 

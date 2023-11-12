@@ -5,7 +5,7 @@ from typer import Option
 from .base import config_dir_type, dev_type, force_init_type, quiet_type, remove_lock_type, verbosity_type
 from ..app.state import app_manager, console, container, context_manager
 from ..core.constants import APP_NAME, APP_NAME_CAPITALIZED
-from ..helpers.common import format_command, format_link
+from ..helpers.format import format_command, format_link
 from ..models.base import EContainer
 
 
