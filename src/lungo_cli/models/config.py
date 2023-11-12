@@ -1,7 +1,7 @@
 from datetime import timedelta
 from ipaddress import IPv4Network
 
-from pydantic import DirectoryPath, EmailStr, field_validator, FilePath, NewPath, PositiveInt
+from pydantic import DirectoryPath, EmailStr, field_validator, FilePath, NewPath
 
 from .base import AllowedApps, Base, EApp, FileName, Port
 
@@ -100,7 +100,6 @@ class Rules(Base):
 
 class RateLimiting(Base):
     enabled: bool = False
-    max_connections: PositiveInt = 8
 
 
 class Session(Base):

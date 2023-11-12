@@ -238,12 +238,6 @@
 #     # Required: no
 #     enabled: false
 
-#     # Maximum number of concurrent connections per IP address
-#     # Type: int
-#     # Default: 8
-#     # Required: no
-#     max_connections: 8
-
 #   # Session settings
 #   session:
 

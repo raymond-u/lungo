@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add a new option to rate limit requests per IP address
+- Add a new option to protect sensitive API endpoints from brute force attacks
 
 ### Fixed
 
