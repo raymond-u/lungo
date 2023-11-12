@@ -1,11 +1,10 @@
 import subprocess
 from os import PathLike
 
-from packaging.specifiers import SpecifierSet
 from typer import Exit
 
 from .console import Console
-from .constants import APP_NAME_CAPITALIZED, DOCKER_URL, PASST_URL, PODMAN_COMPOSE_URL, PODMAN_URL
+from .constants import APP_NAME_CAPITALIZED, DOCKER_URL, PODMAN_COMPOSE_URL, PODMAN_URL
 from .context import ContextManager
 from .file import FileUtils
 from .storage import Storage
@@ -13,11 +12,9 @@ from ..helpers.common import format_command, format_link, format_program, progra
 from ..models.base import EContainer, EService
 
 _docker = format_program("Docker")
-_passt = format_program("passt")
 _podman = format_program("Podman")
 _podman_compose = format_program("podman-compose")
 _docker_link = format_link(DOCKER_URL, _docker)
-_passt_link = format_link(PASST_URL, _passt)
 _podman_link = format_link(PODMAN_URL, _podman)
 _podman_compose_link = format_link(PODMAN_COMPOSE_URL, _podman_compose)
 
@@ -83,16 +80,6 @@ class Container:
             if program_exists("podman-compose"):
                 self.console.print_info(f"Found {_podman}. Use {_podman} for the following operations.")
                 self.tool = EContainer.PODMAN
-
-                if self.context_manager.config.security.rate_limiting.enabled:
-                    if (
-                        self.run_shell_command("podman", "--version", capture_output=True).rsplit(" ", 1)[1]
-                    ) not in SpecifierSet(">=4.3.2"):
-                        self.console.print_error(f"The rate limiting feature requires {_podman_link} >= 4.3.2.")
-                        raise Exit(code=1)
-                    if not program_exists("passt"):
-                        self.console.print_error(f"The rate limiting feature requires {_passt_link} to be installed.")
-                        raise Exit(code=1)
 
                 return EContainer.PODMAN
             else:

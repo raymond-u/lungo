@@ -11,7 +11,6 @@ KETO_ADMIN_API_BASE_URL: Final[str] = "http://127.0.0.1:3939"
 KRATOS_ADMIN_API_BASE_URL: Final[str] = "http://127.0.0.1:3940"
 
 DOCKER_URL: Final[str] = "https://www.docker.com/"
-PASST_URL: Final[str] = "https://passt.top/passt/about/"
 PODMAN_URL: Final[str] = "https://podman.io/"
 PODMAN_COMPOSE_URL: Final[str] = "https://github.com/containers/podman-compose"
 
