@@ -10,15 +10,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add a new option to protect sensitive API endpoints from brute force attacks
+- Support Docker Compose with Podman backend
+
+### Changed
+
+- Migrate to pnpm
 
 ### Fixed
 
 - Fix the outdated warning in the documentation
 - Fix a bug where the lock file may persist if the container tool binary cannot be found
-
-### Changed
-
-- Migrate to pnpm
+- Hide the navigation rail when there is no app to display
 
 ## [0.1.9](https://github.com/raymond-u/lungo/compare/v0.1.8...v0.1.9) - 2023-11-7
 

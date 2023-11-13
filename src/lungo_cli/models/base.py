@@ -17,7 +17,8 @@ class EApp(str, Enum):
 
 class EContainer(str, Enum):
     DOCKER = "docker"
-    PODMAN = "podman"
+    DOCKER_COMPOSE = "docker-compose"
+    PODMAN_COMPOSE = "podman-compose"
 
 
 class EService(str, Enum):
