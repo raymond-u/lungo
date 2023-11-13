@@ -1,0 +1,55 @@
+{% set security = config.security %}
+
+access_by_lua_block {
+    local key = ngx.var.binary_remote_addr
+
+    if ngx.var.request_method == "POST" then
+        -- Rate limit to `max_requests` requests per `time_window` seconds
+        local limit_count, err = require("resty.limit.count").new(
+            "count_store",
+            {{ security.rate_limiting.max_requests }},
+            {{ security.rate_limiting.time_window.total_seconds()|int }},
+        )
+
+        if not limit_count then
+            ngx.log(ngx.ERR, "failed to instantiate a resty.limit.count object: ", err)
+            return ngx.exit(500)
+        end
+
+        local delay, err = limit_count:incoming(key, true)
+
+        if not delay then
+            if err == "rejected" then
+                ngx.log(ngx.ERR, "limit count exceeded")
+                return ngx.exit(503)
+            end
+
+            ngx.log(ngx.ERR, "failed to limit count: ", err)
+            return ngx.exit(500)
+        end
+    end
+
+    -- Rate limit to 1 req/sec with a burst of 1 req/sec
+    local limit_req, err = require("resty.limit.req").new("req_store", 1, 1)
+
+    if not limit_req then
+        ngx.log(ngx.ERR, "failed to instantiate a resty.limit.req object: ", err)
+        return ngx.exit(500)
+    end
+
+    local delay, err = limit_req:incoming(key, true)
+
+    if not delay then
+        if err == "rejected" then
+            ngx.log(ngx.ERR, "limit req exceeded")
+            return ngx.exit(503)
+        end
+
+        ngx.log(ngx.ERR, "failed to limit req: ", err)
+        return ngx.exit(500)
+    end
+
+    if delay >= 0.001 then
+        ngx.sleep(delay)
+    end
+}

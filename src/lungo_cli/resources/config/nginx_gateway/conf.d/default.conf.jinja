@@ -18,7 +18,14 @@ map $http_upgrade $connection_upgrade {
 }
 
 {% if security.rate_limiting.enabled %}
-limit_req_zone $binary_remote_addr zone=account:10m rate=1r/s;
+lua_shared_dict count_store 10m;
+lua_shared_dict req_store 10m;
+
+init_by_lua_block {
+    require "resty.core"
+    require "resty.limit.count"
+    require "resty.limit.req"
+}
 {% endif %}
 
 server {
@@ -44,7 +51,6 @@ server {
 
     location / {
         include snippets/proxy.conf;
-
         proxy_pass http://unix:/var/run/nginx/sockets/nginx.sock;
     }
 
@@ -52,8 +58,8 @@ server {
     # Rate limit login and password recovery requests
     location ~* /(?:login|recover) {
         include snippets/proxy.conf;
+        include snippets/rate_limiting.conf;
 
-        limit_req zone=account burst=1;
         proxy_pass http://unix:/var/run/nginx/sockets/nginx.sock;
     }
     {% endif %}

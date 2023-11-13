@@ -238,6 +238,18 @@
 #     # Required: no
 #     enabled: false
 
+#     # Maximum number of requests in the given time window
+#     # Type: int
+#     # Default: 5
+#     # Required: no
+#     max_requests: 5
+
+#     # Time window (in seconds, or a string describing a time span in ISO 8601 format)
+#     # Type: int | string
+#     # Default: 'PT1H'
+#     # Required: no
+#     time_window: 'PT1H'
+
 #   # Session settings
 #   session:
 
