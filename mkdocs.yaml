@@ -20,6 +20,7 @@ nav:
       - Launching the service: getting-started/launching-the-service.md
   - Guides:
       - Allowing anonymous access: guides/allowing-anonymous-access.md
+      - Configuring rate limiting: guides/configuring-rate-limiting.md
       - Using local home directories: guides/using-local-home-directories.md
   - Configuration:
       - Reference for config.yaml: configuration/reference-for-config-yaml.md
