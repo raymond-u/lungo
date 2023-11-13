@@ -20,7 +20,7 @@ access_by_lua_block {
         if not delay then
             if err == "rejected" then
                 ngx.log(ngx.ERR, "limit count exceeded")
-                return ngx.exit(503)
+                return ngx.exit(429)
             end
 
             ngx.log(ngx.ERR, "failed to limit count: ", err)
@@ -41,7 +41,7 @@ access_by_lua_block {
     if not delay then
         if err == "rejected" then
             ngx.log(ngx.ERR, "limit req exceeded")
-            return ngx.exit(503)
+            return ngx.exit(429)
         end
 
         ngx.log(ngx.ERR, "failed to limit req: ", err)
