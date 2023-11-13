@@ -5,11 +5,10 @@ access_by_lua_block {
 
     if ngx.var.request_method == "POST" then
         -- Rate limit to `max_requests` requests per `time_window` seconds
-        local limit_count, err = require("resty.limit.count").new(
-            "count_store",
-            {{ security.rate_limiting.max_requests }},
-            {{ security.rate_limiting.time_window.total_seconds()|int }},
-        )
+        local limit_count, err = require("resty.limit.count")
+                                     .new("count_store",
+                                          {{ security.rate_limiting.max_requests }},
+                                          {{ security.rate_limiting.time_window.total_seconds()|int }})
 
         if not limit_count then
             ngx.log(ngx.ERR, "failed to instantiate a resty.limit.count object: ", err)

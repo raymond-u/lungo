@@ -56,7 +56,7 @@ server {
 
     {% if security.rate_limiting.enabled %}
     # Rate limit login and password recovery requests
-    location ~* /(?:login|recover) {
+    location ~* ^/(?:login|recover)$ {
         include snippets/proxy.conf;
         include snippets/rate_limiting.conf;
 
