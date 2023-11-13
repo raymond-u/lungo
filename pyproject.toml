@@ -33,7 +33,6 @@ optional = true
 mike = "^2.0.0"
 mkdocs-glightbox = "^0.3.4"
 mkdocs-material = "^9.4.7"
-mkdocs-mermaid2-plugin = "^1.1.1"
 mkdocs-typer = "^0.0.3"
 
 [tool.poetry.scripts]
