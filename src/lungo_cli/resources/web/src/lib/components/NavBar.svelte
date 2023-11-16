@@ -85,7 +85,7 @@
             {@const { email, name } = $page.data.userInfo}
             <div class="dropdown dropdown-end dropdown-bottom">
                 <Avatar button placeholder={getPlaceholder(name.first, name.last)} />
-                <ul class="menu dropdown-content z-20 mt-2 rounded-2xl bg-base-200 p-2 shadow">
+                <ul class="menu dropdown-content z-20 mt-2 rounded-box bg-base-200 p-2 shadow">
                     <li>
                         <div class="pointer-events-none flex">
                             <Avatar large placeholder={getPlaceholder(name.first, name.last)} />
@@ -95,7 +95,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><div class="menu-title divider pointer-events-none"></div></li>
+                    <li><div class="divider menu-title pointer-events-none"></div></li>
                     <li>
                         <a href="/account">
                             <span class="h-6 w-6">

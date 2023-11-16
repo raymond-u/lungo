@@ -11,7 +11,7 @@
 <HeroFrame>
     <div class="hero h-full">
         <div class="hero-content flex-col gap-32 lg:flex-row-reverse">
-            <img src="/cover.jpg" alt="cover" class="w-80 rounded-2xl shadow-2xl" />
+            <img src="/cover.jpg" alt="cover" class="w-80 rounded-box shadow-2xl" />
             <div>
                 {#if data.userInfo}
                     {@const { name } = data.userInfo}
