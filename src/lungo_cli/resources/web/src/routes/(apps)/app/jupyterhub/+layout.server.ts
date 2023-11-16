@@ -42,7 +42,7 @@ export async function load({
         body: new URLSearchParams({
             _xsrf: csrf,
             username,
-            password: JUPYTERHUB_PASSWORD,
+            password: JUPYTERHUB_PASSWORD!,
         }),
     })
 }
