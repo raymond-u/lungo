@@ -33,7 +33,12 @@ c.JupyterHub.db_url = 'sqlite:///db.sqlite3?mode=rwc'
 c.JupyterHub.spawner_class = 'jupyterhub.spawner.LocalProcessSpawner'
 
 ## Downstream proxy IP addresses to trust
-c.JupyterHub.trusted_downstream_ips = ['{{ ip_addresses.nginx }}']
+c.JupyterHub.trusted_downstream_ips = [
+    '{{ ip_addresses.nginx }}',
+    {% for proxy in config.network.trusted_proxies %}
+    '{{ proxy }}',
+    {% endfor %}
+]
 
 ## Upgrade the database automatically on start
 c.JupyterHub.upgrade_db = True

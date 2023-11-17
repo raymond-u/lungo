@@ -141,6 +141,12 @@
 #   # Required: no
 #   subnet: 192.168.2.0/24
 
+#   # Trusted proxies (external IP addresses that are trusted to set the client IP address)
+#   # Type: array
+#   # Default: [ ]
+#   # Required: no
+#   trusted_proxies: [ ]
+
 #   # HTTP settings
 #   http:
 

@@ -1,5 +1,3 @@
-from ipaddress import IPv4Network
-
 from typer import Exit
 
 from .console import Console
@@ -61,16 +59,14 @@ class ContextManager:
 
     @property
     def ip_addresses(self) -> IpAddresses:
-        subnet = IPv4Network(self.config.network.subnet)
-
-        if subnet.num_addresses < 256:
+        if self.config.network.subnet.num_addresses < 256:
             self.console.print_error(
-                f"Subnet {format_input(str(subnet))} is too small. "
+                f"Subnet {format_input(str(self.config.network.subnet))} is too small. "
                 "Please change it to a subnet with at least 256 addresses."
             )
             raise Exit(code=1)
 
-        hosts = list(subnet.hosts())
+        hosts = list(self.config.network.subnet.hosts())
 
         return IpAddresses(
             nginx=hosts[100],

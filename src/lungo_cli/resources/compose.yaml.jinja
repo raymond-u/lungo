@@ -225,7 +225,7 @@ services:
       - ADDRESS_HEADER=X-Forwarded-For
       - HOST_HEADER=X-Forwarded-Host
       - PROTOCOL_HEADER=X-Forwarded-Proto
-      - XFF_DEPTH=1
+      - XFF_DEPTH={{ network.trusted_proxies|length + 1 }}
 
       - KETO_API_BASE_URL=http://{{ ip_addresses.keto }}:80/
       - KRATOS_API_BASE_URL=http://{{ ip_addresses.kratos }}:80/

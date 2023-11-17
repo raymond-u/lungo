@@ -1,13 +1,14 @@
 from datetime import timedelta
-from ipaddress import IPv4Network
+from ipaddress import IPv4Address, IPv4Network
 
 from pydantic import DirectoryPath, EmailStr, field_validator, FilePath, NewPath, PositiveInt
 
 from .base import AllowedApps, Base, EApp, FileName, Port
+from ..core.constants import APP_NAME_CAPITALIZED
 
 
 class Branding(Base):
-    name: str = "Lungo"
+    name: str = APP_NAME_CAPITALIZED
     subtitle: list[str] = ["a hug in a mug", "a poetry of aroma", "a quiet solitude", "a whisper of inspiration"]
     cover: FilePath | None = None
     logo: FilePath | None = None
@@ -78,7 +79,8 @@ class Modules(Base):
 
 class Network(Base):
     hostname: str
-    subnet: IPv4Network = "192.168.2.0/24"
+    subnet: IPv4Network = IPv4Network("192.168.2.0/24")
+    trusted_proxies: list[IPv4Address] = []
     http: Http = Http()
     https: Https = Https()
 
@@ -118,7 +120,7 @@ class Smtp(Base):
     port: Port
     username: str
     password: str
-    name: str = "Lungo"
+    name: str = APP_NAME_CAPITALIZED
     sender: EmailStr
 
 

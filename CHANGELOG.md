@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.1.10...HEAD)
 
+### Added
+
+- Support user-defined trusted proxies
+
 ### Fixed
 
 - Check if the port is available before starting the container
