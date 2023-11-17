@@ -1,7 +1,6 @@
 {% set security = config.security %}
 
-# See Move default writable paths to a dedicated directory (#119)
-# https://github.com/openresty/docker-openresty/issues/119
+# Use dedicated writable paths for temporary files
 client_body_temp_path /var/run/nginx/nginx-client-body;
 proxy_temp_path       /var/run/nginx/nginx-proxy;
 fastcgi_temp_path     /var/run/nginx/nginx-fastcgi;
