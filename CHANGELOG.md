@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Check if the port is available before starting the container
+- Fix a bug where URL search parameters are not passed to the backend
 
 ## [0.1.10](https://github.com/raymond-u/lungo/compare/v0.1.9...v0.1.10) - 2023-11-14
 
