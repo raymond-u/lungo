@@ -12,7 +12,7 @@ from .database import AccountManager
 from .file import FileUtils
 from .renderer import Renderer
 from .storage import Storage
-from ..helpers.common import get_file_permissions
+from ..helpers.common import get_file_permissions, port_is_available
 from ..helpers.crypto import generate_random_hex, generate_self_signed_cert
 from ..helpers.format import format_input, format_path
 from ..models.base import EApp
@@ -51,7 +51,7 @@ class AppManager:
         else:
             self.console.set_log_level(verbosity)
 
-    def process_args_delayed(self, dev: bool, force_init: bool = False, remove_lock: bool = False) -> None:
+    def process_args_deferred(self, dev: bool, force_init: bool = False, remove_lock: bool = False) -> None:
         """Process common arguments that need to be processed after the configuration is loaded."""
         if dev:
             self.console.set_log_level(1)
@@ -69,7 +69,7 @@ class AppManager:
         with as_file(files(f"{PACKAGE_NAME}.resources")) as resources:
             self.file_utils.copy(resources / src, dst)
 
-    def ensure_application_data(self) -> None:
+    def update_app_data(self) -> None:
         """Ensure that all the application data exists and is up-to-date."""
         with self.console.status("Updating storage..."):
             self.storage.validate()
@@ -124,6 +124,18 @@ class AppManager:
                 self.account_manager.update(self.context_manager.config, self.context_manager.users)
 
                 self.file_utils.write_text(self.storage.init_file, config_hash)
+
+    def ensure_port_availability(self) -> None:
+        """Ensure that ports used by the application are available."""
+        if self.context_manager.config.network.http.enabled and not port_is_available(
+            self.context_manager.config.network.http.port
+        ):
+            self.console.print_error(f"Port {format_input(self.context_manager.config.network.http.port)} is in use.")
+            raise Exit(code=1)
+
+        if not port_is_available(self.context_manager.config.network.https.port):
+            self.console.print_error(f"Port {format_input(self.context_manager.config.network.https.port)} is in use.")
+            raise Exit(code=1)
 
     def load_config(self) -> None:
         """Load the configuration files into the context manager."""

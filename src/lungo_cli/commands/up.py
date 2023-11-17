@@ -26,8 +26,10 @@ def main(
     """
     app_manager().process_args(config_dir, quiet, verbosity)
     app_manager().load_config()
-    app_manager().process_args_delayed(dev, force_init, remove_lock)
-    app_manager().ensure_application_data()
+    app_manager().process_args_deferred(dev, force_init, remove_lock)
+
+    app_manager().update_app_data()
+    app_manager().ensure_port_availability()
 
     container().set_preferred_tool(container_tool)
 

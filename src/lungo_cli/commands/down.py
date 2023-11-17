@@ -22,7 +22,7 @@ def main(
     """
     app_manager().process_args(config_dir, quiet, verbosity)
     app_manager().load_config()
-    app_manager().process_args_delayed(dev)
+    app_manager().process_args_deferred(dev)
 
     container().set_preferred_tool(container_tool)
 

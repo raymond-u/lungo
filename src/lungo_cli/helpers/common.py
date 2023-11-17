@@ -1,4 +1,4 @@
-from enum import Enum
+import socket
 from importlib import metadata
 from os import PathLike
 from pathlib import Path
@@ -22,6 +22,7 @@ def program_exists(program: str) -> bool:
     return which(program) is not None
 
 
-def is_in_enum(value: any, enum: type[Enum]) -> bool:
-    """Check if a value is in an enum."""
-    return any((item == value or item.value == value) for item in enum)
+def port_is_available(port: int) -> bool:
+    """Check if a port is available on the local machine."""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        return s.connect_ex(("127.0.0.1", port)) != 0
