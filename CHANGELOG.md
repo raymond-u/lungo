@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Support user-defined trusted proxies
 
+### Changed
+
+- Optimize the web UI layout for narrow screen widths
+
 ### Fixed
 
 - Check if the port is available before starting the container
