@@ -2,7 +2,7 @@
     export let wrapped: boolean = false
 </script>
 
-<div class="flex h-full w-full flex-col items-center overflow-y-auto">
+<div class="flex h-full w-full flex-col items-center">
     <div class="flex w-full flex-1 items-center justify-center py-16">
         {#if wrapped}
             <div

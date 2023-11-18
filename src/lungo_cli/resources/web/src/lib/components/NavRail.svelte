@@ -1,13 +1,17 @@
 <script lang="ts">
     import { page } from "$app/stores"
-    import { syncScroll } from "$lib/actions"
+    import { scrollShadow, scrollSync } from "$lib/actions"
     import { SwapIcon } from "$lib/components"
     import { getTruncateTitle, useStore } from "$lib/utils"
 
     const { currentApp, darkTheme, syncedScrollTops } = useStore()
 </script>
 
-<nav class="scrollbar-none w-16 overflow-y-auto py-10" use:syncScroll={{ id: "nav", stores: syncedScrollTops }}>
+<nav
+    class="scrollbar-none w-16 overflow-y-auto py-10"
+    use:scrollShadow
+    use:scrollSync={{ id: "nav", stores: syncedScrollTops }}
+>
     <ul class="menu items-center gap-1 px-0 py-2">
         {#each $page.data.apps as { name, href, icon } (name)}
             {@const active = $currentApp?.name === name}

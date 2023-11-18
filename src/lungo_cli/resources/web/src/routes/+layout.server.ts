@@ -88,19 +88,16 @@ export async function load({ cookies, fetch, url }: { cookies: Cookies; fetch: t
     }
 
     // return {
-    //     apps: [
-    //         { name: "File Browser", href: `/app/${EApp.FileBrowser}`, icon: EIcon.Folder },
-    //         { name: "RStudio", href: `/app/${EApp.RStudio}`, icon: EIcon.RStudio },
-    //     ],
-    //     logoutToken: "abc123",
+    //     apps: [createApp(EApp.PrivateBin), createApp(EApp.V2Ray)],
+    //     logoutToken: "test123",
     //     title,
-    //     // userInfo: {
-    //     //     username: "test",
-    //     //     email: "testuser12345@gmail.com",
-    //     //     name: {
-    //     //         first: "Test",
-    //     //         last: "User",
-    //     //     },
-    //     // },
+    //     userInfo: {
+    //         username: "test",
+    //         email: "testuser12345@gmail.com",
+    //         name: {
+    //             first: "Test",
+    //             last: "User",
+    //         },
+    //     },
     // }
 }

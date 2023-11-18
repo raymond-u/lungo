@@ -25,9 +25,50 @@ export function safeClick(node: HTMLButtonElement, { callback }: SCParams): Acti
 }
 
 type SSAttrs = { class: `${string}overflow${"-y" | ""}-auto${string}` }
+
+export function scrollShadow(node: HTMLElement): ActionReturn<undefined, SSAttrs> {
+    const parent = node.parentNode!
+    const container = document.createElement("div")
+    const shadow = document.createElement("div")
+
+    container.classList.add("relative", "flex", "flex-1")
+    shadow.classList.add(
+        "pointer-events-none",
+        "absolute",
+        "z-10",
+        "hidden",
+        "h-6",
+        "w-full",
+        "bg-gradient-to-b",
+        "from-base-100"
+    )
+    node.classList.add("scroll-shadow")
+
+    parent.insertBefore(container, node)
+    container.appendChild(shadow)
+    container.appendChild(node)
+
+    const handleScroll = () => {
+        if (node.scrollTop > 0) {
+            shadow.classList.remove("hidden")
+        } else {
+            shadow.classList.add("hidden")
+        }
+    }
+
+    node.addEventListener("scroll", handleScroll)
+
+    return {
+        destroy() {
+            node.removeEventListener("scroll", handleScroll)
+            parent.removeChild(container)
+        },
+    }
+}
+
 type SSParams = { stores: { [key: string]: Writable<number> }; id: string }
 
-export function syncScroll(node: HTMLElement, { stores, id }: SSParams): ActionReturn<SSParams, SSAttrs> {
+export function scrollSync(node: HTMLElement, { stores, id }: SSParams): ActionReturn<SSParams, SSAttrs> {
     if (!(id in stores)) {
         stores[id] = syncedScrollTop()
     }

@@ -2,7 +2,7 @@
     import "../app.pcss"
     import { onMount } from "svelte"
     import { page } from "$app/stores"
-    import { LoadingIndicator, NavBar } from "$lib/components"
+    import { AppShell, LoadingIndicator } from "$lib/components"
     import { createStore, getTitleFromSlug } from "$lib/utils"
 
     const { allowScroll, darkTheme } = createStore()
@@ -25,16 +25,9 @@
 
 <div data-theme={typeof $darkTheme === "undefined" ? undefined : $darkTheme ? "dark" : "light"}>
     <LoadingIndicator />
-    <header>
-        <div class="h-16">
-            <NavBar />
-        </div>
-    </header>
-    <main>
-        <div class="flex h-[calc(100vh-4rem)]">
-            <slot />
-        </div>
-    </main>
+    <AppShell>
+        <slot />
+    </AppShell>
 </div>
 
 <svelte:head>
