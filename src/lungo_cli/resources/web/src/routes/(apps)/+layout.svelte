@@ -6,7 +6,7 @@
 </script>
 
 {#if data.apps.length > 0}
-    <div class="flex flex-none">
+    <div class="hidden flex-none md:flex">
         <NavRail />
     </div>
 {/if}
