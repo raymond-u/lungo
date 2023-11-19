@@ -2,7 +2,7 @@
     import { page } from "$app/stores"
     import { scrollShadow, scrollSync } from "$lib/actions"
     import { SwapIcon } from "$lib/components"
-    import { getTruncateTitle, useStore } from "$lib/utils"
+    import { truncateTitle, useStore } from "$lib/utils"
 
     const { currentApp, darkTheme, syncedScrollTops } = useStore()
 </script>
@@ -26,7 +26,7 @@
                 class:opacity-0={!active}
             >
                 <span class="p-0 text-xs font-semibold">
-                    {getTruncateTitle(name, 8)}
+                    {truncateTitle(name, 8)}
                 </span>
             </li>
         {/each}

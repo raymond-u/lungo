@@ -5,7 +5,7 @@
     import { SITE_TITLE } from "$lib/constants"
     import { LogoutIcon, SettingsIcon } from "$lib/icons"
     import { EIcon } from "$lib/types"
-    import { getPlaceholder, useStore } from "$lib/utils"
+    import { createPlaceholder, useStore } from "$lib/utils"
 
     const { allowScroll, currentApp, darkTheme, syncedScrollTops } = useStore()
 
@@ -85,11 +85,11 @@
             {#if $page.data.userInfo}
                 {@const { email, name } = $page.data.userInfo}
                 <div class="dropdown dropdown-end dropdown-bottom">
-                    <Avatar button placeholder={getPlaceholder(name.first, name.last)} />
+                    <Avatar button placeholder={createPlaceholder(name.first, name.last)} />
                     <ul class="menu dropdown-content z-20 mt-2 rounded-box bg-base-200 p-2 shadow">
                         <li>
                             <div class="pointer-events-none flex">
-                                <Avatar large placeholder={getPlaceholder(name.first, name.last)} />
+                                <Avatar large placeholder={createPlaceholder(name.first, name.last)} />
                                 <div class="flex flex-col">
                                     <span class="text-base font-semibold">{name.first} {name.last}</span>
                                     <span>{email}</span>

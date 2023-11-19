@@ -13,20 +13,16 @@ export function useStore(): Store {
     return getContext<Store>("globalStore")
 }
 
-export function isSameHost(url: string | URL, host: string): boolean {
-    if (typeof url === "string" && !url.match("^(?:https?|wss?)://")) {
-        return true
-    }
+export function createPlaceholder(firstName: string, lastName: string): string {
+    return `${firstName[0].toUpperCase()}${lastName[0].toUpperCase()}`
+}
 
-    return new URL(url).host === host
+export function createTitle(slug: string): string {
+    return `${slug[0]?.toUpperCase() ?? ""}${slug.slice(1)} | ${SITE_TITLE}`
 }
 
 export function getFlow(url: string): string {
     return new URL(url).searchParams.get("flow") ?? ""
-}
-
-export function getPlaceholder(firstName: string, lastName: string): string {
-    return `${firstName[0].toUpperCase()}${lastName[0].toUpperCase()}`
 }
 
 export function getRandomElement<T>(array: T[]): T {
@@ -35,21 +31,6 @@ export function getRandomElement<T>(array: T[]): T {
 
 export function getRandomId(): number {
     return Number(Math.round(Math.random() * 100000).toString() + Date.now().toString().slice(-5))
-}
-
-export function getTitleFromSlug(slug: string): string {
-    return `${slug[0]?.toUpperCase() ?? ""}${slug.slice(1)} | ${SITE_TITLE}`
-}
-
-export function getTruncateTitle(title: string, length: number): string {
-    if (title.length > length) {
-        const capitalSplit = title[0] + title.slice(1).split(/[A-Z]/)[0]
-        const spaceSplit = title.split(" ")[0]
-
-        return capitalSplit.length < spaceSplit.length ? capitalSplit : spaceSplit
-    } else {
-        return title
-    }
 }
 
 export function getUrlParts(url: string): { path: string; query: string; hash: string } {
@@ -69,5 +50,24 @@ export function getUrlParts(url: string): { path: string; query: string; hash: s
         path,
         query: "",
         hash: "",
+    }
+}
+
+export function isSameHost(url: string | URL, host: string): boolean {
+    if (typeof url === "string" && !url.match("^(?:https?|wss?)://")) {
+        return true
+    }
+
+    return new URL(url).host === host
+}
+
+export function truncateTitle(title: string, length: number): string {
+    if (title.length > length) {
+        const capitalSplit = title[0] + title.slice(1).split(/[A-Z]/)[0]
+        const spaceSplit = title.split(" ")[0]
+
+        return capitalSplit.length < spaceSplit.length ? capitalSplit : spaceSplit
+    } else {
+        return title
     }
 }

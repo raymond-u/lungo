@@ -3,7 +3,7 @@
     import { onMount } from "svelte"
     import { page } from "$app/stores"
     import { AppShell, LoadingIndicator } from "$lib/components"
-    import { createStore, getTitleFromSlug } from "$lib/utils"
+    import { createStore, createTitle } from "$lib/utils"
 
     const { allowScroll, darkTheme } = createStore()
 
@@ -31,7 +31,7 @@
 </div>
 
 <svelte:head>
-    <title>{getTitleFromSlug($page.data.title)}</title>
+    <title>{createTitle($page.data.title)}</title>
     {#if !$allowScroll}
         <style>
             body {
