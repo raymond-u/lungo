@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.1.11...HEAD)
 
+### Security
+
+- Use custom Lua code for authentication to prevent endpoint probing
+
 ## [0.1.11](https://github.com/raymond-u/lungo/compare/v0.1.10...v0.1.11) - 2023-11-19
 
 ### Added
