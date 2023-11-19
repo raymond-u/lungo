@@ -21,7 +21,7 @@ location /app/{{ APP_NAME }}/ {
     }
 
     # Just pass them through because websocket requests have no referer header and cannot be reliably patched
-    if ($http_upgrade = websocket) {
+    if ($http_upgrade ~* websocket) {
         return 480;
     }
 
