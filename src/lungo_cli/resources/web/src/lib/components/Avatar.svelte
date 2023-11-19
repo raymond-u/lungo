@@ -1,6 +1,6 @@
 <script lang="ts">
-    export let button: boolean = false
-    export let large: boolean = false
+    export let button = false
+    export let large = false
     export let placeholder: string | undefined = undefined
 </script>
 

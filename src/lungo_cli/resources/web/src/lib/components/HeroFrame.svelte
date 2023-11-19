@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let wrapped: boolean = false
+    export let wrapped = false
 </script>
 
 <div class="flex h-full w-full flex-col items-center">
