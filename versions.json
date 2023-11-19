@@ -1,5 +1,10 @@
 [
   {
+    "version": "nightly",
+    "title": "nightly",
+    "aliases": []
+  },
+  {
     "version": "0.1",
     "title": "0.1",
     "aliases": [
