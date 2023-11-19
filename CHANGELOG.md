@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.1.11...HEAD)
 
+### Fixed
+
+- Perform case-insensitive matching for the `Upgrade` header
+
 ### Security
 
 - Use custom Lua code for authentication to prevent endpoint probing
