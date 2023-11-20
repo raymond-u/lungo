@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Perform case-insensitive matching for the `Upgrade` header
+- Handle websocket connections correctly
 
 ### Security
 

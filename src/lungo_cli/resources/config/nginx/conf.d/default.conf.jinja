@@ -10,6 +10,12 @@ scgi_temp_path        /var/run/nginx/nginx-scgi;
 # Support uploading large files
 client_max_body_size 128m;
 
+# Support forwarding websocket connections
+map $http_upgrade $connection_upgrade {
+    default Upgrade;
+    ""      "";
+}
+
 # Remove unwanted query parameters
 map $args $filtered_args {
     default                $args;
