@@ -7,7 +7,10 @@
     <div class="hero h-full">
         <div class="hero-content text-center">
             <div class="max-w-xl">
-                {#if String($page.status).startsWith("4")}
+                {#if $page.status === 429}
+                    <h1 class="my-6 text-4xl font-bold">Hey, you're going too fast!</h1>
+                    <a class="link text-lg" href="/">Let's take a break.</a>
+                {:else if String($page.status).startsWith("4")}
                     <h1 class="my-6 text-4xl font-bold">Seems like you're lost...</h1>
                     <a class="link text-lg" href="/">Let's not stuck here forever.</a>
                 {:else}
