@@ -26,6 +26,11 @@
         @apply bg-black/60;
     }
 
+    .input:focus,
+    .input:focus-within {
+        @apply border-transparent;
+    }
+
     .modal:not(dialog:not(.modal-open)),
     .modal::backdrop {
         @apply bg-black/60;
