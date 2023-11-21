@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Handle websocket connections correctly
 - Fix the resend button in the web UI
 - Remove border color of the `input` element in the web UI
+- Fix a bug that causes email delivery failures
 
 ### Security
 

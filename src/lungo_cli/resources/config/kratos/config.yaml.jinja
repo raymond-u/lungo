@@ -1,3 +1,4 @@
+{% set network = config.network %}
 {% set security = config.security %}
 {% set smtp = config.smtp %}
 
@@ -58,6 +59,7 @@ courier:
     connection_uri: 'smtp://{{ smtp.username|urlencode }}:{{ smtp.password }}@{{ smtp.host }}:{{ smtp.port }}/'
     from_address: '{{ smtp.sender }}'
     from_name: '{{ smtp.name }}'
+    local_name: '{{ network.hostname }}'
   templates:
     recovery_code:
       valid:

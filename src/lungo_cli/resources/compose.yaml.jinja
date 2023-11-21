@@ -140,8 +140,8 @@ services:
     entrypoint: [ ]
     command: >-
       sh -c 'kratos migrate sql -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml -e -y;
-      kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml
-        --sqa-opt-out --watch-courier >/var/log/kratos/main.log 2>&1'
+      kratos serve -c /etc/kratos/config.yaml -c /etc/kratos/secrets.yaml --sqa-opt-out --watch-courier
+      >/var/log/kratos/main.log 2>&1'
 
     networks:
       static:
