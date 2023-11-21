@@ -45,7 +45,7 @@ export const actions = {
                     nodes: (response.error as KratosComponents["schemas"]["recoveryFlow"]).ui.nodes,
                 })
             case 422:
-                if (data.get("code")) {
+                if (!data.get("email")) {
                     throw redirect(302, "/account")
                 }
 
