@@ -19,7 +19,7 @@ export const actions = {
 
         switch (response.response.status) {
             case 200:
-                if (data.get("code")) {
+                if (!data.get("email")) {
                     throw redirect(302, "/account")
                 }
 
