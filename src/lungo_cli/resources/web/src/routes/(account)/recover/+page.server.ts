@@ -13,8 +13,7 @@ export const actions = {
             body: {
                 csrf_token: data.get("csrf_token") as string,
                 method: data.get("method") as "code" | "link",
-                email: data.get("email") as string,
-                code: data.get("code") as string,
+                ...(data.get("email") ? { email: data.get("email") as string } : { code: data.get("code") as string }),
             },
         })
 

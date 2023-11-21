@@ -8,5 +8,5 @@
     <span class="mb-6 h-12 w-12">
         <ResetIcon />
     </span>
-    <FormBuilder />
+    <FormBuilder validationFreeButtons={["email"]} />
 </HeroFrame>

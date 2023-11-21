@@ -5,6 +5,8 @@
     import { PasswordInput } from "$lib/components"
     import type { KratosComponents } from "$lib/types"
 
+    export let validationFreeButtons = [] as string[]
+
     const clipMessage = (msg: string) => {
         return msg.slice(0, msg.indexOf(".") + 1 || msg.length)
     }
@@ -139,6 +141,7 @@
             type="submit"
             value={actionNode.attributes.value ?? ""}
             {disabled}
+            formnovalidate={actionNode.attributes.name in validationFreeButtons}
         >
             {actionNode.meta.label?.text ?? ""}
         </button>
