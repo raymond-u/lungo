@@ -85,7 +85,7 @@ export function wrapFetch({
         }
 
         if (ensureOk && !(response.status >= 200 && response.status < 400)) {
-            throw error(500)
+            throw error(response.status)
         }
 
         return response
