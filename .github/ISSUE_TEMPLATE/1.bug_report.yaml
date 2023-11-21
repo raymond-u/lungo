@@ -1,0 +1,45 @@
+name: Bug Report
+description: File a bug report
+labels: [ 'bug' ]
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: Bug Type
+      description: The type of bug you are reporting.
+      multiple: false
+      options:
+        - CLI
+        - Web UI
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Lungo Version
+      description: Please run `lungo --version` and paste the output here.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Current Behavior
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: A step-by-step description of how to reproduce the issue.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional Context
+      description: Any extra information that might help us investigate.
