@@ -141,7 +141,7 @@
             type="submit"
             value={actionNode.attributes.value ?? ""}
             {disabled}
-            formnovalidate={actionNode.attributes.name in validationFreeButtons}
+            formnovalidate={validationFreeButtons.includes(actionNode.attributes.name)}
         >
             {actionNode.meta.label?.text ?? ""}
         </button>
