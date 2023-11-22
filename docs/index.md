@@ -23,16 +23,16 @@ We believe that self-hosting should be accessible and straightforward for everyo
 home lab setups where scalability and high availability may not be the primary concerns. Our focus is on prioritizing
 easy setup and low maintenance.
 
-Lungo is specifically designed to meet these needs. It uses a YAML-based configuration system to simplifies the
+Lungo is specifically designed to meet these needs. It uses a YAML-based configuration system to simplify the
 customization of users, applications, and more. This eliminates the complexities associated with database maintenance
 and accelerates backup and restoration processes.
 
-Lungo is a comprehensive package that includes a single sign-on portal and a diverse range of applications that can be
-individually enabled or disabled. You have the flexibility to grant application access on a per-role or per-user basis.
-Anonymous access is also supported when enabled.
+Lungo comes with a single sign-on portal and a diverse range of applications that can be individually enabled or
+disabled. You have the flexibility to grant application access on a per-role or per-user basis. Anonymous access is also
+supported when enabled.
 
 Lungo not only works, but it also looks and feels great. It utilizes a modern UI framework and is designed to be
 responsive, ensuring a visually appealing and smooth user experience.
 
 Lastly, Lungo prioritizes security by default. It comes with HTTPS and secure server settings out of the box, ensuring a
-secure environment, and it provides CSRF protection.
+secure environment, and can be configured to rate limit sensitive API endpoints.
