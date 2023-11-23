@@ -15,8 +15,6 @@ location = /app/{{ APP_NAME }} {
 
 location @{{ APP_NAME }} {
     include snippets/proxy.conf;
-    include snippets/auth.conf;
-
     proxy_pass http://{{ APP_NAME }};
 }
 {% endif %}
