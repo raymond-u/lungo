@@ -20,6 +20,7 @@
             port: ${HTTPS_PORT}
             uuid: "${data.xrayId}"
             tls: true
+            skip-cert-verify: true
             udp: true
             network: ws
             ws-opts:
@@ -47,6 +48,9 @@
             "streamSettings": {
               "network": "ws",
               "security": "tls",
+              "tlsSettings": {
+                "allowInsecure": true,
+              },
               "wsSettings": {
                 "path": "/app/xray"
               }
@@ -119,9 +123,12 @@
             <span class="h-24 w-24 py-2">
                 <NetworkLockIcon />
             </span>
-            <h1 class="text-center">Connecting to the Proxy Server</h1>
+            <h1 class="text-center">Connecting to the VPN Server</h1>
         </div>
-        <p>Please select your preferred proxy client:</p>
+        <p>
+            This note helps you connect to the private network where the host is located. Please select your preferred
+            proxy client:
+        </p>
         <div class="tabs tabs-lifted">
             <input
                 class="tab [--tab-border-color:oklch(var(--nc))]"
@@ -133,9 +140,12 @@
             <div class="tab-content max-w-md rounded-box border-neutral-content px-4 md:max-w-xl md:px-8 lg:max-w-4xl">
                 <ol>
                     <li>
-                        <p>Add server information to the configuration file.</p>
+                        <p>
+                            Add server information to the configuration file. Omit the highlighted part if not using a
+                            self-signed TLS certificate on the website.
+                        </p>
                         <div class="not-prose my-5">
-                            <CodeBlock code={clash_config} language="yaml" />
+                            <CodeBlock code={clash_config} highlightedLines={[7]} language="yaml" />
                         </div>
                     </li>
                     {#if clash_rules.length}
@@ -159,9 +169,12 @@
             <div class="tab-content max-w-md rounded-box border-neutral-content px-4 md:max-w-xl md:px-8 lg:max-w-4xl">
                 <ol>
                     <li>
-                        <p>Add server information to the configuration file.</p>
+                        <p>
+                            Add server information to the configuration file. Omit the highlighted part if not using a
+                            self-signed TLS certificate on the website.
+                        </p>
                         <div class="not-prose my-5">
-                            <CodeBlock code={xray_config} language="json" />
+                            <CodeBlock code={xray_config} highlightedLines={[21, 22, 23]} language="json" />
                         </div>
                     </li>
                     {#if xray_rules.routing.rules.length}
