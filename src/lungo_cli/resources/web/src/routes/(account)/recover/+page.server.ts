@@ -1,4 +1,4 @@
-import { type Cookies, fail, redirect } from "@sveltejs/kit"
+import { type Cookies, error, fail, redirect } from "@sveltejs/kit"
 import { createKratosClient } from "$lib/server/api"
 import type { KratosComponents } from "$lib/types"
 import { getFlow, getRandomId } from "$lib/utils"
@@ -50,6 +50,8 @@ export const actions = {
                 }
 
                 break
+            case 429:
+                throw error(429)
             default:
                 return fail(400, {
                     messages: [
