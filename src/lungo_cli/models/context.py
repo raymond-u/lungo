@@ -1,6 +1,7 @@
 from ipaddress import IPv4Address
+from uuid import UUID
 
-from pydantic import AnyHttpUrl, DirectoryPath
+from pydantic import AnyHttpUrl, DirectoryPath, EmailStr
 
 from .base import Base
 from .config import Config
@@ -23,6 +24,12 @@ class IpAddresses(Base):
     jupyterhub: IPv4Address
     privatebin: IPv4Address
     rstudio: IPv4Address
+    xray: IPv4Address
+
+
+class XrayAccount(Base):
+    email: EmailStr
+    id: UUID
 
 
 class Context(Base):
@@ -34,3 +41,5 @@ class Context(Base):
     dev: bool
     jupyterhub_password: str
     rstudio_password: str
+    xray_accounts: list[XrayAccount]
+    xray_salt: UUID

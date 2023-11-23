@@ -61,7 +61,7 @@ class JupyterHubSettings(Base):
     password: str | None = None
 
 
-class PrivateBin(Base):
+class PrivateBinSettings(Base):
     enabled: bool = True
 
 
@@ -70,11 +70,20 @@ class RStudioSettings(Base):
     password: str | None = None
 
 
+class XraySettings(Base):
+    enabled: bool = True
+    domain_whitelist: list[str] = []
+    domain_keyword_whitelist: list[str] = []
+    domain_suffix_whitelist: list[str] = []
+    ip_range_whitelist: list[IPv4Network] = []
+
+
 class Modules(Base):
     filebrowser: FileBrowserSettings = FileBrowserSettings()
     jupyterhub: JupyterHubSettings = JupyterHubSettings()
-    privatebin: PrivateBin = PrivateBin()
+    privatebin: PrivateBinSettings = PrivateBinSettings()
     rstudio: RStudioSettings = RStudioSettings()
+    xray: XraySettings = XraySettings()
 
 
 class Network(Base):

@@ -1,3 +1,4 @@
+const typography = require("@tailwindcss/typography")
 const daisyui = require("daisyui")
 
 /** @type {import("tailwindcss").Config}*/
@@ -47,7 +48,10 @@ const config = {
         extend: {},
     },
 
-    plugins: [daisyui],
+    plugins: [
+        typography,
+        daisyui,
+    ],
 }
 
 module.exports = config

@@ -1,6 +1,7 @@
 import os
 from os import PathLike
 from pathlib import Path
+from uuid import uuid1
 
 from importlib_resources import as_file, files
 from typer import Exit
@@ -107,6 +108,10 @@ class AppManager:
             if not self.storage.rstudio_password_file.is_file():
                 self.console.print_info("Generating RStudio password...")
                 self.file_utils.write_text(self.storage.rstudio_password_file, generate_random_hex(), True)
+
+            if not self.storage.xray_salt_file.is_file():
+                self.console.print_info("Generating Xray salt...")
+                self.file_utils.write_text(self.storage.xray_salt_file, str(uuid1()), True)
 
         with self.console.status("Updating database..."):
             config_hash = self.file_utils.hash_sha256(self.storage.config_file) + self.file_utils.hash_sha256(

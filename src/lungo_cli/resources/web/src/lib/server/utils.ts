@@ -11,5 +11,7 @@ export function createApp(app: EApp): App {
             return { name: "JupyterHub", href: `/app/${EApp.JupyterHub}`, icon: EIcon.Jupyter }
         case EApp.RStudio:
             return { name: "RStudio", href: `/app/${EApp.RStudio}`, icon: EIcon.RStudio }
+        case EApp.XRay:
+            return { name: "Proxy", href: `/app/${EApp.XRay}`, icon: EIcon.Proxy }
     }
 }

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.1.12...HEAD)
 
+### Added
+
+- Add the Xray module
+
 ### Fixed
 
 - Show error messages correctly in the web UI

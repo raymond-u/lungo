@@ -150,6 +150,10 @@ class Storage:
     def rstudio_password_file(self) -> Path:
         return self.generated_dir / "rstudio" / "password"
 
+    @property
+    def xray_salt_file(self) -> Path:
+        return self.generated_dir / "xray" / "salt"
+
     def validate(self) -> None:
         if self.data_latest_dir.is_dir():
             return

@@ -1,5 +1,6 @@
 export { default as AppShell } from "./AppShell.svelte"
 export { default as Avatar } from "./Avatar.svelte"
+export { default as CodeBlock } from "./CodeBlock.svelte"
 export { default as FormBuilder } from "./FormBuilder.svelte"
 export { default as HeroFrame } from "./HeroFrame.svelte"
 export { default as LoadingIndicator } from "./LoadingIndicator.svelte"

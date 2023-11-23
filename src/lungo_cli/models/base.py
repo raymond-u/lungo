@@ -13,6 +13,7 @@ class EApp(str, Enum):
     JUPYTERHUB = "jupyterhub"
     PRIVATEBIN = "privatebin"
     RSTUDIO = "rstudio"
+    XRAY = "xray"
 
 
 class EContainer(str, Enum):
@@ -32,6 +33,7 @@ class EService(str, Enum):
     JUPYTERHUB = "jupyterhub"
     PRIVATEBIN = "privatebin"
     RSTUDIO = "rstudio"
+    XRAY = "xray"
 
 
 class ERole(str, Enum):

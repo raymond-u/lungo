@@ -5,7 +5,7 @@
 
     export let data
 
-    const subtitle = getRandomElement(JSON.parse(SITE_SUBTITLE))
+    const subtitle = getRandomElement(JSON.parse(SITE_SUBTITLE) as string[])
 </script>
 
 <HeroFrame>

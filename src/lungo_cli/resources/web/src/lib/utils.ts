@@ -21,6 +21,21 @@ export function createTitle(slug: string): string {
     return `${slug[0]?.toUpperCase() ?? ""}${slug.slice(1)} | ${SITE_TITLE}`
 }
 
+export function dedent(text: string): string {
+    const lines = text.match(/^(?:[ \t]*\n)*(.*?)\s*$/s)![1].split("\n")
+
+    const minLeadingSpaces = lines.reduce((acc, line) => {
+        if (line.match(/^\s*$/)) {
+            return acc
+        }
+
+        const leadingSpaces = line.match(/^\s*/)![0].length
+        return leadingSpaces < acc ? leadingSpaces : acc
+    }, Infinity)
+
+    return lines.map((line) => line.substring(minLeadingSpaces)).join("\n")
+}
+
 export function getFlow(url: string): string {
     return new URL(url).searchParams.get("flow") ?? ""
 }

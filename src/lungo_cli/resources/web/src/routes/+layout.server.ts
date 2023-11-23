@@ -40,12 +40,9 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
     if (allowedApps.includes(EApp.RStudio)) {
         apps.push(createApp(EApp.RStudio))
     }
-    // if (allowedApps.includes(EApp.Terminal)) {
-    //     apps.push({ name: "Terminal", href: "/app/terminal", icon: EIcon.Terminal })
-    // }
-    // if (allowedApps.includes(EApp.Proxy)) {
-    //     apps.push({ name: "Proxy", href: "/app/proxy", icon: EIcon.Proxy })
-    // }
+    if (allowedApps.includes(EApp.XRay)) {
+        apps.push(createApp(EApp.XRay))
+    }
 
     return apps
 }
@@ -88,7 +85,7 @@ export async function load({ cookies, fetch, url }: { cookies: Cookies; fetch: t
     }
 
     // return {
-    //     apps: [createApp(EApp.PrivateBin), createApp(EApp.V2Ray)],
+    //     apps: [createApp(EApp.PrivateBin), createApp(EApp.XRay)],
     //     logoutToken: "test123",
     //     title,
     //     userInfo: {

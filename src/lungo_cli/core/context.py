@@ -1,3 +1,5 @@
+from uuid import UUID, uuid5
+
 from typer import Exit
 
 from .console import Console
@@ -5,7 +7,7 @@ from .file import FileUtils
 from .storage import Storage
 from ..helpers.format import format_input
 from ..models.config import Config
-from ..models.context import AppDirs, Context, IpAddresses
+from ..models.context import AppDirs, Context, IpAddresses, XrayAccount
 from ..models.users import Users
 
 
@@ -78,6 +80,7 @@ class ContextManager:
             jupyterhub=hosts[106],
             privatebin=hosts[107],
             rstudio=hosts[108],
+            xray=hosts[109],
         )
 
     @property
@@ -99,6 +102,17 @@ class ContextManager:
         return self.config.modules.rstudio.password or self.file_utils.read_text(self.storage.rstudio_password_file)
 
     @property
+    def xray_accounts(self) -> list[XrayAccount]:
+        return [
+            XrayAccount(email=account.email, id=uuid5(self.xray_salt, account.username))
+            for account in self.users.accounts
+        ]
+
+    @property
+    def xray_salt(self) -> UUID:
+        return UUID(self.file_utils.read_text(self.storage.xray_salt_file))
+
+    @property
     def context(self) -> Context:
         return Context(
             config=self.config,
@@ -109,4 +123,6 @@ class ContextManager:
             dev=self.dev,
             jupyterhub_password=self.jupyterhub_password,
             rstudio_password=self.rstudio_password,
+            xray_accounts=self.xray_accounts,
+            xray_salt=self.xray_salt,
         )
