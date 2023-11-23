@@ -17,7 +17,7 @@
                         "email": "{{ account.email }}",
                         "id": "{{ account.id|string }}"
                     }
-                    {{ '' if loop.last else ',' }}
+                    {{- '' if loop.last else ',' }}
                     {% endfor %}
                 ],
                 "decryption": "none"
