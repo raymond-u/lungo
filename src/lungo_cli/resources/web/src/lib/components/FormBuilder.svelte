@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ActionResult } from "@sveltejs/kit"
+    import { type ActionResult, error } from "@sveltejs/kit"
     import { applyAction, enhance } from "$app/forms"
     import { page } from "$app/stores"
     import { PasswordInput } from "$lib/components"
@@ -27,6 +27,11 @@
         disabled = true
 
         return async ({ result }: { result: ActionResult }) => {
+            // When the client is rate limited, the request won't make it to the node server
+            if (result.type === "error") {
+                throw error(429)
+            }
+
             await applyAction(result)
             disabled = false
         }
