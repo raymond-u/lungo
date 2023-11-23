@@ -242,7 +242,7 @@ services:
       - PUBLIC_XRAY_DOMAIN_WHITELIST={{ modules.xray.domain_whitelist|tojson }}
       - PUBLIC_XRAY_DOMAIN_KEYWORD_WHITELIST={{ modules.xray.domain_keyword_whitelist|tojson }}
       - PUBLIC_XRAY_DOMAIN_SUFFIX_WHITELIST={{ modules.xray.domain_suffix_whitelist|tojson }}
-      - PUBLIC_XRAY_IP_RANGE_WHITELIST={{ modules.xray.ip_range_whitelist|tojson }}
+      - PUBLIC_XRAY_IP_RANGE_WHITELIST={{ modules.xray.ip_range_whitelist|map('string')|list|tojson }}
 
     restart: 'no'
 
