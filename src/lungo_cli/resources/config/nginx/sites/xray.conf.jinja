@@ -1,0 +1,22 @@
+{% set APP_NAME = 'xray' %}
+
+{% if config.modules.xray.enabled %}
+location = /app/{{ APP_NAME }} {
+    include snippets/proxy.conf;
+    include snippets/auth.conf;
+
+    if ($http_upgrade ~* websocket) {
+        return 480;
+    }
+
+    error_page 480 = @{{ APP_NAME }};
+    proxy_pass http://node;
+}
+
+location @{{ APP_NAME }} {
+    include snippets/proxy.conf;
+    include snippets/auth.conf;
+
+    proxy_pass http://{{ APP_NAME }};
+}
+{% endif %}

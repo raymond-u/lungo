@@ -37,3 +37,10 @@ upstream rstudio {
     keepalive 4;
 }
 {% endif %}
+
+{% if modules.xray.enabled %}
+upstream xray {
+    server {{ ip_addresses.xray }}:80;
+    keepalive 4;
+}
+{% endif %}
