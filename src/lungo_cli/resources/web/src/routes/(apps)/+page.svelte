@@ -19,7 +19,7 @@
                     <p class="pt-4 text-lg">{subtitle}</p>
                 {:else}
                     <h1 class="text-4xl font-bold">Welcome to {SITE_TITLE}</h1>
-                    <p class="pb-20 pt-4 text-lg">{subtitle}</p>
+                    <p class="pb-10 pt-4 text-lg lg:pb-20">{subtitle}</p>
                     <a class="btn btn-primary" href="/login">Sign in</a>
                 {/if}
             </div>
