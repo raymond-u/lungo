@@ -3,12 +3,17 @@
     import { safeClick, scrollShadow, scrollSync } from "$lib/actions"
     import { Avatar, SwapIcon } from "$lib/components"
     import { SITE_TITLE } from "$lib/constants"
-    import { LogoutIcon, SettingsIcon } from "$lib/icons"
+    import { FullscreenIcon, LogoutIcon, SettingsIcon } from "$lib/icons"
     import { EIcon } from "$lib/types"
     import { createPlaceholder, useStore } from "$lib/utils"
 
-    const { allowScroll, currentApp, darkTheme, syncedScrollTops } = useStore()
+    const { allowScroll, currentApp, currentInlineFrame, darkTheme, syncedScrollTops } = useStore()
 
+    const handleFullscreen = () => {
+        if ($currentInlineFrame) {
+            $currentInlineFrame.requestFullscreen()
+        }
+    }
     const handleLogout = async () => {
         await fetch("/logout", {
             method: "POST",
@@ -30,7 +35,7 @@
 </script>
 
 <header>
-    <div class="navbar gap-1.5 p-2">
+    <div class="navbar gap-2 p-2">
         <div class="drawer w-12 flex-none">
             <input id="nav-drawer" type="checkbox" class="drawer-toggle" bind:checked />
             <div class="drawer-content">
@@ -74,14 +79,21 @@
         <div class="flex-1 px-6">
             <a class="text-xl" href="/">{SITE_TITLE}</a>
         </div>
-        <div class="mr-1 flex-none">
+        <div class="flex-none" class:hidden={!$currentInlineFrame}>
+            <button class="btn btn-circle btn-ghost h-10 min-h-0 w-10" on:click={handleFullscreen}>
+                <span class="h-6 w-6">
+                    <FullscreenIcon />
+                </span>
+            </button>
+        </div>
+        <div class="flex-none">
             <button class="btn btn-circle btn-ghost h-10 min-h-0 w-10" on:click={handleSwitchTheme}>
                 <span class="h-6 w-6">
                     <SwapIcon icon={EIcon.Theme} active={$darkTheme} rotate />
                 </span>
             </button>
         </div>
-        <div class="mr-4 flex-none">
+        <div class="mx-4 flex-none">
             {#if $page.data.userInfo}
                 {@const { email, name } = $page.data.userInfo}
                 <div class="dropdown dropdown-end dropdown-bottom">
