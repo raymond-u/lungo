@@ -6,6 +6,7 @@
 | [JupyterHub](https://jupyter.org/hub)                            | `jupyterhub`  | :material-check-circle-outline:{ .icon .green } |
 | [PrivateBin](https://privatebin.info/)                           | `privatebin`  | :material-check-circle-outline:{ .icon .green } |
 | [RStudio](https://posit.co/products/open-source/rstudio-server/) | `rstudio`     | :material-check-circle-outline:{ .icon .green } |
+| [Xray](https://xtls.github.io/)                                  | `xray`        | :material-check-circle-outline:{ .icon .green } |
 
 Legend:
 
