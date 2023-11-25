@@ -3,27 +3,18 @@
     import { onMount } from "svelte"
     import { page } from "$app/stores"
     import { AppShell, LoadingIndicator } from "$lib/components"
+    import { ETheme } from "$lib/types"
     import { createStore, createTitle } from "$lib/utils"
 
-    const { allowScroll, darkTheme } = createStore()
-
-    const observeThemeChange = (e: MediaQueryListEvent) => {
-        $darkTheme = e.matches
-    }
+    const { allowScroll, currentTheme } = createStore()
 
     onMount(() => {
-        if (window.matchMedia) {
-            $darkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-            window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", observeThemeChange)
-
-            return () => {
-                window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", observeThemeChange)
-            }
-        }
+        const theme = localStorage.getItem("theme")
+        $currentTheme = theme && Object.values(ETheme).includes(theme as ETheme) ? (theme as ETheme) : ETheme.Auto
     })
 </script>
 
-<div data-theme={typeof $darkTheme === "undefined" ? undefined : $darkTheme ? "dark" : "light"}>
+<div>
     <LoadingIndicator />
     <AppShell>
         <slot />

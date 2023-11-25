@@ -72,4 +72,5 @@
 <span class="swap" class:swap-active={active} class:swap-flip={flip} class:swap-rotate={rotate}>
     <svelte:component this={icons[icon].normal} class="swap-off {classString}" />
     <svelte:component this={icons[icon].active} class="swap-on {classString}" />
+    <slot />
 </span>

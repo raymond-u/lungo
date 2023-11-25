@@ -1,6 +1,8 @@
 export { default as AccountIcon } from "./Account.svelte"
+export { default as CheckIcon } from "./Check.svelte"
 export { default as CloseIcon } from "./Close.svelte"
 export { default as DarkModeIcon } from "./DarkMode.svelte"
+export { default as ExpandIcon } from "./Expand.svelte"
 export { default as FolderOutlineIcon } from "./FolderOutline.svelte"
 export { default as FolderSolidIcon } from "./FolderSolid.svelte"
 export { default as FullscreenIcon } from "./Fullscreen.svelte"

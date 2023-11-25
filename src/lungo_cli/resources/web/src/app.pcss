@@ -8,6 +8,16 @@
         @apply duration-0;
     }
 
+    .btn:is(input[type="checkbox"]:checked),
+    .btn:is(input[type="radio"]:checked) {
+        @apply bg-transparent;
+        @apply text-base-content;
+
+        &:hover {
+            @apply bg-transparent;
+        }
+    }
+
     .divider {
         @apply m-0;
     }

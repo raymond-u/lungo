@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from "$app/stores"
     import { safeClick, scrollShadow, scrollSync } from "$lib/actions"
-    import { Avatar, SwapIcon } from "$lib/components"
+    import { Avatar, SwapIcon, ThemeSelector } from "$lib/components"
     import { SITE_TITLE } from "$lib/constants"
     import { FullscreenIcon, LogoutIcon, SettingsIcon } from "$lib/icons"
     import { EIcon } from "$lib/types"
@@ -25,9 +25,6 @@
 
         location.reload()
     }
-    const handleSwitchTheme = () => {
-        $darkTheme = !$darkTheme
-    }
 
     let checked: boolean | undefined
 
@@ -35,7 +32,7 @@
 </script>
 
 <header>
-    <div class="navbar gap-2 p-2">
+    <div class="navbar gap-3 p-2">
         <div class="drawer w-12 flex-none">
             <input id="nav-drawer" type="checkbox" class="drawer-toggle" bind:checked />
             <div class="drawer-content">
@@ -76,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex-1 px-6">
+        <div class="flex-1 px-4">
             <a class="text-xl" href="/">{SITE_TITLE}</a>
         </div>
         <div class="flex-none" class:hidden={!$currentInlineFrame}>
@@ -87,13 +84,9 @@
             </button>
         </div>
         <div class="flex-none">
-            <button class="btn btn-circle btn-ghost h-10 min-h-0 w-10" on:click={handleSwitchTheme}>
-                <span class="h-6 w-6">
-                    <SwapIcon icon={EIcon.Theme} active={$darkTheme} rotate />
-                </span>
-            </button>
+            <ThemeSelector />
         </div>
-        <div class="mx-4 flex-none">
+        <div class="ml-2 mr-4 flex-none">
             {#if $page.data.userInfo}
                 {@const { email, name } = $page.data.userInfo}
                 <div class="dropdown dropdown-end dropdown-bottom">

@@ -13,12 +13,16 @@ export function useStore(): Store {
     return getContext<Store>("globalStore")
 }
 
+export function capitalize(text: string): string {
+    return `${text[0]?.toUpperCase() ?? ""}${text.slice(1)}`
+}
+
 export function createPlaceholder(firstName: string, lastName: string): string {
-    return `${firstName[0].toUpperCase()}${lastName[0].toUpperCase()}`
+    return `${firstName[0]?.toUpperCase() ?? ""}${lastName[0]?.toUpperCase() ?? ""}`
 }
 
 export function createTitle(slug: string): string {
-    return `${slug[0]?.toUpperCase() ?? ""}${slug.slice(1)} | ${SITE_TITLE}`
+    return `${capitalize(slug)} | ${SITE_TITLE}`
 }
 
 export function dedent(text: string): string {

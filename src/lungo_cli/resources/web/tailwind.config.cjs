@@ -41,6 +41,10 @@ const config = {
                     "base-content": "#A6ADBB",
                 }
             },
+            "emerald",
+            "synthwave",
+            "lofi",
+            "dracula",
         ],
     },
 
