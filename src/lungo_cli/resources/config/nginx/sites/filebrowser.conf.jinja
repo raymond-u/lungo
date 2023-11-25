@@ -44,6 +44,6 @@ location @{{ APP_NAME }} {
     include snippets/auth.conf;
 
     proxy_pass http://{{ APP_NAME }}$escaped_uri?$filtered_args;
-    proxy_redirect ~*^(?:https?://[^/]+)?/app/{{ APP_NAME }}([^?]*)\??(.*)$ /app/{{ APP_NAME }}$1?iframe=1&$2;
+    proxy_redirect ~*^(?:https?://[^/]+)?/app/{{ APP_NAME }}([^?]*)\??(.*)$ $http_x_forwarded_proto://$http_x_forwarded_host/app/{{ APP_NAME }}$1?iframe=1&$2;
 }
 {% endif %}

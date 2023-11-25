@@ -37,6 +37,6 @@ location @{{ APP_NAME }} {
     rewrite ^/app/{{ APP_NAME }}/(.*)$ /$1 break;
 
     proxy_pass http://{{ APP_NAME }};
-    proxy_redirect ~*^(?:https?://[^/]+)?/app/{{ APP_NAME }}([^?]*)\??(.*)$ /app/{{ APP_NAME }}?iframe=1&$2;
+    proxy_redirect ~*^(?:https?://[^/]+)?/app/{{ APP_NAME }}([^?]*)\??(.*)$ $http_x_forwarded_proto://$http_x_forwarded_host/app/{{ APP_NAME }}?iframe=1&$2;
 }
 {% endif %}
