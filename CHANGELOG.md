@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Show error messages correctly in the web UI
 - Correct handling of redirects when using non-standard ports
+- Include the port number in the forwarded `Host` header
 
 ## [0.1.12](https://github.com/raymond-u/lungo/compare/v0.1.11...v0.1.12) - 2023-11-22
 
