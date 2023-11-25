@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add the Xray module
 - Add fullscreen mode for the web UI
+- Add theme selector for the web UI
 
 ### Fixed
 
