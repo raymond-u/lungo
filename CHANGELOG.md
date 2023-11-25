@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add fullscreen mode for the web UI
 - Add theme selector for the web UI
 
+### Changed
+
+- Update JupyterLab to 4.0.9
+
 ### Fixed
 
 - Show error messages correctly in the web UI
