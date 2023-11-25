@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from "$app/stores"
     import { safeClick, scrollShadow, scrollSync } from "$lib/actions"
-    import { Avatar, SwapIcon, ThemeSelector } from "$lib/components"
+    import { Avatar, SwappableIcon, ThemeSelector } from "$lib/components"
     import { SITE_TITLE } from "$lib/constants"
     import { FullscreenIcon, LogoutIcon, SettingsIcon } from "$lib/icons"
     import { EIcon } from "$lib/types"
@@ -38,7 +38,7 @@
             <div class="drawer-content">
                 <label for="nav-drawer" class="btn btn-circle btn-ghost drawer-button">
                     <span class="h-6 w-6">
-                        <SwapIcon icon={EIcon.Menu} active={checked} rotate />
+                        <SwappableIcon icon={EIcon.Menu} active={checked} rotate />
                     </span>
                 </label>
             </div>
@@ -59,7 +59,7 @@
                                     {href}
                                 >
                                     <span class="h-6 w-6">
-                                        <SwapIcon
+                                        <SwappableIcon
                                             class={active && $darkTheme === false ? "fill-neutral-content" : ""}
                                             {active}
                                             {icon}

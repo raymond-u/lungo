@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from "$app/stores"
     import { scrollShadow, scrollSync } from "$lib/actions"
-    import { SwapIcon } from "$lib/components"
+    import { SwappableIcon } from "$lib/components"
     import { truncateTitle, useStore } from "$lib/utils"
 
     const { currentApp, darkTheme, syncedScrollTops } = useStore()
@@ -17,7 +17,11 @@
             {@const active = $currentApp?.name === name}
             <li class="mt-3 h-8 w-14 transition" class:-translate-y-3={active}>
                 <a class="rounded-full py-1" class:!active={active} {href}>
-                    <SwapIcon class={active && $darkTheme === false ? "fill-neutral-content" : ""} {active} {icon} />
+                    <SwappableIcon
+                        class={active && $darkTheme === false ? "fill-neutral-content" : ""}
+                        {active}
+                        {icon}
+                    />
                 </a>
             </li>
             <li

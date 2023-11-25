@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { SwapIcon } from "$lib/components"
+    import { SwappableIcon } from "$lib/components"
     import { EIcon } from "$lib/types"
 
     export let name = ""
@@ -28,6 +28,6 @@
         {placeholder}
     />
     <button class="absolute right-3 top-3 h-6 w-6" type="button" on:click={handleClick}>
-        <SwapIcon active={visible} icon={EIcon.Visibility} />
+        <SwappableIcon active={visible} icon={EIcon.Visibility} />
     </button>
 </span>
