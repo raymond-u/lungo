@@ -5,7 +5,7 @@ APP_NAME_CAPITALIZED: Final[str] = APP_NAME.capitalize()
 APP_AUTHOR: Final[str] = APP_NAME
 PACKAGE_NAME: Final[str] = "lungo_cli"
 STORAGE_PREFIX: Final[str] = "v"
-STORAGE_VERSION: Final[str] = "v1"
+STORAGE_VERSION: Final[str] = "v0"
 
 KETO_ADMIN_API_BASE_URL: Final[str] = "http://127.0.0.1:3939"
 KRATOS_ADMIN_API_BASE_URL: Final[str] = "http://127.0.0.1:3940"
