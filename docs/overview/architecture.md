@@ -2,29 +2,27 @@
 
 ```mermaid
 graph LR
-    Host(Host) ---> Proxy(Reverse Proxy <br /><br /> Nginx)
-    Proxy <--->|Authorize requests| Auth(Access Control <br /><br /> Oathkeeper) ---> Control
-    Proxy ---> UI(Web UI <br /><br /> Node)
-    UI --->|Fetch a list of accessible apps| Control
+    Host(Host) --> Portal(Portal<br /><br />Openresty)
+    Portal -->|Perform real IP forwarding<br />and rate limiting| Proxy(Reverse Proxy<br /><br />Openresty)
+    Proxy <--->|Authorize requests| Auth(Access Control<br /><br />Oathkeeper) ---> Control
+    Proxy ---> UI(Web UI<br /><br />Node.js)
+    UI --->|Find accessible apps| Control
     UI ---> Backends
 
     subgraph Control [&nbsp]
         subgraph P1 [Access Control Backends]
             subgraph P2 [&nbsp]
-                direction LR
-                Authenticator(Authenticator <br /><br /> Kratos)
-                Authorizer(Authorizer <br /><br /> Keto)
+                direction TB
+                Authenticator(Authenticator<br /><br />Kratos) ~~~ Authorizer(Authorizer<br /><br />Keto)
             end
         end
     end
 
     subgraph Backends [&nbsp]
-        subgraph P3 [Application Backends]
+        subgraph P3 [App Backends]
             subgraph P4 [&nbsp]
-                direction LR
-                App1(App 1)
-                App2(App 2)
-                App3(App 3)
+                direction TB
+                App1(App 1) ~~~ App2(App 2) ~~~ App0(...)
             end
         end
     end
@@ -37,7 +35,7 @@ graph LR
 
 Lungo consists of three primary components:
 
-- **Reverse proxy** - Nginx, responsible for authorizing incoming requests using Oathkeeper and forwarding them to the
-  relevant backend.
+- **Reverse proxy** - Openresty, responsible for authorizing incoming requests using Oathkeeper and forwarding them to
+  the relevant backend.
 - **Access control backends** - Kratos and Keto, which manage user authentication and authorization, respectively.
 - **Application backends** - a set of applications accessible through the proxy.
