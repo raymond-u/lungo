@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/logo.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.12">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.13">
     
     
       
@@ -397,6 +397,7 @@ You're not viewing the latest version.
   
   
   
+  
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
         
@@ -413,6 +414,7 @@ You're not viewing the latest version.
     
       
       
+  
   
   
   
@@ -455,6 +457,7 @@ You're not viewing the latest version.
   
   
   
+  
     <li class="md-nav__item">
       <a href="../overview/architecture/" class="md-nav__link">
         
@@ -475,6 +478,7 @@ You're not viewing the latest version.
   
   
   
+  
     <li class="md-nav__item">
       <a href="../overview/security/" class="md-nav__link">
         
@@ -492,6 +496,7 @@ You're not viewing the latest version.
             
               
                 
+  
   
   
   
@@ -522,6 +527,7 @@ You're not viewing the latest version.
   
   
     
+  
   
   
     <li class="md-nav__item md-nav__item--active">
@@ -587,18 +593,9 @@ You're not viewing the latest version.
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing-from-source" class="md-nav__link">
+  <a href="#from-source" class="md-nav__link">
     <span class="md-ellipsis">
-      Installing from source
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Notes
+      From source
     </span>
   </a>
   
@@ -614,6 +611,7 @@ You're not viewing the latest version.
     
       
       
+  
   
   
   
@@ -656,6 +654,7 @@ You're not viewing the latest version.
   
   
   
+  
     <li class="md-nav__item">
       <a href="../getting-started/prerequisites/" class="md-nav__link">
         
@@ -673,6 +672,7 @@ You're not viewing the latest version.
             
               
                 
+  
   
   
   
@@ -696,6 +696,7 @@ You're not viewing the latest version.
   
   
   
+  
     <li class="md-nav__item">
       <a href="../getting-started/managing-users/" class="md-nav__link">
         
@@ -713,6 +714,7 @@ You're not viewing the latest version.
             
               
                 
+  
   
   
   
@@ -740,6 +742,7 @@ You're not viewing the latest version.
     
       
       
+  
   
   
   
@@ -782,6 +785,7 @@ You're not viewing the latest version.
   
   
   
+  
     <li class="md-nav__item">
       <a href="../guides/allowing-anonymous-access/" class="md-nav__link">
         
@@ -802,6 +806,7 @@ You're not viewing the latest version.
   
   
   
+  
     <li class="md-nav__item">
       <a href="../guides/configuring-rate-limiting/" class="md-nav__link">
         
@@ -819,6 +824,7 @@ You're not viewing the latest version.
             
               
                 
+  
   
   
   
@@ -846,6 +852,7 @@ You're not viewing the latest version.
     
       
       
+  
   
   
   
@@ -888,6 +895,7 @@ You're not viewing the latest version.
   
   
   
+  
     <li class="md-nav__item">
       <a href="../configuration/reference-for-config-yaml/" class="md-nav__link">
         
@@ -905,6 +913,7 @@ You're not viewing the latest version.
             
               
                 
+  
   
   
   
@@ -935,6 +944,7 @@ You're not viewing the latest version.
   
   
   
+  
     <li class="md-nav__item">
       <a href="../cli-reference/" class="md-nav__link">
         
@@ -951,6 +961,7 @@ You're not viewing the latest version.
     
       
       
+  
   
   
   
@@ -1015,18 +1026,9 @@ You're not viewing the latest version.
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing-from-source" class="md-nav__link">
+  <a href="#from-source" class="md-nav__link">
     <span class="md-ellipsis">
-      Installing from source
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Notes
+      From source
     </span>
   </a>
   
@@ -1064,6 +1066,12 @@ You're not viewing the latest version.
 
 
 <h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">#</a></h1>
+<p>Lungo is built upon <a href="https://github.com/docker/compose">Docker Compose</a>. Before proceeding, please ensure that Docker is
+installed on your machine.</p>
+<p>Alternatively, you can use <a href="https://github.com/containers/podman-compose">Podman Compose</a>
+with <a href="https://podman.io/">Podman</a>. You can
+also <a href="https://fedoramagazine.org/use-docker-compose-with-podman-to-orchestrate-containers-on-fedora/">use Docker Compose with Podman</a>.</p>
+<p>For instructions on setting up these tools, please refer to their respective documentation.</p>
 <h2 id="with-pipx">With pipx<a class="headerlink" href="#with-pipx" title="Permanent link">#</a></h2>
 <p>The recommended way to install Lungo is with <a href="https://pypa.github.io/pipx/">pipx</a>:</p>
 <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1">pipx<span class="w"> </span>install<span class="w"> </span>lungo-cli
@@ -1072,21 +1080,14 @@ You're not viewing the latest version.
 <p>To install Lungo with pip, run:</p>
 <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1">pip<span class="w"> </span>install<span class="w"> </span>lungo-cli
 </span></code></pre></div></td></tr></table></div>
-<h2 id="installing-from-source">Installing from source<a class="headerlink" href="#installing-from-source" title="Permanent link">#</a></h2>
-<p>To install from source, run:</p>
+<h2 id="from-source">From source<a class="headerlink" href="#from-source" title="Permanent link">#</a></h2>
+<p>To install Lungo from source, run:</p>
 <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1">git<span class="w"> </span>clone<span class="w"> </span>--recurse-submodules<span class="w"> </span>https://github.com/raymond-u/lungo
 </span><span id="__span-2-2"><span class="nb">cd</span><span class="w"> </span>lungo
 </span><span id="__span-2-3">pip<span class="w"> </span>install<span class="w"> </span>.
 </span></code></pre></div></td></tr></table></div>
-<h2 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">#</a></h2>
-<p>Lungo is built upon <a href="https://github.com/docker/compose">Docker Compose</a>. Before proceeding, please ensure that Docker is
-installed on your machine.</p>
-<p>Alternatively, you can use <a href="https://github.com/containers/podman-compose">Podman Compose</a>
-with <a href="https://podman.io/">Podman</a>. You can
-also <a href="https://fedoramagazine.org/use-docker-compose-with-podman-to-orchestrate-containers-on-fedora/">use Docker Compose with Podman</a>.</p>
-<p>For instructions on setting up these tools, please refer to their respective documentation.</p>
 
 
 
@@ -1179,7 +1180,7 @@ also <a href="https://fedoramagazine.org/use-docker-compose-with-podman-to-orche
     <script id="__config" type="application/json">{"base": "..", "features": ["content.action.edit", "content.action.view", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.top", "search.highlight", "search.suggest", "toc.follow"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": ["nightly", "stable"], "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.6c14ae12.min.js"></script>
+      <script src="../assets/javascripts/bundle.cd18aaf1.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": false, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
