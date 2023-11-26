@@ -28,7 +28,6 @@ class Console:
         self.epilogue = []
         self.log_level = LogLevels.INFO
         self.stdout = console.Console()
-        self.stderr = console.Console(stderr=True)
 
     def set_log_level(self, verbosity: int):
         if verbosity <= -1:
@@ -75,28 +74,28 @@ class Console:
             return
 
         kwargs["highlight"] = kwargs.get("highlight", False)
-        self.stderr.print("[DEBUG]", *args, **kwargs)
+        self.stdout.print("[DEBUG]", *args, **kwargs)
 
     def print_info(self, *args: Any, **kwargs: Any):
         if self.log_level.value > LogLevels.INFO.value:
             return
 
         kwargs["highlight"] = kwargs.get("highlight", False)
-        self.stderr.print("[INFO]", *args, **kwargs)
+        self.stdout.print("[INFO]", *args, **kwargs)
 
     def print_warning(self, *args: Any, **kwargs: Any):
         if self.log_level.value > LogLevels.WARNING.value:
             return
 
         kwargs["highlight"] = kwargs.get("highlight", False)
-        self.stderr.print("[bold yellow][WARNING][/bold yellow]", *args, **kwargs)
+        self.stdout.print("[bold yellow][WARNING][/bold yellow]", *args, **kwargs)
 
     def print_error(self, *args: Any, **kwargs: Any):
         if self.log_level.value > LogLevels.ERROR.value:
             return
 
         kwargs["highlight"] = kwargs.get("highlight", False)
-        self.stderr.print("[bold red][ERROR][/bold red]", *args, **kwargs)
+        self.stdout.print("[bold red][ERROR][/bold red]", *args, **kwargs)
 
     def show_epilogue(self):
         self.request_for_newline()
