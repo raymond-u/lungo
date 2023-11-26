@@ -14,8 +14,7 @@
             <img src="/cover.jpg" alt="cover" class="max-h-48 w-80 rounded-box object-cover shadow-2xl lg:max-h-none" />
             <div>
                 {#if data.userInfo}
-                    {@const { name } = data.userInfo}
-                    <h1 class="text-4xl font-bold">Welcome, {name.first} {name.last}</h1>
+                    <h1 class="text-4xl font-bold">Welcome back, {data.userInfo.name.first}</h1>
                     <p class="pt-4 text-lg">{subtitle}</p>
                 {:else}
                     <h1 class="text-4xl font-bold">Welcome to {SITE_TITLE}</h1>

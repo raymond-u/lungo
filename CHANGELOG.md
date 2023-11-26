@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.2.1...HEAD)
 
+### Changed
+
+- Remove the user's last name from the greeting in the web UI
+
 ## [0.2.1](https://github.com/raymond-u/lungo/compare/v0.2.0...v0.2.1) - 2023-11-26
 
 ### Fixed
