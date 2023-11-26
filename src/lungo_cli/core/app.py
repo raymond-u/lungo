@@ -13,7 +13,7 @@ from .database import AccountManager
 from .file import FileUtils
 from .renderer import Renderer
 from .storage import Storage
-from ..helpers.common import get_file_permissions, port_is_available
+from ..helpers.common import get_app_version, get_file_permissions, port_is_available
 from ..helpers.crypto import generate_random_hex, generate_self_signed_cert
 from ..helpers.format import format_input, format_path
 from ..models.base import EApp
@@ -70,13 +70,28 @@ class AppManager:
         with as_file(files(f"{PACKAGE_NAME}.resources")) as resources:
             self.file_utils.copy(resources / src, dst)
 
+    def generate_config_hash(self) -> str:
+        """Generate a hash of the configuration files."""
+        return (
+            f"v{get_app_version()}"
+            + f"+{self.file_utils.hash_sha256(self.storage.config_file)}"
+            + f"+{self.file_utils.hash_sha256(self.storage.users_file)}"
+        )
+
     def update_app_data(self) -> None:
         """Ensure that all the application data exists and is up-to-date."""
+        config_hash = self.generate_config_hash()
+
         with self.console.status("Updating storage..."):
             self.storage.validate()
             self.storage.create_dirs()
 
-            if not self.storage.bundled_dir.is_dir() or self.context_manager.dev:
+            if (
+                not self.storage.init_file.is_file()
+                or self.file_utils.read_text(self.storage.init_file) != config_hash
+                or not self.storage.bundled_dir.is_dir()
+                or self.context_manager.dev
+            ):
                 self.console.print_info("Updating bundled data...")
                 self.copy_app_resources(".", self.storage.bundled_dir)
                 self.file_utils.change_mode(self.storage.bundled_dir, 0o700)
@@ -114,17 +129,7 @@ class AppManager:
                 self.file_utils.write_text(self.storage.xray_salt_file, str(uuid1()), True)
 
         with self.console.status("Updating database..."):
-            config_hash = self.file_utils.hash_sha256(self.storage.config_file) + self.file_utils.hash_sha256(
-                self.storage.users_file
-            )
-
-            if (
-                not self.storage.init_file.is_file()
-                or self.file_utils.read_text(self.storage.init_file) != config_hash
-                or self.context_manager.dev
-            ):
-                self.file_utils.remove(self.storage.init_file)
-
+            if not self.storage.init_file.is_file():
                 self.renderer.render_all(self.context_manager.context)
                 self.account_manager.update(self.context_manager.config, self.context_manager.users)
 
