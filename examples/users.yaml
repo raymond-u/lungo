@@ -1,6 +1,5 @@
 accounts:
-  - enabled: false
-    username: joe
+  - username: joe
     name:
       first: Joe
       last: Doe
@@ -9,3 +8,10 @@ accounts:
     extra:
       allowed_apps:
         - rstudio
+  - enabled: false
+    username: anonymous
+    name:
+      first: Anonymous
+      last: User
+    email: an@nymo.us
+    role: guest
