@@ -3,7 +3,7 @@ site_url: 'https://raymond-u.github.io/lungo/'
 repo_name: 'raymond-u/lungo'
 repo_url: 'https://github.com/raymond-u/lungo'
 remote_branch: gh-pages
-copyright: 'Copyright &copy; 2023 raymond-u'
+copyright: 'Copyright &copy; 2023-2024 raymond-u'
 edit_uri: edit/main/docs/
 
 nav:
