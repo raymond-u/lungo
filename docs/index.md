@@ -7,7 +7,7 @@ hide:
 
 Lungo is a user-friendly home lab setup designed for small-to-mid-scale on-premises hosting.
 
-![showcase](https://github.com/raymond-u/lungo/assets/36328498/d16fc1ce-8db5-41a0-b443-f35f6aaaa857){ .w-4/5 }
+![showcase](assets/showcase.jpg){ .w-4/5 }
 
 ## Features
 
