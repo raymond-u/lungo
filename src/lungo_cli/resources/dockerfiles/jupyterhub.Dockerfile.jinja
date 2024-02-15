@@ -1,5 +1,5 @@
 {% set JUPYTERHUB_VER = '4.0.2' %}
-{% set JUPYTERLAB_VER = '4.0.9' %}
+{% set JUPYTERLAB_VER = '4.1.1' %}
 
 FROM docker.io/jupyterhub/jupyterhub:{{ JUPYTERHUB_VER }}
 RUN python3 -m pip install --no-cache-dir --upgrade setuptools pip && \

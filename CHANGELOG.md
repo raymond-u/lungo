@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Allow containers to restart automatically after a crash
+- Update File Browser to 2.27.0
+- Update JupyterLab to 4.1.1
+- Update PrivateBin to 1.7.1
+- Update Xray to 1.8.7
 
 ## [0.2.2](https://github.com/raymond-u/lungo/compare/v0.2.1...v0.2.2) - 2023-11-27
 
