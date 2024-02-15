@@ -1,6 +1,6 @@
 site_name: Lungo
 site_url: 'https://raymond-u.github.io/lungo/'
-repo_name: 'raymond-u/lungo'
+repo_name: raymond-u/lungo
 repo_url: 'https://github.com/raymond-u/lungo'
 remote_branch: gh-pages
 copyright: 'Copyright &copy; 2023-2024 raymond-u'
@@ -46,6 +46,22 @@ theme:
     - search.suggest
     - toc.follow
 
+  palette:
+    - media: '(prefers-color-scheme)'
+      toggle:
+        icon: material/brightness-auto
+        name: 'Use light mode'
+    - media: '(prefers-color-scheme: light)'
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: 'Use dark mode'
+    - media: '(prefers-color-scheme: dark)'
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: 'Use system preference'
+
 markdown_extensions:
   - attr_list
   - md_in_html
@@ -77,6 +93,7 @@ plugins:
       zoomable: false
   - mike:
       canonical_version: stable
+  - privacy
   - search
 
 extra:
