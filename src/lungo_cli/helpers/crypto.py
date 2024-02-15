@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 from secrets import token_hex
 
 from cryptography import x509
@@ -14,7 +14,7 @@ def generate_self_signed_cert() -> tuple[bytes, bytes]:
     key = rsa.generate_private_key(public_exponent=65537, key_size=2048, backend=default_backend())
     name = x509.Name([x509.NameAttribute(x509.oid.NameOID.ORGANIZATION_NAME, APP_NAME_CAPITALIZED)])
     serial_number = x509.random_serial_number()
-    now = datetime.utcnow()
+    now = datetime.now(UTC)
     basic_constraints = x509.BasicConstraints(ca=True, path_length=0)
 
     cert = (
