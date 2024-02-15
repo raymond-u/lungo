@@ -55,7 +55,7 @@ services:
 
     depends_on:
       - nginx
-    restart: 'no'
+    restart: 'unless-stopped'
 
   nginx:
     container_name: nginx
@@ -100,7 +100,7 @@ services:
       {% if modules.rstudio.enabled %}
       - rstudio
       {% endif %}
-    restart: 'no'
+    restart: 'unless-stopped'
 
   # ============================== #
   # Identity and access management #
@@ -129,7 +129,7 @@ services:
       - '{{ app_dirs.cache_dir }}/keto:/var/log/keto:rw'
       - '{{ app_dirs.managed_dir }}/keto:/var/lib/keto:rw'
 
-    restart: 'no'
+    restart: 'unless-stopped'
 
   kratos:
     container_name: kratos
@@ -161,7 +161,7 @@ services:
       - source: KRATOS_SECRETS
         target: /etc/kratos/secrets.yaml
 
-    restart: 'no'
+    restart: 'unless-stopped'
 
   oathkeeper:
     container_name: oathkeeper
@@ -183,7 +183,7 @@ services:
       - './config/oathkeeper:/etc/oathkeeper:ro'
       - '{{ app_dirs.cache_dir }}/oathkeeper:/var/log/oathkeeper:rw'
 
-    restart: 'no'
+    restart: 'unless-stopped'
 
   # == #
   # UI #
@@ -244,7 +244,7 @@ services:
       - PUBLIC_XRAY_DOMAIN_SUFFIX_WHITELIST={{ modules.xray.domain_suffix_whitelist|tojson }}
       - PUBLIC_XRAY_IP_RANGE_WHITELIST={{ modules.xray.ip_range_whitelist|map('string')|list|tojson }}
 
-    restart: 'no'
+    restart: 'unless-stopped'
 
   # ============ #
   # Applications #
@@ -292,7 +292,7 @@ services:
       - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
       {% endfor %}
 
-    restart: 'no'
+    restart: 'unless-stopped'
   {% endif %}
 
   {% if modules.jupyterhub.enabled %}
@@ -335,7 +335,7 @@ services:
       - source: JUPYTERHUB_COOKIE_SECRET
         target: /etc/jupyterhub/cookie_secret
 
-    restart: 'no'
+    restart: 'unless-stopped'
   {% endif %}
 
   {% if modules.privatebin.enabled %}
@@ -363,7 +363,7 @@ services:
     environment:
       - CONFIG_PATH=/etc/privatebin
 
-    restart: 'no'
+    restart: 'unless-stopped'
   {% endif %}
 
   {% if modules.rstudio.enabled %}
@@ -403,7 +403,7 @@ services:
       - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
       {% endfor %}
 
-    restart: 'no'
+    restart: 'unless-stopped'
   {% endif %}
 
   {% if modules.xray.enabled %}
@@ -427,7 +427,7 @@ services:
       - './config/xray:/etc/xray:ro'
       - '{{ app_dirs.cache_dir }}/xray:/var/log/xray:rw'
 
-    restart: 'no'
+    restart: 'unless-stopped'
   {% endif %}
 
 networks:

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.2.2...HEAD)
 
+### Changed
+
+- Allow containers to restart automatically after a crash
+
 ## [0.2.2](https://github.com/raymond-u/lungo/compare/v0.2.1...v0.2.2) - 2023-11-27
 
 ### Changed
