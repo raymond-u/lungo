@@ -192,6 +192,7 @@ class AccountManager:
         if anonymous_account := next(filter(lambda x: x.username == "anonymous", accounts), None):
             accounts.remove(anonymous_account)
 
+        # This endpoint by default returns the first 250 accounts, but should be enough for most use cases
         for old_account in self.client.get(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities"):
             if new_account := next(filter(lambda x: x.username == old_account["traits"]["username"], accounts), None):
                 # Update the account
