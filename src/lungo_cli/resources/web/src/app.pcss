@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    html:has(.drawer-toggle:checked) {
+        scrollbar-gutter: auto !important;
+    }
+}
+
 @layer components {
     .btn {
         @apply animate-none;

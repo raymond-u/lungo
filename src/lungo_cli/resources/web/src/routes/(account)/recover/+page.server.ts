@@ -20,7 +20,7 @@ export const actions = {
         switch (response.response.status) {
             case 200:
                 if (!data.get("email")) {
-                    throw redirect(302, "/account")
+                    redirect(302, "/account")
                 }
 
                 return {
@@ -46,7 +46,7 @@ export const actions = {
                 })
             case 422:
                 if (!data.get("email")) {
-                    throw redirect(302, "/account")
+                    redirect(302, "/account")
                 }
 
                 break
@@ -77,7 +77,7 @@ export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof
             }
         default:
             // Already logged in
-            throw redirect(302, "/account")
+            redirect(302, "/account")
     }
 
     // return {

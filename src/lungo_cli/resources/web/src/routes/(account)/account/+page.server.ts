@@ -67,7 +67,7 @@ export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof
             }
         default:
             // Invalid session or insufficient session privileges
-            throw redirect(302, "/login")
+            redirect(302, "/login")
     }
 
     // return {

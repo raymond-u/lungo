@@ -20,7 +20,8 @@ export const actions = {
 
         switch (response.response.status) {
             case 200:
-                throw redirect(302, "/")
+                redirect(302, "/")
+            // eslint-disable-next-line no-fallthrough
             case 303:
                 return fail(400, {
                     messages: [
@@ -64,7 +65,7 @@ export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof
             }
         default:
             // Already logged in
-            throw redirect(302, "/")
+            redirect(302, "/")
     }
 
     // return {
