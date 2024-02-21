@@ -5,7 +5,6 @@ export default {
     kit: {
         adapter: adapter({
             out: "build",
-            polyfill: false,
             precompress: false,
         }),
     },
