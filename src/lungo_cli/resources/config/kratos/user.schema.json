@@ -31,12 +31,12 @@
                     "title": "Email",
                     "ory.sh/kratos": {
                         "credentials": {
-                            "password": {
-                                "identifier": true
-                            },
                             "code": {
                                 "identifier": true,
                                 "via": "email"
+                            },
+                            "password": {
+                                "identifier": true
                             },
                             "webauthn": {
                                 "identifier": true

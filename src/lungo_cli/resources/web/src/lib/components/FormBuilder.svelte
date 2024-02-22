@@ -14,7 +14,8 @@
         return (
             nodes
                 .find((node) => node.group === group && node.type === "input" && node.attributes.type === "submit")
-                ?.meta.label?.text.split(" with")[0] ?? ""
+                ?.meta.label?.text.split("with")[0]
+                .trim() ?? ""
         )
     }
     const getNodeId = (node: KratosComponents["schemas"]["uiNode"]) => {

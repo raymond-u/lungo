@@ -14,7 +14,9 @@ export const actions = {
                 csrf_token: data.get("csrf_token") as string,
                 method: data.get("method") as string,
                 identifier: data.get("identifier") as string,
-                password: data.get("password") as string,
+                ...(data.get("code")
+                    ? { email: data.get("code") as string }
+                    : { code: data.get("password") as string }),
             },
         })
 
