@@ -9,7 +9,7 @@
     <span class="mb-6 h-12 w-12">
         <AccountIcon />
     </span>
-    <FormBuilder primaryGroup="password" validationFreeButtons={["code"]}>
+    <FormBuilder primaryGroup="password" validationFreeButtons={["resend"]}>
         <span class="inline-flex">
             <a class="link text-sm" href="/recover">Forgot password?</a>
         </span>
