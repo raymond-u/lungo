@@ -1,5 +1,6 @@
 import { derived, type Readable, writable, type Writable } from "svelte/store"
 import type { Page } from "@sveltejs/kit"
+import { page } from "$app/stores"
 import { type App, ETheme } from "$lib/types"
 
 export function allowScroll(): Writable<boolean> {
@@ -41,4 +42,24 @@ export function loginForm(): Writable<object | undefined> {
 
 export function syncedScrollTop(): Writable<number> {
     return writable(0)
+}
+
+export class Store {
+    allowScroll: Writable<boolean>
+    currentApp: Readable<App | undefined>
+    currentInlineFrame: Writable<HTMLIFrameElement | undefined>
+    currentTheme: Writable<ETheme>
+    darkTheme: Readable<boolean | undefined>
+    loginForm: Writable<object | undefined>
+    syncedScrollTops: { [key: string]: Writable<number> }
+
+    constructor() {
+        this.allowScroll = allowScroll()
+        this.currentApp = currentApp(page)
+        this.currentInlineFrame = currentInlineFrame()
+        this.currentTheme = currentTheme()
+        this.darkTheme = darkTheme(this.currentTheme)
+        this.loginForm = loginForm()
+        this.syncedScrollTops = {}
+    }
 }

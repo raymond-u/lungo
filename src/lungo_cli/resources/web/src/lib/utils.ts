@@ -1,6 +1,6 @@
 import { getContext, setContext } from "svelte"
 import { SITE_TITLE } from "$lib/constants"
-import { Store } from "$lib/types"
+import { Store } from "$lib/stores"
 
 export function createStore(): Store {
     const store = new Store()
