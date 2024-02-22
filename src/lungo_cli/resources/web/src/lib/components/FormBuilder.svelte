@@ -12,8 +12,9 @@
     }
     const getGroupActionTitle = (group: KratosComponents["schemas"]["uiNode"]["group"]) => {
         return (
-            nodes.find((node) => node.group === group && node.type === "input" && node.attributes.type === "submit")
-                ?.meta.label?.text ?? ""
+            nodes
+                .find((node) => node.group === group && node.type === "input" && node.attributes.type === "submit")
+                ?.meta.label?.text.split(" with")[0] ?? ""
         )
     }
     const getNodeId = (node: KratosComponents["schemas"]["uiNode"]) => {
