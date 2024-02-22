@@ -12,10 +12,9 @@
     <span class="mb-6 h-12 w-12">
         <AccountIcon />
     </span>
-    <FormBuilder>
+    <FormBuilder primaryGroup="password">
         <span class="inline-flex">
             <a class="link text-sm" href="/recover">Forgot password?</a>
         </span>
     </FormBuilder>
-    <p>{JSON.stringify(a)}</p>
 </HeroFrame>

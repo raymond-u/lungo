@@ -5,6 +5,7 @@
     import { PasswordInput } from "$lib/components"
     import type { KratosComponents } from "$lib/types"
 
+    export let primaryGroup: KratosComponents["schemas"]["uiNode"]["group"] | undefined = undefined
     export let validationFreeButtons = [] as string[]
 
     const clipMessage = (msg: string) => {
@@ -14,8 +15,7 @@
         return (
             nodes
                 .find((node) => node.group === group && node.type === "input" && node.attributes.type === "submit")
-                ?.meta.label?.text.split("with")[0]
-                .trim() ?? ""
+                ?.meta.label?.text.split(" with")[0] ?? ""
         )
     }
     const getNodeId = (node: KratosComponents["schemas"]["uiNode"]) => {
@@ -45,7 +45,9 @@
     let messages: KratosComponents["schemas"]["uiTexts"]
     let nodes: KratosComponents["schemas"]["uiNodes"] = $page.data.nodes
     let currentGroup: KratosComponents["schemas"]["uiNode"]["group"] =
-        nodes.find((node) => node.group !== "default")?.group ?? "default"
+        primaryGroup && nodes.some((node) => node.group === primaryGroup)
+            ? primaryGroup
+            : nodes.find((node) => node.group !== "default")?.group ?? "default"
     let otherGroups: KratosComponents["schemas"]["uiNode"]["group"][]
 
     $: actionNodes = nodes.filter(
