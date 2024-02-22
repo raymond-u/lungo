@@ -2,9 +2,6 @@
     import { FormBuilder, HeroFrame } from "$lib/components"
     import { SITE_TITLE } from "$lib/constants"
     import { AccountIcon } from "$lib/icons"
-    import { page } from "$app/stores"
-
-    const a = $page.data.nodes
 </script>
 
 <HeroFrame wrapped>
