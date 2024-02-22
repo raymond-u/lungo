@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.2.3...HEAD)
 
+### Added
+
+- Allow login through a one-time code sent via email
+
 ### Changed
 
 - Update JupyterLab to 4.1.2

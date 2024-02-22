@@ -1,4 +1,4 @@
-Recover your account
+Log into your account
 
 {{ config.branding.name }} ( {{ base_url }} )
 
@@ -8,7 +8,7 @@ Hi {% raw %}{{ .Identity.traits.name.first }}{% endraw %},
 
 Please use the code below to validate your identity. If you didn't request one, please feel free to ignore this email.
 
-{% raw %}{{ .RecoveryCode }}{% endraw %}
+{% raw %}{{ .LoginCode }}{% endraw %}
 
 This code will expire in one hour.
 

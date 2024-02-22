@@ -13,6 +13,10 @@
                     "title": "Username",
                     "ory.sh/kratos": {
                         "credentials": {
+                            "code": {
+                                "identifier": true,
+                                "via": "email"
+                            },
                             "password": {
                                 "identifier": true
                             },
@@ -31,6 +35,10 @@
                     "title": "Email",
                     "ory.sh/kratos": {
                         "credentials": {
+                            "code": {
+                                "identifier": true,
+                                "via": "email"
+                            },
                             "password": {
                                 "identifier": true
                             },

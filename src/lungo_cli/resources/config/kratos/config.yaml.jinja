@@ -49,6 +49,7 @@ selfservice:
   methods:
     code:
       enabled: true
+      passwordless_enabled: true
     password:
       enabled: true
     profile:
@@ -61,6 +62,13 @@ courier:
     from_name: '{{ smtp.name }}'
     local_name: '{{ network.hostname }}'
   templates:
+    login_code:
+      valid:
+        email:
+          subject: 'file:///etc/kratos/email_templates/login_code/valid/email.subject.gotmpl'
+          body:
+            html: 'file:///etc/kratos/email_templates/login_code/valid/email.body.gotmpl'
+            plaintext: 'file:///etc/kratos/email_templates/login_code/valid/email.body.plaintext.gotmpl'
     recovery_code:
       valid:
         email:
