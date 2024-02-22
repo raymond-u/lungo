@@ -1,6 +1,6 @@
 import createClient from "openapi-fetch"
 import parser from "set-cookie-parser"
-import { type Cookies, error, type NumericRange } from "@sveltejs/kit"
+import { type Cookies, error } from "@sveltejs/kit"
 import { KETO_API_BASE_URL, KRATOS_API_BASE_URL } from "$lib/server/constants"
 import type { KetoPaths, KratosPaths } from "$lib/types"
 
@@ -85,7 +85,7 @@ export function wrapFetch({
         }
 
         if (ensureOk && response.status >= 400 && response.status < 600) {
-            error(response.status as NumericRange<400, 599>)
+            error(response.status)
         }
 
         return response
