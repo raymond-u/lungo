@@ -22,18 +22,13 @@ class EContainer(str, Enum):
     PODMAN_COMPOSE = "podman-compose"
 
 
-class EService(str, Enum):
+class ECoreService(str, Enum):
     NGINX_GATEWAY = "nginx_gateway"
     NGINX = "nginx"
     KETO = "keto"
     KRATOS = "kratos"
     OATHKEEPER = "oathkeeper"
     NODE = "node"
-    FILEBROWSER = "filebrowser"
-    JUPYTERHUB = "jupyterhub"
-    PRIVATEBIN = "privatebin"
-    RSTUDIO = "rstudio"
-    XRAY = "xray"
 
 
 class ERole(str, Enum):

@@ -10,7 +10,7 @@ from .file import FileUtils
 from .storage import Storage
 from ..helpers.common import program_exists
 from ..helpers.format import format_command, format_link, format_program
-from ..models.base import EContainer, EService
+from ..models.base import EContainer, ECoreService
 
 _docker = format_program("Docker")
 _docker_link = format_link(DOCKER_URL, _docker)
@@ -109,7 +109,7 @@ class Container:
             self.console.print_error(f"Neither {_docker_link} nor {_podman_link} is installed.")
             raise Exit(code=1)
 
-    def build(self, working_dir: str | PathLike[str] | None = None, service: EService | None = None) -> None:
+    def build(self, working_dir: str | PathLike[str] | None = None, service: EApp | ECoreService | None = None) -> None:
         match self.choose_tool():
             case EContainer.DOCKER:
                 self.run_shell_command("docker", "compose", "build", service.value if service else "", cwd=working_dir)

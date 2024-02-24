@@ -9,7 +9,7 @@ from .console import Console
 from .constants import APP_AUTHOR, APP_NAME, STORAGE_PREFIX, STORAGE_VERSION
 from .file import FileUtils
 from ..helpers.format import format_path
-from ..models.base import EService
+from ..models.base import EApp, ECoreService
 
 
 class Storage:
@@ -183,12 +183,12 @@ class Storage:
             ...
 
     def create_dirs(self) -> None:
-        app: EService
-        for app in EService:
+        app: EApp | ECoreService
+        for app in *EApp, *ECoreService:
             self.file_utils.create_dir(self.cache_latest_dir / app.value)
             self.file_utils.change_mode(self.cache_latest_dir / app.value, 0o700)
             self.file_utils.create_dir(self.managed_dir / app.value)
             self.file_utils.change_mode(self.managed_dir / app.value, 0o700)
 
         # Allow the non-root container user to write
-        self.file_utils.change_mode(self.managed_dir / EService.PRIVATEBIN.value, 0o777)
+        self.file_utils.change_mode(self.managed_dir / EApp.PRIVATEBIN.value, 0o777)
