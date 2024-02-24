@@ -7,5 +7,5 @@
 | Windows | `%USERPROFILE%\AppData\Local\lungo\lungo\config.yaml` |
 
 ```yaml linenums="1" title="config.yaml"
---8<-- "src/lungo_cli/resources/excluded/config.yaml"
+--8<-- "src/lungo_cli/resources/assets/config_references/config.yaml"
 ```

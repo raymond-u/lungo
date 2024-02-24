@@ -117,11 +117,11 @@ class Storage:
 
     @property
     def template_config_rel(self) -> Path:
-        return self.excluded_rel / "config.yaml"
+        return self.bundled_dir / "assets" / "config_references" / "config.yaml"
 
     @property
     def template_users_rel(self) -> Path:
-        return self.excluded_rel / "users.yaml"
+        return self.bundled_dir / "assets" / "config_references" / "users.yaml"
 
     @property
     def template_kratos_secrets_rel(self) -> Path:
