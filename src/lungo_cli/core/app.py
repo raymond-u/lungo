@@ -103,6 +103,9 @@ class AppManager:
                 self.file_utils.write_bytes(self.storage.nginx_gateway_cert_file, cert)
                 self.file_utils.write_bytes(self.storage.nginx_gateway_key_file, key, True)
 
+            # Remove the socket file every time to avoid binding issues
+            self.file_utils.remove(self.storage.nginx_gateway_socket_file)
+
             if not self.storage.kratos_secrets_file.is_file():
                 self.console.print_info("Generating Kratos secrets...")
                 self.renderer.render(

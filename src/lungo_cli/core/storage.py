@@ -136,6 +136,10 @@ class Storage:
         return self.generated_dir / "nginx_gateway" / "lungo.key"
 
     @property
+    def nginx_gateway_socket_file(self) -> Path:
+        return self.managed_dir / "nginx_gateway" / "sockets" / "nginx.sock"
+
+    @property
     def kratos_secrets_file(self) -> Path:
         return self.generated_dir / "kratos" / "secrets.yaml"
 

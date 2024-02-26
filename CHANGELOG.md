@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update JupyterLab to 4.1.2
 
+### Fixed
+
+- Fix the recurrent Nginx socket binding issue
+
 ## [0.2.3](https://github.com/raymond-u/lungo/compare/v0.2.2...v0.2.3) - 2024-2-16
 
 ### Changed
