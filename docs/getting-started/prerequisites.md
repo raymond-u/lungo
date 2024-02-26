@@ -7,13 +7,8 @@ administrator needs to perform specific configurations as outlined in
 the [Docker guide](https://docs.docker.com/engine/security/rootless/) or
 the [Podman guide](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md).
 
-To allow non-root users to bind to ports below 1024, you can utilize the `setcap` command:
-
-```bash linenums="1" title="Terminal"
-sudo setcap 'cap_net_bind_service=+ep' "$(command -v lungo)"
-```
-
-Alternatively, you can modify the value of `net.ipv4.ip_unprivileged_port_start` using the following command:
+To allow non-root users to bind to ports below 1024, you can modify the value of `net.ipv4.ip_unprivileged_port_start`
+using the following command:
 
 ```bash linenums="1" title="Terminal"
 # This will allow any user to bind to port 80
