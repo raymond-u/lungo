@@ -232,8 +232,6 @@ class PluginManager:
                 )
                 continue
 
-            self.console.print_debug(f"Loaded plugin {format_program(plugin_cls.config.name)}.")
-
     def initialize_plugins(self) -> None:
         """Initialize all plugins."""
         for plugin_cls in self.installed_plugin_classes:
@@ -245,4 +243,4 @@ class PluginManager:
 
             plugin = plugin_cls(plugin_settings, self.console, self.context_manager, self.file_utils, self.storage)
             self.plugins.append(plugin)
-            self.context_manager.plugin_outputs.append(plugin.output)
+            self.console.print_debug(f"Loaded plugin {format_program(plugin.config.name)}.")

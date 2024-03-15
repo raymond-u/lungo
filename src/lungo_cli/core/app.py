@@ -261,6 +261,7 @@ class AppManager:
 
                 if not self.storage.init_file.is_file():
                     self.renderer.render_plugin(plugin, self.context_manager.context)
+                    self.context_manager.plugin_outputs.append(plugin.output)
 
                     # Copy web related files of the plugin to the main web directory
                     for web_dir in (self.storage.installed_plugins_dir / plugin.config.name / "web").iterdir():
