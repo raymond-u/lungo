@@ -13,6 +13,7 @@ class Plugin(BasePlugin):
     config = Config(
         name="jupyterhub",
         descriptive_name="JupyterHub",
+        version="0.1.0",
         description="JupyterHub as a Lungo plugin.",
         have_backend=True,
         require_account=True,

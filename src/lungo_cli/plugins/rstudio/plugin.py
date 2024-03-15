@@ -13,6 +13,7 @@ class Plugin(BasePlugin):
     config = Config(
         name="rstudio",
         descriptive_name="RStudio",
+        version="0.1.0",
         description="RStudio as a Lungo plugin.",
         have_backend=True,
         require_account=True,

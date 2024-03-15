@@ -9,7 +9,6 @@ class Config(Base):
     name: str
     descriptive_name: str | None = None
     version: str | None = None
-    repository: str | None = None
     description: str | None = None
 
     have_backend: bool

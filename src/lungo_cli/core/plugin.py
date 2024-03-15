@@ -115,21 +115,54 @@ class PluginManager:
         self.file_utils = file_utils
         self.storage = storage
 
+        self._builtin_plugin_classes = None
+        self._custom_plugin_classes = None
         self._installable_plugin_classes = None
         self._installed_plugin_classes = None
         self._plugins = []
 
     @property
+    def builtin_plugin_classes(self) -> list[Type[BasePlugin]]:
+        if self._builtin_plugin_classes is None:
+            with as_file(files(f"{PACKAGE_NAME}.plugins")) as package_dir:
+                plugin_classes = self.import_plugins(package_dir)
+
+                for plugin_cls in plugin_classes:
+                    plugin_cls.installable = True
+
+                self._builtin_plugin_classes = plugin_classes
+
+        return self._builtin_plugin_classes
+
+    @property
+    def custom_plugin_classes(self) -> list[Type[BasePlugin]]:
+        if self._custom_plugin_classes is None:
+            plugin_classes = self.import_plugins(self.storage.custom_plugins_dir)
+
+            for plugin_cls in plugin_classes:
+                plugin_cls.custom = True
+                plugin_cls.installable = True
+
+            self._custom_plugin_classes = plugin_classes
+
+        return self._custom_plugin_classes
+
+    @property
     def installable_plugin_classes(self) -> list[Type[BasePlugin]]:
         if self._installable_plugin_classes is None:
-            self._installable_plugin_classes = self.import_builtin_plugins() + self.import_custom_plugins()
+            self._installable_plugin_classes = self.builtin_plugin_classes + self.custom_plugin_classes
 
         return self._installable_plugin_classes
 
     @property
     def installed_plugin_classes(self) -> list[Type[BasePlugin]]:
         if self._installed_plugin_classes is None:
-            self._installed_plugin_classes = self.import_installed_plugins()
+            plugin_classes = self.import_plugins(self.storage.installed_plugins_dir)
+
+            for plugin_cls in plugin_classes:
+                plugin_cls.installed = True
+
+            self._installed_plugin_classes = plugin_classes
 
         return self._installed_plugin_classes
 
@@ -190,35 +223,6 @@ class PluginManager:
 
         return plugin_classes
 
-    def import_builtin_plugins(self) -> list[Type[BasePlugin]]:
-        """Import plugins from the built-in plugins directory."""
-        with as_file(files(f"{PACKAGE_NAME}.plugins")) as package_dir:
-            plugin_classes = self.import_plugins(package_dir)
-
-            for plugin_cls in plugin_classes:
-                plugin_cls.installable = True
-
-            return plugin_classes
-
-    def import_custom_plugins(self) -> list[Type[BasePlugin]]:
-        """Import plugins from the custom plugins directory."""
-        plugin_classes = self.import_plugins(self.storage.custom_plugins_dir)
-
-        for plugin_cls in plugin_classes:
-            plugin_cls.custom = True
-            plugin_cls.installable = True
-
-        return plugin_classes
-
-    def import_installed_plugins(self) -> list[Type[BasePlugin]]:
-        """Import installed plugins."""
-        plugin_classes = self.import_plugins(self.storage.installed_plugins_dir)
-
-        for plugin_cls in plugin_classes:
-            plugin_cls.installed = True
-
-        return plugin_classes
-
     def extend_models(self) -> None:
         """Extend the models with fields for installed plugins."""
         for plugin_cls in self.installed_plugin_classes:
@@ -242,5 +246,6 @@ class PluginManager:
                 raise Exit(code=1)
 
             plugin = plugin_cls(plugin_settings, self.console, self.context_manager, self.file_utils, self.storage)
+            plugin.update_data()
             self.plugins.append(plugin)
             self.console.print_debug(f"Loaded plugin {format_program(plugin.config.name)}.")

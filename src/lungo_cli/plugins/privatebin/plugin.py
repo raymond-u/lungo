@@ -7,6 +7,7 @@ class Plugin(BasePlugin):
     config = Config(
         name="privatebin",
         descriptive_name="PrivateBin",
+        version="0.1.0",
         description="PrivateBin as a Lungo plugin.",
         have_backend=True,
         require_account=False,
