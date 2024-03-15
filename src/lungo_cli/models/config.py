@@ -1,9 +1,7 @@
 from datetime import timedelta
 from ipaddress import IPv4Address, IPv4Network
-from typing import Any
 
 from pydantic import ConfigDict, DirectoryPath, EmailStr, field_validator, FilePath, NewPath, PositiveInt
-from pydantic.fields import FieldInfo
 
 from .base import AllowedApps, Base, FileName, Port
 from ..core.constants import APP_NAME_CAPITALIZED
@@ -65,26 +63,6 @@ class Network(Base):
 class Plugins(Base):
     model_config = ConfigDict(extra="ignore")
 
-    @classmethod
-    def add_fields(cls, **field_definitions: Any) -> None:
-        new_fields: dict[str, FieldInfo] = {}
-
-        for f_name, f_def in field_definitions.items():
-            if isinstance(f_def, tuple):
-                try:
-                    f_annotation, f_value = f_def
-                except ValueError as e:
-                    raise Exception(
-                        "field definitions should either be a tuple of (<type>, <default>) or just a default value"
-                    ) from e
-            else:
-                f_annotation, f_value = None, f_def
-
-            new_fields[f_name] = FieldInfo(annotation=f_annotation, default=f_value)
-
-        cls.model_fields.update(new_fields)
-        cls.model_rebuild(force=True)
-
 
 class Privilege(Base):
     allowed_apps: AllowedApps
@@ -133,8 +111,3 @@ class Config(Base):
     rules: Rules = Rules()
     security: Security = Security()
     smtp: Smtp
-
-    @classmethod
-    def rebuild(cls) -> None:
-        cls.model_fields["plugins"] = FieldInfo(annotation=Plugins, default=Plugins())
-        cls.model_rebuild(force=True)

@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any, ClassVar, final, Type
 
 from aenum import extend_enum
+from pydantic.fields import FieldInfo
 from typer import Exit
 
 from .console import Console
@@ -18,6 +19,7 @@ from ..helpers.common import extract_multiline_value_from_yaml
 from ..helpers.format import format_path, format_program
 from ..models.base import EApp
 from ..models.config import Config as Conf, Plugins
+from ..models.context import Context
 from ..models.plugin import BaseSettings, Config, PluginOutput
 
 
@@ -228,15 +230,19 @@ class PluginManager:
         for plugin_cls in self.installed_plugin_classes:
             try:
                 extend_enum(EApp, plugin_cls.config.name.upper(), plugin_cls.config.name)
+
                 settings_cls = plugin_cls.get_plugin_settings_cls()
-                Plugins.add_fields(**{plugin_cls.config.name: (settings_cls, settings_cls())})
+                field_info = FieldInfo(annotation=settings_cls, default=settings_cls())
+                Plugins.model_fields[plugin_cls.config.name] = field_info
             except Exception as e:
                 self.console.print_warning(
                     f"Failed to load plugin {format_program(plugin_cls.config.name)} ({e}). Skipping."
                 )
                 continue
 
-        Conf.rebuild()
+        Plugins.model_rebuild(force=True)
+        Conf.model_rebuild(force=True)
+        Context.model_rebuild(force=True)
 
     def initialize_plugins(self) -> None:
         """Initialize all plugins."""
