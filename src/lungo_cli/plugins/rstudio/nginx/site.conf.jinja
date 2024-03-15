@@ -1,6 +1,5 @@
 {% set APP_NAME = 'rstudio' %}
 
-{% if config.plugins.rstudio.enabled %}
 location = /app/{{ APP_NAME }} {
     include snippets/proxy.conf;
     include snippets/auth.conf;
@@ -45,4 +44,3 @@ location @{{ APP_NAME }} {
     proxy_pass http://{{ APP_NAME }};
     proxy_redirect ~*^(?:https?://[^/]+)?/app/{{ APP_NAME }}([^?]*)\??(.*)$ $http_x_forwarded_proto://$http_x_forwarded_host/app/{{ APP_NAME }}$1?iframe=1&$2;
 }
-{% endif %}
