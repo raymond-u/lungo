@@ -1,6 +1,6 @@
 from typing import Annotated, Optional
 
-from typer import Option, Exit
+from typer import Exit, Option
 
 from .base import config_dir_type, dev_type, force_init_type, quiet_type, verbosity_type
 from ..app.state import app_manager, console, container, context_manager, file_utils, storage

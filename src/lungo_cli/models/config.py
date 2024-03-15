@@ -54,8 +54,16 @@ class Https(Base):
     tls: Tls | None = None
 
 
+class Network(Base):
+    hostname: str
+    subnet: IPv4Network = IPv4Network("192.168.2.0/24")
+    trusted_proxies: list[IPv4Address] = []
+    http: Http = Http()
+    https: Https = Https()
+
+
 class Plugins(Base):
-    model_config = ConfigDict(extra="allow")
+    model_config = ConfigDict(extra="ignore")
 
     @classmethod
     def add_fields(cls, **field_definitions: Any):
@@ -76,14 +84,6 @@ class Plugins(Base):
 
         cls.model_fields.update(new_fields)
         cls.model_rebuild(force=True)
-
-
-class Network(Base):
-    hostname: str
-    subnet: IPv4Network = IPv4Network("192.168.2.0/24")
-    trusted_proxies: list[IPv4Address] = []
-    http: Http = Http()
-    https: Https = Https()
 
 
 class Privilege(Base):

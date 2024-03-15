@@ -30,8 +30,6 @@ class Console:
     def set_log_level(self, verbosity: int):
         if verbosity <= -1:
             self.log_level = LogLevels.WARNING
-        elif verbosity == 0:
-            self.log_level = LogLevels.INFO
         elif verbosity == 1:
             self.log_level = LogLevels.DEBUG
         elif verbosity >= 2:
@@ -61,35 +59,35 @@ class Console:
             self.stdout.print(*args, **kwargs)
 
     def print_trace(self, *args: Any, **kwargs: Any):
-        if self.log_level.value > LogLevels.TRACE.value:
+        if self.log_level > LogLevels.TRACE:
             return
 
         kwargs["highlight"] = kwargs.get("highlight", False)
         self.stdout.print("[TRACE]", *args, **kwargs)
 
     def print_debug(self, *args: Any, **kwargs: Any):
-        if self.log_level.value > LogLevels.DEBUG.value:
+        if self.log_level > LogLevels.DEBUG:
             return
 
         kwargs["highlight"] = kwargs.get("highlight", False)
         self.stdout.print("[DEBUG]", *args, **kwargs)
 
     def print_info(self, *args: Any, **kwargs: Any):
-        if self.log_level.value > LogLevels.INFO.value:
+        if self.log_level > LogLevels.INFO:
             return
 
         kwargs["highlight"] = kwargs.get("highlight", False)
         self.stdout.print("[INFO]", *args, **kwargs)
 
     def print_warning(self, *args: Any, **kwargs: Any):
-        if self.log_level.value > LogLevels.WARNING.value:
+        if self.log_level > LogLevels.WARNING:
             return
 
         kwargs["highlight"] = kwargs.get("highlight", False)
         self.stdout.print("[bold yellow][WARNING][/bold yellow]", *args, **kwargs)
 
     def print_error(self, *args: Any, **kwargs: Any):
-        if self.log_level.value > LogLevels.ERROR.value:
+        if self.log_level > LogLevels.ERROR:
             return
 
         kwargs["highlight"] = kwargs.get("highlight", False)
