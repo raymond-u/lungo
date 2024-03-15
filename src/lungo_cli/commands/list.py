@@ -77,8 +77,7 @@ def main(
 
         for plugin_cls in plugin_classes:
             table.add_row(
-                f"{plugin_cls.config.name}"
-                f"{f' ({plugin_cls.config.descriptive_name})' if plugin_cls.config.descriptive_name else ''}",
+                plugin_cls.config.name,
                 (plugin_cls.installed and plugin_cls.config.version) or "-",
                 (plugin_cls.installable and plugin_cls.alt_version) or "-",
                 "Yes" if plugin_cls.installable else "No",
