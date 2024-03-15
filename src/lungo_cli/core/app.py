@@ -224,7 +224,16 @@ class AppManager:
                 or self.file_utils.read_text(self.storage.init_file) != config_hash
             ):
                 self.console.print_info("Updating bundled resources...")
+
+                # Backup the installed plugins directory if it exists
+                if self.storage.installed_plugins_dir.is_dir():
+                    self.file_utils.move(self.storage.installed_plugins_dir, self.storage.cache_plugins_dir)
+
                 self.file_utils.copy_package_resources(f"{PACKAGE_NAME}.resources", ".", self.storage.bundled_dir)
+
+                if self.storage.cache_plugins_dir.is_dir():
+                    self.file_utils.move(self.storage.cache_plugins_dir, self.storage.installed_plugins_dir)
+
                 self.file_utils.change_mode(self.storage.bundled_dir, 0o700)
                 self.file_utils.remove(self.storage.init_file)
 

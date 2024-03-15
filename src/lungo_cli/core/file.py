@@ -59,6 +59,21 @@ class FileUtils:
             self.console.print_error(f"Failed to copy {format_path(src.name)} to {format_path(dst.name)} ({e}).")
             raise Exit(code=1)
 
+    def move(self, src: str | PathLike[str], dst: str | PathLike[str], merge: bool = False) -> None:
+        src = Path(src)
+        dst = Path(dst)
+
+        try:
+            self.create_dir(dst.parent)
+
+            if not merge:
+                self.remove(dst)
+
+            shutil.move(src, dst)
+        except Exception as e:
+            self.console.print_error(f"Failed to move {format_path(src.name)} to {format_path(dst.name)} ({e}).")
+            raise Exit(code=1)
+
     def remove(self, path: str | PathLike[str]) -> None:
         path = Path(path)
 

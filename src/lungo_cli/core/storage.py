@@ -65,10 +65,6 @@ class Storage:
         return self._data_dir / self._storage_version
 
     @property
-    def custom_plugins_dir(self) -> Path:
-        return self.config_dir / "plugins"
-
-    @property
     def bundled_dir(self) -> Path:
         return self.data_latest_dir / self.bundled_rel
 
@@ -95,6 +91,14 @@ class Storage:
     @property
     def excluded_rel(self) -> Path:
         return Path("excluded")
+
+    @property
+    def cache_plugins_dir(self) -> Path:
+        return self.cache_latest_dir / "plugins"
+
+    @property
+    def custom_plugins_dir(self) -> Path:
+        return self.config_dir / "plugins"
 
     @property
     def installed_plugins_dir(self) -> Path:
