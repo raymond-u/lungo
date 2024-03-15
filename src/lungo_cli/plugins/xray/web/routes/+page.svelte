@@ -1,5 +1,3 @@
-{% set xray = config.plugins.xray %}
-
 <script lang="ts">
     import { HOSTNAME, HTTPS_PORT } from "$lib/constants"
     import CodeBlock from "$lib/plugins/xray/components/CodeBlock.svelte"
