@@ -38,7 +38,7 @@ def main(
         plugin_manager().remove_plugin(plugin_cls)
         count += 1
 
-        if count == 1:
-            console().print("1 plugin removed successfully.")
-        elif count > 1:
-            console().print(f"{count} plugins removed successfully.")
+    if count == 1:
+        console().print("1 plugin removed successfully.")
+    elif count > 1:
+        console().print(f"{count} plugins removed successfully.")

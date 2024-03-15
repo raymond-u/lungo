@@ -38,7 +38,7 @@ def main(
         plugin_manager().add_plugin(plugin_cls)
         count += 1
 
-        if count == 1:
-            console().print("1 plugin added successfully.")
-        elif count > 1:
-            console().print(f"{count} plugins added successfully.")
+    if count == 1:
+        console().print("1 plugin added successfully.")
+    elif count > 1:
+        console().print(f"{count} plugins added successfully.")
