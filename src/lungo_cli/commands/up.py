@@ -36,7 +36,7 @@ def main(
 
     if build_only:
         with console().status(
-            "Building the container (it may take up to an hour depending on the internet connection)..."
+            "Building containers (could take a few minutes, depending on the internet connection)..."
         ):
             container().build()
 
@@ -54,7 +54,7 @@ def main(
             raise Exit(code=1)
 
         with console().status(
-            "Starting the service (building may take up to an hour depending on the internet connection)..."
+            "Starting the service (could take a few minutes, depending on the internet connection)..."
         ):
             container().up()
 
