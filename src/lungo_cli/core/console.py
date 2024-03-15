@@ -47,9 +47,6 @@ class Console:
             self.need_newline = True
 
     def print(self, *args: Any, epilogue: bool = False, **kwargs: Any):
-        if self.log_level.value > LogLevels.INFO.value:
-            return
-
         kwargs["highlight"] = kwargs.get("highlight", False)
 
         if epilogue:
