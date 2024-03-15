@@ -168,9 +168,9 @@ class AppManager:
 
                 if next(
                     (
-                        plugin.config.require_account
-                        for plugin in self.plugin_manager.plugins
-                        if plugin.config.name == allowed_app
+                        plugin_cls.config.require_account
+                        for plugin_cls in self.plugin_manager.installed_plugin_classes
+                        if plugin_cls.config.name == allowed_app
                     ),
                     False,
                 ):
@@ -185,15 +185,13 @@ class AppManager:
         # 1. Load the configuration file and set cache and data directories if needed
         # 2. Extend the models with the plugins
         # 3. Load the configuration file again to include the plugin settings
-        # 4. Initialize the plugins
         self.load_config()
         self.plugin_manager.extend_models()
         self.load_config(True)
-        self.plugin_manager.initialize_plugins()
 
     def generate_config_hash(self) -> str:
         """Generate a hash of the configuration files."""
-        ordered_plugins = sorted(self.plugin_manager.plugins, key=lambda x: x.config.name)
+        ordered_plugins = sorted(self.plugin_manager.installed_plugin_classes, key=lambda x: x.config.name)
 
         return hash_text(
             "+".join(
@@ -256,10 +254,10 @@ class AppManager:
                 )
                 self.file_utils.change_mode(self.storage.kratos_secrets_file, 0o600)
 
-            for plugin in self.plugin_manager.plugins:
-                plugin.update_data()
+            self.plugin_manager.initialize_plugins()
 
-                if not self.storage.init_file.is_file():
+            if not self.storage.init_file.is_file():
+                for plugin in self.plugin_manager.plugins:
                     self.renderer.render_plugin(plugin, self.context_manager.context)
                     self.context_manager.plugin_outputs.append(plugin.output)
 
@@ -272,7 +270,6 @@ class AppManager:
                             dst_prefix = self.storage.bundled_dir / "web" / "src" / "lib" / "plugins"
                             self.file_utils.copy(web_dir, dst_prefix / plugin.config.name / web_dir.name)
 
-            if not self.storage.init_file.is_file():
                 self.renderer.render_main(self.context_manager.context)
                 self.account_manager.update(self.context_manager.config, self.context_manager.users)
 
