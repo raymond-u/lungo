@@ -31,17 +31,19 @@ def port_is_available(port: int) -> bool:
 def extract_multiline_value_from_yaml(yaml: str, key: str) -> str:
     """Extract a multiline value from a YAML string."""
     lines = yaml.splitlines()
-    index = lines.index(f"{key}:") + 1
+
+    try:
+        index = lines.index(f"{key}:") + 1
+    except ValueError:
+        return ""
+
     value = []
 
-    if index == 0:
-        return ""
-    else:
-        while index < len(lines):
-            if (services_line := lines[index]) and not services_line.startswith(" "):
-                break
+    while index < len(lines):
+        if (services_line := lines[index]) and not services_line.startswith(" "):
+            break
 
-            value.append(services_line)
-            index += 1
+        value.append(services_line)
+        index += 1
 
     return "\n".join(value).strip()
