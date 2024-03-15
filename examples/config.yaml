@@ -34,14 +34,11 @@ plugins: { }
 rules:
   privileges:
     unregistered:
-      allowed_apps:
-        - privatebin
+      allowed_apps: [ ]
     guest:
-      allowed_apps:
-        - filebrowser
+      allowed_apps: [ ]
     user:
-      allowed_apps:
-        - rstudio
+      allowed_apps: [ ]
     admin:
       allowed_apps: all
 
