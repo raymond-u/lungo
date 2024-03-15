@@ -22,7 +22,7 @@ def main(
     verbosity: verbosity_type = 0,
 ) -> None:
     """
-    List all installed and custom plugins.
+    List all plugins.
     """
     app_manager().process_args(config_dir, dev, quiet, verbosity)
     app_manager().load_config()
