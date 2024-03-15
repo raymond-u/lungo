@@ -1,5 +1,5 @@
 from contextlib import nullcontext
-from enum import auto, IntEnum
+from enum import auto, Enum, IntEnum
 from typing import Any, Callable
 
 from rich import console
