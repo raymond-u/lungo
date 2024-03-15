@@ -4,7 +4,7 @@
 
 ```yaml
 # ========
-# modules:
+# plugins:
 # ========
 
 #   # Settings for the Xray module

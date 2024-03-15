@@ -1,6 +1,6 @@
 {% set APP_NAME = 'xray' %}
 
-{% if config.modules.xray.enabled %}
+{% if config.plugins.xray.enabled %}
 location = /app/{{ APP_NAME }} {
     include snippets/proxy.conf;
     include snippets/auth.conf;

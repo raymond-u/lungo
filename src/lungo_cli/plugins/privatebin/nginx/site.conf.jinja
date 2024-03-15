@@ -1,6 +1,6 @@
 {% set APP_NAME = 'privatebin' %}
 
-{% if config.modules.privatebin.enabled %}
+{% if config.plugins.privatebin.enabled %}
 location = /app/{{ APP_NAME }} {
     include snippets/proxy.conf;
     include snippets/auth.conf;
