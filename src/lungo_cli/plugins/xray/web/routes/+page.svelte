@@ -64,49 +64,44 @@
         }
     }
 
-    const domain_whitelist = JSON.parse(`{{ xray.domain_whitelist|tojson }}`) as string[]
-    const domain_keyword_whitelist = JSON.parse(`{{ xray.domain_keyword_whitelist|tojson }}`) as string[]
-    const domain_suffix_whitelist = JSON.parse(`{{ xray.domain_suffix_whitelist|tojson }}`) as string[]
-    const ip_range_whitelist = JSON.parse(`{{ xray.ip_range_whitelist|map('string')|list|tojson }}`) as string[]
-
     if (
-        domain_whitelist.length ||
-        domain_keyword_whitelist.length ||
-        domain_suffix_whitelist.length ||
-        ip_range_whitelist.length
+        data.domain_whitelist.length ||
+        data.domain_keyword_whitelist.length ||
+        data.domain_suffix_whitelist.length ||
+        data.ip_range_whitelist.length
     ) {
         clash_rules.push("rules:")
 
-        for (const domain of domain_whitelist) {
+        for (const domain of data.domain_whitelist) {
             clash_rules.push(`  - DOMAIN,${domain},VPN`)
         }
-        for (const domain_keyword of domain_keyword_whitelist) {
+        for (const domain_keyword of data.domain_keyword_whitelist) {
             clash_rules.push(`  - DOMAIN-KEYWORD,${domain_keyword},VPN`)
         }
-        for (const domain_suffix of domain_suffix_whitelist) {
+        for (const domain_suffix of data.domain_suffix_whitelist) {
             clash_rules.push(`  - DOMAIN-SUFFIX,${domain_suffix},VPN`)
         }
-        for (const ip_range of ip_range_whitelist) {
+        for (const ip_range of data.ip_range_whitelist) {
             clash_rules.push(`  - IP-CIDR,${ip_range},VPN,no-resolve`)
         }
     }
 
-    if (domain_whitelist.length || domain_keyword_whitelist.length || domain_suffix_whitelist.length) {
+    if (data.domain_whitelist.length || data.domain_keyword_whitelist.length || data.domain_suffix_whitelist.length) {
         xray_rules.routing.rules.push({
             type: "field",
             domain: [
-                ...domain_whitelist.map((x) => `full:${x}`),
-                ...domain_keyword_whitelist,
-                ...domain_suffix_whitelist.map((x) => `domain:${x}`),
+                ...data.domain_whitelist.map((x) => `full:${x}`),
+                ...data.domain_keyword_whitelist,
+                ...data.domain_suffix_whitelist.map((x) => `domain:${x}`),
             ],
             outboundTag: "VPN",
         })
     }
 
-    if (ip_range_whitelist.length) {
+    if (data.ip_range_whitelist.length) {
         xray_rules.routing.rules.push({
             type: "field",
-            ip: ip_range_whitelist,
+            ip: data.ip_range_whitelist,
             outboundTag: "VPN",
         })
     }

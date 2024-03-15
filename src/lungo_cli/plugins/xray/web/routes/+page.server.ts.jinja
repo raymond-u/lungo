@@ -6,6 +6,10 @@ export async function load({ parent }: { parent: () => Promise<{ userInfo: User[
     const username = userInfo?.username ?? "anonymous"
 
     return {
+        domain_whitelist: JSON.parse(`{{ xray.domain_whitelist|tojson }}`) as string[],
+        domain_keyword_whitelist: JSON.parse(`{{ xray.domain_keyword_whitelist|tojson }}`) as string[],
+        domain_suffix_whitelist: JSON.parse(`{{ xray.domain_suffix_whitelist|tojson }}`) as string[],
+        ip_range_whitelist: JSON.parse(`{{ xray.ip_range_whitelist|map('string')|list|tojson }}`) as string[],
         xrayId: uuidv5(username, "{{ xray_salt|string }}"),
     }
 }
