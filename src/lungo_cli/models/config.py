@@ -1,9 +1,9 @@
 from datetime import timedelta
 from ipaddress import IPv4Address, IPv4Network
-from typing import Any
+from typing import Annotated, Any
 
 from pydantic import ConfigDict, DirectoryPath, EmailStr, field_validator, FilePath, NewPath, PositiveInt
-from pydantic.fields import FieldInfo
+from pydantic.fields import Field, FieldInfo
 
 from .base import AllowedApps, Base, FileName, Port
 from ..core.constants import APP_NAME_CAPITALIZED
@@ -129,7 +129,8 @@ class Config(Base):
     branding: Branding = Branding()
     directories: Directories
     network: Network
-    plugins: Plugins = Plugins()
+    # Do not use a stale default value for plugins
+    plugins: Annotated[Plugins, Field(default_factory=Plugins)]
     rules: Rules = Rules()
     security: Security = Security()
     smtp: Smtp
