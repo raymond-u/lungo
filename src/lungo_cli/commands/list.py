@@ -41,20 +41,21 @@ def main(
         for arg in args:
             if plugin_cls := next((x for x in plugin_classes if x.config.name == arg), None):
                 console().print(
-                    f"{plugin_cls.config.name}"
+                    f"Name: {plugin_cls.config.name}"
                     f"{f' ({plugin_cls.config.descriptive_name})' if plugin_cls.config.descriptive_name else ''}"
                 )
                 console().print(
-                    f"{(plugin_cls.installed and plugin_cls.config.version) or '-'}"
+                    f"Version: {(plugin_cls.installed and plugin_cls.config.version) or '-'}"
                     f" -> {(plugin_cls.installable and plugin_cls.alt_version) or '-'}"
                     if plugin_cls.installable
                     else ""
                 )
                 console().print(
-                    f"{'Custom' if plugin_cls.custom else 'Built-in'} plugin "
-                    f"({'installed' if plugin_cls.installed else 'not installed'})"
+                    f"Status: {'installable' if plugin_cls.installable else 'not installable'}, "
+                    f"{'installed' if plugin_cls.installed else 'not installed'} "
+                    f"({'custom' if plugin_cls.custom else 'built-in'} plugin)"
                 )
-                console().print(plugin_cls.config.description or "No description.")
+                console().print(f"Description: {plugin_cls.config.description or 'No description.'}")
             else:
                 console().print(f"Plugin {format_input(arg)} not found. Skipping.")
 
@@ -71,13 +72,16 @@ def main(
         table.add_column("Name")
         table.add_column("Current")
         table.add_column("Available")
+        table.add_column("Installable")
         table.add_column("Installed")
 
         for plugin_cls in plugin_classes:
             table.add_row(
-                plugin_cls.config.name,
+                f"{plugin_cls.config.name}"
+                f"{f' ({plugin_cls.config.descriptive_name})' if plugin_cls.config.descriptive_name else ''}",
                 (plugin_cls.installed and plugin_cls.config.version) or "-",
                 (plugin_cls.installable and plugin_cls.alt_version) or "-",
+                "Yes" if plugin_cls.installable else "No",
                 "Yes" if plugin_cls.installed else "No",
             )
 
