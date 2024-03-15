@@ -5,18 +5,19 @@ from jinja2 import Environment, FileSystemLoader
 from typer import Exit
 
 from .console import Console
+from .context import ContextManager
 from .file import FileUtils
 from .plugin import BasePlugin
 from .storage import Storage
 from ..helpers.format import format_path, format_program
-from ..models.context import Context
 
 
 class Renderer:
     """Render Jinja templates."""
 
-    def __init__(self, console: Console, file_utils: FileUtils, storage: Storage):
+    def __init__(self, console: Console, context_manager: ContextManager, file_utils: FileUtils, storage: Storage):
         self.console = console
+        self.context_manager = context_manager
         self.file_utils = file_utils
         self.storage = storage
 
@@ -42,22 +43,27 @@ class Renderer:
             self.console.print_error(f"Failed to render {format_path(src)} ({e}).")
             raise Exit(code=1)
 
-    def render_main(self, context: Context) -> None:
+    def render_main(self) -> None:
         self.console.print_info("Rendering templates...")
 
         for file in self.storage.bundled_dir.rglob("*.jinja"):
             relative_path = file.relative_to(self.storage.bundled_dir)
 
             if relative_path.parts[0] != str(self.storage.excluded_rel):
-                self.render(relative_path, file.with_suffix(""), **context.model_dump())
+                self.render(relative_path, file.with_suffix(""), **self.context_manager.context.model_dump())
                 self.file_utils.remove(file)
 
-    def render_plugin(self, plugin: BasePlugin, context: Context) -> None:
+    def render_plugin(self, plugin: BasePlugin) -> None:
         self.console.print_info(f"Rendering templates for {format_program(plugin.config.name)}...")
 
         for file in self.storage.installed_plugins_dir.joinpath(plugin.config.name).rglob("*.jinja"):
             relative_path = file.relative_to(self.storage.bundled_dir)
-            self.render(relative_path, file.with_suffix(""), **context.model_dump(), **plugin.get_render_context())
+            self.render(
+                relative_path,
+                file.with_suffix(""),
+                **self.context_manager.context.model_dump(),
+                **plugin.get_render_context(),
+            )
             self.file_utils.remove(file)
 
         plugin.mark_as_rendered()

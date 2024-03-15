@@ -258,7 +258,7 @@ class AppManager:
 
             if not self.storage.init_file.is_file():
                 for plugin in self.plugin_manager.plugins:
-                    self.renderer.render_plugin(plugin, self.context_manager.context)
+                    self.renderer.render_plugin(plugin)
                     self.context_manager.plugin_outputs.append(plugin.output)
 
                     # Copy web related files of the plugin to the main web directory
@@ -270,7 +270,7 @@ class AppManager:
                             dst_prefix = self.storage.bundled_dir / "web" / "src" / "lib" / "plugins"
                             self.file_utils.copy(web_dir, dst_prefix / plugin.config.name / web_dir.name)
 
-                self.renderer.render_main(self.context_manager.context)
+                self.renderer.render_main()
                 self.account_manager.update(self.context_manager.config, self.context_manager.users)
 
                 self.file_utils.write_text(self.storage.init_file, config_hash)
