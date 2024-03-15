@@ -107,10 +107,6 @@ class ContextManager:
         ]
 
     @property
-    def web_extra_dependencies(self) -> list[str]:
-        return [dep for plugin_output in self.plugin_outputs for dep in plugin_output.web_dependencies]
-
-    @property
     def context(self) -> Context:
         return Context(
             config=self.config,
@@ -121,5 +117,4 @@ class ContextManager:
             dev=self.dev,
             ip_addresses=self.ip_addresses,
             web_app_info=self.web_app_info,
-            web_extra_dependencies=self.web_extra_dependencies,
         )

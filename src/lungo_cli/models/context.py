@@ -24,4 +24,3 @@ class Context(Base):
     dev: bool
     ip_addresses: dict[str, IPv4Address]
     web_app_info: list[dict[str, str | None]]
-    web_extra_dependencies: list[str]
