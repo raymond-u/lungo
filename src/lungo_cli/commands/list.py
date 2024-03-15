@@ -53,7 +53,7 @@ def main(
                 console().print(
                     f"Status: {'installable' if plugin_cls.installable else 'not installable'}, "
                     f"{'installed' if plugin_cls.installed else 'not installed'} "
-                    f"({'custom' if plugin_cls.custom else 'built-in'} plugin)"
+                    f"({'custom' if plugin_cls.custom else 'built-in'} plugin)."
                 )
                 console().print(f"Description: {plugin_cls.config.description or 'No description.'}")
             else:
