@@ -163,9 +163,14 @@ class PluginManager:
 
     def import_plugins(self, src: str | PathLike[str]) -> list[Type[BasePlugin]]:
         """Import plugins from the specified directory."""
+        src = Path(src)
+
+        if not src.is_dir():
+            return []
+
         plugin_classes = []
 
-        for plugin_dir in Path(src).iterdir():
+        for plugin_dir in src.iterdir():
             if not plugin_dir.joinpath("plugin.py").is_file():
                 self.console.print_warning(f"Plugin at {format_path(plugin_dir)} does not seem to be valid. Skipping.")
                 continue
