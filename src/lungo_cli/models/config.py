@@ -1,9 +1,9 @@
 from datetime import timedelta
 from ipaddress import IPv4Address, IPv4Network
-from typing import Annotated, Any
+from typing import Any
 
 from pydantic import ConfigDict, DirectoryPath, EmailStr, field_validator, FilePath, NewPath, PositiveInt
-from pydantic.fields import Field, FieldInfo
+from pydantic.fields import FieldInfo
 
 from .base import AllowedApps, Base, FileName, Port
 from ..core.constants import APP_NAME_CAPITALIZED
@@ -66,7 +66,7 @@ class Plugins(Base):
     model_config = ConfigDict(extra="ignore")
 
     @classmethod
-    def add_fields(cls, **field_definitions: Any):
+    def add_fields(cls, **field_definitions: Any) -> None:
         new_fields: dict[str, FieldInfo] = {}
 
         for f_name, f_def in field_definitions.items():
@@ -129,8 +129,12 @@ class Config(Base):
     branding: Branding = Branding()
     directories: Directories
     network: Network
-    # Do not use a stale default value for plugins
-    plugins: Annotated[Plugins, Field(default_factory=Plugins)]
+    plugins: Plugins = Plugins()
     rules: Rules = Rules()
     security: Security = Security()
     smtp: Smtp
+
+    @classmethod
+    def rebuild(cls) -> None:
+        cls.model_fields["plugins"] = FieldInfo(annotation=Plugins, default=Plugins())
+        cls.model_rebuild(force=True)

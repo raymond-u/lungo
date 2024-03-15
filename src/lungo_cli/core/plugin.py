@@ -17,7 +17,7 @@ from .storage import Storage
 from ..helpers.common import extract_multiline_value_from_yaml
 from ..helpers.format import format_path, format_program
 from ..models.base import EApp
-from ..models.config import Plugins
+from ..models.config import Config as Conf, Plugins
 from ..models.plugin import BaseSettings, Config, PluginOutput
 
 
@@ -235,6 +235,8 @@ class PluginManager:
                     f"Failed to load plugin {format_program(plugin_cls.config.name)} ({e}). Skipping."
                 )
                 continue
+
+        Conf.rebuild()
 
     def initialize_plugins(self) -> None:
         """Initialize all plugins."""
