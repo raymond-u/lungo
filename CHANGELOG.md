@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Remove lock file when the service fails to start
 - Fix the recurrent Nginx socket binding issue
 - Remove an incorrect instruction from the documentation
 

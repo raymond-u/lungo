@@ -122,8 +122,8 @@ class Container:
     def up(self, working_dir: str | PathLike[str] | None = None) -> None:
         if self.storage.lock_file.is_file():
             self.console.print_error(
-                f"An existing instance of {APP_NAME_CAPITALIZED} is running. Please stop it before proceeding. "
-                f"Or, you can use the {format_command('--ignore-lock')} option."
+                f"An existing instance of {APP_NAME_CAPITALIZED} is running. Please stop it before proceeding, "
+                f"or use the {format_command('--ignore-lock')} flag."
             )
             raise Exit(code=1)
 
@@ -132,13 +132,17 @@ class Container:
         if not working_dir:
             self.file_utils.create(self.storage.lock_file)
 
-        match tool:
-            case EContainer.DOCKER:
-                self.run_shell_command("docker", "compose", "up", "-d", "--build", cwd=working_dir)
-            case EContainer.DOCKER_COMPOSE:
-                self.run_shell_command("docker-compose", "up", "-d", "--build", cwd=working_dir)
-            case EContainer.PODMAN_COMPOSE:
-                self.run_shell_command("podman-compose", "up", "-d", "--build", cwd=working_dir)
+        try:
+            match tool:
+                case EContainer.DOCKER:
+                    self.run_shell_command("docker", "compose", "up", "-d", "--build", cwd=working_dir)
+                case EContainer.DOCKER_COMPOSE:
+                    self.run_shell_command("docker-compose", "up", "-d", "--build", cwd=working_dir)
+                case EContainer.PODMAN_COMPOSE:
+                    self.run_shell_command("podman-compose", "up", "-d", "--build", cwd=working_dir)
+        except Exception:
+            self.file_utils.remove(self.storage.lock_file)
+            raise
 
     def down(self, working_dir: str | PathLike[str] | None = None) -> None:
         match self.choose_tool():
