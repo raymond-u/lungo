@@ -68,7 +68,7 @@ mutators:
     enabled: true
     config:
       headers:
-        X-Remote-User: {{ '"{{ if .Extra.identity }}{{ .Extra.identity.traits.username }}{{ else }}{{ .Subject }}{{ end }}"' }}
+        X-Remote-User: '{{ '{{ if .Extra.identity }}{{ .Extra.identity.traits.username }}{{ else }}{{ .Subject }}{{ end }}' }}'
 
 errors:
   handlers:
