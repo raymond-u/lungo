@@ -68,57 +68,58 @@ class AppManager:
         if force_init:
             self.force_init = True
 
-    def load_config(self) -> None:
+    def load_config(self, skip_check: bool = False) -> None:
         """Load the configuration files into the context manager."""
-        files_missing = False
+        if not skip_check:
+            files_missing = False
 
-        if not self.storage.config_file.is_file():
-            self.console.print_error(
-                f"{format_path(self.storage.config_file.name)} not found. "
-                "A template has been created in place of the missing file."
-            )
-            self.file_utils.copy_package_resources(
-                f"{PACKAGE_NAME}.resources",
-                self.storage.template_config_rel,
-                self.storage.config_file,
-            )
-            files_missing = True
+            if not self.storage.config_file.is_file():
+                self.console.print_error(
+                    f"{format_path(self.storage.config_file.name)} not found. "
+                    "A template has been created in place of the missing file."
+                )
+                self.file_utils.copy_package_resources(
+                    f"{PACKAGE_NAME}.resources",
+                    self.storage.template_config_rel,
+                    self.storage.config_file,
+                )
+                files_missing = True
 
-        if not self.storage.users_file.is_file():
-            self.console.print_error(
-                f"{format_path(self.storage.users_file.name)} not found. "
-                "A template has been created in place of the missing file."
-            )
-            self.file_utils.copy_package_resources(
-                f"{PACKAGE_NAME}.resources",
-                self.storage.template_users_rel,
-                self.storage.users_file,
-            )
-            files_missing = True
+            if not self.storage.users_file.is_file():
+                self.console.print_error(
+                    f"{format_path(self.storage.users_file.name)} not found. "
+                    "A template has been created in place of the missing file."
+                )
+                self.file_utils.copy_package_resources(
+                    f"{PACKAGE_NAME}.resources",
+                    self.storage.template_users_rel,
+                    self.storage.users_file,
+                )
+                files_missing = True
 
-        if files_missing:
-            raise Exit(code=1)
+            if files_missing:
+                raise Exit(code=1)
 
-        if (permission := get_file_permissions(self.storage.config_file))[1:] != "00":
-            self.console.print_warning(
-                f"{format_path(self.storage.config_file)} should not be readable or writable by other users "
-                f"(recommended permission: 600, current permission: {permission})."
-            )
-        if (permission := get_file_permissions(self.storage.users_file))[1:] != "00":
-            self.console.print_warning(
-                f"{format_path(self.storage.users_file)} should not be readable or writable by other users "
-                f"(recommended permission: 600, current permission: {permission})."
-            )
+            if (permission := get_file_permissions(self.storage.config_file))[1:] != "00":
+                self.console.print_warning(
+                    f"{format_path(self.storage.config_file)} should not be readable or writable by other users "
+                    f"(recommended permission: 600, current permission: {permission})."
+                )
+            if (permission := get_file_permissions(self.storage.users_file))[1:] != "00":
+                self.console.print_warning(
+                    f"{format_path(self.storage.users_file)} should not be readable or writable by other users "
+                    f"(recommended permission: 600, current permission: {permission})."
+                )
 
         config = self.file_utils.parse_yaml(self.storage.config_file, Config)
         users = self.file_utils.parse_yaml(self.storage.users_file, Users)
+
+        self.verify_config(config, users)
 
         if config.directories.cache_dir:
             self.storage.cache_dir = config.directories.cache_dir.resolve()
         if config.directories.data_dir:
             self.storage.data_dir = config.directories.data_dir.resolve()
-
-        self.verify_config(config, users)
 
         self.context_manager.config = config
         self.context_manager.users = users
@@ -187,7 +188,7 @@ class AppManager:
         # 4. Initialize the plugins
         self.load_config()
         self.plugin_manager.extend_models()
-        self.load_config()
+        self.load_config(True)
         self.plugin_manager.initialize_plugins()
 
     def generate_config_hash(self) -> str:
