@@ -9,11 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Plugin system
 - Allow login through a one-time code sent via email
 
 ### Changed
 
-- Update JupyterLab to 4.1.2
+- Raise the minimum required version of Python to 3.12
+- Built-in apps are now installed as plugins
+- The `modules` configuration has been renamed to `plugins`
+- Guest role and user role accounts no longer have access to apps by default
+- Hide the full screen button for narrow screen widths
+- Update JupyterLab to 4.1.5
+- Update RStudio to 4.3.3
+- Update Xray to 1.8.9
 
 ### Fixed
 

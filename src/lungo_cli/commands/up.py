@@ -1,11 +1,12 @@
 from typing import Annotated, Optional
 
-from typer import Option
+from typer import Option, Exit
 
-from .base import config_dir_type, dev_type, force_init_type, quiet_type, remove_lock_type, verbosity_type
-from ..app.state import app_manager, console, container, context_manager
+from .base import config_dir_type, dev_type, force_init_type, quiet_type, verbosity_type
+from ..app.state import app_manager, console, container, context_manager, file_utils, storage
 from ..core.constants import APP_NAME, APP_NAME_CAPITALIZED
-from ..helpers.format import format_command, format_link
+from ..helpers.common import port_is_available
+from ..helpers.format import format_command, format_input, format_link
 from ..models.base import EContainer
 
 
@@ -14,24 +15,24 @@ def main(
     container_tool: Annotated[
         Optional[EContainer], Option("--container-tool", help="Container management tool to use.", show_default=False)
     ] = None,
+    force_init: force_init_type = False,
+    remove_lock: Annotated[bool, Option("--remove-lock", help="Remove the lock file.", show_default=False)] = False,
     config_dir: config_dir_type = None,
     dev: dev_type = False,
-    force_init: force_init_type = False,
-    remove_lock: remove_lock_type = False,
     quiet: quiet_type = False,
     verbosity: verbosity_type = 0,
 ):
     """
     Start the service.
     """
-    app_manager().process_args(config_dir, quiet, verbosity)
-    app_manager().load_config()
-    app_manager().process_args_deferred(dev, force_init, remove_lock)
-
+    app_manager().process_args(config_dir, dev, quiet, verbosity, force_init)
+    app_manager().load_config_and_plugins()
     app_manager().update_app_data()
-    app_manager().ensure_port_availability()
 
     container().set_preferred_tool(container_tool)
+
+    if remove_lock:
+        file_utils().remove(storage().lock_file)
 
     if build_only:
         with console().status(
@@ -41,6 +42,17 @@ def main(
 
         console().print("Build completed.")
     else:
+        http_port = context_manager().config.network.http.port
+        https_port = context_manager().config.network.https.port
+
+        if context_manager().config.network.http.enabled and not port_is_available(http_port):
+            console().print_error(f"Port {format_input(http_port)} is in use.")
+            raise Exit(code=1)
+
+        if not port_is_available(https_port):
+            console().print_error(f"Port {format_input(https_port)} is in use.")
+            raise Exit(code=1)
+
         with console().status(
             "Starting the service (building may take up to an hour depending on the internet connection)..."
         ):

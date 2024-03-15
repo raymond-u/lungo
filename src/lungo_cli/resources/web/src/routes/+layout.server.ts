@@ -1,15 +1,13 @@
 import type { Cookies } from "@sveltejs/kit"
 import { createKetoClient, createKratosClient } from "$lib/server/api"
-import { EApp } from "$lib/server/types"
-import { createApp } from "$lib/server/utils"
-import type { App, User } from "$lib/types"
+import { getAllApps, getAppInfo } from "$lib/server/utils"
+import type { AppInfo, User } from "$lib/types"
 
-async function getAllowedApps(fetch: typeof global.fetch, username?: string): Promise<App[]> {
+async function getAllowedApps(fetch: typeof global.fetch, username?: string): Promise<AppInfo[]> {
     const client = createKetoClient(fetch)
-    const allowedApps = []
     const apps = []
 
-    for (const app of Object.values(EApp)) {
+    for (const app of await getAllApps()) {
         const response = await client.GET("/relation-tuples/check", {
             params: {
                 query: {
@@ -23,25 +21,9 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
 
         switch (response.response.status) {
             case 200:
-                allowedApps.push(app)
+                apps.push(await getAppInfo(app))
                 break
         }
-    }
-
-    if (allowedApps.includes(EApp.FileBrowser)) {
-        apps.push(createApp(EApp.FileBrowser))
-    }
-    if (allowedApps.includes(EApp.PrivateBin)) {
-        apps.push(createApp(EApp.PrivateBin))
-    }
-    if (allowedApps.includes(EApp.JupyterHub)) {
-        apps.push(createApp(EApp.JupyterHub))
-    }
-    if (allowedApps.includes(EApp.RStudio)) {
-        apps.push(createApp(EApp.RStudio))
-    }
-    if (allowedApps.includes(EApp.XRay)) {
-        apps.push(createApp(EApp.XRay))
     }
 
     return apps

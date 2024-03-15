@@ -1,0 +1,10 @@
+{% set PRIVATEBIN_VER = '1.7.1' %}
+
+FROM docker.io/privatebin/fs:{{ PRIVATEBIN_VER }}
+USER root
+COPY {{ app_dirs.plugin_dir }}/privatebin/config/conf.php /etc/privatebin/conf.php
+COPY {{ app_dirs.plugin_dir }}/privatebin/config/site.conf /etc/nginx/http.d/site.conf
+RUN apk --update add libcap && \
+    setcap 'cap_net_bind_service=+ep' /usr/sbin/nginx && \
+    chown nobody:www-data /etc/privatebin/conf.php && \
+    chmod 644 /etc/nginx/http.d/site.conf

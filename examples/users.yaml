@@ -7,7 +7,7 @@ accounts:
     role: user
     extra:
       allowed_apps:
-        - rstudio
+        - all
   - enabled: false
     username: anonymous
     name:

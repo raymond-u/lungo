@@ -18,6 +18,7 @@ class Storage:
     def __init__(self, console: Console, file_utils: FileUtils):
         self.console = console
         self.file_utils = file_utils
+
         self._storage_version = STORAGE_VERSION
         self._cache_dir = user_cache_path(APP_NAME, APP_AUTHOR)
         self._config_dir = user_config_path(APP_NAME, APP_AUTHOR)
@@ -64,6 +65,10 @@ class Storage:
         return self._data_dir / self._storage_version
 
     @property
+    def custom_plugins_dir(self) -> Path:
+        return self.config_dir / "plugins"
+
+    @property
     def bundled_dir(self) -> Path:
         return self.data_latest_dir / self.bundled_rel
 
@@ -92,6 +97,10 @@ class Storage:
         return Path("excluded")
 
     @property
+    def installed_plugins_dir(self) -> Path:
+        return self.bundled_dir / "plugins"
+
+    @property
     def config_file(self) -> Path:
         return self._config_dir / "config.yaml"
 
@@ -117,11 +126,11 @@ class Storage:
 
     @property
     def template_config_rel(self) -> Path:
-        return self.bundled_dir / "assets" / "config_references" / "config.yaml"
+        return Path("assets") / "config_references" / "config.yaml"
 
     @property
     def template_users_rel(self) -> Path:
-        return self.bundled_dir / "assets" / "config_references" / "users.yaml"
+        return Path("assets") / "config_references" / "users.yaml"
 
     @property
     def template_kratos_secrets_rel(self) -> Path:
@@ -143,22 +152,6 @@ class Storage:
     def kratos_secrets_file(self) -> Path:
         return self.generated_dir / "kratos" / "secrets.yaml"
 
-    @property
-    def jupyterhub_cookie_secret_file(self) -> Path:
-        return self.generated_dir / "jupyterhub" / "cookie_secret"
-
-    @property
-    def jupyterhub_password_file(self) -> Path:
-        return self.generated_dir / "jupyterhub" / "password"
-
-    @property
-    def rstudio_password_file(self) -> Path:
-        return self.generated_dir / "rstudio" / "password"
-
-    @property
-    def xray_salt_file(self) -> Path:
-        return self.generated_dir / "xray" / "salt"
-
     def validate(self) -> None:
         if self.data_latest_dir.is_dir():
             return
@@ -176,6 +169,14 @@ class Storage:
         if largest_version >= 0:
             self.migrate(self.data_dir / f"{STORAGE_PREFIX}{largest_version}")
 
+        # Always make sure the directories exist
+        app: EApp | ECoreService
+        for app in *EApp, *ECoreService:
+            self.file_utils.create_dir(self.cache_latest_dir / app.value)
+            self.file_utils.change_mode(self.cache_latest_dir / app.value, 0o700)
+            self.file_utils.create_dir(self.managed_dir / app.value)
+            self.file_utils.change_mode(self.managed_dir / app.value, 0o700)
+
     def migrate(self, from_: str | PathLike[str]) -> None:
         self.console.print_info(f"Migrating storage from {format_path(Path(from_).name)}...")
 
@@ -185,14 +186,3 @@ class Storage:
             self.file_utils.copy(from_ / self.managed_rel, self.managed_dir)
         except Exit:
             ...
-
-    def create_dirs(self) -> None:
-        app: EApp | ECoreService
-        for app in *EApp, *ECoreService:
-            self.file_utils.create_dir(self.cache_latest_dir / app.value)
-            self.file_utils.change_mode(self.cache_latest_dir / app.value, 0o700)
-            self.file_utils.create_dir(self.managed_dir / app.value)
-            self.file_utils.change_mode(self.managed_dir / app.value, 0o700)
-
-        # Allow the non-root container user to write
-        self.file_utils.change_mode(self.managed_dir / EApp.PRIVATEBIN.value, 0o777)

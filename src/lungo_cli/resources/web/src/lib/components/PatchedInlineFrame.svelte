@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { onMount } from "svelte"
     import parser from "set-cookie-parser"
+    import { onMount } from "svelte"
     import { goto } from "$app/navigation"
     import { page } from "$app/stores"
     import { getUrlParts, isSameHost, useStore } from "$lib/utils"

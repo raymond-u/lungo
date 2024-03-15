@@ -10,7 +10,7 @@ from .file import FileUtils
 from .storage import Storage
 from ..helpers.common import program_exists
 from ..helpers.format import format_command, format_link, format_program
-from ..models.base import EContainer, ECoreService
+from ..models.base import EApp, EContainer, ECoreService
 
 _docker = format_program("Docker")
 _docker_link = format_link(DOCKER_URL, _docker)
@@ -25,11 +25,12 @@ _podman_compose_link = format_link(PODMAN_COMPOSE_URL, _podman_compose)
 class Container:
     """Communicate with the container management tool."""
 
-    def __init__(self, console: Console, file_utils: FileUtils, storage: Storage, context_manager: ContextManager):
+    def __init__(self, console: Console, context_manager: ContextManager, file_utils: FileUtils, storage: Storage):
         self.console = console
+        self.context_manager = context_manager
         self.file_utils = file_utils
         self.storage = storage
-        self.context_manager = context_manager
+
         self.preferred_tool = None
         self.tool = None
 
@@ -122,7 +123,7 @@ class Container:
         if self.storage.lock_file.is_file():
             self.console.print_error(
                 f"An existing instance of {APP_NAME_CAPITALIZED} is running. Please stop it before proceeding. "
-                f"Or, you can remove the restriction forcibly by using the {format_command('--remove-lock')} option."
+                f"Or, you can use the {format_command('--ignore-lock')} option."
             )
             raise Exit(code=1)
 

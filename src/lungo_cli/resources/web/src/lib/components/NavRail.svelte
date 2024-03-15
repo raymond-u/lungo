@@ -13,14 +13,15 @@
     use:scrollSync={{ id: "nav", stores: syncedScrollTops }}
 >
     <ul class="menu items-center gap-1 px-0 py-2">
-        {#each $page.data.apps as { name, href, icon } (name)}
+        {#each $page.data.apps as { name, href, icon, altIcon } (name)}
             {@const active = $currentApp?.name === name}
             <li class="mt-3 h-8 w-14 transition" class:-translate-y-3={active}>
                 <a class="rounded-full py-1" class:!active={active} {href}>
                     <SwappableIcon
                         class={active && $darkTheme === false ? "fill-neutral-content" : ""}
-                        {active}
                         {icon}
+                        {altIcon}
+                        altIconActive={active}
                     />
                 </a>
             </li>

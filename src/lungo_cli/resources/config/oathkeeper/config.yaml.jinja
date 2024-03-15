@@ -34,7 +34,7 @@ authenticators:
   cookie_session:
     enabled: true
     config:
-      check_session_url: 'http://{{ ip_addresses.kratos }}:80/sessions/whoami'
+      check_session_url: 'http://{{ ip_addresses['kratos'] }}:80/sessions/whoami'
       preserve_path: true
       extra_from: '@this'
       subject_from: 'identity.id'
@@ -50,7 +50,7 @@ authorizers:
   remote_json:
     enabled: true
     config:
-      remote: 'http://{{ ip_addresses.keto }}:80/relation-tuples/check'
+      remote: 'http://{{ ip_addresses['keto'] }}:80/relation-tuples/check'
       payload: >-
         {% raw %}
         {
@@ -68,7 +68,7 @@ mutators:
     enabled: true
     config:
       headers:
-        X-Remote-User: {% raw %}"{{ if .Extra.identity }}{{ .Extra.identity.traits.username }}{{ else }}{{ .Subject }}{{ end }}"{% endraw %}
+        X-Remote-User: {{ '"{{ if .Extra.identity }}{{ .Extra.identity.traits.username }}{{ else }}{{ .Subject }}{{ end }}"' }}
 
 errors:
   handlers:

@@ -1,17 +1,49 @@
-import { EApp } from "$lib/server/types"
-import { type App, EIcon } from "$lib/types"
+import type { ComponentType } from "svelte"
+import { QuestionMarkIcon } from "$lib/icons"
+import { APP_INFO } from "$lib/server/constants"
+import type { AppInfo, RawAppInfo } from "$lib/types"
 
-export function createApp(app: EApp): App {
-    switch (app) {
-        case EApp.FileBrowser:
-            return { name: "File Browser", href: `/app/${EApp.FileBrowser}`, icon: EIcon.Folder }
-        case EApp.PrivateBin:
-            return { name: "Pastebin", href: `/app/${EApp.PrivateBin}`, icon: EIcon.Note }
-        case EApp.JupyterHub:
-            return { name: "JupyterHub", href: `/app/${EApp.JupyterHub}`, icon: EIcon.Jupyter }
-        case EApp.RStudio:
-            return { name: "RStudio", href: `/app/${EApp.RStudio}`, icon: EIcon.RStudio }
-        case EApp.XRay:
-            return { name: "Proxy", href: `/app/${EApp.XRay}`, icon: EIcon.Proxy }
+let parsedApps: string[]
+const parsedAppInfo: { [key: string]: AppInfo } = {}
+
+export async function getAllApps(): Promise<string[]> {
+    if (!parsedApps) {
+        parsedApps = (JSON.parse(APP_INFO!) as RawAppInfo[]).map((app) => app.name).sort()
     }
+
+    return parsedApps
+}
+
+export async function getAppInfo(name: string): Promise<AppInfo> {
+    if (parsedAppInfo[name]) {
+        return parsedAppInfo[name]
+    }
+
+    const rawAppInfo = (JSON.parse(APP_INFO!) as RawAppInfo[]).find((app) => app.name === name)!
+
+    let icon: ComponentType
+    let altIcon: ComponentType
+
+    if (rawAppInfo.icon) {
+        icon = (await import(`$lib/plugins/${name}/icons/${rawAppInfo.icon}`)).default
+    } else {
+        icon = QuestionMarkIcon
+    }
+
+    if (rawAppInfo.altIcon) {
+        altIcon = (await import(`$lib/plugins/${name}/icons/${rawAppInfo.altIcon}`)).default
+    } else {
+        altIcon = icon
+    }
+
+    const appInfo = {
+        name: rawAppInfo.name,
+        descriptiveName: rawAppInfo.descriptiveName ?? rawAppInfo.name,
+        href: `/app/${rawAppInfo.name}`,
+        icon,
+        altIcon,
+    }
+    parsedAppInfo[name] = appInfo
+
+    return appInfo
 }

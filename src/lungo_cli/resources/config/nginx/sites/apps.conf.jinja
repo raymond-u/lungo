@@ -1,0 +1,5 @@
+{% for plugin_output in plugin_outputs %}
+    {% if plugin_output.config.have_backend and config.plugins[plugin_output.config.name].enabled %}
+{{ plugin_output.nginx_site }}
+    {% endif %}
+{% endfor %}

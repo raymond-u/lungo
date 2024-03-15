@@ -6,8 +6,9 @@ from typer import Exit
 
 from .console import Console
 from .file import FileUtils
+from .plugin import BasePlugin
 from .storage import Storage
-from ..helpers.format import format_path
+from ..helpers.format import format_path, format_program
 from ..models.context import Context
 
 
@@ -18,6 +19,7 @@ class Renderer:
         self.console = console
         self.file_utils = file_utils
         self.storage = storage
+
         self._env = None
 
     @property
@@ -40,11 +42,22 @@ class Renderer:
             self.console.print_error(f"Failed to render {format_path(src)} ({e}).")
             raise Exit(code=1)
 
-    def render_all(self, context: Context) -> None:
+    def render_main(self, context: Context) -> None:
         self.console.print_info("Rendering templates...")
 
         for file in self.storage.bundled_dir.rglob("*.jinja"):
             relative_path = file.relative_to(self.storage.bundled_dir)
 
-            if str(self.storage.excluded_rel) not in relative_path.parts:
+            if relative_path.parts[0] != str(self.storage.excluded_rel):
                 self.render(relative_path, file.with_suffix(""), **context.model_dump())
+                self.file_utils.remove(file)
+
+    def render_plugin(self, plugin: BasePlugin, context: Context) -> None:
+        self.console.print_info(f"Rendering templates for {format_program(plugin.config.name)}...")
+
+        for file in self.storage.installed_plugins_dir.joinpath(plugin.config.name).rglob("*.jinja"):
+            relative_path = file.relative_to(self.storage.bundled_dir)
+            self.render(relative_path, file.with_suffix(""), **context.model_dump(), **plugin.get_render_context())
+            self.file_utils.remove(file)
+
+        plugin.mark_as_rendered()

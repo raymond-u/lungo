@@ -1,46 +1,15 @@
-{% set modules = config.modules %}
-
 upstream oathkeeper {
-    server {{ ip_addresses.oathkeeper }}:80;
+    server {{ ip_addresses['oathkeeper'] }}:80;
     keepalive 4;
 }
 
 upstream node {
-    server {{ ip_addresses.node }}:80;
+    server {{ ip_addresses['node'] }}:80;
     keepalive 4;
 }
 
-{% if modules.filebrowser.enabled %}
-upstream filebrowser {
-    server {{ ip_addresses.filebrowser }}:80;
-    keepalive 4;
-}
-{% endif %}
-
-{% if modules.jupyterhub.enabled %}
-upstream jupyterhub {
-    server {{ ip_addresses.jupyterhub }}:80;
-    keepalive 4;
-}
-{% endif %}
-
-{% if modules.privatebin.enabled %}
-upstream privatebin {
-    server {{ ip_addresses.privatebin }}:80;
-    keepalive 4;
-}
-{% endif %}
-
-{% if modules.rstudio.enabled %}
-upstream rstudio {
-    server {{ ip_addresses.rstudio }}:80;
-    keepalive 4;
-}
-{% endif %}
-
-{% if modules.xray.enabled %}
-upstream xray {
-    server {{ ip_addresses.xray }}:80;
-    keepalive 4;
-}
-{% endif %}
+{% for plugin_output in plugin_outputs %}
+    {% if plugin_output.config.have_backend and config.plugins[plugin_output.config.name].enabled %}
+{{ plugin_output.nginx_upstream }}
+    {% endif %}
+{% endfor %}

@@ -1,6 +1,6 @@
-from enum import Enum
 from typing import Annotated, Literal
 
+from aenum import auto, StrEnum
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -8,33 +8,28 @@ class Base(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True, str_strip_whitespace=True, use_enum_values=True)
 
 
-class EApp(str, Enum):
-    FILEBROWSER = "filebrowser"
-    JUPYTERHUB = "jupyterhub"
-    PRIVATEBIN = "privatebin"
-    RSTUDIO = "rstudio"
-    XRAY = "xray"
+class EApp(StrEnum): ...
 
 
-class EContainer(str, Enum):
-    DOCKER = "docker"
+class EContainer(StrEnum):
+    DOCKER = auto()
     DOCKER_COMPOSE = "docker-compose"
     PODMAN_COMPOSE = "podman-compose"
 
 
-class ECoreService(str, Enum):
-    NGINX_GATEWAY = "nginx_gateway"
-    NGINX = "nginx"
-    KETO = "keto"
-    KRATOS = "kratos"
-    OATHKEEPER = "oathkeeper"
-    NODE = "node"
+class ECoreService(StrEnum):
+    NGINX_GATEWAY = auto()
+    NGINX = auto()
+    KETO = auto()
+    KRATOS = auto()
+    OATHKEEPER = auto()
+    NODE = auto()
 
 
-class ERole(str, Enum):
-    GUEST = "guest"
-    USER = "user"
-    ADMIN = "admin"
+class ERole(StrEnum):
+    GUEST = auto()
+    USER = auto()
+    ADMIN = auto()
 
 
 AllowedApps = Literal["all"] | list[EApp]

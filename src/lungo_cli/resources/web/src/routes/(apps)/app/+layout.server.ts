@@ -1,5 +1,4 @@
-import { EApp } from "$lib/server/types"
-import { createApp } from "$lib/server/utils"
+import { getAllApps, getAppInfo } from "$lib/server/utils"
 
 export async function load({ url }: { url: URL }) {
     const pathBase = url.pathname.match("^/app/[^/]+")
@@ -10,12 +9,12 @@ export async function load({ url }: { url: URL }) {
         }
     }
 
-    for (const app in EApp) {
-        const { href, name } = createApp(EApp[app as keyof typeof EApp])
+    for (const app of await getAllApps()) {
+        const { descriptiveName, href } = await getAppInfo(app)
 
         if (href === pathBase[0]) {
             return {
-                title: name,
+                title: descriptiveName,
             }
         }
     }

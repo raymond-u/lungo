@@ -1,14 +1,16 @@
 import { derived, type Readable, writable, type Writable } from "svelte/store"
 import type { Page } from "@sveltejs/kit"
 import { page } from "$app/stores"
-import { type App, ETheme } from "$lib/types"
+import { type AppInfo, ETheme } from "$lib/types"
 
 export function allowScroll(): Writable<boolean> {
     return writable(true)
 }
 
-export function currentApp(page: Readable<Page>): Readable<App | undefined> {
-    return derived(page, ($page: Page) => $page.data.apps?.find((app: App) => $page.url.pathname.startsWith(app.href)))
+export function currentApp(page: Readable<Page>): Readable<AppInfo | undefined> {
+    return derived(page, ($page: Page) =>
+        $page.data.apps?.find((app: AppInfo) => $page.url.pathname.startsWith(app.href))
+    )
 }
 
 export function currentInlineFrame(): Writable<HTMLIFrameElement | undefined> {
@@ -46,7 +48,7 @@ export function syncedScrollTop(): Writable<number> {
 
 export class Store {
     allowScroll: Writable<boolean>
-    currentApp: Readable<App | undefined>
+    currentApp: Readable<AppInfo | undefined>
     currentInlineFrame: Writable<HTMLIFrameElement | undefined>
     currentTheme: Writable<ETheme>
     darkTheme: Readable<boolean | undefined>

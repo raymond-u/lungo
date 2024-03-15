@@ -74,91 +74,6 @@
 #         read_only: true
 
 # ========
-# modules:
-# ========
-
-#   # Settings for the File Browser module
-#   filebrowser:
-
-#     # Enable or disable the module
-#     # Type: boolean
-#     # Default: true
-#     # Required: no
-#     enabled: true
-
-#   # Settings for the JupyterHub module
-#   jupyterhub:
-
-#     # Enable or disable the module
-#     # Type: boolean
-#     # Default: true
-#     # Required: no
-#     enabled: true
-
-#     # Password for users inside the container
-#     # Type: string
-#     # Default: (randomly generated)
-#     # Required: no
-#     password: passwd
-
-#   # Settings for the PrivateBin module
-#   privatebin:
-
-#     # Enable or disable the module
-#     # Type: boolean
-#     # Default: true
-#     # Required: no
-#     enabled: true
-
-#   # Settings for the RStudio module
-#   rstudio:
-
-#     # Enable or disable the module
-#     # Type: boolean
-#     # Default: true
-#     # Required: no
-#     enabled: true
-
-#     # Password for users inside the container
-#     # Type: string
-#     # Default: (randomly generated)
-#     # Required: no
-#     password: passwd
-
-#   # Settings for the Xray module
-#   xray:
-
-#     # Enable or disable the module
-#     # Type: boolean
-#     # Default: true
-#     # Required: no
-#     enabled: true
-
-#     # Domain whitelist (used only as a template for configuring the proxy client)
-#     # Type: array
-#     # Default: [ ]
-#     # Required: no
-#     domain_whitelist: [ ]
-
-#     # Domain keyword whitelist (used only as a template for configuring the proxy client)
-#     # Type: array
-#     # Default: [ ]
-#     # Required: no
-#     domain_keyword_whitelist: [ ]
-
-#     # Domain suffix whitelist (used only as a template for configuring the proxy client)
-#     # Type: array
-#     # Default: [ ]
-#     # Required: no
-#     domain_suffix_whitelist: [ ]
-
-#     # IP range whitelist (used only as a template for configuring the proxy client)
-#     # Type: array
-#     # Default: [ ]
-#     # Required: no
-#     ip_range_whitelist: [ ]
-
-# ========
 # network:
 # ========
 
@@ -219,6 +134,10 @@
 #       # Required: no
 #       key: /etc/ssl/private/self-signed.key
 
+# ========
+# plugins:
+# ========
+
 # ======
 # rules:
 # ======
@@ -240,20 +159,18 @@
 
 #       # Allowed apps, or 'all' to allow all apps
 #       # Type: 'all' | array
-#       # Default: ['filebrowser', 'privatebin']
+#       # Default: [ ]
 #       # Required: no
-#       allowed_apps:
-#         - filebrowser
+#       allowed_apps: [ ]
 
 #     # For regular users
 #     user:
 
 #       # Allowed apps, or 'all' to allow all apps
 #       # Type: 'all' | array
-#       # Default: ['jupyterhub', 'rstudio']
+#       # Default: [ ]
 #       # Required: no
-#       allowed_apps:
-#         - rstudio
+#       allowed_apps: [ ]
 
 #     # For administrators
 #     admin:

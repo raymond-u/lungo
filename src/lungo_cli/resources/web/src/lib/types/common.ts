@@ -1,19 +1,18 @@
-export type App = {
+import type { ComponentType } from "svelte"
+
+export type AppInfo = {
     name: string
+    descriptiveName: string
     href: string
-    icon: EIcon
+    icon: ComponentType
+    altIcon: ComponentType
 }
 
-export enum EIcon {
-    Folder,
-    Jupyter,
-    Menu,
-    Note,
-    Proxy,
-    RStudio,
-    Terminal,
-    Theme,
-    Visibility,
+export type RawAppInfo = {
+    name: string
+    descriptiveName: string | null
+    icon: string | null
+    altIcon: string | null
 }
 
 // noinspection JSUnusedGlobalSymbols

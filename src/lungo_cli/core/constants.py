@@ -14,5 +14,3 @@ DOCKER_URL: Final[str] = "https://www.docker.com/"
 DOCKER_COMPOSE_URL: Final[str] = "https://github.com/docker/compose"
 PODMAN_URL: Final[str] = "https://podman.io/"
 PODMAN_COMPOSE_URL: Final[str] = "https://github.com/containers/podman-compose"
-
-FILEBROWSER_DEFAULT_PASSWORD_HASH: Final[str] = "$2a$10$aulj1r/ROe0VnA1iE2/ojOItBBFeHK0KLMv5mnl3ECXfiNLKfcKHi"

@@ -1,19 +1,18 @@
 {% set KETO_VER = 'v0.12.0' %}
 {% set KRATOS_VER = 'v1.1.0' %}
-{% set OATHKEEPER_VER = 'v0.40.6' %}
-{% set XRAY_VER = '1.8.7' %}
+{% set OATHKEEPER_VER = 'v0.40.7' %}
 
 {% set accounts = users.accounts %}
 {% set branding = config.branding %}
 {% set directories = config.directories %}
-{% set modules = config.modules %}
 {% set network = config.network %}
+{% set plugins = config.plugins %}
 
 services:
 
-  # ============= #
-  # Reverse proxy #
-  # ============= #
+  # =============== #
+  # Reverse proxies #
+  # =============== #
 
   nginx_gateway:
     container_name: nginx_gateway
@@ -73,7 +72,7 @@ services:
 
     networks:
       static:
-        ipv4_address: {{ ip_addresses.nginx }}
+        ipv4_address: {{ ip_addresses['nginx'] }}
 
     volumes:
       - './config/nginx:/etc/nginx:ro'
@@ -88,18 +87,12 @@ services:
       - kratos
       - oathkeeper
       - node
-      {% if modules.filebrowser.enabled %}
-      - filebrowser
-      {% endif %}
-      {% if modules.jupyterhub.enabled %}
-      - jupyterhub
-      {% endif %}
-      {% if modules.privatebin.enabled %}
-      - privatebin
-      {% endif %}
-      {% if modules.rstudio.enabled %}
-      - rstudio
-      {% endif %}
+      {% for plugin_output in plugin_outputs %}
+        {% if plugin_output.config.have_backend and plugins[plugin_output.config.name].enabled %}
+      - {{ plugin_output.config.name }}
+        {% endif %}
+      {% endfor %}
+
     restart: 'unless-stopped'
 
   # ============================== #
@@ -120,7 +113,7 @@ services:
 
     networks:
       static:
-        ipv4_address: {{ ip_addresses.keto }}
+        ipv4_address: {{ ip_addresses['keto'] }}
     expose:
       - 80
 
@@ -146,7 +139,7 @@ services:
 
     networks:
       static:
-        ipv4_address: {{ ip_addresses.kratos }}
+        ipv4_address: {{ ip_addresses['kratos'] }}
     expose:
       - 80
 
@@ -175,7 +168,7 @@ services:
 
     networks:
       static:
-        ipv4_address: {{ ip_addresses.oathkeeper }}
+        ipv4_address: {{ ip_addresses['oathkeeper'] }}
     expose:
       - 80
 
@@ -185,9 +178,9 @@ services:
 
     restart: 'unless-stopped'
 
-  # == #
-  # UI #
-  # == #
+  # ====== #
+  # Web UI #
+  # ====== #
 
   node:
     container_name: node
@@ -202,7 +195,7 @@ services:
 
     networks:
       static:
-        ipv4_address: {{ ip_addresses.node }}
+        ipv4_address: {{ ip_addresses['node'] }}
     expose:
       - 80
 
@@ -228,207 +221,26 @@ services:
       - PROTOCOL_HEADER=X-Forwarded-Proto
       - XFF_DEPTH={{ network.trusted_proxies|length + 1 }}
 
-      - KETO_API_BASE_URL=http://{{ ip_addresses.keto }}:80/
-      - KRATOS_API_BASE_URL=http://{{ ip_addresses.kratos }}:80/
-      - JUPYTERHUB_BASE_URL=http://{{ ip_addresses.jupyterhub }}:80/
-      - JUPYTERHUB_PASSWORD={{ jupyterhub_password }}
-      - RSTUDIO_BASE_URL=http://{{ ip_addresses.rstudio }}:80/
-      - RSTUDIO_PASSWORD={{ rstudio_password }}
-      - XRAY_SALT={{ xray_salt|string }}
       - PUBLIC_HOSTNAME={{ network.hostname }}
       - PUBLIC_HTTPS_PORT={{ network.https.port }}
       - PUBLIC_SITE_SUBTITLE={{ branding.subtitle|tojson }}
       - PUBLIC_SITE_TITLE={{ branding.name }}
-      - PUBLIC_XRAY_DOMAIN_WHITELIST={{ modules.xray.domain_whitelist|tojson }}
-      - PUBLIC_XRAY_DOMAIN_KEYWORD_WHITELIST={{ modules.xray.domain_keyword_whitelist|tojson }}
-      - PUBLIC_XRAY_DOMAIN_SUFFIX_WHITELIST={{ modules.xray.domain_suffix_whitelist|tojson }}
-      - PUBLIC_XRAY_IP_RANGE_WHITELIST={{ modules.xray.ip_range_whitelist|map('string')|list|tojson }}
+
+      - APP_INFO={{ web_app_info|tojson }}
+      - KETO_API_BASE_URL=http://{{ ip_addresses['keto'] }}:80/
+      - KRATOS_API_BASE_URL=http://{{ ip_addresses['kratos'] }}:80/
 
     restart: 'unless-stopped'
 
-  # ============ #
-  # Applications #
-  # ============ #
+  # =============== #
+  # Custom services #
+  # =============== #
 
-  {% if modules.filebrowser.enabled %}
-  filebrowser:
-    container_name: filebrowser
-    hostname: filebrowser
-
-    build:
-      context: .
-      dockerfile: dockerfiles/filebrowser.Dockerfile
-
-    user: root
-    entrypoint: [ ]
-    command: >-
-      sh -c 'rm -f /var/lib/filebrowser/filebrowser.db;
-      /filebrowser -c /etc/filebrowser/settings.yaml config init --auth.method=noauth;
-      /filebrowser -c /etc/filebrowser/settings.yaml config import /etc/filebrowser/config_export.yaml;
-      /filebrowser -c /etc/filebrowser/settings.yaml users import --replace /etc/filebrowser/users_export.yaml;
-      umask 002; /filebrowser -c /etc/filebrowser/settings.yaml'
-
-    networks:
-      static:
-        ipv4_address: {{ ip_addresses.filebrowser }}
-    expose:
-      - 80
-
-    volumes:
-      - './config/filebrowser:/etc/filebrowser:ro'
-      - '{{ app_dirs.cache_dir }}/filebrowser:/var/log/filebrowser:rw'
-      - '{{ app_dirs.managed_dir }}/filebrowser:/var/lib/filebrowser:rw'
-      {% for account in accounts %}
-        {% if account.extra.user_dir %}
-      - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
-        {% else %}
-      - '{{ directories.users_dir }}/{{ account.username }}:/mnt/home/{{ account.username }}:rw'
-        {% endif %}
-        {% for shared_dir in account.extra.shared_dirs %}
-      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
-        {% endfor %}
-      {% endfor %}
-      {% for shared_dir in directories.shared_dirs %}
-      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
-      {% endfor %}
-
-    restart: 'unless-stopped'
-  {% endif %}
-
-  {% if modules.jupyterhub.enabled %}
-  jupyterhub:
-    container_name: jupyterhub
-    hostname: jupyterhub
-
-    build:
-      context: .
-      dockerfile: dockerfiles/jupyterhub.Dockerfile
-
-    user: root
-    entrypoint: [ ]
-    command: sh -c 'umask 002; jupyterhub -f /etc/jupyterhub/config.py'
-
-    networks:
-      static:
-        ipv4_address: {{ ip_addresses.jupyterhub }}
-    expose:
-      - 80
-
-    volumes:
-      - './config/jupyterhub:/etc/jupyterhub:ro'
-      - '{{ app_dirs.managed_dir }}/jupyterhub:/srv/jupyterhub:rw'
-      {% for account in accounts %}
-        {% if account.extra.user_dir %}
-      - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
-        {% else %}
-      - '{{ directories.users_dir }}/{{ account.username }}:/mnt/home/{{ account.username }}:rw'
-        {% endif %}
-        {% for shared_dir in account.extra.shared_dirs %}
-      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
-        {% endfor %}
-      {% endfor %}
-      {% for shared_dir in directories.shared_dirs %}
-      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
-      {% endfor %}
-
-    secrets:
-      - source: JUPYTERHUB_COOKIE_SECRET
-        target: /etc/jupyterhub/cookie_secret
-
-    restart: 'unless-stopped'
-  {% endif %}
-
-  {% if modules.privatebin.enabled %}
-  privatebin:
-    container_name: privatebin
-    hostname: privatebin
-
-    build:
-      context: .
-      dockerfile: dockerfiles/privatebin.Dockerfile
-
-    user: 'nobody:www-data'
-    entrypoint: [ ]
-    command: /etc/init.d/rc.local
-
-    networks:
-      static:
-        ipv4_address: {{ ip_addresses.privatebin }}
-    expose:
-      - 80
-
-    volumes:
-      - '{{ app_dirs.managed_dir }}/privatebin:/srv/data:rw'
-
-    environment:
-      - CONFIG_PATH=/etc/privatebin
-
-    restart: 'unless-stopped'
-  {% endif %}
-
-  {% if modules.rstudio.enabled %}
-  rstudio:
-    container_name: rstudio
-    hostname: rstudio
-
-    build:
-      context: .
-      dockerfile: dockerfiles/rstudio.Dockerfile
-
-    user: root
-    entrypoint: [ ]
-    command: sh -c 'umask 002; /init'
-
-    networks:
-      static:
-        ipv4_address: {{ ip_addresses.rstudio }}
-    expose:
-      - 80
-
-    volumes:
-      - './config/rstudio/rserver.conf:/etc/rstudio/rserver.conf:ro'
-      - './config/rstudio/rsession.conf:/etc/rstudio/rsession.conf:ro'
-      - '{{ app_dirs.managed_dir }}/rstudio:/var/lib/rstudio-server:rw'
-      {% for account in accounts %}
-        {% if account.extra.user_dir %}
-      - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
-        {% else %}
-      - '{{ directories.users_dir }}/{{ account.username }}:/mnt/home/{{ account.username }}:rw'
-        {% endif %}
-        {% for shared_dir in account.extra.shared_dirs %}
-      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
-        {% endfor %}
-      {% endfor %}
-      {% for shared_dir in directories.shared_dirs %}
-      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
-      {% endfor %}
-
-    restart: 'unless-stopped'
-  {% endif %}
-
-  {% if modules.xray.enabled %}
-  xray:
-    container_name: xray
-    hostname: xray
-
-    image: 'docker.io/teddysun/xray:{{ XRAY_VER }}'
-
-    user: root
-    entrypoint: [ ]
-    command: /usr/bin/xray run -c /etc/xray/config.json
-
-    networks:
-      static:
-        ipv4_address: {{ ip_addresses.xray }}
-    expose:
-      - 80
-
-    volumes:
-      - './config/xray:/etc/xray:ro'
-      - '{{ app_dirs.cache_dir }}/xray:/var/log/xray:rw'
-
-    restart: 'unless-stopped'
-  {% endif %}
+  {% for plugin_output in plugin_outputs %}
+    {% if plugin_output.config.have_backend and plugins[plugin_output.config.name].enabled %}
+  {{ plugin_output.compose_services }}
+    {% endif %}
+  {% endfor %}
 
 networks:
   static:
@@ -446,5 +258,8 @@ secrets:
       {% endif %}
   KRATOS_SECRETS:
     file: '{{ app_dirs.generated_dir }}/kratos/secrets.yaml'
-  JUPYTERHUB_COOKIE_SECRET:
-    file: '{{ app_dirs.generated_dir }}/jupyterhub/cookie_secret'
+  {% for plugin_output in plugin_outputs %}
+    {% if plugin_output.config.have_backend and plugins[plugin_output.config.name].enabled %}
+  {{ plugin_output.compose_secrets }}
+    {% endif %}
+  {% endfor %}

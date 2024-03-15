@@ -1,7 +1,7 @@
 <script lang="ts">
     import { SwappableIcon } from "$lib/components"
-    import { CheckIcon, ExpandIcon } from "$lib/icons"
-    import { EIcon, ETheme } from "$lib/types"
+    import { CheckIcon, DarkModeIcon, ExpandIcon, LightModeIcon } from "$lib/icons"
+    import { ETheme } from "$lib/types"
     import { useStore } from "$lib/utils"
 
     const { currentTheme, darkTheme } = useStore()
@@ -25,7 +25,7 @@
 <div class="flex items-center">
     <button class="btn btn-circle btn-ghost h-10 min-h-0 w-10" on:click={handleSwitchTheme}>
         <span class="h-6 w-6">
-            <SwappableIcon icon={EIcon.Theme} active={$darkTheme} rotate>
+            <SwappableIcon icon={DarkModeIcon} altIcon={LightModeIcon} altIconActive={$darkTheme} rotate>
                 <input class="theme-controller" type="checkbox" value="dark" />
             </SwappableIcon>
         </span>

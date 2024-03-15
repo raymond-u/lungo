@@ -3,8 +3,7 @@
     import { safeClick, scrollShadow, scrollSync } from "$lib/actions"
     import { Avatar, SwappableIcon, ThemeSelector } from "$lib/components"
     import { SITE_TITLE } from "$lib/constants"
-    import { FullscreenIcon, LogoutIcon, SettingsIcon } from "$lib/icons"
-    import { EIcon } from "$lib/types"
+    import { CloseIcon, FullscreenIcon, LogoutIcon, MenuIcon, SettingsIcon } from "$lib/icons"
     import { createPlaceholder, useStore } from "$lib/utils"
 
     const { allowScroll, currentApp, currentInlineFrame, darkTheme, syncedScrollTops } = useStore()
@@ -38,7 +37,7 @@
             <div class="drawer-content">
                 <label for="nav-drawer" class="btn btn-circle btn-ghost drawer-button">
                     <span class="h-6 w-6">
-                        <SwappableIcon icon={EIcon.Menu} active={checked} rotate />
+                        <SwappableIcon icon={MenuIcon} altIcon={CloseIcon} altIconActive={checked} rotate />
                     </span>
                 </label>
             </div>
@@ -50,7 +49,7 @@
                     use:scrollSync={{ id: "nav", stores: syncedScrollTops }}
                 >
                     <ul class="menu items-center gap-2 p-2 pb-3">
-                        {#each $page.data.apps as { name, href, icon } (name)}
+                        {#each $page.data.apps as { name, href, icon, altIcon } (name)}
                             {@const active = $currentApp?.name === name}
                             <li class="mx-0 h-14 w-full rounded-full">
                                 <a
@@ -61,8 +60,9 @@
                                     <span class="h-6 w-6">
                                         <SwappableIcon
                                             class={active && $darkTheme === false ? "fill-neutral-content" : ""}
-                                            {active}
                                             {icon}
+                                            {altIcon}
+                                            altIconActive={active}
                                         />
                                     </span>
                                     <span class="p-0 text-xs font-semibold">{name}</span>
@@ -76,13 +76,15 @@
         <div class="flex-1 px-4">
             <a class="text-xl" href="/">{SITE_TITLE}</a>
         </div>
-        <div class="flex-none" class:hidden={!$currentInlineFrame}>
-            <button class="btn btn-circle btn-ghost h-10 min-h-0 w-10" on:click={handleFullscreen}>
-                <span class="h-6 w-6">
-                    <FullscreenIcon />
-                </span>
-            </button>
-        </div>
+        {#if $currentInlineFrame}
+            <div class="hidden flex-none lg:block">
+                <button class="btn btn-circle btn-ghost h-10 min-h-0 w-10" on:click={handleFullscreen}>
+                    <span class="h-6 w-6">
+                        <FullscreenIcon />
+                    </span>
+                </button>
+            </div>
+        {/if}
         <div class="flex-none">
             <ThemeSelector />
         </div>

@@ -1,9 +1,7 @@
 import os
 from os import PathLike
 from pathlib import Path
-from uuid import uuid1
 
-from importlib_resources import as_file, files
 from typer import Exit
 
 from .console import Console
@@ -11,10 +9,11 @@ from .constants import PACKAGE_NAME
 from .context import ContextManager
 from .database import AccountManager
 from .file import FileUtils
+from .plugin import PluginManager
 from .renderer import Renderer
 from .storage import Storage
-from ..helpers.common import get_app_version, get_file_permissions, port_is_available
-from ..helpers.crypto import generate_random_hex, generate_self_signed_cert
+from ..helpers.common import get_app_version, get_file_permissions
+from ..helpers.crypto import generate_random_hex, generate_self_signed_cert, hash_text
 from ..helpers.format import format_input, format_path
 from ..models.base import EApp
 from ..models.config import Config
@@ -22,23 +21,31 @@ from ..models.users import Users
 
 
 class AppManager:
+    """Manager for the application."""
+
     def __init__(
         self,
-        console: Console,
-        file_utils: FileUtils,
-        storage: Storage,
-        context_manager: ContextManager,
         account_manager: AccountManager,
+        console: Console,
+        context_manager: ContextManager,
+        file_utils: FileUtils,
+        plugin_manager: PluginManager,
         renderer: Renderer,
+        storage: Storage,
     ):
-        self.console = console
-        self.file_utils = file_utils
-        self.storage = storage
-        self.context_manager = context_manager
         self.account_manager = account_manager
+        self.console = console
+        self.context_manager = context_manager
+        self.file_utils = file_utils
+        self.plugin_manager = plugin_manager
         self.renderer = renderer
+        self.storage = storage
 
-    def process_args(self, config_dir: str | PathLike[str] | None, quiet: bool, verbosity: int) -> None:
+        self.force_init = False
+
+    def process_args(
+        self, config_dir: str | PathLike[str] | None, dev: bool, quiet: bool, verbosity: int, force_init: bool = False
+    ) -> None:
         """Process common arguments."""
         if config_dir:
             if not Path(config_dir).is_dir():
@@ -47,108 +54,19 @@ class AppManager:
 
             self.storage.config_dir = Path(config_dir).resolve()
 
+        if dev:
+            self.console.set_log_level(1)
+            self.storage.storage_version = "dev"
+            self.context_manager.dev = True
+            self.force_init = True
+
         if quiet:
             self.console.set_log_level(-1)
         else:
             self.console.set_log_level(verbosity)
 
-    def process_args_deferred(self, dev: bool, force_init: bool = False, remove_lock: bool = False) -> None:
-        """Process common arguments that need to be processed after the configuration is loaded."""
-        if dev:
-            self.console.set_log_level(1)
-            self.storage.storage_version = "dev"
-            self.context_manager.dev = True
-
         if force_init:
-            self.file_utils.remove(self.storage.bundled_dir)
-
-        if remove_lock:
-            self.file_utils.remove(self.storage.lock_file)
-
-    def copy_app_resources(self, src: str | PathLike[str], dst: str | PathLike[str]) -> None:
-        """Copy resources from the package to the destination directory."""
-        with as_file(files(f"{PACKAGE_NAME}.resources")) as resources:
-            self.file_utils.copy(resources / src, dst)
-
-    def generate_config_hash(self) -> str:
-        """Generate a hash of the configuration files."""
-        return (
-            f"v{get_app_version()}"
-            + f"+{self.file_utils.hash_sha256(self.storage.config_file)}"
-            + f"+{self.file_utils.hash_sha256(self.storage.users_file)}"
-        )
-
-    def update_app_data(self) -> None:
-        """Ensure that all the application data exists and is up-to-date."""
-        config_hash = self.generate_config_hash()
-
-        with self.console.status("Updating storage..."):
-            self.storage.validate()
-            self.storage.create_dirs()
-
-            if (
-                not self.storage.init_file.is_file()
-                or self.file_utils.read_text(self.storage.init_file) != config_hash
-                or not self.storage.bundled_dir.is_dir()
-                or self.context_manager.dev
-            ):
-                self.console.print_info("Updating bundled data...")
-                self.copy_app_resources(".", self.storage.bundled_dir)
-                self.file_utils.change_mode(self.storage.bundled_dir, 0o700)
-                self.file_utils.remove(self.storage.init_file)
-
-            if not self.storage.nginx_gateway_cert_file.is_file() or not self.storage.nginx_gateway_key_file.is_file():
-                self.console.print_info("Generating self-signed certificate...")
-                cert, key = generate_self_signed_cert()
-                self.file_utils.write_bytes(self.storage.nginx_gateway_cert_file, cert)
-                self.file_utils.write_bytes(self.storage.nginx_gateway_key_file, key, True)
-
-            # Remove the socket file every time to avoid binding issues
-            self.file_utils.remove(self.storage.nginx_gateway_socket_file)
-
-            if not self.storage.kratos_secrets_file.is_file():
-                self.console.print_info("Generating Kratos secrets...")
-                self.renderer.render(
-                    self.storage.template_kratos_secrets_rel,
-                    self.storage.kratos_secrets_file,
-                    secret_cookie=generate_random_hex(),
-                )
-                self.file_utils.change_mode(self.storage.kratos_secrets_file, 0o600)
-
-            if not self.storage.jupyterhub_cookie_secret_file.is_file():
-                self.console.print_info("Generating JupyterHub cookie secret...")
-                self.file_utils.write_text(self.storage.jupyterhub_cookie_secret_file, generate_random_hex(), True)
-
-            if not self.storage.jupyterhub_password_file.is_file():
-                self.console.print_info("Generating JupyterHub password...")
-                self.file_utils.write_text(self.storage.jupyterhub_password_file, generate_random_hex(), True)
-
-            if not self.storage.rstudio_password_file.is_file():
-                self.console.print_info("Generating RStudio password...")
-                self.file_utils.write_text(self.storage.rstudio_password_file, generate_random_hex(), True)
-
-            if not self.storage.xray_salt_file.is_file():
-                self.console.print_info("Generating Xray salt...")
-                self.file_utils.write_text(self.storage.xray_salt_file, str(uuid1()), True)
-
-        with self.console.status("Updating database..."):
-            if not self.storage.init_file.is_file():
-                self.renderer.render_all(self.context_manager.context)
-                self.account_manager.update(self.context_manager.config, self.context_manager.users)
-
-                self.file_utils.write_text(self.storage.init_file, config_hash)
-
-    def ensure_port_availability(self) -> None:
-        """Ensure that ports used by the application are available."""
-        if self.context_manager.config.network.http.enabled and not port_is_available(
-            self.context_manager.config.network.http.port
-        ):
-            self.console.print_error(f"Port {format_input(self.context_manager.config.network.http.port)} is in use.")
-            raise Exit(code=1)
-
-        if not port_is_available(self.context_manager.config.network.https.port):
-            self.console.print_error(f"Port {format_input(self.context_manager.config.network.https.port)} is in use.")
-            raise Exit(code=1)
+            self.force_init = True
 
     def load_config(self) -> None:
         """Load the configuration files into the context manager."""
@@ -157,17 +75,25 @@ class AppManager:
         if not self.storage.config_file.is_file():
             self.console.print_error(
                 f"{format_path(self.storage.config_file.name)} not found. "
-                "A template will be created, please read the manual to learn how to configure it."
+                "A template has been created in place of the missing file."
             )
-            self.copy_app_resources(self.storage.template_config_rel, self.storage.config_file)
+            self.file_utils.copy_package_resources(
+                f"{PACKAGE_NAME}.resources",
+                self.storage.template_config_rel,
+                self.storage.config_file,
+            )
             files_missing = True
 
         if not self.storage.users_file.is_file():
             self.console.print_error(
                 f"{format_path(self.storage.users_file.name)} not found. "
-                "A template will be created, please read the manual to learn how to configure it."
+                "A template has been created in place of the missing file."
             )
-            self.copy_app_resources(self.storage.template_users_rel, self.storage.users_file)
+            self.file_utils.copy_package_resources(
+                f"{PACKAGE_NAME}.resources",
+                self.storage.template_users_rel,
+                self.storage.users_file,
+            )
             files_missing = True
 
         if files_missing:
@@ -198,6 +124,7 @@ class AppManager:
         self.context_manager.users = users
 
     def verify_config(self, config: Config, users: Users) -> None:
+        """Verify the configuration files."""
         shared_dirs = list(map(lambda x: x.name, config.directories.shared_dirs))
         anonymous_account_exists = False
 
@@ -234,13 +161,108 @@ class AppManager:
                 raise Exit(code=1)
 
             for allowed_app in config.rules.privileges.unregistered.allowed_apps:
-                # Pydantic does not distinguish between a string and a enum value
-                if type(allowed_app) is str:
-                    allowed_app = EApp(allowed_app)
+                # Pydantic does not distinguish between a string and an enum value
+                if type(allowed_app) is EApp:
+                    allowed_app = allowed_app.value
 
-                if allowed_app in (EApp.FILEBROWSER, EApp.JUPYTERHUB, EApp.RSTUDIO):
+                if next(
+                    (
+                        plugin.config.require_account
+                        for plugin in self.plugin_manager.plugins
+                        if plugin.config.name == allowed_app
+                    ),
+                    False,
+                ):
                     self.console.print_error(
                         "An anonymous account is required when the unregistered role "
                         "has access to applications that require an account."
                     )
                     raise Exit(code=1)
+
+    def load_config_and_plugins(self) -> None:
+        """Load the configuration files and the plugins."""
+        # 1. Load the configuration file and set cache and data directories if needed
+        # 2. Extend the models with the plugins
+        # 3. Load the configuration file again to include the plugin settings
+        # 4. Initialize the plugins
+        self.load_config()
+        self.plugin_manager.extend_models()
+        self.load_config()
+        self.plugin_manager.initialize_plugins()
+
+    def generate_config_hash(self) -> str:
+        """Generate a hash of the configuration files."""
+        ordered_plugins = sorted(self.plugin_manager.plugins, key=lambda x: x.config.name)
+
+        return hash_text(
+            "+".join(
+                [
+                    f"v{get_app_version()}",
+                    *(
+                        map(
+                            lambda x: f"{x.config.name}{f'v{x.config.version}' if x.config.version else ''}",
+                            ordered_plugins,
+                        )
+                    ),
+                    self.file_utils.hash_sha256(self.storage.config_file),
+                    self.file_utils.hash_sha256(self.storage.users_file),
+                ]
+            )
+        )
+
+    def update_app_data(self) -> None:
+        """Ensure that all the application data exists and is up-to-date."""
+        config_hash = self.generate_config_hash()
+
+        with self.console.status("Updating app data..."):
+            self.storage.validate()
+
+            if (
+                self.force_init
+                or not self.storage.bundled_dir.is_dir()
+                or not self.storage.init_file.is_file()
+                or self.file_utils.read_text(self.storage.init_file) != config_hash
+            ):
+                self.console.print_info("Updating bundled resources...")
+                self.file_utils.copy_package_resources(f"{PACKAGE_NAME}.resources", ".", self.storage.bundled_dir)
+                self.file_utils.change_mode(self.storage.bundled_dir, 0o700)
+                self.file_utils.remove(self.storage.init_file)
+
+            if not self.storage.nginx_gateway_cert_file.is_file() or not self.storage.nginx_gateway_key_file.is_file():
+                self.console.print_info("Generating self-signed certificate...")
+                cert, key = generate_self_signed_cert()
+                self.file_utils.write_bytes(self.storage.nginx_gateway_cert_file, cert)
+                self.file_utils.write_bytes(self.storage.nginx_gateway_key_file, key, True)
+
+            # Remove the socket file every time to avoid binding issues
+            self.file_utils.remove(self.storage.nginx_gateway_socket_file)
+
+            if not self.storage.kratos_secrets_file.is_file():
+                self.console.print_info("Generating Kratos secrets...")
+                self.renderer.render(
+                    self.storage.template_kratos_secrets_rel,
+                    self.storage.kratos_secrets_file,
+                    secret_cookie=generate_random_hex(),
+                )
+                self.file_utils.change_mode(self.storage.kratos_secrets_file, 0o600)
+
+            for plugin in self.plugin_manager.plugins:
+                plugin.update_data()
+
+                if not self.storage.init_file.is_file():
+                    self.renderer.render_plugin(plugin, self.context_manager.context)
+
+                    # Copy web related files of the plugin to the main web directory
+                    for web_dir in (self.storage.installed_plugins_dir / plugin.config.name / "web").iterdir():
+                        if web_dir.name == "routes":
+                            dst_prefix = self.storage.bundled_dir / "web" / "src" / "routes" / "(apps)" / "app"
+                            self.file_utils.copy(web_dir, dst_prefix / plugin.config.name)
+                        else:
+                            dst_prefix = self.storage.bundled_dir / "web" / "src" / "lib" / "plugins"
+                            self.file_utils.copy(web_dir, dst_prefix / plugin.config.name / web_dir.name)
+
+            if not self.storage.init_file.is_file():
+                self.renderer.render_main(self.context_manager.context)
+                self.account_manager.update(self.context_manager.config, self.context_manager.users)
+
+                self.file_utils.write_text(self.storage.init_file, config_hash)

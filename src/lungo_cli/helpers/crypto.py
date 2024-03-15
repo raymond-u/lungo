@@ -1,5 +1,7 @@
+import hashlib
 from datetime import datetime, timedelta, UTC
 from secrets import token_hex
+from typing import BinaryIO
 
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
@@ -42,3 +44,13 @@ def generate_self_signed_cert() -> tuple[bytes, bytes]:
 def generate_random_hex() -> str:
     """Generate a random hex string."""
     return token_hex(32)
+
+
+def hash_stream(f: BinaryIO) -> str:
+    """Hash a stream using SHA-256."""
+    return hashlib.file_digest(f, "sha256").hexdigest()
+
+
+def hash_text(text: str) -> str:
+    """Hash a text using SHA-256."""
+    return hashlib.sha256(text.encode()).hexdigest()

@@ -1,0 +1,6 @@
+{% set APP_NAME = 'jupyterhub' %}
+
+upstream {{ APP_NAME }} {
+    server {{ ip_addresses[APP_NAME] }}:80;
+    keepalive 4;
+}

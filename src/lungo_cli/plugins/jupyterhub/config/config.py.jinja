@@ -1,0 +1,70 @@
+# Configuration file for jupyterhub
+
+c = get_config()  # noqa
+
+# ------------------------------------------------------------------------------
+# JupyterHub(Application) configuration
+# ------------------------------------------------------------------------------
+## An Application for starting a Multi-User Jupyter Notebook server
+
+## Allow named single-user servers per user
+c.JupyterHub.allow_named_servers = True
+
+## Class for authenticating users
+c.JupyterHub.authenticator_class = 'jupyterhub.auth.PAMAuthenticator'
+
+## The public facing URL of the whole JupyterHub application
+c.JupyterHub.bind_url = 'http://0.0.0.0:80/app/jupyterhub/'
+
+## The config file to load
+c.JupyterHub.config_file = '/etc/jupyterhub/config.py'
+
+## File in which to store the cookie secret
+c.JupyterHub.cookie_secret_file = '/etc/jupyterhub/cookie_secret'
+
+## The location of jupyterhub data files (e.g. /usr/local/share/jupyterhub)
+#  Default: '$HOME/checkouts/readthedocs.org/user_builds/jupyterhub/checkouts/stable/share/jupyterhub'
+# c.JupyterHub.data_files_path = '/home/docs/checkouts/readthedocs.org/user_builds/jupyterhub/checkouts/stable/share/jupyterhub'
+
+## URL for the database
+c.JupyterHub.db_url = 'sqlite:///db.sqlite3?mode=rwc'
+
+## The class to use for spawning single-user servers
+c.JupyterHub.spawner_class = 'jupyterhub.spawner.LocalProcessSpawner'
+
+## Downstream proxy IP addresses to trust
+c.JupyterHub.trusted_downstream_ips = [
+    '{{ ip_addresses['nginx'] }}',
+    {% for proxy in config.network.trusted_proxies %}
+    '{{ proxy }}',
+    {% endfor %}
+]
+
+## Upgrade the database automatically on start
+c.JupyterHub.upgrade_db = True
+
+# ------------------------------------------------------------------------------
+# Spawner(LoggingConfigurable) configuration
+# ------------------------------------------------------------------------------
+## Base class for spawning single-user notebook servers
+
+## The URL the single-user server should start in
+c.Spawner.default_url = '/lab'
+
+## Path to the notebook directory for the single-user server
+c.Spawner.notebook_dir = '~'
+
+# ------------------------------------------------------------------------------
+# Authenticator(LoggingConfigurable) configuration
+# ------------------------------------------------------------------------------
+## Base class for implementing an authentication provider for JupyterHub
+
+## Set of users that will have admin rights on this JupyterHub
+c.Authenticator.admin_users = set([
+    {% for account in users.accounts if account.role == 'admin' %}
+    '{{ account.username }}',
+    {% endfor %}
+])
+
+## Delete any users from the database that do not pass validation (e.g. if deleted from an external system)
+c.Authenticator.delete_invalid_users = True

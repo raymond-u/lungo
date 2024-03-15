@@ -1,0 +1,44 @@
+services:
+  jupyterhub:
+    container_name: jupyterhub
+    hostname: jupyterhub
+
+    build:
+      context: {{ app_dirs.plugin_dir }}/jupyterhub
+
+    user: root
+    entrypoint: [ ]
+    command: sh -c 'umask 002; jupyterhub -f /etc/jupyterhub/config.py'
+
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses['jupyterhub'] }}
+    expose:
+      - 80
+
+    volumes:
+      - '{{ app_dirs.plugin_dir }}/jupyterhub/config:/etc/jupyterhub:ro'
+      - '{{ app_dirs.managed_dir }}/jupyterhub:/srv/jupyterhub:rw'
+        {% for account in users.accounts %}
+          {% if account.extra.user_dir %}
+      - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
+          {% else %}
+      - '{{ config.directories.users_dir }}/{{ account.username }}:/mnt/home/{{ account.username }}:rw'
+          {% endif %}
+          {% for shared_dir in account.extra.shared_dirs %}
+      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
+          {% endfor %}
+        {% endfor %}
+        {% for shared_dir in config.directories.shared_dirs %}
+      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
+        {% endfor %}
+
+    secrets:
+      - source: JUPYTERHUB_COOKIE_SECRET
+        target: /etc/jupyterhub/cookie_secret
+
+    restart: 'unless-stopped'
+
+secrets:
+  JUPYTERHUB_COOKIE_SECRET:
+    file: '{{ app_dirs.generated_dir }}/jupyterhub/cookie_secret'

@@ -1,22 +1,20 @@
 from contextlib import nullcontext
-from enum import Enum
-from typing import Any, Callable, TypeVar
+from enum import auto, IntEnum
+from typing import Any, Callable
 
 from rich import console
 from rich.prompt import Confirm, Prompt
 from rich.status import Status
 
-TEnum = TypeVar("TEnum", bound=Enum)
 
-
-class LogLevels(int, Enum):
+class LogLevels(IntEnum):
     """Log levels for console output."""
 
-    TRACE = 0
-    DEBUG = 1
-    INFO = 2
-    WARNING = 3
-    ERROR = 4
+    TRACE = auto()
+    DEBUG = auto()
+    INFO = auto()
+    WARNING = auto()
+    ERROR = auto()
 
 
 class Console:
@@ -46,7 +44,7 @@ class Console:
 
         self.is_empty = False
 
-    def request_for_newline(self):
+    def request_newline(self):
         if not self.is_empty:
             self.need_newline = True
 
@@ -98,7 +96,7 @@ class Console:
         self.stdout.print("[bold red][ERROR][/bold red]", *args, **kwargs)
 
     def show_epilogue(self):
-        self.request_for_newline()
+        self.request_newline()
         self.ensure_newline()
 
         for args, kwargs in self.epilogue:
@@ -163,7 +161,7 @@ class Console:
 
         return answer
 
-    def ask_for_enum(self, prompt: str, enum: type[TEnum], default: TEnum | None = None, **kwargs: Any) -> TEnum:
+    def ask_for_enum[T: Enum](self, prompt: str, enum: type[T], default: T | None = None, **kwargs: Any) -> T:
         self.ensure_newline()
 
         kwargs["prompt"] = f"[bold]{prompt}[/bold]"

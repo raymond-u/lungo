@@ -1,0 +1,25 @@
+services:
+  privatebin:
+    container_name: privatebin
+    hostname: privatebin
+
+    build:
+      context: {{ app_dirs.plugin_dir }}/privatebin
+
+    user: 'nobody:www-data'
+    entrypoint: [ ]
+    command: /etc/init.d/rc.local
+
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses['privatebin'] }}
+    expose:
+      - 80
+
+    volumes:
+      - '{{ app_dirs.managed_dir }}/privatebin:/srv/data:rw'
+
+    environment:
+      - CONFIG_PATH=/etc/privatebin
+
+    restart: 'unless-stopped'

@@ -54,7 +54,7 @@
 #         # Default: [ ]
 #         # Required: no
 #         allowed_apps:
-#           - rstudio
+#           - all
 
 #         # Override user directory
 #         # Type: path

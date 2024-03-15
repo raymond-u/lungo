@@ -14,13 +14,13 @@ class AccountManager:
     """Validate and update user accounts."""
 
     def __init__(
-        self, console: Console, file_utils: FileUtils, storage: Storage, client: HttpApiClient, container: Container
+        self, client: HttpApiClient, console: Console, container: Container, file_utils: FileUtils, storage: Storage
     ):
+        self.client = client
         self.console = console
+        self.container = container
         self.file_utils = file_utils
         self.storage = storage
-        self.client = client
-        self.container = container
 
     def update(self, config: Config, users: Users) -> None:
         # Ensure that the container can always be started even if it failed last time
@@ -82,7 +82,7 @@ class AccountManager:
 
         app: EApp
         for app in EApp:
-            if getattr(config.modules, app.value).enabled:
+            if getattr(config.plugins, app.value).enabled:
                 enabled_apps.append(app)
                 data.append(
                     {
@@ -114,7 +114,7 @@ class AccountManager:
                 )
             else:
                 for allowed_app in privilege.allowed_apps:
-                    # Pydantic does not distinguish between a string and a enum value
+                    # Pydantic does not distinguish between a string and an enum value
                     if type(allowed_app) is str:
                         allowed_app = EApp(allowed_app)
 
@@ -161,7 +161,7 @@ class AccountManager:
                 )
             else:
                 for allowed_app in account.extra.allowed_apps:
-                    # Pydantic does not distinguish between a string and a enum value
+                    # Pydantic does not distinguish between a string and an enum value
                     if type(allowed_app) is str:
                         allowed_app = EApp(allowed_app)
 

@@ -1,0 +1,37 @@
+services:
+  rstudio:
+    container_name: rstudio
+    hostname: rstudio
+
+    build:
+      context: {{ app_dirs.plugin_dir }}/rstudio
+
+    user: root
+    entrypoint: [ ]
+    command: sh -c 'umask 002; /init'
+
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses['rstudio'] }}
+    expose:
+      - 80
+
+    volumes:
+      - '{{ app_dirs.plugin_dir }}/rstudio/config/rserver.conf:/etc/rstudio/rserver.conf:ro'
+      - '{{ app_dirs.plugin_dir }}/rstudio/config/rsession.conf:/etc/rstudio/rsession.conf:ro'
+      - '{{ app_dirs.managed_dir }}/rstudio:/var/lib/rstudio-server:rw'
+      {% for account in users.accounts %}
+        {% if account.extra.user_dir %}
+      - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
+        {% else %}
+      - '{{ config.directories.users_dir }}/{{ account.username }}:/mnt/home/{{ account.username }}:rw'
+        {% endif %}
+        {% for shared_dir in account.extra.shared_dirs %}
+      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
+        {% endfor %}
+      {% endfor %}
+      {% for shared_dir in config.directories.shared_dirs %}
+      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
+      {% endfor %}
+
+    restart: 'unless-stopped'

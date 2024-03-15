@@ -3,7 +3,7 @@ from typing import Annotated
 from typer import Exit, Option, Typer
 
 from .state import console
-from ..commands import check, down, up
+from ..commands import check, down, install, list, uninstall, up
 from ..core.constants import APP_NAME, APP_NAME_CAPITALIZED
 from ..helpers.common import get_app_version
 
@@ -17,6 +17,9 @@ app = Typer(
 app.command("check")(check.main)
 app.command("up")(up.main)
 app.command("down")(down.main)
+app.command("list")(list.main)
+app.command("install")(install.main)
+app.command("uninstall")(uninstall.main)
 
 
 def app_wrapper():

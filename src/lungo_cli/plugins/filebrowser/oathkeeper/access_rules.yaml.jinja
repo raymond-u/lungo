@@ -1,0 +1,46 @@
+#file: noinspection YAMLDuplicatedKeys
+#@formatter:off
+{% set ALL -%}
+      - GET
+      - POST
+      - DELETE
+      - PATCH
+      - PUT
+      - HEAD
+      - OPTIONS
+{% endset %}
+{% set AUTH -%}
+  authenticators:
+    - handler: cookie_session
+    - handler: anonymous
+  authorizer:
+    handler: remote_json
+  mutators:
+    - handler: header
+  errors:
+    - handler: json
+{% endset %}
+{% set PASS -%}
+  authenticators:
+    - handler: noop
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: noop
+  errors:
+    - handler: json
+{% endset %}
+
+- id: filebrowser-private
+  match:
+    url: '{{ base_url }}app/<filebrowser><(?!/(?:api/public|share|static)/).*>'
+    methods:
+      {{ ALL }}
+  {{ AUTH }}
+
+- id: filebrowser-public
+  match:
+    url: '{{ base_url }}app/filebrowser<(?=/(?:api/public|share|static)/).*>'
+    methods:
+      {{ ALL }}
+  {{ PASS }}

@@ -1,4 +1,4 @@
-from uuid import UUID, uuid5
+from ipaddress import IPv4Address
 
 from typer import Exit
 
@@ -6,8 +6,10 @@ from .console import Console
 from .file import FileUtils
 from .storage import Storage
 from ..helpers.format import format_input
+from ..models.base import EApp, ECoreService
 from ..models.config import Config
-from ..models.context import AppDirs, Context, IpAddresses, XrayAccount
+from ..models.context import AppDirs, Context
+from ..models.plugin import PluginOutput
 from ..models.users import Users
 
 
@@ -18,8 +20,10 @@ class ContextManager:
         self.console = console
         self.file_utils = file_utils
         self.storage = storage
+
         self._config = None
         self._users = None
+        self._plugin_outputs = []
         self._dev = False
 
     @property
@@ -47,41 +51,26 @@ class ContextManager:
         self._users = value
 
     @property
+    def plugin_outputs(self) -> list[PluginOutput]:
+        return self._plugin_outputs
+
+    @plugin_outputs.setter
+    def plugin_outputs(self, value: list[PluginOutput]):
+        self._plugin_outputs = value
+
+    @property
     def app_dirs(self) -> AppDirs:
         return AppDirs(
-            cache_dir=self.storage.cache_latest_dir,
-            generated_dir=self.storage.generated_dir,
-            managed_dir=self.storage.managed_dir,
+            cache_dir=str(self.storage.cache_latest_dir),
+            generated_dir=str(self.storage.generated_dir),
+            managed_dir=str(self.storage.managed_dir),
+            plugin_dir="./plugins",
         )
 
     @property
     def base_url(self) -> str:
         port = f":{self.config.network.https.port}" if self.config.network.https.port != 443 else ""
         return f"https://{self.config.network.hostname}{port}/"
-
-    @property
-    def ip_addresses(self) -> IpAddresses:
-        if self.config.network.subnet.num_addresses < 256:
-            self.console.print_error(
-                f"Subnet {format_input(str(self.config.network.subnet))} is too small. "
-                "Please change it to a subnet with at least 256 addresses."
-            )
-            raise Exit(code=1)
-
-        hosts = list(self.config.network.subnet.hosts())
-
-        return IpAddresses(
-            nginx=hosts[100],
-            keto=hosts[101],
-            kratos=hosts[102],
-            oathkeeper=hosts[103],
-            node=hosts[104],
-            filebrowser=hosts[105],
-            jupyterhub=hosts[106],
-            privatebin=hosts[107],
-            rstudio=hosts[108],
-            xray=hosts[109],
-        )
 
     @property
     def dev(self) -> bool:
@@ -92,37 +81,45 @@ class ContextManager:
         self._dev = value
 
     @property
-    def jupyterhub_password(self) -> str:
-        return self.config.modules.jupyterhub.password or self.file_utils.read_text(
-            self.storage.jupyterhub_password_file
-        )
+    def ip_addresses(self) -> dict[str, IPv4Address]:
+        if self.config.network.subnet.num_addresses < 256:
+            self.console.print_error(
+                f"Subnet {format_input(str(self.config.network.subnet))} is too small. "
+                "Please change it to a subnet with at least 256 addresses."
+            )
+            raise Exit(code=1)
+
+        hosts = list(self.config.network.subnet.hosts())
+
+        # Reserve the first 16 addresses for gateway and other services
+        return {app.value: hosts[i + 16] for i, app in enumerate((*ECoreService, *EApp))}
 
     @property
-    def rstudio_password(self) -> str:
-        return self.config.modules.rstudio.password or self.file_utils.read_text(self.storage.rstudio_password_file)
-
-    @property
-    def xray_accounts(self) -> list[XrayAccount]:
+    def web_app_info(self) -> list[dict[str, str | None]]:
         return [
-            XrayAccount(email=account.email, id=uuid5(self.xray_salt, account.username))
-            for account in self.users.accounts
+            {
+                "name": plugin_output.config.name,
+                "descriptiveName": plugin_output.config.descriptive_name,
+                "icon": plugin_output.config.web_icon,
+                "altIcon": plugin_output.config.web_alt_icon,
+            }
+            for plugin_output in self.plugin_outputs
         ]
 
     @property
-    def xray_salt(self) -> UUID:
-        return UUID(self.file_utils.read_text(self.storage.xray_salt_file))
+    def web_extra_dependencies(self) -> list[str]:
+        return [dep for plugin_output in self.plugin_outputs for dep in plugin_output.web_dependencies]
 
     @property
     def context(self) -> Context:
         return Context(
             config=self.config,
             users=self.users,
+            plugin_outputs=self.plugin_outputs,
             app_dirs=self.app_dirs,
             base_url=self.base_url,
-            ip_addresses=self.ip_addresses,
             dev=self.dev,
-            jupyterhub_password=self.jupyterhub_password,
-            rstudio_password=self.rstudio_password,
-            xray_accounts=self.xray_accounts,
-            xray_salt=self.xray_salt,
+            ip_addresses=self.ip_addresses,
+            web_app_info=self.web_app_info,
+            web_extra_dependencies=self.web_extra_dependencies,
         )

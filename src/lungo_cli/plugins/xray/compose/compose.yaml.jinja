@@ -1,0 +1,24 @@
+{% set XRAY_VER = '1.8.9' %}
+
+services:
+  xray:
+    container_name: xray
+    hostname: xray
+
+    image: 'docker.io/teddysun/xray:{{ XRAY_VER }}'
+
+    user: root
+    entrypoint: [ ]
+    command: /usr/bin/xray run -c /etc/xray/config.json
+
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses['xray'] }}
+    expose:
+      - 80
+
+    volumes:
+      - '{{ app_dirs.plugin_dir }}/xray/config:/etc/xray:ro'
+      - '{{ app_dirs.cache_dir }}/xray:/var/log/xray:rw'
+
+    restart: 'unless-stopped'

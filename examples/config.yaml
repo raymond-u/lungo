@@ -17,13 +17,6 @@ directories:
       source: /mnt/data/shared_readonly
       read_only: true
 
-modules:
-  filebrowser:
-    enabled: true
-  rstudio:
-    enabled: false
-    password: passwd
-
 network:
   hostname: lungo.com
   subnet: 192.168.2.0/24
@@ -35,6 +28,8 @@ network:
     tls:
       cert: /etc/ssl/certs/self-signed.crt
       key: /etc/ssl/private/self-signed.key
+
+plugins: { }
 
 rules:
   privileges:

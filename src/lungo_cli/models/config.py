@@ -1,9 +1,11 @@
 from datetime import timedelta
 from ipaddress import IPv4Address, IPv4Network
+from typing import Any
 
-from pydantic import DirectoryPath, EmailStr, field_validator, FilePath, NewPath, PositiveInt
+from pydantic import ConfigDict, DirectoryPath, EmailStr, field_validator, FilePath, NewPath, PositiveInt
+from pydantic.fields import FieldInfo
 
-from .base import AllowedApps, Base, EApp, FileName, Port
+from .base import AllowedApps, Base, FileName, Port
 from ..core.constants import APP_NAME_CAPITALIZED
 
 
@@ -52,38 +54,28 @@ class Https(Base):
     tls: Tls | None = None
 
 
-class FileBrowserSettings(Base):
-    enabled: bool = True
+class Plugins(Base):
+    model_config = ConfigDict(extra="allow")
 
+    @classmethod
+    def add_fields(cls, **field_definitions: Any):
+        new_fields: dict[str, FieldInfo] = {}
 
-class JupyterHubSettings(Base):
-    enabled: bool = True
-    password: str | None = None
+        for f_name, f_def in field_definitions.items():
+            if isinstance(f_def, tuple):
+                try:
+                    f_annotation, f_value = f_def
+                except ValueError as e:
+                    raise Exception(
+                        "field definitions should either be a tuple of (<type>, <default>) or just a default value"
+                    ) from e
+            else:
+                f_annotation, f_value = None, f_def
 
+            new_fields[f_name] = FieldInfo(annotation=f_annotation, default=f_value)
 
-class PrivateBinSettings(Base):
-    enabled: bool = True
-
-
-class RStudioSettings(Base):
-    enabled: bool = True
-    password: str | None = None
-
-
-class XraySettings(Base):
-    enabled: bool = True
-    domain_whitelist: list[str] = []
-    domain_keyword_whitelist: list[str] = []
-    domain_suffix_whitelist: list[str] = []
-    ip_range_whitelist: list[IPv4Network] = []
-
-
-class Modules(Base):
-    filebrowser: FileBrowserSettings = FileBrowserSettings()
-    jupyterhub: JupyterHubSettings = JupyterHubSettings()
-    privatebin: PrivateBinSettings = PrivateBinSettings()
-    rstudio: RStudioSettings = RStudioSettings()
-    xray: XraySettings = XraySettings()
+        cls.model_fields.update(new_fields)
+        cls.model_rebuild(force=True)
 
 
 class Network(Base):
@@ -100,8 +92,8 @@ class Privilege(Base):
 
 class Privileges(Base):
     unregistered: Privilege = Privilege(allowed_apps=[])
-    guest: Privilege = Privilege(allowed_apps=[EApp.FILEBROWSER, EApp.PRIVATEBIN])
-    user: Privilege = Privilege(allowed_apps=[EApp.JUPYTERHUB, EApp.RSTUDIO])
+    guest: Privilege = Privilege(allowed_apps=[])
+    user: Privilege = Privilege(allowed_apps=[])
     admin: Privilege = Privilege(allowed_apps="all")
 
 
@@ -136,8 +128,8 @@ class Smtp(Base):
 class Config(Base):
     branding: Branding = Branding()
     directories: Directories
-    modules: Modules = Modules()
     network: Network
+    plugins: Plugins = Plugins()
     rules: Rules = Rules()
     security: Security = Security()
     smtp: Smtp

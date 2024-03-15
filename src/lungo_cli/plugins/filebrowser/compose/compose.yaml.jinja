@@ -1,0 +1,42 @@
+services:
+  filebrowser:
+    container_name: filebrowser
+    hostname: filebrowser
+
+    build:
+      context: {{ app_dirs.plugin_dir }}/filebrowser
+
+    user: root
+    entrypoint: [ ]
+    command: >-
+      sh -c 'rm -f /var/lib/filebrowser/filebrowser.db;
+      /filebrowser -c /etc/filebrowser/settings.yaml config init --auth.method=noauth;
+      /filebrowser -c /etc/filebrowser/settings.yaml config import /etc/filebrowser/config_export.yaml;
+      /filebrowser -c /etc/filebrowser/settings.yaml users import --replace /etc/filebrowser/users_export.yaml;
+      umask 002; /filebrowser -c /etc/filebrowser/settings.yaml'
+
+    networks:
+      static:
+        ipv4_address: {{ ip_addresses['filebrowser'] }}
+    expose:
+      - 80
+
+    volumes:
+      - '{{ app_dirs.plugin_dir }}/filebrowser/config:/etc/filebrowser:ro'
+      - '{{ app_dirs.cache_dir }}/filebrowser:/var/log/filebrowser:rw'
+      - '{{ app_dirs.managed_dir }}/filebrowser:/var/lib/filebrowser:rw'
+      {% for account in users.accounts %}
+        {% if account.extra.user_dir %}
+      - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
+        {% else %}
+      - '{{ config.directories.users_dir }}/{{ account.username }}:/mnt/home/{{ account.username }}:rw'
+        {% endif %}
+        {% for shared_dir in account.extra.shared_dirs %}
+      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
+        {% endfor %}
+      {% endfor %}
+      {% for shared_dir in config.directories.shared_dirs %}
+      - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
+      {% endfor %}
+
+    restart: 'unless-stopped'

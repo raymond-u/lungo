@@ -1,5 +1,6 @@
 #file: noinspection YAMLDuplicatedKeys
 #@formatter:off
+{% set plugins = config.plugins %}
 {% set ALL -%}
       - GET
       - POST
@@ -30,46 +31,26 @@
   errors:
     - handler: json
 {% endset %}
+{% set APPS_WITH_RULES -%}
+  {% for plugin_output in plugin_outputs -%}
+    {% if plugins[plugin_output.config.name].enabled and plugin_output.oathkeeper_rules -%}
+      {{ plugin_output.config.name }}{{ '|' if not loop.last }}
+    {%- endif %}
+  {%- endfor %}
+{%- endset %}
 
 - id: apps
   match:
-    url: '{{ base_url }}app/<(?!filebrowser|privatebin)[^/]*><.*>'
+    url: '{{ base_url }}app/<(?!(?:{{ APPS_WITH_RULES }})/)[^/]*><.*>'
     methods:
       {{ ALL }}
   {{ AUTH }}
 
-- id: filebrowser-private
-  match:
-    url: '{{ base_url }}app/<filebrowser><(?!/(?:api/public|share|static)/).*>'
-    methods:
-      {{ ALL }}
-  {{ AUTH }}
-
-- id: filebrowser-public
-  match:
-    url: '{{ base_url }}app/filebrowser<(?=/(?:api/public|share|static)/).*>'
-    methods:
-      {{ ALL }}
-  {{ PASS }}
-
-- id: privatebin-private
-  match:
-    url: '{{ base_url }}app/<privatebin><.*>'
-    methods:
-      - POST
-      - DELETE
-      - PATCH
-      - PUT
-      - HEAD
-      - OPTIONS
-  {{ AUTH }}
-
-- id: privatebin-public
-  match:
-    url: '{{ base_url }}app/privatebin<.*>'
-    methods:
-      - GET
-  {{ PASS }}
+{% for plugin_output in plugin_outputs %}
+  {% if plugins[plugin_output.config.name].enabled and plugin_output.oathkeeper_rules %}
+{{ plugin_output.oathkeeper_rules }}
+  {% endif %}
+{% endfor %}
 
 - id: catch-all
   match:

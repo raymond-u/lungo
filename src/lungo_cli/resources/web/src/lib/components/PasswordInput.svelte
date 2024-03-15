@@ -1,6 +1,6 @@
 <script lang="ts">
     import { SwappableIcon } from "$lib/components"
-    import { EIcon } from "$lib/types"
+    import { VisibilityOffIcon, VisibilityOnIcon } from "$lib/icons"
 
     export let name = ""
     export let value = ""
@@ -28,6 +28,6 @@
         {placeholder}
     />
     <button class="absolute right-3 top-3 h-6 w-6" type="button" on:click={handleClick}>
-        <SwappableIcon active={visible} icon={EIcon.Visibility} />
+        <SwappableIcon icon={VisibilityOnIcon} altIcon={VisibilityOffIcon} altIconActive={visible} />
     </button>
 </span>

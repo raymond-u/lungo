@@ -1,0 +1,22 @@
+{% set JUPYTERHUB_VER = '4.0.2' %}
+{% set JUPYTERLAB_VER = '4.1.5' %}
+
+FROM docker.io/jupyterhub/jupyterhub:{{ JUPYTERHUB_VER }}
+RUN python3 -m pip install --no-cache-dir --upgrade setuptools pip && \
+    python3 -m pip install --no-cache-dir 'jupyterlab=={{ JUPYTERLAB_VER }}' && \
+    {% for account in users.accounts %}
+        {% if account.role == 'admin' %}
+    useradd --no-log-init -g root -G sudo -m -s /usr/bin/bash '{{ account.username }}' && \
+        {% else %}
+    useradd --no-log-init -g root -m -s /usr/bin/bash '{{ account.username }}' && \
+        {% endif %}
+    echo '{{ account.username }}:{{ jupyterhub_password }}' | chpasswd && \
+    ln -s '/mnt/home/{{ account.username }}' '/home/{{ account.username }}/home' && \
+        {% for shared_dir in account.extra.shared_dirs %}
+    ln -s '/mnt/{{ shared_dir.name }}' '/home/{{ account.username }}/{{ shared_dir.name }}' && \
+        {% endfor %}
+        {% for shared_dir in config.directories.shared_dirs %}
+    ln -s '/mnt/{{ shared_dir.name }}' '/home/{{ account.username }}/{{ shared_dir.name }}' && \
+        {% endfor %}
+    {% endfor %}
+    :
