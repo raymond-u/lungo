@@ -171,6 +171,9 @@ class PluginManager:
         plugin_classes = []
 
         for plugin_dir in src.iterdir():
+            if not plugin_dir.is_dir() or plugin_dir.name.startswith("_"):
+                continue
+
             if not plugin_dir.joinpath("plugin.py").is_file():
                 self.console.print_warning(f"Plugin at {format_path(plugin_dir)} does not seem to be valid. Skipping.")
                 continue
