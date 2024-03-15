@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.10">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
     
     
       
@@ -1288,90 +1288,7 @@ You're not viewing the latest version.
 <span class="normal">253</span>
 <span class="normal">254</span>
 <span class="normal">255</span>
-<span class="normal">256</span>
-<span class="normal">257</span>
-<span class="normal">258</span>
-<span class="normal">259</span>
-<span class="normal">260</span>
-<span class="normal">261</span>
-<span class="normal">262</span>
-<span class="normal">263</span>
-<span class="normal">264</span>
-<span class="normal">265</span>
-<span class="normal">266</span>
-<span class="normal">267</span>
-<span class="normal">268</span>
-<span class="normal">269</span>
-<span class="normal">270</span>
-<span class="normal">271</span>
-<span class="normal">272</span>
-<span class="normal">273</span>
-<span class="normal">274</span>
-<span class="normal">275</span>
-<span class="normal">276</span>
-<span class="normal">277</span>
-<span class="normal">278</span>
-<span class="normal">279</span>
-<span class="normal">280</span>
-<span class="normal">281</span>
-<span class="normal">282</span>
-<span class="normal">283</span>
-<span class="normal">284</span>
-<span class="normal">285</span>
-<span class="normal">286</span>
-<span class="normal">287</span>
-<span class="normal">288</span>
-<span class="normal">289</span>
-<span class="normal">290</span>
-<span class="normal">291</span>
-<span class="normal">292</span>
-<span class="normal">293</span>
-<span class="normal">294</span>
-<span class="normal">295</span>
-<span class="normal">296</span>
-<span class="normal">297</span>
-<span class="normal">298</span>
-<span class="normal">299</span>
-<span class="normal">300</span>
-<span class="normal">301</span>
-<span class="normal">302</span>
-<span class="normal">303</span>
-<span class="normal">304</span>
-<span class="normal">305</span>
-<span class="normal">306</span>
-<span class="normal">307</span>
-<span class="normal">308</span>
-<span class="normal">309</span>
-<span class="normal">310</span>
-<span class="normal">311</span>
-<span class="normal">312</span>
-<span class="normal">313</span>
-<span class="normal">314</span>
-<span class="normal">315</span>
-<span class="normal">316</span>
-<span class="normal">317</span>
-<span class="normal">318</span>
-<span class="normal">319</span>
-<span class="normal">320</span>
-<span class="normal">321</span>
-<span class="normal">322</span>
-<span class="normal">323</span>
-<span class="normal">324</span>
-<span class="normal">325</span>
-<span class="normal">326</span>
-<span class="normal">327</span>
-<span class="normal">328</span>
-<span class="normal">329</span>
-<span class="normal">330</span>
-<span class="normal">331</span>
-<span class="normal">332</span>
-<span class="normal">333</span>
-<span class="normal">334</span>
-<span class="normal">335</span>
-<span class="normal">336</span>
-<span class="normal">337</span>
-<span class="normal">338</span>
-<span class="normal">339</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><span class="c1">## Configuration file for general settings</span>
+<span class="normal">256</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><span class="c1">## Configuration file for general settings</span>
 </span><span id="__span-0-2">
 </span><span id="__span-0-3"><span class="c1"># =========</span>
 </span><span id="__span-0-4"><span class="c1"># branding:</span>
@@ -1447,269 +1364,186 @@ You're not viewing the latest version.
 </span><span id="__span-0-74"><span class="c1">#         read_only: true</span>
 </span><span id="__span-0-75">
 </span><span id="__span-0-76"><span class="c1"># ========</span>
-</span><span id="__span-0-77"><span class="c1"># modules:</span>
+</span><span id="__span-0-77"><span class="c1"># network:</span>
 </span><span id="__span-0-78"><span class="c1"># ========</span>
 </span><span id="__span-0-79">
-</span><span id="__span-0-80"><span class="c1">#   # Settings for the File Browser module</span>
-</span><span id="__span-0-81"><span class="c1">#   filebrowser:</span>
-</span><span id="__span-0-82">
-</span><span id="__span-0-83"><span class="c1">#     # Enable or disable the module</span>
-</span><span id="__span-0-84"><span class="c1">#     # Type: boolean</span>
-</span><span id="__span-0-85"><span class="c1">#     # Default: true</span>
-</span><span id="__span-0-86"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-87"><span class="c1">#     enabled: true</span>
-</span><span id="__span-0-88">
-</span><span id="__span-0-89"><span class="c1">#   # Settings for the JupyterHub module</span>
-</span><span id="__span-0-90"><span class="c1">#   jupyterhub:</span>
+</span><span id="__span-0-80"><span class="c1">#   # Hostname of the website</span>
+</span><span id="__span-0-81"><span class="c1">#   # Type: string</span>
+</span><span id="__span-0-82"><span class="c1">#   # Default: none</span>
+</span><span id="__span-0-83"><span class="c1">#   # Required: yes</span>
+</span><span id="__span-0-84"><span class="c1">#   hostname: lungo.com</span>
+</span><span id="__span-0-85">
+</span><span id="__span-0-86"><span class="c1">#   # Subnet to use for the internal network, in CIDR notation (must have a minimum of 256 addresses)</span>
+</span><span id="__span-0-87"><span class="c1">#   # Type: string</span>
+</span><span id="__span-0-88"><span class="c1">#   # Default: 192.168.2.0/24</span>
+</span><span id="__span-0-89"><span class="c1">#   # Required: no</span>
+</span><span id="__span-0-90"><span class="c1">#   subnet: 192.168.2.0/24</span>
 </span><span id="__span-0-91">
-</span><span id="__span-0-92"><span class="c1">#     # Enable or disable the module</span>
-</span><span id="__span-0-93"><span class="c1">#     # Type: boolean</span>
-</span><span id="__span-0-94"><span class="c1">#     # Default: true</span>
-</span><span id="__span-0-95"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-96"><span class="c1">#     enabled: true</span>
+</span><span id="__span-0-92"><span class="c1">#   # Trusted proxies (external IP addresses that are trusted to set the client IP address)</span>
+</span><span id="__span-0-93"><span class="c1">#   # Type: array</span>
+</span><span id="__span-0-94"><span class="c1">#   # Default: [ ]</span>
+</span><span id="__span-0-95"><span class="c1">#   # Required: no</span>
+</span><span id="__span-0-96"><span class="c1">#   trusted_proxies: [ ]</span>
 </span><span id="__span-0-97">
-</span><span id="__span-0-98"><span class="c1">#     # Password for users inside the container</span>
-</span><span id="__span-0-99"><span class="c1">#     # Type: string</span>
-</span><span id="__span-0-100"><span class="c1">#     # Default: (randomly generated)</span>
-</span><span id="__span-0-101"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-102"><span class="c1">#     password: passwd</span>
-</span><span id="__span-0-103">
-</span><span id="__span-0-104"><span class="c1">#   # Settings for the PrivateBin module</span>
-</span><span id="__span-0-105"><span class="c1">#   privatebin:</span>
+</span><span id="__span-0-98"><span class="c1">#   # HTTP settings</span>
+</span><span id="__span-0-99"><span class="c1">#   http:</span>
+</span><span id="__span-0-100">
+</span><span id="__span-0-101"><span class="c1">#     # Enable or disable HTTP</span>
+</span><span id="__span-0-102"><span class="c1">#     # Type: boolean</span>
+</span><span id="__span-0-103"><span class="c1">#     # Default: true</span>
+</span><span id="__span-0-104"><span class="c1">#     # Required: no</span>
+</span><span id="__span-0-105"><span class="c1">#     enabled: true</span>
 </span><span id="__span-0-106">
-</span><span id="__span-0-107"><span class="c1">#     # Enable or disable the module</span>
-</span><span id="__span-0-108"><span class="c1">#     # Type: boolean</span>
-</span><span id="__span-0-109"><span class="c1">#     # Default: true</span>
+</span><span id="__span-0-107"><span class="c1">#     # Port to use for HTTP</span>
+</span><span id="__span-0-108"><span class="c1">#     # Type: integer</span>
+</span><span id="__span-0-109"><span class="c1">#     # Default: 80</span>
 </span><span id="__span-0-110"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-111"><span class="c1">#     enabled: true</span>
+</span><span id="__span-0-111"><span class="c1">#     port: 80</span>
 </span><span id="__span-0-112">
-</span><span id="__span-0-113"><span class="c1">#   # Settings for the RStudio module</span>
-</span><span id="__span-0-114"><span class="c1">#   rstudio:</span>
+</span><span id="__span-0-113"><span class="c1">#   # HTTPS settings</span>
+</span><span id="__span-0-114"><span class="c1">#   https:</span>
 </span><span id="__span-0-115">
-</span><span id="__span-0-116"><span class="c1">#     # Enable or disable the module</span>
-</span><span id="__span-0-117"><span class="c1">#     # Type: boolean</span>
-</span><span id="__span-0-118"><span class="c1">#     # Default: true</span>
+</span><span id="__span-0-116"><span class="c1">#     # Port to use for HTTPS</span>
+</span><span id="__span-0-117"><span class="c1">#     # Type: integer</span>
+</span><span id="__span-0-118"><span class="c1">#     # Default: 443</span>
 </span><span id="__span-0-119"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-120"><span class="c1">#     enabled: true</span>
+</span><span id="__span-0-120"><span class="c1">#     port: 443</span>
 </span><span id="__span-0-121">
-</span><span id="__span-0-122"><span class="c1">#     # Password for users inside the container</span>
-</span><span id="__span-0-123"><span class="c1">#     # Type: string</span>
-</span><span id="__span-0-124"><span class="c1">#     # Default: (randomly generated)</span>
-</span><span id="__span-0-125"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-126"><span class="c1">#     password: passwd</span>
-</span><span id="__span-0-127">
-</span><span id="__span-0-128"><span class="c1">#   # Settings for the Xray module</span>
-</span><span id="__span-0-129"><span class="c1">#   xray:</span>
+</span><span id="__span-0-122"><span class="c1">#     # Set custom TLS certificate and key</span>
+</span><span id="__span-0-123"><span class="c1">#     tls:</span>
+</span><span id="__span-0-124">
+</span><span id="__span-0-125"><span class="c1">#       # Path to the TLS certificate</span>
+</span><span id="__span-0-126"><span class="c1">#       # Type: path</span>
+</span><span id="__span-0-127"><span class="c1">#       # Default: none</span>
+</span><span id="__span-0-128"><span class="c1">#       # Required: no</span>
+</span><span id="__span-0-129"><span class="c1">#       cert: /etc/ssl/certs/self-signed.crt</span>
 </span><span id="__span-0-130">
-</span><span id="__span-0-131"><span class="c1">#     # Enable or disable the module</span>
-</span><span id="__span-0-132"><span class="c1">#     # Type: boolean</span>
-</span><span id="__span-0-133"><span class="c1">#     # Default: true</span>
-</span><span id="__span-0-134"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-135"><span class="c1">#     enabled: true</span>
+</span><span id="__span-0-131"><span class="c1">#       # Path to the TLS private key</span>
+</span><span id="__span-0-132"><span class="c1">#       # Type: path</span>
+</span><span id="__span-0-133"><span class="c1">#       # Default: none</span>
+</span><span id="__span-0-134"><span class="c1">#       # Required: no</span>
+</span><span id="__span-0-135"><span class="c1">#       key: /etc/ssl/private/self-signed.key</span>
 </span><span id="__span-0-136">
-</span><span id="__span-0-137"><span class="c1">#     # Domain whitelist (used only as a template for configuring the proxy client)</span>
-</span><span id="__span-0-138"><span class="c1">#     # Type: array</span>
-</span><span id="__span-0-139"><span class="c1">#     # Default: [ ]</span>
-</span><span id="__span-0-140"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-141"><span class="c1">#     domain_whitelist: [ ]</span>
-</span><span id="__span-0-142">
-</span><span id="__span-0-143"><span class="c1">#     # Domain keyword whitelist (used only as a template for configuring the proxy client)</span>
-</span><span id="__span-0-144"><span class="c1">#     # Type: array</span>
-</span><span id="__span-0-145"><span class="c1">#     # Default: [ ]</span>
-</span><span id="__span-0-146"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-147"><span class="c1">#     domain_keyword_whitelist: [ ]</span>
-</span><span id="__span-0-148">
-</span><span id="__span-0-149"><span class="c1">#     # Domain suffix whitelist (used only as a template for configuring the proxy client)</span>
-</span><span id="__span-0-150"><span class="c1">#     # Type: array</span>
-</span><span id="__span-0-151"><span class="c1">#     # Default: [ ]</span>
-</span><span id="__span-0-152"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-153"><span class="c1">#     domain_suffix_whitelist: [ ]</span>
-</span><span id="__span-0-154">
-</span><span id="__span-0-155"><span class="c1">#     # IP range whitelist (used only as a template for configuring the proxy client)</span>
-</span><span id="__span-0-156"><span class="c1">#     # Type: array</span>
-</span><span id="__span-0-157"><span class="c1">#     # Default: [ ]</span>
-</span><span id="__span-0-158"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-159"><span class="c1">#     ip_range_whitelist: [ ]</span>
-</span><span id="__span-0-160">
-</span><span id="__span-0-161"><span class="c1"># ========</span>
-</span><span id="__span-0-162"><span class="c1"># network:</span>
-</span><span id="__span-0-163"><span class="c1"># ========</span>
-</span><span id="__span-0-164">
-</span><span id="__span-0-165"><span class="c1">#   # Hostname of the website</span>
-</span><span id="__span-0-166"><span class="c1">#   # Type: string</span>
-</span><span id="__span-0-167"><span class="c1">#   # Default: none</span>
-</span><span id="__span-0-168"><span class="c1">#   # Required: yes</span>
-</span><span id="__span-0-169"><span class="c1">#   hostname: lungo.com</span>
-</span><span id="__span-0-170">
-</span><span id="__span-0-171"><span class="c1">#   # Subnet to use for the internal network, in CIDR notation (must have a minimum of 256 addresses)</span>
-</span><span id="__span-0-172"><span class="c1">#   # Type: string</span>
-</span><span id="__span-0-173"><span class="c1">#   # Default: 192.168.2.0/24</span>
-</span><span id="__span-0-174"><span class="c1">#   # Required: no</span>
-</span><span id="__span-0-175"><span class="c1">#   subnet: 192.168.2.0/24</span>
-</span><span id="__span-0-176">
-</span><span id="__span-0-177"><span class="c1">#   # Trusted proxies (external IP addresses that are trusted to set the client IP address)</span>
-</span><span id="__span-0-178"><span class="c1">#   # Type: array</span>
-</span><span id="__span-0-179"><span class="c1">#   # Default: [ ]</span>
-</span><span id="__span-0-180"><span class="c1">#   # Required: no</span>
-</span><span id="__span-0-181"><span class="c1">#   trusted_proxies: [ ]</span>
-</span><span id="__span-0-182">
-</span><span id="__span-0-183"><span class="c1">#   # HTTP settings</span>
-</span><span id="__span-0-184"><span class="c1">#   http:</span>
-</span><span id="__span-0-185">
-</span><span id="__span-0-186"><span class="c1">#     # Enable or disable HTTP</span>
-</span><span id="__span-0-187"><span class="c1">#     # Type: boolean</span>
-</span><span id="__span-0-188"><span class="c1">#     # Default: true</span>
-</span><span id="__span-0-189"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-190"><span class="c1">#     enabled: true</span>
-</span><span id="__span-0-191">
-</span><span id="__span-0-192"><span class="c1">#     # Port to use for HTTP</span>
-</span><span id="__span-0-193"><span class="c1">#     # Type: integer</span>
-</span><span id="__span-0-194"><span class="c1">#     # Default: 80</span>
-</span><span id="__span-0-195"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-196"><span class="c1">#     port: 80</span>
-</span><span id="__span-0-197">
-</span><span id="__span-0-198"><span class="c1">#   # HTTPS settings</span>
-</span><span id="__span-0-199"><span class="c1">#   https:</span>
-</span><span id="__span-0-200">
-</span><span id="__span-0-201"><span class="c1">#     # Port to use for HTTPS</span>
-</span><span id="__span-0-202"><span class="c1">#     # Type: integer</span>
-</span><span id="__span-0-203"><span class="c1">#     # Default: 443</span>
-</span><span id="__span-0-204"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-205"><span class="c1">#     port: 443</span>
-</span><span id="__span-0-206">
-</span><span id="__span-0-207"><span class="c1">#     # Set custom TLS certificate and key</span>
-</span><span id="__span-0-208"><span class="c1">#     tls:</span>
-</span><span id="__span-0-209">
-</span><span id="__span-0-210"><span class="c1">#       # Path to the TLS certificate</span>
-</span><span id="__span-0-211"><span class="c1">#       # Type: path</span>
-</span><span id="__span-0-212"><span class="c1">#       # Default: none</span>
-</span><span id="__span-0-213"><span class="c1">#       # Required: no</span>
-</span><span id="__span-0-214"><span class="c1">#       cert: /etc/ssl/certs/self-signed.crt</span>
-</span><span id="__span-0-215">
-</span><span id="__span-0-216"><span class="c1">#       # Path to the TLS private key</span>
-</span><span id="__span-0-217"><span class="c1">#       # Type: path</span>
-</span><span id="__span-0-218"><span class="c1">#       # Default: none</span>
-</span><span id="__span-0-219"><span class="c1">#       # Required: no</span>
-</span><span id="__span-0-220"><span class="c1">#       key: /etc/ssl/private/self-signed.key</span>
+</span><span id="__span-0-137"><span class="c1"># ========</span>
+</span><span id="__span-0-138"><span class="c1"># plugins:</span>
+</span><span id="__span-0-139"><span class="c1"># ========</span>
+</span><span id="__span-0-140">
+</span><span id="__span-0-141"><span class="c1"># ======</span>
+</span><span id="__span-0-142"><span class="c1"># rules:</span>
+</span><span id="__span-0-143"><span class="c1"># ======</span>
+</span><span id="__span-0-144">
+</span><span id="__span-0-145"><span class="c1">#   # Privileges of each role (privileges are inherited from roles above)</span>
+</span><span id="__span-0-146"><span class="c1">#   privileges:</span>
+</span><span id="__span-0-147">
+</span><span id="__span-0-148"><span class="c1">#     # For unregistered users</span>
+</span><span id="__span-0-149"><span class="c1">#     unregistered:</span>
+</span><span id="__span-0-150">
+</span><span id="__span-0-151"><span class="c1">#       # Allowed apps, or &#39;all&#39; to allow all apps (do not allow services that require authentication)</span>
+</span><span id="__span-0-152"><span class="c1">#       # Type: &#39;all&#39; | array</span>
+</span><span id="__span-0-153"><span class="c1">#       # Default: [ ]</span>
+</span><span id="__span-0-154"><span class="c1">#       # Required: no</span>
+</span><span id="__span-0-155"><span class="c1">#       allowed_apps: [ ]</span>
+</span><span id="__span-0-156">
+</span><span id="__span-0-157"><span class="c1">#     # For guest users</span>
+</span><span id="__span-0-158"><span class="c1">#     guest:</span>
+</span><span id="__span-0-159">
+</span><span id="__span-0-160"><span class="c1">#       # Allowed apps, or &#39;all&#39; to allow all apps</span>
+</span><span id="__span-0-161"><span class="c1">#       # Type: &#39;all&#39; | array</span>
+</span><span id="__span-0-162"><span class="c1">#       # Default: [ ]</span>
+</span><span id="__span-0-163"><span class="c1">#       # Required: no</span>
+</span><span id="__span-0-164"><span class="c1">#       allowed_apps: [ ]</span>
+</span><span id="__span-0-165">
+</span><span id="__span-0-166"><span class="c1">#     # For regular users</span>
+</span><span id="__span-0-167"><span class="c1">#     user:</span>
+</span><span id="__span-0-168">
+</span><span id="__span-0-169"><span class="c1">#       # Allowed apps, or &#39;all&#39; to allow all apps</span>
+</span><span id="__span-0-170"><span class="c1">#       # Type: &#39;all&#39; | array</span>
+</span><span id="__span-0-171"><span class="c1">#       # Default: [ ]</span>
+</span><span id="__span-0-172"><span class="c1">#       # Required: no</span>
+</span><span id="__span-0-173"><span class="c1">#       allowed_apps: [ ]</span>
+</span><span id="__span-0-174">
+</span><span id="__span-0-175"><span class="c1">#     # For administrators</span>
+</span><span id="__span-0-176"><span class="c1">#     admin:</span>
+</span><span id="__span-0-177">
+</span><span id="__span-0-178"><span class="c1">#       # Allowed apps, or &#39;all&#39; to allow all apps</span>
+</span><span id="__span-0-179"><span class="c1">#       # Type: &#39;all&#39; | array</span>
+</span><span id="__span-0-180"><span class="c1">#       # Default: &#39;all&#39;</span>
+</span><span id="__span-0-181"><span class="c1">#       # Required: no</span>
+</span><span id="__span-0-182"><span class="c1">#       allowed_apps: all</span>
+</span><span id="__span-0-183">
+</span><span id="__span-0-184"><span class="c1"># =========</span>
+</span><span id="__span-0-185"><span class="c1"># security:</span>
+</span><span id="__span-0-186"><span class="c1"># =========</span>
+</span><span id="__span-0-187">
+</span><span id="__span-0-188"><span class="c1">#   # Rate limiting settings</span>
+</span><span id="__span-0-189"><span class="c1">#   rate_limiting:</span>
+</span><span id="__span-0-190">
+</span><span id="__span-0-191"><span class="c1">#     # Enable or disable rate limiting</span>
+</span><span id="__span-0-192"><span class="c1">#     # Type: boolean</span>
+</span><span id="__span-0-193"><span class="c1">#     # Default: false</span>
+</span><span id="__span-0-194"><span class="c1">#     # Required: no</span>
+</span><span id="__span-0-195"><span class="c1">#     enabled: false</span>
+</span><span id="__span-0-196">
+</span><span id="__span-0-197"><span class="c1">#     # Maximum number of requests in the given time window</span>
+</span><span id="__span-0-198"><span class="c1">#     # Type: int</span>
+</span><span id="__span-0-199"><span class="c1">#     # Default: 5</span>
+</span><span id="__span-0-200"><span class="c1">#     # Required: no</span>
+</span><span id="__span-0-201"><span class="c1">#     max_requests: 5</span>
+</span><span id="__span-0-202">
+</span><span id="__span-0-203"><span class="c1">#     # Time window (in seconds, or a string describing a time span in ISO 8601 format)</span>
+</span><span id="__span-0-204"><span class="c1">#     # Type: int | string</span>
+</span><span id="__span-0-205"><span class="c1">#     # Default: &#39;PT1H&#39;</span>
+</span><span id="__span-0-206"><span class="c1">#     # Required: no</span>
+</span><span id="__span-0-207"><span class="c1">#     time_window: &#39;PT1H&#39;</span>
+</span><span id="__span-0-208">
+</span><span id="__span-0-209"><span class="c1">#   # Session settings</span>
+</span><span id="__span-0-210"><span class="c1">#   session:</span>
+</span><span id="__span-0-211">
+</span><span id="__span-0-212"><span class="c1">#     # Session lifetime (in seconds, or a string describing a time span in ISO 8601 format)</span>
+</span><span id="__span-0-213"><span class="c1">#     # Type: int | string</span>
+</span><span id="__span-0-214"><span class="c1">#     # Default: &#39;P1DT&#39;</span>
+</span><span id="__span-0-215"><span class="c1">#     # Required: no</span>
+</span><span id="__span-0-216"><span class="c1">#     lifetime: &#39;P1DT&#39;</span>
+</span><span id="__span-0-217">
+</span><span id="__span-0-218"><span class="c1"># =====</span>
+</span><span id="__span-0-219"><span class="c1"># smtp:</span>
+</span><span id="__span-0-220"><span class="c1"># =====</span>
 </span><span id="__span-0-221">
-</span><span id="__span-0-222"><span class="c1"># ======</span>
-</span><span id="__span-0-223"><span class="c1"># rules:</span>
-</span><span id="__span-0-224"><span class="c1"># ======</span>
-</span><span id="__span-0-225">
-</span><span id="__span-0-226"><span class="c1">#   # Privileges of each role (privileges are inherited from roles above)</span>
-</span><span id="__span-0-227"><span class="c1">#   privileges:</span>
-</span><span id="__span-0-228">
-</span><span id="__span-0-229"><span class="c1">#     # For unregistered users</span>
-</span><span id="__span-0-230"><span class="c1">#     unregistered:</span>
-</span><span id="__span-0-231">
-</span><span id="__span-0-232"><span class="c1">#       # Allowed apps, or &#39;all&#39; to allow all apps (do not allow services that require authentication)</span>
-</span><span id="__span-0-233"><span class="c1">#       # Type: &#39;all&#39; | array</span>
-</span><span id="__span-0-234"><span class="c1">#       # Default: [ ]</span>
-</span><span id="__span-0-235"><span class="c1">#       # Required: no</span>
-</span><span id="__span-0-236"><span class="c1">#       allowed_apps: [ ]</span>
-</span><span id="__span-0-237">
-</span><span id="__span-0-238"><span class="c1">#     # For guest users</span>
-</span><span id="__span-0-239"><span class="c1">#     guest:</span>
-</span><span id="__span-0-240">
-</span><span id="__span-0-241"><span class="c1">#       # Allowed apps, or &#39;all&#39; to allow all apps</span>
-</span><span id="__span-0-242"><span class="c1">#       # Type: &#39;all&#39; | array</span>
-</span><span id="__span-0-243"><span class="c1">#       # Default: [&#39;filebrowser&#39;, &#39;privatebin&#39;]</span>
-</span><span id="__span-0-244"><span class="c1">#       # Required: no</span>
-</span><span id="__span-0-245"><span class="c1">#       allowed_apps:</span>
-</span><span id="__span-0-246"><span class="c1">#         - filebrowser</span>
-</span><span id="__span-0-247">
-</span><span id="__span-0-248"><span class="c1">#     # For regular users</span>
-</span><span id="__span-0-249"><span class="c1">#     user:</span>
-</span><span id="__span-0-250">
-</span><span id="__span-0-251"><span class="c1">#       # Allowed apps, or &#39;all&#39; to allow all apps</span>
-</span><span id="__span-0-252"><span class="c1">#       # Type: &#39;all&#39; | array</span>
-</span><span id="__span-0-253"><span class="c1">#       # Default: [&#39;jupyterhub&#39;, &#39;rstudio&#39;]</span>
-</span><span id="__span-0-254"><span class="c1">#       # Required: no</span>
-</span><span id="__span-0-255"><span class="c1">#       allowed_apps:</span>
-</span><span id="__span-0-256"><span class="c1">#         - rstudio</span>
-</span><span id="__span-0-257">
-</span><span id="__span-0-258"><span class="c1">#     # For administrators</span>
-</span><span id="__span-0-259"><span class="c1">#     admin:</span>
-</span><span id="__span-0-260">
-</span><span id="__span-0-261"><span class="c1">#       # Allowed apps, or &#39;all&#39; to allow all apps</span>
-</span><span id="__span-0-262"><span class="c1">#       # Type: &#39;all&#39; | array</span>
-</span><span id="__span-0-263"><span class="c1">#       # Default: &#39;all&#39;</span>
-</span><span id="__span-0-264"><span class="c1">#       # Required: no</span>
-</span><span id="__span-0-265"><span class="c1">#       allowed_apps: all</span>
-</span><span id="__span-0-266">
-</span><span id="__span-0-267"><span class="c1"># =========</span>
-</span><span id="__span-0-268"><span class="c1"># security:</span>
-</span><span id="__span-0-269"><span class="c1"># =========</span>
-</span><span id="__span-0-270">
-</span><span id="__span-0-271"><span class="c1">#   # Rate limiting settings</span>
-</span><span id="__span-0-272"><span class="c1">#   rate_limiting:</span>
-</span><span id="__span-0-273">
-</span><span id="__span-0-274"><span class="c1">#     # Enable or disable rate limiting</span>
-</span><span id="__span-0-275"><span class="c1">#     # Type: boolean</span>
-</span><span id="__span-0-276"><span class="c1">#     # Default: false</span>
-</span><span id="__span-0-277"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-278"><span class="c1">#     enabled: false</span>
-</span><span id="__span-0-279">
-</span><span id="__span-0-280"><span class="c1">#     # Maximum number of requests in the given time window</span>
-</span><span id="__span-0-281"><span class="c1">#     # Type: int</span>
-</span><span id="__span-0-282"><span class="c1">#     # Default: 5</span>
-</span><span id="__span-0-283"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-284"><span class="c1">#     max_requests: 5</span>
-</span><span id="__span-0-285">
-</span><span id="__span-0-286"><span class="c1">#     # Time window (in seconds, or a string describing a time span in ISO 8601 format)</span>
-</span><span id="__span-0-287"><span class="c1">#     # Type: int | string</span>
-</span><span id="__span-0-288"><span class="c1">#     # Default: &#39;PT1H&#39;</span>
-</span><span id="__span-0-289"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-290"><span class="c1">#     time_window: &#39;PT1H&#39;</span>
-</span><span id="__span-0-291">
-</span><span id="__span-0-292"><span class="c1">#   # Session settings</span>
-</span><span id="__span-0-293"><span class="c1">#   session:</span>
-</span><span id="__span-0-294">
-</span><span id="__span-0-295"><span class="c1">#     # Session lifetime (in seconds, or a string describing a time span in ISO 8601 format)</span>
-</span><span id="__span-0-296"><span class="c1">#     # Type: int | string</span>
-</span><span id="__span-0-297"><span class="c1">#     # Default: &#39;P1DT&#39;</span>
-</span><span id="__span-0-298"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-299"><span class="c1">#     lifetime: &#39;P1DT&#39;</span>
-</span><span id="__span-0-300">
-</span><span id="__span-0-301"><span class="c1"># =====</span>
-</span><span id="__span-0-302"><span class="c1"># smtp:</span>
-</span><span id="__span-0-303"><span class="c1"># =====</span>
-</span><span id="__span-0-304">
-</span><span id="__span-0-305"><span class="c1">#   # SMTP server host</span>
-</span><span id="__span-0-306"><span class="c1">#   # Type: string</span>
-</span><span id="__span-0-307"><span class="c1">#   # Default: none</span>
-</span><span id="__span-0-308"><span class="c1">#   # Required: yes</span>
-</span><span id="__span-0-309"><span class="c1">#   host: smtp.gmail.com</span>
-</span><span id="__span-0-310">
-</span><span id="__span-0-311"><span class="c1">#   # SMTP server port</span>
-</span><span id="__span-0-312"><span class="c1">#   # Type: integer</span>
-</span><span id="__span-0-313"><span class="c1">#   # Default: none</span>
-</span><span id="__span-0-314"><span class="c1">#   # Required: yes</span>
-</span><span id="__span-0-315"><span class="c1">#   port: 587</span>
-</span><span id="__span-0-316">
-</span><span id="__span-0-317"><span class="c1">#   # SMTP server username</span>
-</span><span id="__span-0-318"><span class="c1">#   # Type: string</span>
-</span><span id="__span-0-319"><span class="c1">#   # Default: none</span>
-</span><span id="__span-0-320"><span class="c1">#   # Required: yes</span>
-</span><span id="__span-0-321"><span class="c1">#   username: joe</span>
-</span><span id="__span-0-322">
-</span><span id="__span-0-323"><span class="c1">#   # SMTP server password</span>
-</span><span id="__span-0-324"><span class="c1">#   # Type: string</span>
-</span><span id="__span-0-325"><span class="c1">#   # Default: none</span>
-</span><span id="__span-0-326"><span class="c1">#   # Required: yes</span>
-</span><span id="__span-0-327"><span class="c1">#   password: joe123</span>
-</span><span id="__span-0-328">
-</span><span id="__span-0-329"><span class="c1">#   # Sender name</span>
-</span><span id="__span-0-330"><span class="c1">#   # Type: string</span>
-</span><span id="__span-0-331"><span class="c1">#   # Default: &#39;Lungo&#39;</span>
-</span><span id="__span-0-332"><span class="c1">#   # Required: no</span>
-</span><span id="__span-0-333"><span class="c1">#   name: Lungo</span>
-</span><span id="__span-0-334">
-</span><span id="__span-0-335"><span class="c1">#   # Sender email</span>
-</span><span id="__span-0-336"><span class="c1">#   # Type: string</span>
-</span><span id="__span-0-337"><span class="c1">#   # Default: none</span>
-</span><span id="__span-0-338"><span class="c1">#   # Required: yes</span>
-</span><span id="__span-0-339"><span class="c1">#   sender: joe@gmail.com</span>
+</span><span id="__span-0-222"><span class="c1">#   # SMTP server host</span>
+</span><span id="__span-0-223"><span class="c1">#   # Type: string</span>
+</span><span id="__span-0-224"><span class="c1">#   # Default: none</span>
+</span><span id="__span-0-225"><span class="c1">#   # Required: yes</span>
+</span><span id="__span-0-226"><span class="c1">#   host: smtp.gmail.com</span>
+</span><span id="__span-0-227">
+</span><span id="__span-0-228"><span class="c1">#   # SMTP server port</span>
+</span><span id="__span-0-229"><span class="c1">#   # Type: integer</span>
+</span><span id="__span-0-230"><span class="c1">#   # Default: none</span>
+</span><span id="__span-0-231"><span class="c1">#   # Required: yes</span>
+</span><span id="__span-0-232"><span class="c1">#   port: 587</span>
+</span><span id="__span-0-233">
+</span><span id="__span-0-234"><span class="c1">#   # SMTP server username</span>
+</span><span id="__span-0-235"><span class="c1">#   # Type: string</span>
+</span><span id="__span-0-236"><span class="c1">#   # Default: none</span>
+</span><span id="__span-0-237"><span class="c1">#   # Required: yes</span>
+</span><span id="__span-0-238"><span class="c1">#   username: joe</span>
+</span><span id="__span-0-239">
+</span><span id="__span-0-240"><span class="c1">#   # SMTP server password</span>
+</span><span id="__span-0-241"><span class="c1">#   # Type: string</span>
+</span><span id="__span-0-242"><span class="c1">#   # Default: none</span>
+</span><span id="__span-0-243"><span class="c1">#   # Required: yes</span>
+</span><span id="__span-0-244"><span class="c1">#   password: joe123</span>
+</span><span id="__span-0-245">
+</span><span id="__span-0-246"><span class="c1">#   # Sender name</span>
+</span><span id="__span-0-247"><span class="c1">#   # Type: string</span>
+</span><span id="__span-0-248"><span class="c1">#   # Default: &#39;Lungo&#39;</span>
+</span><span id="__span-0-249"><span class="c1">#   # Required: no</span>
+</span><span id="__span-0-250"><span class="c1">#   name: Lungo</span>
+</span><span id="__span-0-251">
+</span><span id="__span-0-252"><span class="c1">#   # Sender email</span>
+</span><span id="__span-0-253"><span class="c1">#   # Type: string</span>
+</span><span id="__span-0-254"><span class="c1">#   # Default: none</span>
+</span><span id="__span-0-255"><span class="c1">#   # Required: yes</span>
+</span><span id="__span-0-256"><span class="c1">#   sender: joe@gmail.com</span>
 </span></code></pre></div></td></tr></table></div>
 
 
@@ -1807,7 +1641,7 @@ You're not viewing the latest version.
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.action.edit", "content.action.view", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.top", "search.highlight", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": ["nightly", "stable"], "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.8fd75fb4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c8d2eff1.min.js"></script>
       
     
   <script>document$.subscribe(() => {document.querySelectorAll('.glightbox').forEach(function(element) {

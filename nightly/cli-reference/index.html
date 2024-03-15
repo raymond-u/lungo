@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.10">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
     
     
       
@@ -979,6 +979,33 @@ You're not viewing the latest version.
 </li>
       
         <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      install
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list" class="md-nav__link">
+    <span class="md-ellipsis">
+      list
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uninstall" class="md-nav__link">
+    <span class="md-ellipsis">
+      uninstall
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#up" class="md-nav__link">
     <span class="md-ellipsis">
       up
@@ -1062,6 +1089,33 @@ You're not viewing the latest version.
 </li>
       
         <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      install
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list" class="md-nav__link">
+    <span class="md-ellipsis">
+      list
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uninstall" class="md-nav__link">
+    <span class="md-ellipsis">
+      uninstall
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#up" class="md-nav__link">
     <span class="md-ellipsis">
       up
@@ -1119,8 +1173,9 @@ You're not viewing the latest version.
 </span></code></pre></div>
 <p>Options:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1">  -c, --config-dir PATH  Path to the configuration directory.
-</span><span id="__span-3-2">  -q, --quiet            Suppress all output except for errors.
-</span><span id="__span-3-3">  -v, --verbose          Increase verbosity.
+</span><span id="__span-3-2">  --dev                  Use the development configuration.
+</span><span id="__span-3-3">  -q, --quiet            Suppress all output except for errors.
+</span><span id="__span-3-4">  -v, --verbose          Increase verbosity.
 </span></code></pre></div>
 <h2 id="down">down<a class="headerlink" href="#down" title="Permanent link">#</a></h2>
 <p>Stop the service.</p>
@@ -1135,21 +1190,57 @@ You're not viewing the latest version.
 </span><span id="__span-5-5">  -q, --quiet                     Suppress all output except for errors.
 </span><span id="__span-5-6">  -v, --verbose                   Increase verbosity.
 </span></code></pre></div>
+<h2 id="install">install<a class="headerlink" href="#install" title="Permanent link">#</a></h2>
+<p>Install or upgrade plugins.</p>
+<p>Usage:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1">lungo install [OPTIONS] ARGS...
+</span></code></pre></div>
+<p>Options:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1">  ARGS...                Names of the plugins to add.  [required]
+</span><span id="__span-7-2">  -c, --config-dir PATH  Path to the configuration directory.
+</span><span id="__span-7-3">  --dev                  Use the development configuration.
+</span><span id="__span-7-4">  -q, --quiet            Suppress all output except for errors.
+</span><span id="__span-7-5">  -v, --verbose          Increase verbosity.
+</span></code></pre></div>
+<h2 id="list">list<a class="headerlink" href="#list" title="Permanent link">#</a></h2>
+<p>List all installed and custom plugins.</p>
+<p>Usage:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1">lungo list [OPTIONS] [ARGS]...
+</span></code></pre></div>
+<p>Options:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1">  [ARGS]...              Names of the plugins to list.
+</span><span id="__span-9-2">  -c, --config-dir PATH  Path to the configuration directory.
+</span><span id="__span-9-3">  --dev                  Use the development configuration.
+</span><span id="__span-9-4">  -q, --quiet            Suppress all output except for errors.
+</span><span id="__span-9-5">  -v, --verbose          Increase verbosity.
+</span></code></pre></div>
+<h2 id="uninstall">uninstall<a class="headerlink" href="#uninstall" title="Permanent link">#</a></h2>
+<p>Uninstall plugins.</p>
+<p>Usage:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1">lungo uninstall [OPTIONS] ARGS...
+</span></code></pre></div>
+<p>Options:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1">  ARGS...                Names of the plugins to remove.  [required]
+</span><span id="__span-11-2">  -c, --config-dir PATH  Path to the configuration directory.
+</span><span id="__span-11-3">  --dev                  Use the development configuration.
+</span><span id="__span-11-4">  -q, --quiet            Suppress all output except for errors.
+</span><span id="__span-11-5">  -v, --verbose          Increase verbosity.
+</span></code></pre></div>
 <h2 id="up">up<a class="headerlink" href="#up" title="Permanent link">#</a></h2>
 <p>Start the service.</p>
 <p>Usage:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1">lungo up [OPTIONS]
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1">lungo up [OPTIONS]
 </span></code></pre></div>
 <p>Options:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1">  --build-only                    Only build the container.
-</span><span id="__span-7-2">  --container-tool [docker|docker-compose|podman-compose]
-</span><span id="__span-7-3">                                  Container management tool to use.
-</span><span id="__span-7-4">  -c, --config-dir PATH           Path to the configuration directory.
-</span><span id="__span-7-5">  --dev                           Use the development configuration.
-</span><span id="__span-7-6">  --force-init                    Do a fresh initialization.
-</span><span id="__span-7-7">  --remove-lock                   Remove the lock file.
-</span><span id="__span-7-8">  -q, --quiet                     Suppress all output except for errors.
-</span><span id="__span-7-9">  -v, --verbose                   Increase verbosity.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1">  --build-only                    Only build the container.
+</span><span id="__span-13-2">  --container-tool [docker|docker-compose|podman-compose]
+</span><span id="__span-13-3">                                  Container management tool to use.
+</span><span id="__span-13-4">  --force-init                    Do a fresh initialization.
+</span><span id="__span-13-5">  --remove-lock                   Remove the lock file.
+</span><span id="__span-13-6">  -c, --config-dir PATH           Path to the configuration directory.
+</span><span id="__span-13-7">  --dev                           Use the development configuration.
+</span><span id="__span-13-8">  -q, --quiet                     Suppress all output except for errors.
+</span><span id="__span-13-9">  -v, --verbose                   Increase verbosity.
 </span></code></pre></div>
 
 
@@ -1254,7 +1345,7 @@ You're not viewing the latest version.
     <script id="__config" type="application/json">{"base": "..", "features": ["content.action.edit", "content.action.view", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.top", "search.highlight", "search.suggest", "toc.follow"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": ["nightly", "stable"], "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.8fd75fb4.min.js"></script>
+      <script src="../assets/javascripts/bundle.c8d2eff1.min.js"></script>
       
     
   <script>document$.subscribe(() => {document.querySelectorAll('.glightbox').forEach(function(element) {
