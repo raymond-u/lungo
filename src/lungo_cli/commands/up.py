@@ -27,12 +27,12 @@ def main(
     """
     app_manager().process_args(config_dir, dev, quiet, verbosity, force_init)
     app_manager().load_config_and_plugins()
-    app_manager().update_app_data()
-
-    container().set_preferred_tool(container_tool)
 
     if remove_lock:
         file_utils().remove(storage().lock_file)
+
+    app_manager().update_app_data()
+    container().set_preferred_tool(container_tool)
 
     if build_only:
         with console().status(
