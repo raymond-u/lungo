@@ -123,7 +123,7 @@ class Container:
         if self.storage.lock_file.is_file():
             self.console.print_error(
                 f"An existing instance of {APP_NAME_CAPITALIZED} is running. Please stop it before proceeding, "
-                f"or use the {format_command('--ignore-lock')} flag."
+                f"or use the {format_command('--remove-lock')} flag."
             )
             raise Exit(code=1)
 
