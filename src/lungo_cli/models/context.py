@@ -23,4 +23,3 @@ class Context(Base):
     base_url: AnyHttpUrl
     dev: bool
     ip_addresses: dict[str, IPv4Address]
-    web_app_info: list[dict[str, str | None]]

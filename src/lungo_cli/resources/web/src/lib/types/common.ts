@@ -8,13 +8,6 @@ export type AppInfo = {
     altIcon: ComponentType
 }
 
-export type RawAppInfo = {
-    name: string
-    descriptiveName: string | null
-    icon: string | null
-    altIcon: string | null
-}
-
 // noinspection JSUnusedGlobalSymbols
 export enum ETheme {
     Auto = "auto",

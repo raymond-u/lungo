@@ -1,4 +1,4 @@
-import { getAllApps, getAppInfo } from "$lib/server/utils"
+import { getAllApps } from "$lib/server/utils"
 
 export async function load({ url }: { url: URL }) {
     const pathBase = url.pathname.match("^/app/[^/]+")
@@ -9,12 +9,10 @@ export async function load({ url }: { url: URL }) {
         }
     }
 
-    for (const app of await getAllApps()) {
-        const { descriptiveName, href } = await getAppInfo(app)
-
-        if (href === pathBase[0]) {
+    for (const app of getAllApps()) {
+        if (app.href === pathBase[0]) {
             return {
-                title: descriptiveName,
+                title: app.descriptiveName,
             }
         }
     }

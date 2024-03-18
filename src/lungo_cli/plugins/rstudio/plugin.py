@@ -17,8 +17,8 @@ class Plugin(BasePlugin):
         description="RStudio as a Lungo plugin.",
         have_backend=True,
         require_account=True,
-        web_icon="RStudioOutline.svelte",
-        web_alt_icon="RStudioSolid.svelte",
+        web_icon="icons/RStudioOutline.svelte",
+        web_alt_icon="icons/RStudioSolid.svelte",
     )
 
     @property

@@ -11,8 +11,8 @@ class Plugin(BasePlugin):
         description="PrivateBin as a Lungo plugin.",
         have_backend=True,
         require_account=False,
-        web_icon="NoteOutline.svelte",
-        web_alt_icon="NoteSolid.svelte",
+        web_icon="icons/NoteOutline.svelte",
+        web_alt_icon="icons/NoteSolid.svelte",
     )
 
     @override

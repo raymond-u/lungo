@@ -95,18 +95,6 @@ class ContextManager:
         return {app.value: hosts[i + 16] for i, app in enumerate((*ECoreService, *EApp))}
 
     @property
-    def web_app_info(self) -> list[dict[str, str | None]]:
-        return [
-            {
-                "name": plugin_output.config.name,
-                "descriptiveName": plugin_output.config.descriptive_name,
-                "icon": plugin_output.config.web_icon,
-                "altIcon": plugin_output.config.web_alt_icon,
-            }
-            for plugin_output in self.plugin_outputs
-        ]
-
-    @property
     def context(self) -> Context:
         return Context(
             config=self.config,
@@ -116,5 +104,4 @@ class ContextManager:
             base_url=self.base_url,
             dev=self.dev,
             ip_addresses=self.ip_addresses,
-            web_app_info=self.web_app_info,
         )

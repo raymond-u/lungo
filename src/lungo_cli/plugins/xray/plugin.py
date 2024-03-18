@@ -21,8 +21,8 @@ class Plugin(BasePlugin):
         description="Xray as a Lungo plugin.",
         have_backend=True,
         require_account=True,
-        web_icon="ProxyOutline.svelte",
-        web_alt_icon="ProxySolid.svelte",
+        web_icon="icons/ProxyOutline.svelte",
+        web_alt_icon="icons/ProxySolid.svelte",
     )
 
     @property

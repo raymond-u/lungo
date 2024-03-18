@@ -9,6 +9,6 @@ class Plugin(BasePlugin):
         description="File Browser as a Lungo plugin.",
         have_backend=True,
         require_account=True,
-        web_icon="FolderOutline.svelte",
-        web_alt_icon="FolderSolid.svelte",
+        web_icon="icons/FolderOutline.svelte",
+        web_alt_icon="icons/FolderSolid.svelte",
     )

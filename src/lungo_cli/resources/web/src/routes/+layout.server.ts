@@ -1,18 +1,18 @@
 import type { Cookies } from "@sveltejs/kit"
 import { createKetoClient, createKratosClient } from "$lib/server/api"
-import { getAllApps, getAppInfo } from "$lib/server/utils"
+import { getAllApps } from "$lib/server/utils"
 import type { AppInfo, User } from "$lib/types"
 
 async function getAllowedApps(fetch: typeof global.fetch, username?: string): Promise<AppInfo[]> {
     const client = createKetoClient(fetch)
     const apps = []
 
-    for (const app of await getAllApps()) {
+    for (const app of getAllApps()) {
         const response = await client.GET("/relation-tuples/check", {
             params: {
                 query: {
                     namespace: "app",
-                    object: app,
+                    object: app.name,
                     relation: "access",
                     subject_id: username ?? "anonymous",
                 },
@@ -21,7 +21,7 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
 
         switch (response.response.status) {
             case 200:
-                apps.push(await getAppInfo(app))
+                apps.push(app)
                 break
         }
     }

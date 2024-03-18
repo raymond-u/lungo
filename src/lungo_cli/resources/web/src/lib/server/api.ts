@@ -66,8 +66,7 @@ export function wrapFetch({
                 }
             }
 
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
+            // @ts-expect-error fetch type definition is incomplete
             response = await fetch(input, init)
 
             if (cookies) {

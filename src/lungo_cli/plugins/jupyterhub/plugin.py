@@ -17,7 +17,7 @@ class Plugin(BasePlugin):
         description="JupyterHub as a Lungo plugin.",
         have_backend=True,
         require_account=True,
-        web_icon="Jupyter.svelte",
+        web_icon="icons/Jupyter.svelte",
     )
 
     @property

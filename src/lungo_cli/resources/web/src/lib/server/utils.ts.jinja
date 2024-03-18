@@ -1,0 +1,29 @@
+import { QuestionMarkIcon } from "$lib/icons"
+import type { AppInfo } from "$lib/types"
+{% for plugin in plugin_outputs %}
+    {% set plugin_dir = "$lib/plugins/" + plugin.config.name %}
+    {% set plugin_prefix = plugin.config.name|capitalize %}
+    {% if plugin.config.web_icon %}
+import {{ plugin_prefix + plugin.config.web_icon }} from "{{ plugin_dir }}/{{ plugin.config.web_icon }}"
+    {% endif %}
+    {% if plugin.config.web_alt_icon %}
+import {{ plugin_prefix + plugin.config.web_alt_icon }} from "{{ plugin_dir }}/{{ plugin.config.web_alt_icon }}"
+    {% endif %}
+{% endfor %}
+
+export function getAllApps(): AppInfo[] {
+    const apps = [
+        {% for plugin in plugin_outputs %}
+            {% set plugin_prefix = plugin.config.name|capitalize %}
+        {
+            name: "{{ plugin.config.name }}",
+            descriptiveName: "{{ plugin.config.descriptive_name or plugin_prefix }}",
+            href: "/app/{{ plugin.config.name }}",
+            icon: {{ plugin_prefix + plugin.config.web_icon if plugin.config.web_icon else "QuestionMarkIcon"}},
+            altIcon: {{ plugin_prefix + plugin.config.web_alt_icon if plugin.config.web_alt_icon else "QuestionMarkIcon" }},
+        },
+        {% endfor %}
+    ]
+
+    return apps.sort((a, b) => a.descriptiveName.localeCompare(b.descriptiveName))
+}
