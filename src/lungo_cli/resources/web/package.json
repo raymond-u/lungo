@@ -31,7 +31,7 @@
         "eslint-plugin-svelte": "^2.35.1",
         "json-schema-to-typescript": "^13.1.2",
         "openapi-typescript": "^6.7.5",
-        "postcss": "^8.4.35",
+        "postcss": "^8.4.36",
         "postcss-load-config": "^4.0.2",
         "prettier": "^3.2.5",
         "prettier-plugin-svelte": "^3.2.2",
@@ -48,5 +48,5 @@
         "node": ">=20.0.0",
         "pnpm": "^8.0.0"
     },
-    "packageManager": "pnpm@8.15.4"
+    "packageManager": "pnpm@8.15.5"
 }
