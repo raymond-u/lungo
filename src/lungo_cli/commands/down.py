@@ -20,7 +20,7 @@ def main(
     """
     Stop the service.
     """
-    app_manager().process_args(config_dir, dev, quiet, verbosity)
+    app_manager().process_cli_options(config_dir, dev, quiet, verbosity)
     app_manager().load_config()
 
     container().set_preferred_tool(container_tool)

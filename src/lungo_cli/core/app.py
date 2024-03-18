@@ -43,7 +43,7 @@ class AppManager:
 
         self.force_init = False
 
-    def process_args(
+    def process_cli_options(
         self, config_dir: str | PathLike[str] | None, dev: bool, quiet: bool, verbosity: int, force_init: bool = False
     ) -> None:
         """Process common arguments."""

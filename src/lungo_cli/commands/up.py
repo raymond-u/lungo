@@ -25,7 +25,7 @@ def main(
     """
     Start the service.
     """
-    app_manager().process_args(config_dir, dev, quiet, verbosity, force_init)
+    app_manager().process_cli_options(config_dir, dev, quiet, verbosity, force_init)
     app_manager().load_config_and_plugins()
 
     if remove_lock:
