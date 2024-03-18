@@ -14,10 +14,11 @@ export function useAppIcon(name: string): { icon: ComponentType; altIcon: Compon
     const icons = {
         {% for plugin in plugin_outputs %}
             {% set plugin_prefix = plugin.config.name|capitalize %}
+            {% set plugin_icon = plugin_prefix ~ 'Icon' if plugin.config.web_icon else 'QuestionMarkIcon' %}
         "{{ plugin.config.name }}":
             {
-                icon: {{ plugin_prefix ~ 'Icon' if plugin.config.web_icon else 'QuestionMarkIcon' }},
-                altIcon: {{ plugin_prefix ~ 'AltIcon' if plugin.config.web_alt_icon else 'QuestionMarkIcon' }},
+                icon: {{ plugin_icon }},
+                altIcon: {{ plugin_prefix ~ 'AltIcon' if plugin.config.web_alt_icon else plugin_icon }},
             },
         {% endfor %}
     }
