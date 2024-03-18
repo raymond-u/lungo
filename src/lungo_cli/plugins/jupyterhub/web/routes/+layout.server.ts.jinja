@@ -1,7 +1,7 @@
-import {load as loadHtmlString} from "cheerio"
-import type {Cookies} from "@sveltejs/kit"
-import {wrapFetch} from "$lib/server/api"
-import type {User} from "$lib/types"
+import { load as loadHtmlString } from "cheerio"
+import type { Cookies } from "@sveltejs/kit"
+import { wrapFetch } from "$lib/server/api"
+import type { User } from "$lib/types"
 
 export async function load({
     cookies,
