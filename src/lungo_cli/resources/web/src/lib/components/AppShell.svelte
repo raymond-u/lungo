@@ -78,7 +78,7 @@
             <a class="text-xl" href="/">{SITE_TITLE}</a>
         </div>
         {#if $currentInlineFrame}
-            <div class="hidden flex-none lg:block">
+            <div class="hidden flex-none md:flex">
                 <button class="btn btn-circle btn-ghost h-10 min-h-0 w-10" on:click={handleFullscreen}>
                     <span class="h-6 w-6">
                         <FullscreenIcon />

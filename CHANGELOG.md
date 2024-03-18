@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Built-in apps are now installed as plugins
 - The `modules` configuration has been renamed to `plugins`
 - Guest role and user role accounts no longer have access to apps by default
-- Hide the full screen button for narrow screen widths
+- Hide fullscreen button for narrow screen widths
 - Update JupyterLab to 4.1.5
 - Update RStudio to 4.3.3
 - Update Xray to 1.8.9
