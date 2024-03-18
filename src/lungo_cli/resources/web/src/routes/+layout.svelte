@@ -4,7 +4,7 @@
     import { page } from "$app/stores"
     import { AppShell, LoadingIndicator } from "$lib/components"
     import { ETheme } from "$lib/types"
-    import { createStore, createTitle } from "$lib/utils"
+    import { createStore, usePageTitle } from "$lib/utils"
 
     const { allowScroll, currentTheme } = createStore()
 
@@ -22,7 +22,7 @@
 </div>
 
 <svelte:head>
-    <title>{createTitle($page.data.title)}</title>
+    <title>{usePageTitle($page.data.title)}</title>
     {#if !$allowScroll}
         <style>
             body {
