@@ -2,7 +2,7 @@
     import { page } from "$app/stores"
     import { scrollShadow, scrollSync } from "$lib/actions"
     import { SwappableIcon } from "$lib/components"
-    import { truncateTitle, useStore } from "$lib/utils"
+    import { truncate, useAppIcon, useStore } from "$lib/utils"
 
     const { currentApp, darkTheme, syncedScrollTops } = useStore()
 </script>
@@ -13,8 +13,9 @@
     use:scrollSync={{ id: "nav", stores: syncedScrollTops }}
 >
     <ul class="menu items-center gap-1 px-0 py-2">
-        {#each $page.data.apps as { name, href, icon, altIcon } (name)}
+        {#each $page.data.apps as { name, descriptiveName, href } (name)}
             {@const active = $currentApp?.name === name}
+            {@const { icon, altIcon } = useAppIcon(name)}
             <li class="mt-3 h-8 w-14 transition" class:-translate-y-3={active}>
                 <a class="rounded-full py-1" class:!active={active} {href}>
                     <SwappableIcon
@@ -31,7 +32,7 @@
                 class:opacity-0={!active}
             >
                 <span class="p-0 text-xs font-semibold">
-                    {truncateTitle(name, 8)}
+                    {truncate(descriptiveName, 8)}
                 </span>
             </li>
         {/each}

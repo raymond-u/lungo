@@ -3,12 +3,25 @@
     import hljs from "highlight.js/lib/core"
     import json from "highlight.js/lib/languages/json"
     import yaml from "highlight.js/lib/languages/yaml"
-    import { dedent } from "$lib/utils"
 
     export let code: string
     export let language: string
     export let highlightedLines = [] as number[]
     export let lineNumbers = true
+
+    const dedent = (text: string) => {
+        const lines = text.match(/^(?:[ \t]*\n)*(.*?)\s*$/s)![1].split("\n")
+        const minLeadingSpaces = lines.reduce((acc, line) => {
+            if (line.match(/^\s*$/)) {
+                return acc
+            }
+
+            const leadingSpaces = line.match(/^\s*/)![0].length
+            return leadingSpaces < acc ? leadingSpaces : acc
+        }, Infinity)
+
+        return lines.map((line) => line.substring(minLeadingSpaces)).join("\n")
+    }
 
     // Remember to register all the languages used in the code
     hljs.registerLanguage("json", json)

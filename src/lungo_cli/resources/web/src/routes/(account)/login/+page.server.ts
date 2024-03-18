@@ -1,7 +1,7 @@
 import { type Cookies, fail, redirect } from "@sveltejs/kit"
 import { createKratosClient } from "$lib/server/api"
 import type { KratosComponents } from "$lib/types"
-import { getFlow, getRandomId } from "$lib/utils"
+import { getFlowId, getRandomId } from "$lib/utils"
 
 export const actions = {
     default: async ({ cookies, request }: { cookies: Cookies; request: Request }) => {
@@ -38,7 +38,7 @@ export const actions = {
                 })
             case 400:
                 return fail(400, {
-                    flow: getFlow((response.error as KratosComponents["schemas"]["loginFlow"]).ui.action),
+                    flow: getFlowId((response.error as KratosComponents["schemas"]["loginFlow"]).ui.action),
                     messages: (response.error as KratosComponents["schemas"]["loginFlow"]).ui.messages,
                     nodes: (response.error as KratosComponents["schemas"]["loginFlow"]).ui.nodes,
                 })
@@ -63,7 +63,7 @@ export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof
     switch (response.response.status) {
         case 200:
             return {
-                flow: getFlow(response.data!.ui.action),
+                flow: getFlowId(response.data!.ui.action),
                 messages: response.data!.ui.messages,
                 nodes: response.data!.ui.nodes,
             }
@@ -73,7 +73,7 @@ export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof
     }
 
     // return {
-    //     flow: getFlow("https://playground.com/self-service/login?flow=33f6079a-ef14-4084-af13-34a91e53cd6c"),
+    //     flow: getFlowId("https://playground.com/self-service/login?flow=33f6079a-ef14-4084-af13-34a91e53cd6c"),
     //     messages: [
     //         // {
     //         //     id: 4000001,

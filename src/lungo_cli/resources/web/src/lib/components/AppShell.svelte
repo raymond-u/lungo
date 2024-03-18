@@ -4,7 +4,7 @@
     import { Avatar, SwappableIcon, ThemeSelector } from "$lib/components"
     import { SITE_TITLE } from "$lib/constants"
     import { CloseIcon, FullscreenIcon, LogoutIcon, MenuIcon, SettingsIcon } from "$lib/icons"
-    import { createPlaceholder, useStore } from "$lib/utils"
+    import { getNameInitials, useAppIcon, useStore } from "$lib/utils"
 
     const { allowScroll, currentApp, currentInlineFrame, darkTheme, syncedScrollTops } = useStore()
 
@@ -49,8 +49,9 @@
                     use:scrollSync={{ id: "nav", stores: syncedScrollTops }}
                 >
                     <ul class="menu items-center gap-2 p-2 pb-3">
-                        {#each $page.data.apps as { name, href, icon, altIcon } (name)}
+                        {#each $page.data.apps as { name, descriptiveName, href } (name)}
                             {@const active = $currentApp?.name === name}
+                            {@const { icon, altIcon } = useAppIcon(name)}
                             <li class="mx-0 h-14 w-full rounded-full">
                                 <a
                                     class="flex h-full items-center justify-between rounded-full px-5 py-1"
@@ -65,7 +66,7 @@
                                             altIconActive={active}
                                         />
                                     </span>
-                                    <span class="p-0 text-xs font-semibold">{name}</span>
+                                    <span class="p-0 text-xs font-semibold">{descriptiveName}</span>
                                 </a>
                             </li>
                         {/each}
@@ -92,11 +93,11 @@
             {#if $page.data.userInfo}
                 {@const { email, name } = $page.data.userInfo}
                 <div class="dropdown dropdown-end dropdown-bottom">
-                    <Avatar button placeholder={createPlaceholder(name.first, name.last)} />
+                    <Avatar button placeholder={getNameInitials(name.first, name.last)} />
                     <ul class="menu dropdown-content z-20 mt-2 rounded-box bg-base-200 p-2 shadow">
                         <li>
                             <div class="pointer-events-none flex">
-                                <Avatar large placeholder={createPlaceholder(name.first, name.last)} />
+                                <Avatar large placeholder={getNameInitials(name.first, name.last)} />
                                 <div class="flex flex-col">
                                     <span class="text-base font-semibold">{name.first} {name.last}</span>
                                     <span>{email}</span>

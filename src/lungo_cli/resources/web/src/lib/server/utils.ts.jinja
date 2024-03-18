@@ -1,25 +1,12 @@
-import { QuestionMarkIcon } from "$lib/icons"
 import type { AppInfo } from "$lib/types"
-{% for plugin in plugin_outputs %}
-    {% set plugin_prefix = plugin.config.name|capitalize %}
-    {% if plugin.config.web_icon %}
-import {{ plugin_prefix ~ 'Icon' }} from "$lib/plugins/{{ plugin.config.name }}/{{ plugin.config.web_icon }}"
-    {% endif %}
-    {% if plugin.config.web_alt_icon %}
-import {{ plugin_prefix ~ 'AltIcon' }} from "$lib/plugins/{{ plugin.config.name }}/{{ plugin.config.web_alt_icon }}"
-    {% endif %}
-{% endfor %}
 
 export function getAllApps(): AppInfo[] {
     const apps = [
         {% for plugin in plugin_outputs %}
-            {% set plugin_prefix = plugin.config.name|capitalize %}
         {
             name: "{{ plugin.config.name }}",
-            descriptiveName: "{{ plugin.config.descriptive_name or plugin_prefix }}",
+            descriptiveName: "{{ plugin.config.descriptive_name or plugin.config.name|capitalize }}",
             href: "/app/{{ plugin.config.name }}",
-            icon: {{ plugin_prefix ~ 'Icon' if plugin.config.web_icon else 'QuestionMarkIcon' }},
-            altIcon: {{ plugin_prefix ~ 'AltIcon' if plugin.config.web_alt_icon else 'QuestionMarkIcon' }},
         },
         {% endfor %}
     ]

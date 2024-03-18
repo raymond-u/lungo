@@ -1,11 +1,7 @@
-import type { ComponentType } from "svelte"
-
 export type AppInfo = {
     name: string
     descriptiveName: string
     href: string
-    icon: ComponentType
-    altIcon: ComponentType
 }
 
 // noinspection JSUnusedGlobalSymbols
