@@ -1,6 +1,6 @@
 {% set NODE_VER = '20.11.1-alpine' %}
 
-FROM docker.io/library/node:{{ NODE_VER }}
+FROM docker.io/library/node:{{ NODE_VER }} AS builder
 WORKDIR /app
 COPY package.json pnpm-lock.yaml .
 RUN corepack enable && pnpm install --frozen-lockfile && \
@@ -12,3 +12,9 @@ RUN corepack enable && pnpm install --frozen-lockfile && \
     mv package.json package.json.bak && mv pnpm-lock.yaml pnpm-lock.yaml.bak
 COPY . .
 RUN mv package.json.bak package.json && mv pnpm-lock.yaml.bak pnpm-lock.yaml && pnpm run build && pnpm prune --prod
+
+FROM docker.io/library/node:{{ NODE_VER }}
+WORKDIR /app
+COPY --from=builder /app/build build/
+COPY --from=builder /app/node_modules node_modules/
+COPY --from=builder /app/package.json .
