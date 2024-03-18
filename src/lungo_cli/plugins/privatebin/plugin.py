@@ -6,7 +6,7 @@ from lungo_cli.core.plugin import BasePlugin, BaseSettings, Config
 class Plugin(BasePlugin[BaseSettings]):
     config = Config(
         name="privatebin",
-        descriptive_name="PrivateBin",
+        descriptive_name="Pastebin",
         version="0.1.0",
         description="PrivateBin as a Lungo plugin.",
         have_backend=True,
