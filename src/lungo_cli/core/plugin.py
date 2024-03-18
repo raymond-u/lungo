@@ -23,7 +23,7 @@ from ..models.context import Context
 from ..models.plugin import BaseSettings, Config, PluginOutput
 
 
-class BasePlugin(ABC):
+class BasePlugin[T: BaseSettings](ABC):
     """Base class for all plugins."""
 
     config: ClassVar[Config]
@@ -37,7 +37,7 @@ class BasePlugin(ABC):
 
     def __init__(
         self,
-        settings: BaseSettings,
+        settings: T,
         console: Console,
         context_manager: ContextManager,
         file_utils: FileUtils,
@@ -54,7 +54,7 @@ class BasePlugin(ABC):
     # Chaining `classmethod` descriptor with `property` descriptor is no longer supported
     # `ClassVar` parameter cannot include type variables
     @classmethod
-    def get_plugin_settings_cls(cls) -> Type[BaseSettings]:
+    def get_plugin_settings_cls(cls) -> Type[T]:
         return BaseSettings
 
     def get_render_context(self) -> dict[str, Any]:

@@ -1,9 +1,9 @@
 from typing import override
 
-from lungo_cli.core.plugin import BasePlugin, Config
+from lungo_cli.core.plugin import BasePlugin, BaseSettings, Config
 
 
-class Plugin(BasePlugin):
+class Plugin(BasePlugin[BaseSettings]):
     config = Config(
         name="privatebin",
         descriptive_name="PrivateBin",

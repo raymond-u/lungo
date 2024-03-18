@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     password: str | None = None
 
 
-class Plugin(BasePlugin):
+class Plugin(BasePlugin[Settings]):
     config = Config(
         name="jupyterhub",
         descriptive_name="JupyterHub",
@@ -30,7 +30,7 @@ class Plugin(BasePlugin):
 
     @classmethod
     @override
-    def get_plugin_settings_cls(cls) -> Type[BaseSettings]:
+    def get_plugin_settings_cls(cls) -> Type[Settings]:
         return Settings
 
     @override

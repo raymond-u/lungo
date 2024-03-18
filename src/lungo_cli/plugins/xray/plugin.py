@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     ip_range_whitelist: list[IPv4Network] = []
 
 
-class Plugin(BasePlugin):
+class Plugin(BasePlugin[Settings]):
     config = Config(
         name="xray",
         descriptive_name="Xray",
@@ -31,7 +31,7 @@ class Plugin(BasePlugin):
 
     @classmethod
     @override
-    def get_plugin_settings_cls(cls) -> Type[BaseSettings]:
+    def get_plugin_settings_cls(cls) -> Type[Settings]:
         return Settings
 
     @override

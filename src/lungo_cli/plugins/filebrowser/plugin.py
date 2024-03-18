@@ -1,7 +1,7 @@
-from lungo_cli.core.plugin import BasePlugin, Config
+from lungo_cli.core.plugin import BasePlugin, BaseSettings, Config
 
 
-class Plugin(BasePlugin):
+class Plugin(BasePlugin[BaseSettings]):
     config = Config(
         name="filebrowser",
         descriptive_name="File Browser",
