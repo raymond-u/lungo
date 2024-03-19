@@ -67,7 +67,7 @@ export async function load({ cookies, fetch, url }: { cookies: Cookies; fetch: t
     }
 
     // return {
-    //     apps: [createApp(EApp.PrivateBin), createApp(EApp.XRay)],
+    //     apps: [],
     //     logoutToken: "test123",
     //     title,
     //     userInfo: {
