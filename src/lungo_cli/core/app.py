@@ -263,7 +263,9 @@ class AppManager:
 
                     # Copy web related files of the plugin to the main web directory
                     for web_dir in (self.storage.installed_plugins_dir / plugin.config.name / "web").iterdir():
-                        if web_dir.name == "routes":
+                        if web_dir.name == "dependencies.txt":
+                            continue
+                        elif web_dir.name == "routes":
                             dst_prefix = self.storage.bundled_dir / "web" / "src" / "routes" / "(apps)" / "app"
                             self.file_utils.copy(web_dir, dst_prefix / plugin.config.name)
                         else:
