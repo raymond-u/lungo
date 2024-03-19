@@ -5,7 +5,7 @@ export async function load({ url }: { url: URL }) {
 
     if (!pathBase) {
         return {
-            title: "",
+            title: "Unknown",
         }
     }
 
@@ -18,6 +18,6 @@ export async function load({ url }: { url: URL }) {
     }
 
     return {
-        title: "",
+        title: "Unknown",
     }
 }
