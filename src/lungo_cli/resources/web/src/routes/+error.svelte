@@ -5,7 +5,7 @@
 
 <HeroFrame>
     <div class="hero h-full">
-        <div class="hero-content text-center">
+        <div class="hero-content text-balance text-center">
             <div class="max-w-xl">
                 {#if $page.status === 429}
                     <h1 class="my-6 text-4xl font-bold">Hey, you're going too fast!</h1>
