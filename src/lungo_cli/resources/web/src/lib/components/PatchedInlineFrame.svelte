@@ -46,6 +46,7 @@
         const open = iframe.contentWindow!.open.bind(iframe.contentWindow!)
         const pushState = iframe.contentWindow!.history.pushState.bind(iframe.contentWindow!.history)
         const replaceState = iframe.contentWindow!.history.replaceState.bind(iframe.contentWindow!.history)
+        // @ts-expect-error type definition is inaccurate
         const cookie = Object.getOwnPropertyDescriptor(iframe.contentWindow!.Document.prototype, "cookie")!
         const getCookie = cookie.get!.bind(iframe.contentDocument)
         const setCookie = cookie.set!.bind(iframe.contentDocument)
