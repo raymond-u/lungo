@@ -38,8 +38,8 @@ export function darkTheme(currentTheme: Writable<ETheme>): Readable<boolean | un
     })
 }
 
-export function loginForm(): Writable<object | undefined> {
-    return writable(undefined)
+export function isSafari(): Writable<boolean> {
+    return writable(false)
 }
 
 export function syncedScrollTop(): Writable<number> {
@@ -52,7 +52,7 @@ export class Store {
     currentInlineFrame: Writable<HTMLIFrameElement | undefined>
     currentTheme: Writable<ETheme>
     darkTheme: Readable<boolean | undefined>
-    loginForm: Writable<object | undefined>
+    isSafari: Writable<boolean>
     syncedScrollTops: { [key: string]: Writable<number> }
 
     constructor() {
@@ -61,7 +61,7 @@ export class Store {
         this.currentInlineFrame = currentInlineFrame()
         this.currentTheme = currentTheme()
         this.darkTheme = darkTheme(this.currentTheme)
-        this.loginForm = loginForm()
+        this.isSafari = isSafari()
         this.syncedScrollTops = {}
     }
 }

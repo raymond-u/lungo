@@ -6,11 +6,14 @@
     import { ETheme } from "$lib/types"
     import { createStore, usePageTitle } from "$lib/utils"
 
-    const { allowScroll, currentTheme } = createStore()
+    const { allowScroll, currentTheme, isSafari } = createStore()
 
     onMount(() => {
         const theme = localStorage.getItem("theme")
         $currentTheme = theme && Object.values(ETheme).includes(theme as ETheme) ? (theme as ETheme) : ETheme.Auto
+
+        // @ts-expect-error exists for Safari on macOS
+        $isSafari = window.safari !== undefined
     })
 </script>
 

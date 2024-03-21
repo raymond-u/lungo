@@ -1,28 +1,18 @@
 <script lang="ts">
     import { page } from "$app/stores"
-    import { safeClick, scrollShadow, scrollSync } from "$lib/actions"
-    import { Avatar, SwappableIcon, ThemeSelector } from "$lib/components"
+    import { scrollShadow, scrollSync } from "$lib/actions"
+    import { SwappableIcon, ThemeSelector } from "$lib/components"
     import { SITE_TITLE } from "$lib/constants"
-    import { CloseIcon, FullscreenIcon, LogoutIcon, MenuIcon, SettingsIcon } from "$lib/icons"
+    import { CloseIcon, FullscreenIcon, MenuIcon } from "$lib/icons"
     import { getNameInitials, useAppIcon, useStore } from "$lib/utils"
+    import AccountDropdown from "./AccountDropdown.svelte"
 
-    const { allowScroll, currentApp, currentInlineFrame, darkTheme, syncedScrollTops } = useStore()
+    const { allowScroll, currentApp, currentInlineFrame, darkTheme, isSafari, syncedScrollTops } = useStore()
 
     const handleFullscreen = () => {
         if ($currentInlineFrame) {
             $currentInlineFrame.requestFullscreen()
         }
-    }
-    const handleLogout = async () => {
-        await fetch("/logout", {
-            method: "POST",
-            body: new URLSearchParams({ logoutToken: $page.data.logoutToken }),
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-        })
-
-        location.reload()
     }
 
     let checked: boolean | undefined
@@ -92,37 +82,25 @@
         <div class="ml-2 mr-4 flex-none">
             {#if $page.data.userInfo}
                 {@const { email, name } = $page.data.userInfo}
-                <div class="dropdown dropdown-end dropdown-bottom">
-                    <Avatar button placeholder={getNameInitials(name.first, name.last)} />
-                    <ul class="menu dropdown-content z-20 mt-2 rounded-box bg-base-200 p-2 shadow">
-                        <li>
-                            <div class="pointer-events-none flex">
-                                <Avatar large placeholder={getNameInitials(name.first, name.last)} />
-                                <div class="flex flex-col">
-                                    <span class="text-base font-semibold">{name.first} {name.last}</span>
-                                    <span>{email}</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li><div class="divider menu-title pointer-events-none"></div></li>
-                        <li>
-                            <a href="/account">
-                                <span class="h-6 w-6">
-                                    <SettingsIcon />
-                                </span>
-                                <span>Manage account</span>
-                            </a>
-                        </li>
-                        <li>
-                            <button use:safeClick={{ callback: handleLogout }}>
-                                <span class="h-6 w-6">
-                                    <LogoutIcon />
-                                </span>
-                                <span>Log out</span>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
+                {#if $isSafari}
+                    <details class="dropdown dropdown-end dropdown-bottom">
+                        <summary
+                            class="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-accent text-sm font-bold text-accent-content"
+                        >
+                            {getNameInitials(name.first, name.last)}
+                        </summary>
+                        <AccountDropdown {email} firstName={name.first} lastName={name.last} />
+                    </details>
+                {:else}
+                    <div class="dropdown dropdown-end dropdown-bottom">
+                        <button
+                            class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-accent text-sm font-bold text-accent-content"
+                        >
+                            {getNameInitials(name.first, name.last)}
+                        </button>
+                        <AccountDropdown {email} firstName={name.first} lastName={name.last} />
+                    </div>
+                {/if}
             {:else}
                 <a class="btn" href="/login">Sign in</a>
             {/if}
