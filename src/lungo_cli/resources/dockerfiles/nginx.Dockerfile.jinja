@@ -2,7 +2,7 @@
 
 FROM docker.io/openresty/openresty:{{ NGINX_VER }}
 RUN adduser -D -H -S www-data && \
-    apk --update add logrotate && \
+    apk add --no-cache logrotate && \
     printf '%s\n' >/etc/logrotate.d/nginx \
         '/var/log/nginx/*.log {' \
         '    daily' \
