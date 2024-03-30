@@ -149,7 +149,7 @@ services:
       - '{{ app_dirs.managed_dir }}/kratos:/var/lib/kratos:rw'
 
     environment:
-      - DSN=sqlite:///var/lib/kratos/db.sqlite3?_fk=true&mode=rwc
+      - DSN=sqlite:////var/lib/kratos/db.sqlite3?_fk=true&mode=rwc
     secrets:
       - source: KRATOS_SECRETS
         target: /etc/kratos/secrets.yaml
