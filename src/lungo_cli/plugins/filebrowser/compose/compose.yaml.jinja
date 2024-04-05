@@ -9,11 +9,15 @@ services:
     user: root
     entrypoint: [ ]
     command: >-
-      sh -c 'rm -f /var/lib/filebrowser/filebrowser.db;
-      /filebrowser -c /etc/filebrowser/settings.yaml config init --auth.method=noauth;
-      /filebrowser -c /etc/filebrowser/settings.yaml config import /etc/filebrowser/config_export.yaml;
-      /filebrowser -c /etc/filebrowser/settings.yaml users import --replace /etc/filebrowser/users_export.yaml;
-      umask 002; /filebrowser -c /etc/filebrowser/settings.yaml'
+      sh -c 'if ! cmp -s /etc/filebrowser/users_export.yaml /var/lib/filebrowser/users_export.old.yaml; then
+               rm -f /var/lib/filebrowser/filebrowser.db;
+               /filebrowser -c /etc/filebrowser/settings.yaml config init --auth.method=noauth;
+               /filebrowser -c /etc/filebrowser/settings.yaml config import /etc/filebrowser/config_export.yaml;
+               /filebrowser -c /etc/filebrowser/settings.yaml users import --replace /etc/filebrowser/users_export.yaml;
+               cp /etc/filebrowser/users_export.yaml /var/lib/filebrowser/users_export.old.yaml;
+             fi;
+             umask 002;
+             /filebrowser -c /etc/filebrowser/settings.yaml'
 
     networks:
       static:
