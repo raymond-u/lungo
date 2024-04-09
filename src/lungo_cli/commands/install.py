@@ -35,8 +35,8 @@ def main(
             console().print_warning(f"Plugin {format_input(arg)} not found or not installable. Skipping.")
             continue
 
-        plugin_manager().add_plugin(plugin_cls)
-        count += 1
+        if plugin_manager().add_plugin(plugin_cls):
+            count += 1
 
     if count == 1:
         console().print("1 plugin added successfully.")

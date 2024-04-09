@@ -11,6 +11,7 @@ class Config(Base):
     version: str | None = None
     description: str | None = None
 
+    compatible_with: str | None = None
     have_backend: bool
     require_account: bool
 

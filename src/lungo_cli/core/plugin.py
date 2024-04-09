@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any, ClassVar, final, Type
 
 from aenum import extend_enum
+from packaging.specifiers import InvalidSpecifier, SpecifierSet
 from pydantic.fields import FieldInfo
 from typer import Exit
 
@@ -15,7 +16,7 @@ from .constants import PACKAGE_NAME
 from .context import ContextManager
 from .file import FileUtils
 from .storage import Storage
-from ..helpers.common import extract_multiline_value_from_yaml
+from ..helpers.common import extract_multiline_value_from_yaml, get_app_version
 from ..helpers.format import format_path, format_program
 from ..models.base import EApp
 from ..models.config import Config as Conf, Plugins
@@ -172,13 +173,27 @@ class PluginManager:
     def plugins(self) -> list[BasePlugin]:
         return self._plugins
 
-    def add_plugin(self, plugin_cls: Type[BasePlugin]) -> None:
+    def add_plugin(self, plugin_cls: Type[BasePlugin]) -> bool:
         """Add a plugin to the application."""
         if not plugin_cls.installable:
-            self.console.print_error(f"Plugin {format_program(plugin_cls.config.name)} is not installable.")
-            raise Exit(code=1)
+            self.console.print_warning(f"Plugin {format_program(plugin_cls.config.name)} is not installable. Skipping.")
+            return False
 
         dst = self.storage.installed_plugins_dir / plugin_cls.config.name
+
+        if plugin_cls.config.compatible_with:
+            try:
+                if get_app_version() not in SpecifierSet(plugin_cls.config.compatible_with):
+                    self.console.print_warning(
+                        f"Plugin {format_program(plugin_cls.config.name)} is not compatible "
+                        "with the current version of the application. Skipping."
+                    )
+                    return False
+            except InvalidSpecifier:
+                self.console.print_warning(
+                    f"Plugin {format_program(plugin_cls.config.name)} has an invalid version specifier. Skipping."
+                )
+                return False
 
         if plugin_cls.custom:
             self.file_utils.copy(self.storage.custom_plugins_dir / plugin_cls.config.name, dst)
@@ -186,15 +201,18 @@ class PluginManager:
             self.file_utils.copy_package_resources(f"{PACKAGE_NAME}.plugins", plugin_cls.config.name, dst)
 
         plugin_cls.installed = True
+        return True
 
-    def remove_plugin(self, plugin_cls: Type[BasePlugin]) -> None:
+    def remove_plugin(self, plugin_cls: Type[BasePlugin]) -> bool:
         """Remove a plugin from the application."""
         if not plugin_cls.installed:
-            self.console.print_error(f"Plugin {format_program(plugin_cls.config.name)} is not installed.")
-            raise Exit(code=1)
+            self.console.print_warning(f"Plugin {format_program(plugin_cls.config.name)} is not installed. Skipping.")
+            return False
 
         self.file_utils.remove(self.storage.installed_plugins_dir / plugin_cls.config.name)
+
         plugin_cls.installed = False
+        return True
 
     def import_plugins(self, src: str | PathLike[str]) -> list[Type[BasePlugin]]:
         """Import plugins from the specified directory."""
