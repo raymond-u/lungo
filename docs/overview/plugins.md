@@ -1,4 +1,17 @@
-# Supported applications
+# Plugins
+
+## About plugins
+
+Plugins are how Lungo extends its functionality. They are applications that run within containers alongside Lungo,
+offering additional services to users. Each plugin can be independently enabled or disabled, with its own configuration.
+
+Lungo has built-in plugins for several popular applications. You can also install custom plugins or even develop your
+own.
+
+Please be aware that insecure or malicious plugins may compromise the security of not only your Lungo instance but also
+your entire system. Therefore, it is strongly advised to install plugins exclusively from trusted sources.
+
+## Built-in plugins
 
 | Application                                                      | Value         | Status                                          |
 |:-----------------------------------------------------------------|---------------|:------------------------------------------------|

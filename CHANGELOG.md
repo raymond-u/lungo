@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Plugin system
+- The plugin system
 - Allow login through a one-time code sent via email
 
 ### Changed

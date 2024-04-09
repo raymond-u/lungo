@@ -23,7 +23,7 @@ A user can be assigned one of the following roles:
 - `user`
 - `admin`
 
-Each role inherits the permissions of the previous one. For example, a user with the `admin` role can perform all
+Each role inherits the permissions of the previous one. For instance, a user with the `admin` role can perform all
 actions that a `guest` or `user` can.
 
 ## About the `extra.user_dir` field

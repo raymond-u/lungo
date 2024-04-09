@@ -11,11 +11,12 @@ nav:
   - Overview:
       - Architecture: overview/architecture.md
       - Security: overview/security.md
-      - Supported applications: overview/supported-applications.md
+      - Plugins: overview/plugins.md
   - Installation: installation.md
   - Getting Started:
       - Prerequisites: getting-started/prerequisites.md
       - Configuring settings: getting-started/configuring-settings.md
+      - Managing plugins: getting-started/managing-plugins.md
       - Managing users: getting-started/managing-users.md
       - Launching the service: getting-started/launching-the-service.md
   - Guides:

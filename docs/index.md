@@ -13,7 +13,7 @@ Lungo is a user-friendly home lab setup designed for small-to-mid-scale on-premi
 
 - **Complete configurability** - manage everything declaratively through YAML files
 - **Seamless interoperability** - access all applications via a single sign-on portal
-- **Batteries included** - benefit from a diverse range of applications
+- **Batteries included** - extend functionality with both built-in and custom plugins
 - **Containerized solution** - designed to operate in a rootless Docker environment
 - **Security by default** - use HTTPS and secure server settings across the system
 
