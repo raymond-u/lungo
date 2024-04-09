@@ -185,6 +185,12 @@
 # security:
 # =========
 
+#   # Maximum size of the request body allowed in megabytes (or 0 for unlimited)
+#   # Type: int
+#   # Default: 0
+#   # Required: no
+#   max_body_size: 0
+
 #   # Rate limiting settings
 #   rate_limiting:
 

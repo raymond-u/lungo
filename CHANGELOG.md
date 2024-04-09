@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The plugin system
 - Allow login through a one-time code sent via email
+- Allow control over the maximum size of the client request body
 
 ### Changed
 

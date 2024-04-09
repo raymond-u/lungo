@@ -1,7 +1,16 @@
 from datetime import timedelta
 from ipaddress import IPv4Address, IPv4Network
 
-from pydantic import ConfigDict, DirectoryPath, EmailStr, field_validator, FilePath, NewPath, PositiveInt
+from pydantic import (
+    ConfigDict,
+    DirectoryPath,
+    EmailStr,
+    field_validator,
+    FilePath,
+    NewPath,
+    NonNegativeInt,
+    PositiveInt,
+)
 
 from .base import AllowedApps, Base, FileName, Port
 from ..core.constants import APP_NAME_CAPITALIZED
@@ -90,6 +99,7 @@ class Session(Base):
 
 
 class Security(Base):
+    max_body_size: NonNegativeInt = 0
     rate_limiting: RateLimiting = RateLimiting()
     session: Session = Session()
 

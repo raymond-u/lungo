@@ -7,8 +7,8 @@ fastcgi_temp_path     /var/run/nginx/nginx-fastcgi;
 uwsgi_temp_path       /var/run/nginx/nginx-uwsgi;
 scgi_temp_path        /var/run/nginx/nginx-scgi;
 
-# Support uploading large files
-client_max_body_size 128m;
+# Body size is already checked by the gateway
+client_max_body_size 0;
 
 # Support forwarding websocket connections
 map $http_upgrade $connection_upgrade {
