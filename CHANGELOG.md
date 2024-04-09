@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.2.3...HEAD)
 
+### Breaking Changes
+
+- Raise the minimum required version of Python to 3.12
+- Built-in apps are now installed as plugins
+- The `modules` configuration has been renamed to `plugins`
+- Guest role and user role accounts no longer have access to apps by default
+
 ### Added
 
 - Plugin system
@@ -14,10 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Raise the minimum required version of Python to 3.12
-- Built-in apps are now installed as plugins
-- The `modules` configuration has been renamed to `plugins`
-- Guest role and user role accounts no longer have access to apps by default
 - Hide fullscreen button for narrow screen widths
 - Update JupyterLab to 4.1.5
 - Update RStudio to 4.3.3
