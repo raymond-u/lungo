@@ -2,7 +2,6 @@ import shutil
 from importlib.resources import as_file, files
 from os import PathLike
 from pathlib import Path
-from typing import Type
 
 from pydantic import BaseModel, ValidationError
 from pydantic_yaml import parse_yaml_file_as
@@ -151,7 +150,7 @@ class FileUtils:
             self.console.print_error(f"Failed to hash {format_path(path.name)} ({e}).")
             raise Exit(code=1)
 
-    def parse_yaml[T: BaseModel](self, path: str | PathLike[str], model: Type[T]) -> T:
+    def parse_yaml[T: BaseModel](self, path: str | PathLike[str], model: type[T]) -> T:
         """Parse a YAML file as a Pydantic model."""
         try:
             return parse_yaml_file_as(model, path)

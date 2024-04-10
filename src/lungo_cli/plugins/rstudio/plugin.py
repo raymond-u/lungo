@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, override, Type
+from typing import Any, override
 
 from lungo_cli.core.plugin import BasePlugin, BaseSettings, Config
 from lungo_cli.helpers.crypto import generate_random_hex
@@ -27,7 +27,7 @@ class Plugin(BasePlugin[Settings]):
 
     @classmethod
     @override
-    def get_plugin_settings_cls(cls) -> Type[Settings]:
+    def get_plugin_settings_cls(cls) -> type[Settings]:
         return Settings
 
     @override

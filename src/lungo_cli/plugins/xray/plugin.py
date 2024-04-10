@@ -1,6 +1,6 @@
 from ipaddress import IPv4Network
 from pathlib import Path
-from typing import Any, override, Type
+from typing import Any, override
 from uuid import UUID, uuid1, uuid5
 
 from lungo_cli.core.plugin import BasePlugin, BaseSettings, Config
@@ -31,7 +31,7 @@ class Plugin(BasePlugin[Settings]):
 
     @classmethod
     @override
-    def get_plugin_settings_cls(cls) -> Type[Settings]:
+    def get_plugin_settings_cls(cls) -> type[Settings]:
         return Settings
 
     @override

@@ -4,7 +4,7 @@ from importlib import import_module
 from importlib.resources import as_file, files
 from os import PathLike
 from pathlib import Path
-from typing import Any, ClassVar, final, Type
+from typing import Any, ClassVar, final
 
 from aenum import extend_enum
 from packaging.specifiers import InvalidSpecifier, SpecifierSet
@@ -55,7 +55,7 @@ class BasePlugin[T: BaseSettings](ABC):
     # Chaining `classmethod` descriptor with `property` descriptor is no longer supported
     # `ClassVar` parameter cannot include type variables
     @classmethod
-    def get_plugin_settings_cls(cls) -> Type[T]:
+    def get_plugin_settings_cls(cls) -> type[T]:
         return BaseSettings
 
     def get_render_context(self) -> dict[str, Any]:
@@ -125,7 +125,7 @@ class PluginManager:
         self._plugins = []
 
     @property
-    def builtin_plugin_classes(self) -> list[Type[BasePlugin]]:
+    def builtin_plugin_classes(self) -> list[type[BasePlugin]]:
         if self._builtin_plugin_classes is None:
             with as_file(files(f"{PACKAGE_NAME}.plugins")) as package_dir:
                 plugin_classes = self.import_plugins(package_dir)
@@ -138,7 +138,7 @@ class PluginManager:
         return self._builtin_plugin_classes
 
     @property
-    def custom_plugin_classes(self) -> list[Type[BasePlugin]]:
+    def custom_plugin_classes(self) -> list[type[BasePlugin]]:
         if self._custom_plugin_classes is None:
             plugin_classes = self.import_plugins(self.storage.custom_plugins_dir)
 
@@ -151,14 +151,14 @@ class PluginManager:
         return self._custom_plugin_classes
 
     @property
-    def installable_plugin_classes(self) -> list[Type[BasePlugin]]:
+    def installable_plugin_classes(self) -> list[type[BasePlugin]]:
         if self._installable_plugin_classes is None:
             self._installable_plugin_classes = self.builtin_plugin_classes + self.custom_plugin_classes
 
         return self._installable_plugin_classes
 
     @property
-    def installed_plugin_classes(self) -> list[Type[BasePlugin]]:
+    def installed_plugin_classes(self) -> list[type[BasePlugin]]:
         if self._installed_plugin_classes is None:
             plugin_classes = self.import_plugins(self.storage.installed_plugins_dir)
 
@@ -173,7 +173,7 @@ class PluginManager:
     def plugins(self) -> list[BasePlugin]:
         return self._plugins
 
-    def add_plugin(self, plugin_cls: Type[BasePlugin]) -> bool:
+    def add_plugin(self, plugin_cls: type[BasePlugin]) -> bool:
         """Add a plugin to the application."""
         if not plugin_cls.installable:
             self.console.print_warning(f"Plugin {format_program(plugin_cls.config.name)} is not installable. Skipping.")
@@ -203,7 +203,7 @@ class PluginManager:
         plugin_cls.installed = True
         return True
 
-    def remove_plugin(self, plugin_cls: Type[BasePlugin]) -> bool:
+    def remove_plugin(self, plugin_cls: type[BasePlugin]) -> bool:
         """Remove a plugin from the application."""
         if not plugin_cls.installed:
             self.console.print_warning(f"Plugin {format_program(plugin_cls.config.name)} is not installed. Skipping.")
@@ -214,7 +214,7 @@ class PluginManager:
         plugin_cls.installed = False
         return True
 
-    def import_plugins(self, src: str | PathLike[str]) -> list[Type[BasePlugin]]:
+    def import_plugins(self, src: str | PathLike[str]) -> list[type[BasePlugin]]:
         """Import plugins from the specified directory."""
         src = Path(src)
 
