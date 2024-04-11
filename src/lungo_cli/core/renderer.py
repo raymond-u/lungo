@@ -51,7 +51,6 @@ class Renderer:
 
             if relative_path.parts[0] != str(self.storage.excluded_rel):
                 self.render(relative_path, file.with_suffix(""), **self.context_manager.context.model_dump())
-                self.file_utils.remove(file)
 
     def render_plugin(self, plugin: BasePlugin) -> None:
         self.console.print_info(f"Rendering templates for {format_program(plugin.config.name)}...")
@@ -64,6 +63,5 @@ class Renderer:
                 **self.context_manager.context.model_dump(),
                 **plugin.get_render_context(),
             )
-            self.file_utils.remove(file)
 
         plugin.mark_as_rendered()
