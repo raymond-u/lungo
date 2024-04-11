@@ -181,20 +181,6 @@ class PluginManager:
 
         dst = self.storage.installed_plugins_dir / plugin_cls.config.name
 
-        if plugin_cls.config.compatible_with:
-            try:
-                if get_app_version() not in SpecifierSet(plugin_cls.config.compatible_with):
-                    self.console.print_warning(
-                        f"Plugin {format_program(plugin_cls.config.name)} is not compatible "
-                        "with the current version of the application. Skipping."
-                    )
-                    return False
-            except InvalidSpecifier:
-                self.console.print_warning(
-                    f"Plugin {format_program(plugin_cls.config.name)} has an invalid version specifier. Skipping."
-                )
-                return False
-
         if plugin_cls.custom:
             self.file_utils.copy(self.storage.custom_plugins_dir / plugin_cls.config.name, dst)
         else:
@@ -234,7 +220,31 @@ class PluginManager:
             # Import modules with the same name from different directories
             try:
                 sys.path.insert(0, str(plugin_dir))
-                plugin_classes.append(import_module("plugin").Plugin)
+
+                plugin_cls = import_module("plugin").Plugin
+
+                if plugin_cls.config.compatible_with:
+                    plugin_version = plugin_cls.config.version
+
+                    try:
+                        if get_app_version() not in SpecifierSet(plugin_cls.config.compatible_with):
+                            self.console.print_warning(
+                                f"Plugin {format_program(plugin_cls.config.name)} "
+                                f"{f'version {plugin_version}' if plugin_version else 'with an unknown version'} "
+                                "is not compatible with the current version of the application. Skipping."
+                            )
+
+                            continue
+                    except InvalidSpecifier:
+                        self.console.print_warning(
+                            f"Plugin {format_program(plugin_cls.config.name)} "
+                            f"{f'version {plugin_version}' if plugin_version else 'with an unknown version'} "
+                            "has an invalid version specifier. Skipping."
+                        )
+
+                        continue
+
+                plugin_classes.append(plugin_cls)
             except Exception as e:
                 self.console.print_warning(f"Failed to import plugin from {format_path(plugin_dir)} ({e}). Skipping.")
             finally:
