@@ -175,7 +175,7 @@ class AppManager:
                 if next(
                     (
                         plugin_cls.config.require_account
-                        for plugin_cls in self.plugin_manager.installed_plugin_classes
+                        for plugin_cls in self.plugin_manager.compatible_plugin_classes
                         if plugin_cls.config.name == allowed_app
                     ),
                     False,
@@ -188,7 +188,7 @@ class AppManager:
 
     def generate_config_hash(self) -> str:
         """Generate a hash of the configuration files."""
-        ordered_plugins = sorted(self.plugin_manager.installed_plugin_classes, key=lambda x: x.config.name)
+        ordered_plugins = sorted(self.plugin_manager.compatible_plugin_classes, key=lambda x: x.config.name)
 
         return hash_text(
             "+".join(

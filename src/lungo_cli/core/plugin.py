@@ -33,6 +33,7 @@ class BasePlugin[T: BaseSettings](ABC):
     custom: ClassVar[bool] = False
     installable: ClassVar[bool] = False
     installed: ClassVar[bool] = False
+    compatible: ClassVar[bool] = True
     alt_version: ClassVar[str | None] = None
 
     rendered: ClassVar[bool] = False
@@ -123,6 +124,7 @@ class PluginManager:
         self._custom_plugin_classes = None
         self._installable_plugin_classes = None
         self._installed_plugin_classes = None
+        self._compatible_plugin_classes = None
         self._plugins = []
 
     @property
@@ -169,6 +171,15 @@ class PluginManager:
             self._installed_plugin_classes = plugin_classes
 
         return self._installed_plugin_classes
+
+    @property
+    def compatible_plugin_classes(self) -> list[type[BasePlugin]]:
+        if self._compatible_plugin_classes is None:
+            self._compatible_plugin_classes = [
+                plugin_cls for plugin_cls in self.installed_plugin_classes if plugin_cls.compatible
+            ]
+
+        return self._compatible_plugin_classes
 
     @property
     def plugins(self) -> list[BasePlugin]:
@@ -241,7 +252,7 @@ class PluginManager:
                                 "is not compatible with the current version of the application. Skipping it."
                             )
 
-                            continue
+                            plugin_cls.compatible = False
                     except InvalidSpecifier:
                         self.console.print_warning(
                             f"Plugin {format_program(plugin_cls.config.name)} "
@@ -249,7 +260,7 @@ class PluginManager:
                             "has an invalid version specifier. Skipping it."
                         )
 
-                        continue
+                        plugin_cls.compatible = False
 
                 plugin_classes.append(plugin_cls)
             except Exception as e:
@@ -264,7 +275,7 @@ class PluginManager:
 
     def extend_models(self) -> None:
         """Extend the models with fields for installed plugins."""
-        for plugin_cls in self.installed_plugin_classes:
+        for plugin_cls in self.compatible_plugin_classes:
             try:
                 extend_enum(EApp, plugin_cls.config.name.upper(), plugin_cls.config.name)
 
@@ -289,7 +300,7 @@ class PluginManager:
 
     def initialize_plugins(self) -> None:
         """Initialize all plugins."""
-        for plugin_cls in self.installed_plugin_classes:
+        for plugin_cls in self.compatible_plugin_classes:
             plugin_settings = getattr(self.context_manager.config.plugins, plugin_cls.config.name, None)
 
             if plugin_settings is None:
