@@ -113,6 +113,12 @@ class Smtp(Base):
     sender: EmailStr
 
 
+class CoreConfig(Base):
+    model_config = ConfigDict(extra="ignore")
+
+    directories: Directories
+
+
 class Config(Base):
     branding: Branding = Branding()
     directories: Directories

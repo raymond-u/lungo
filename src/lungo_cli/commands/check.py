@@ -12,6 +12,6 @@ def main(
     Check if the configuration is valid.
     """
     app_manager().process_cli_options(config_dir, dev, quiet, verbosity)
-    app_manager().load_config_and_plugins()
+    app_manager().load_full_config()
 
     console().print("Configuration is valid.")

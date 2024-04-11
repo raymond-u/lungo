@@ -25,7 +25,7 @@ def main(
     List all plugins.
     """
     app_manager().process_cli_options(config_dir, dev, quiet, verbosity)
-    app_manager().load_config()
+    app_manager().load_core_config()
 
     plugin_classes = plugin_manager().installed_plugin_classes
 

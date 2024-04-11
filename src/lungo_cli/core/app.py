@@ -16,7 +16,7 @@ from ..helpers.common import get_app_version, get_file_permissions
 from ..helpers.crypto import generate_random_hex, generate_self_signed_cert, hash_text
 from ..helpers.format import format_input, format_path
 from ..models.base import EApp
-from ..models.config import Config
+from ..models.config import Config, CoreConfig
 from ..models.users import Users
 
 
@@ -68,58 +68,64 @@ class AppManager:
         if force_init:
             self.force_init = True
 
-    def load_config(self, skip_check: bool = False) -> None:
-        """Load the configuration files into the context manager."""
-        if not skip_check:
-            files_missing = False
+    def load_core_config(self) -> None:
+        """Load the core part of the configuration file that is critical to set up the application."""
+        files_missing = False
 
-            if not self.storage.config_file.is_file():
-                self.console.print_error(
-                    f"{format_path(self.storage.config_file.name)} not found. "
-                    "A template has been created in place of the missing file."
-                )
-                self.file_utils.copy_package_resources(
-                    f"{PACKAGE_NAME}.resources",
-                    self.storage.template_config_rel,
-                    self.storage.config_file,
-                )
-                files_missing = True
+        if not self.storage.config_file.is_file():
+            self.console.print_error(
+                f"{format_path(self.storage.config_file.name)} not found. "
+                "A template has been created in place of the missing file."
+            )
+            self.file_utils.copy_package_resources(
+                f"{PACKAGE_NAME}.resources",
+                self.storage.template_config_rel,
+                self.storage.config_file,
+            )
+            files_missing = True
 
-            if not self.storage.users_file.is_file():
-                self.console.print_error(
-                    f"{format_path(self.storage.users_file.name)} not found. "
-                    "A template has been created in place of the missing file."
-                )
-                self.file_utils.copy_package_resources(
-                    f"{PACKAGE_NAME}.resources",
-                    self.storage.template_users_rel,
-                    self.storage.users_file,
-                )
-                files_missing = True
+        if not self.storage.users_file.is_file():
+            self.console.print_error(
+                f"{format_path(self.storage.users_file.name)} not found. "
+                "A template has been created in place of the missing file."
+            )
+            self.file_utils.copy_package_resources(
+                f"{PACKAGE_NAME}.resources",
+                self.storage.template_users_rel,
+                self.storage.users_file,
+            )
+            files_missing = True
 
-            if files_missing:
-                raise Exit(code=1)
+        if files_missing:
+            raise Exit(code=1)
 
-            if (permission := get_file_permissions(self.storage.config_file))[1:] != "00":
-                self.console.print_warning(
-                    f"{format_path(self.storage.config_file)} should not be readable or writable by other users "
-                    f"(recommended permission: 600, current permission: {permission})."
-                )
-            if (permission := get_file_permissions(self.storage.users_file))[1:] != "00":
-                self.console.print_warning(
-                    f"{format_path(self.storage.users_file)} should not be readable or writable by other users "
-                    f"(recommended permission: 600, current permission: {permission})."
-                )
+        if (permission := get_file_permissions(self.storage.config_file))[1:] != "00":
+            self.console.print_warning(
+                f"{format_path(self.storage.config_file)} should not be readable or writable by other users "
+                f"(recommended permission: 600, current permission: {permission})."
+            )
+        if (permission := get_file_permissions(self.storage.users_file))[1:] != "00":
+            self.console.print_warning(
+                f"{format_path(self.storage.users_file)} should not be readable or writable by other users "
+                f"(recommended permission: 600, current permission: {permission})."
+            )
+
+        core_config = self.file_utils.parse_yaml(self.storage.config_file, CoreConfig)
+
+        if core_config.directories.cache_dir:
+            self.storage.cache_dir = core_config.directories.cache_dir.resolve()
+        if core_config.directories.data_dir:
+            self.storage.data_dir = core_config.directories.data_dir.resolve()
+
+    def load_full_config(self) -> None:
+        """Load the full configuration files into the context manager."""
+        self.load_core_config()
+        self.plugin_manager.extend_models()
 
         config = self.file_utils.parse_yaml(self.storage.config_file, Config)
         users = self.file_utils.parse_yaml(self.storage.users_file, Users)
 
         self.verify_config(config, users)
-
-        if config.directories.cache_dir:
-            self.storage.cache_dir = config.directories.cache_dir.resolve()
-        if config.directories.data_dir:
-            self.storage.data_dir = config.directories.data_dir.resolve()
 
         self.context_manager.config = config
         self.context_manager.users = users
@@ -179,15 +185,6 @@ class AppManager:
                         "has access to applications that require an account."
                     )
                     raise Exit(code=1)
-
-    def load_config_and_plugins(self) -> None:
-        """Load the configuration files and the plugins."""
-        # 1. Load the configuration file and set cache and data directories if needed
-        # 2. Extend the models with the plugins
-        # 3. Load the configuration file again to include the plugin settings
-        self.load_config()
-        self.plugin_manager.extend_models()
-        self.load_config(True)
 
     def generate_config_hash(self) -> str:
         """Generate a hash of the configuration files."""
