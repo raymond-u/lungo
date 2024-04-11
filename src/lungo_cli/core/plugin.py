@@ -224,7 +224,7 @@ class PluginManager:
         plugin_classes = []
 
         for plugin_dir in src.iterdir():
-            if not plugin_dir.is_dir() or plugin_dir.name.startswith("_"):
+            if not plugin_dir.is_dir() or plugin_dir.name.startswith("_") or plugin_dir.name.startswith("."):
                 continue
 
             if not plugin_dir.joinpath("plugin.py").is_file():
