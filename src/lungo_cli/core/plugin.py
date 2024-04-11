@@ -19,15 +19,15 @@ from .storage import Storage
 from ..helpers.common import extract_multiline_value_from_yaml, get_app_version
 from ..helpers.format import format_path, format_program
 from ..models.base import EApp
-from ..models.config import Config as Conf, Plugins
+from ..models.config import Config, Plugins
 from ..models.context import Context
-from ..models.plugin import BaseSettings, Config, PluginOutput
+from ..models.plugin import BaseSettings, PluginConfig, PluginOutput
 
 
 class BasePlugin[T: BaseSettings](ABC):
     """Base class for all plugins."""
 
-    config: ClassVar[Config]
+    config: ClassVar[PluginConfig]
 
     custom: ClassVar[bool] = False
     installable: ClassVar[bool] = False
@@ -259,7 +259,7 @@ class PluginManager:
                 continue
 
         Plugins.model_rebuild(force=True)
-        Conf.model_rebuild(force=True)
+        Config.model_rebuild(force=True)
         Context.model_rebuild(force=True)
 
     def initialize_plugins(self) -> None:

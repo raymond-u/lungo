@@ -1,10 +1,10 @@
 from typing import override
 
-from lungo_cli.core.plugin import BasePlugin, BaseSettings, Config
+from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginConfig
 
 
 class Plugin(BasePlugin[BaseSettings]):
-    config = Config(
+    config = PluginConfig(
         name="privatebin",
         descriptive_name="Pastebin",
         version="0.1.0",

@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any, override
 
-from lungo_cli.core.plugin import BasePlugin, BaseSettings, Config
+from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginConfig
 from lungo_cli.helpers.crypto import generate_random_hex
 
 
@@ -10,7 +10,7 @@ class Settings(BaseSettings):
 
 
 class Plugin(BasePlugin[Settings]):
-    config = Config(
+    config = PluginConfig(
         name="jupyterhub",
         descriptive_name="JupyterHub",
         version="0.1.0",

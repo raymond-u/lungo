@@ -5,7 +5,7 @@ class BaseSettings(Base):
     enabled: bool = True
 
 
-class Config(Base):
+class PluginConfig(Base):
     name: str
     descriptive_name: str | None = None
     version: str | None = None
@@ -20,7 +20,7 @@ class Config(Base):
 
 
 class PluginOutput(Base):
-    config: Config
+    config: PluginConfig
     compose_services: str
     compose_secrets: str
     nginx_upstream: str

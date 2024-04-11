@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Any, override
 from uuid import UUID, uuid1, uuid5
 
-from lungo_cli.core.plugin import BasePlugin, BaseSettings, Config
+from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginConfig
 
 
 class Settings(BaseSettings):
@@ -14,7 +14,7 @@ class Settings(BaseSettings):
 
 
 class Plugin(BasePlugin[Settings]):
-    config = Config(
+    config = PluginConfig(
         name="xray",
         descriptive_name="Xray",
         version="0.1.0",
