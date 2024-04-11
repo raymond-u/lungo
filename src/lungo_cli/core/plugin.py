@@ -19,9 +19,10 @@ from .storage import Storage
 from ..helpers.common import extract_multiline_value_from_yaml, get_app_version
 from ..helpers.format import format_path, format_program
 from ..models.base import EApp
-from ..models.config import Config, Plugins
+from ..models.config import Config, Plugins, Privilege, Privileges, Rules
 from ..models.context import Context
 from ..models.plugin import BaseSettings, PluginConfig, PluginOutput
+from ..models.users import Account, Extra, Users
 
 
 class BasePlugin[T: BaseSettings](ABC):
@@ -269,7 +270,13 @@ class PluginManager:
                 continue
 
         Plugins.model_rebuild(force=True)
+        Privilege.model_rebuild(force=True)
+        Privileges.model_rebuild(force=True)
+        Rules.model_rebuild(force=True)
         Config.model_rebuild(force=True)
+        Extra.model_rebuild(force=True)
+        Account.model_rebuild(force=True)
+        Users.model_rebuild(force=True)
         Context.model_rebuild(force=True)
 
     def initialize_plugins(self) -> None:
