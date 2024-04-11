@@ -1,5 +1,4 @@
 Dockerfile
-Dockerfile.jinja
 .dockerignore
 .env
 .git
@@ -13,3 +12,4 @@ assets
 build
 node_modules
 README.md
+**/*.jinja
