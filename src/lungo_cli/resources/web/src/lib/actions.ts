@@ -11,8 +11,12 @@ export function safeClick(node: HTMLButtonElement, { callback }: SCParams): Acti
         }
 
         node.disabled = true
-        await callback(e)
-        node.disabled = false
+
+        try {
+            await callback(e)
+        } finally {
+            node.disabled = false
+        }
     }
 
     node.addEventListener("click", handleClick)
