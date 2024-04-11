@@ -12,7 +12,7 @@ from pydantic import (
     PositiveInt,
 )
 
-from .base import AllowedApps, Base, FileName, Port
+from .base import AllowedAppsType, Base, FileNameType, PortType
 from ..core.constants import APP_NAME_CAPITALIZED
 
 
@@ -24,7 +24,7 @@ class Branding(Base):
 
 
 class SharedDir(Base):
-    name: FileName
+    name: FileNameType
     source: DirectoryPath | FilePath
     read_only: bool = False
 
@@ -48,7 +48,7 @@ class Directories(Base):
 
 class Http(Base):
     enabled: bool = True
-    port: Port = 80
+    port: PortType = 80
 
 
 class Tls(Base):
@@ -57,7 +57,7 @@ class Tls(Base):
 
 
 class Https(Base):
-    port: Port = 443
+    port: PortType = 443
     tls: Tls | None = None
 
 
@@ -74,7 +74,7 @@ class Plugins(Base):
 
 
 class Privilege(Base):
-    allowed_apps: AllowedApps
+    allowed_apps: AllowedAppsType
 
 
 class Privileges(Base):
@@ -106,7 +106,7 @@ class Security(Base):
 
 class Smtp(Base):
     host: str
-    port: Port
+    port: PortType
     username: str
     password: str
     name: str = APP_NAME_CAPITALIZED

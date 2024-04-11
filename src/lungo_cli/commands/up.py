@@ -2,7 +2,7 @@ from typing import Annotated, Optional
 
 from typer import Exit, Option
 
-from .base import config_dir_type, dev_type, force_init_type, quiet_type, verbosity_type
+from .base import ConfigDirType, DevType, ForceInitType, QuietType, VerbosityType
 from ..app.state import app_manager, console, container, context_manager, file_utils, storage
 from ..core.constants import APP_NAME, APP_NAME_CAPITALIZED
 from ..helpers.common import port_is_available
@@ -15,12 +15,12 @@ def main(
     container_tool: Annotated[
         Optional[EContainer], Option("--container-tool", help="Container management tool to use.", show_default=False)
     ] = None,
-    force_init: force_init_type = False,
+    force_init: ForceInitType = False,
     remove_lock: Annotated[bool, Option("--remove-lock", help="Remove the lock file.", show_default=False)] = False,
-    config_dir: config_dir_type = None,
-    dev: dev_type = False,
-    quiet: quiet_type = False,
-    verbosity: verbosity_type = 0,
+    config_dir: ConfigDirType = None,
+    dev: DevType = False,
+    quiet: QuietType = False,
+    verbosity: VerbosityType = 0,
 ):
     """
     Start the service.

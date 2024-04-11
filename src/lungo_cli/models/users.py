@@ -2,24 +2,24 @@ from typing import Self
 
 from pydantic import DirectoryPath, EmailStr, field_validator, model_validator, NewPath
 
-from .base import AllowedApps, Base, ERole, NameStr, Username
+from .base import AllowedAppsType, Base, ERole, NameStrType, UsernameType
 from .config import SharedDir
 
 
 class Name(Base):
-    first: NameStr
-    last: NameStr
+    first: NameStrType
+    last: NameStrType
 
 
 class Extra(Base):
-    allowed_apps: AllowedApps = []
+    allowed_apps: AllowedAppsType = []
     user_dir: DirectoryPath | NewPath | None = None
     shared_dirs: list[SharedDir] = []
 
 
 class Account(Base):
     enabled: bool = True
-    username: Username
+    username: UsernameType
     name: Name
     email: EmailStr
     role: ERole

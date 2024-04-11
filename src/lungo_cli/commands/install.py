@@ -2,7 +2,7 @@ from typing import Annotated
 
 from typer import Argument
 
-from .base import config_dir_type, dev_type, quiet_type, verbosity_type
+from .base import ConfigDirType, DevType, QuietType, VerbosityType
 from ..app.state import app_manager, console, plugin_manager
 from ..helpers.format import format_input
 
@@ -15,10 +15,10 @@ def main(
             show_default=False,
         ),
     ],
-    config_dir: config_dir_type = None,
-    dev: dev_type = False,
-    quiet: quiet_type = False,
-    verbosity: verbosity_type = 0,
+    config_dir: ConfigDirType = None,
+    dev: DevType = False,
+    quiet: QuietType = False,
+    verbosity: VerbosityType = 0,
 ) -> None:
     """
     Install or upgrade plugins.
