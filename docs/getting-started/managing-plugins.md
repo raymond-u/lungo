@@ -10,7 +10,7 @@ lungo list
 
 ## Installing a built-in plugin
 
-To install a built-in plugin, run the following command:
+By default, Lungo does not install any plugins. To install a built-in plugin, run the following command:
 
 ```bash linenums="1" title="Terminal"
 lungo install <plugin>
