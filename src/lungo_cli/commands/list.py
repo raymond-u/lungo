@@ -57,7 +57,7 @@ def main(
                 )
                 console().print(f"Description: {plugin_cls.config.description or 'No description.'}")
             else:
-                console().print(f"Plugin {format_input(arg)} not found. Skipping.")
+                console().print(f"Plugin {format_input(arg)} not found. Skipping it.")
 
             console().request_newline()
     else:

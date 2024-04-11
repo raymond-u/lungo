@@ -177,7 +177,9 @@ class PluginManager:
     def add_plugin(self, plugin_cls: type[BasePlugin]) -> bool:
         """Add a plugin to the application."""
         if not plugin_cls.installable:
-            self.console.print_warning(f"Plugin {format_program(plugin_cls.config.name)} is not installable. Skipping.")
+            self.console.print_warning(
+                f"Plugin {format_program(plugin_cls.config.name)} is not installable. Skipping it."
+            )
             return False
 
         dst = self.storage.installed_plugins_dir / plugin_cls.config.name
@@ -193,7 +195,9 @@ class PluginManager:
     def remove_plugin(self, plugin_cls: type[BasePlugin]) -> bool:
         """Remove a plugin from the application."""
         if not plugin_cls.installed:
-            self.console.print_warning(f"Plugin {format_program(plugin_cls.config.name)} is not installed. Skipping.")
+            self.console.print_warning(
+                f"Plugin {format_program(plugin_cls.config.name)} is not installed. Skipping it."
+            )
             return False
 
         self.file_utils.remove(self.storage.installed_plugins_dir / plugin_cls.config.name)
@@ -215,7 +219,9 @@ class PluginManager:
                 continue
 
             if not plugin_dir.joinpath("plugin.py").is_file():
-                self.console.print_warning(f"Plugin at {format_path(plugin_dir)} does not seem to be valid. Skipping.")
+                self.console.print_warning(
+                    f"Plugin at {format_path(plugin_dir)} does not seem to be valid. Skipping it."
+                )
                 continue
 
             # Import modules with the same name from different directories
@@ -232,7 +238,7 @@ class PluginManager:
                             self.console.print_warning(
                                 f"Plugin {format_program(plugin_cls.config.name)} "
                                 f"{f'version {plugin_version}' if plugin_version else 'with an unknown version'} "
-                                "is not compatible with the current version of the application. Skipping."
+                                "is not compatible with the current version of the application. Skipping it."
                             )
 
                             continue
@@ -240,14 +246,16 @@ class PluginManager:
                         self.console.print_warning(
                             f"Plugin {format_program(plugin_cls.config.name)} "
                             f"{f'version {plugin_version}' if plugin_version else 'with an unknown version'} "
-                            "has an invalid version specifier. Skipping."
+                            "has an invalid version specifier. Skipping it."
                         )
 
                         continue
 
                 plugin_classes.append(plugin_cls)
             except Exception as e:
-                self.console.print_warning(f"Failed to import plugin from {format_path(plugin_dir)} ({e}). Skipping.")
+                self.console.print_warning(
+                    f"Failed to import plugin from {format_path(plugin_dir)} ({e}). Skipping it."
+                )
             finally:
                 sys.modules.pop("plugin", None)
                 sys.path.pop(0)
@@ -265,7 +273,7 @@ class PluginManager:
                 Plugins.model_fields[plugin_cls.config.name] = field_info
             except Exception as e:
                 self.console.print_warning(
-                    f"Failed to load plugin {format_program(plugin_cls.config.name)} ({e}). Skipping."
+                    f"Failed to load plugin {format_program(plugin_cls.config.name)} ({e}). Skipping it."
                 )
                 continue
 
