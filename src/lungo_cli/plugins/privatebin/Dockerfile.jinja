@@ -2,8 +2,8 @@
 
 FROM docker.io/privatebin/fs:{{ PRIVATEBIN_VER }}
 USER root
-COPY {{ app_dirs.plugin_dir }}/privatebin/config/conf.php /etc/privatebin/conf.php
-COPY {{ app_dirs.plugin_dir }}/privatebin/config/site.conf /etc/nginx/http.d/site.conf
+COPY config/conf.php /etc/privatebin/conf.php
+COPY config/site.conf /etc/nginx/http.d/site.conf
 RUN apk add --no-cache libcap && \
     setcap 'cap_net_bind_service=+ep' /usr/sbin/nginx && \
     chown nobody:www-data /etc/privatebin/conf.php && \
