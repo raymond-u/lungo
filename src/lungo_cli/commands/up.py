@@ -11,10 +11,13 @@ from ..models.base import EContainer
 
 
 def main(
-    build_only: Annotated[bool, Option("--build-only", help="Only build the container.", show_default=False)] = False,
+    build_only: Annotated[bool, Option("--build-only", help="Only build the containers.", show_default=False)] = False,
     container_tool: Annotated[
         Optional[EContainer], Option("--container-tool", help="Container management tool to use.", show_default=False)
     ] = None,
+    render_only: Annotated[
+        bool, Option("--render-only", help="Only render the templates.", show_default=False)
+    ] = False,
     force_init: ForceInitType = False,
     remove_lock: Annotated[bool, Option("--remove-lock", help="Remove the lock file.", show_default=False)] = False,
     config_dir: ConfigDirType = None,
@@ -32,6 +35,10 @@ def main(
         file_utils().remove(storage().lock_file)
 
     app_manager().update_app_data()
+
+    if render_only:
+        return
+
     container().set_preferred_tool(container_tool)
 
     if build_only:
