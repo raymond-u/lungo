@@ -1,4 +1,4 @@
-from typing import Annotated, Final, Literal, Union
+from typing import Annotated, Final, Literal
 
 from aenum import auto, StrEnum
 from pydantic import BaseModel, ConfigDict, Field
@@ -33,8 +33,8 @@ class ERole(StrEnum):
     ADMIN = auto()
 
 
-AllowedAppsType: Final[Union] = Literal["all"] | list[EApp]
-FileNameType: Final[type[str]] = Annotated[str, Field(pattern=r"^[a-zA-Z0-9._-]+$")]
-NameStrType: Final[type[str]] = Annotated[str, Field(max_length=32)]
-PortType: Final[type[int]] = Annotated[int, Field(ge=1, le=65535)]
-UsernameType: Final[type[str]] = Annotated[str, Field(pattern=r"^[a-z_](?:[a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\$)$")]
+AllowedAppsType: Final = Literal["all"] | list[EApp]
+FileNameType: Final = Annotated[str, Field(pattern=r"^[a-zA-Z0-9._-]+$")]
+NameStrType: Final = Annotated[str, Field(max_length=32)]
+PortType: Final = Annotated[int, Field(ge=1, le=65535)]
+UsernameType: Final = Annotated[str, Field(pattern=r"^[a-z_](?:[a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\$)$")]
