@@ -4,7 +4,7 @@ from os import PathLike
 
 def format_command(*value: str) -> str:
     """Format a shell command for console output."""
-    return f"[green]{' '.join(value)}[/green]"
+    return f"[green]{' '.join(filter(None, value))}[/green]"
 
 
 def format_program(value: str) -> str:
