@@ -93,16 +93,20 @@ class Storage:
         return Path("excluded")
 
     @property
+    def plugins_rel(self) -> Path:
+        return Path("plugins")
+
+    @property
     def cache_plugins_dir(self) -> Path:
-        return self.cache_latest_dir / "plugins"
+        return self.cache_latest_dir / self.plugins_rel
 
     @property
     def custom_plugins_dir(self) -> Path:
-        return self.config_dir / "plugins"
+        return self.config_dir / self.plugins_rel
 
     @property
     def installed_plugins_dir(self) -> Path:
-        return self.bundled_dir / "plugins"
+        return self.bundled_dir / self.plugins_rel
 
     @property
     def config_file(self) -> Path:
