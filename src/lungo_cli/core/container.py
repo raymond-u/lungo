@@ -41,13 +41,23 @@ class Container:
         command = list(filter(None, command))
 
         try:
-            subprocess.run(
-                command,
-                check=True,
-                cwd=cwd or self.storage.bundled_dir,
-                stderr=subprocess.DEVNULL,
-                stdout=subprocess.DEVNULL,
-            )
+            if self.context_manager.dev:
+                with subprocess.Popen(
+                    command,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    cwd=cwd or self.storage.bundled_dir,
+                ) as process:
+                    for line in process.stdout:
+                        self.console.print(line.decode("utf8"))
+            else:
+                subprocess.run(
+                    command,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    cwd=cwd or self.storage.bundled_dir,
+                    check=True,
+                )
         except Exception as e:
             self.console.print_error(f"Failed to run command {format_command(*command)} ({e}).")
             raise Exit(code=1)
