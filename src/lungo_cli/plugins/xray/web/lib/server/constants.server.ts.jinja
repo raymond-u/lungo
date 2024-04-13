@@ -1,3 +1,5 @@
+{% set xray = config.plugins.xray %}
+
 export const XRAY_DOMAIN_KEYWORD_WHITELIST = `{{ xray.domain_keyword_whitelist|tojson }}`
 export const XRAY_DOMAIN_SUFFIX_WHITELIST = `{{ xray.domain_suffix_whitelist|tojson }}`
 export const XRAY_DOMAIN_WHITELIST = `{{ xray.domain_whitelist|tojson }}`

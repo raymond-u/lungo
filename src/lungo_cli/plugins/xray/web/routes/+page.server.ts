@@ -1,5 +1,3 @@
-{% set xray = config.plugins.xray %}
-
 import { v5 as uuidv5 } from "uuid"
 import {
     XRAY_DOMAIN_KEYWORD_WHITELIST,
@@ -8,7 +6,6 @@ import {
     XRAY_IP_RANGE_WHITELIST,
     XRAY_SALT,
 } from "$lib/plugins/xray/server/constants.server"
-
 
 export async function load({ parent }) {
     const { userInfo } = await parent()
