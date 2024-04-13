@@ -186,7 +186,7 @@
 # =========
 
 #   # Maximum size of the request body allowed in megabytes (or 0 for unlimited)
-#   # Type: int
+#   # Type: integer
 #   # Default: 0
 #   # Required: no
 #   max_body_size: 0
@@ -201,13 +201,13 @@
 #     enabled: false
 
 #     # Maximum number of requests in the given time window
-#     # Type: int
+#     # Type: integer
 #     # Default: 5
 #     # Required: no
 #     max_requests: 5
 
 #     # Time window (in seconds, or a string describing a time span in ISO 8601 format)
-#     # Type: int | string
+#     # Type: integer | string
 #     # Default: 'PT1H'
 #     # Required: no
 #     time_window: 'PT1H'
@@ -216,7 +216,7 @@
 #   session:
 
 #     # Session lifetime (in seconds, or a string describing a time span in ISO 8601 format)
-#     # Type: int | string
+#     # Type: integer | string
 #     # Default: 'P1DT'
 #     # Required: no
 #     lifetime: 'P1DT'
