@@ -23,9 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Hide fullscreen button for narrow screen widths
-- Update JupyterLab to 4.1.5
+- Update JupyterHub to 4.1.5
+- Update JupyterLab to 4.1.6
 - Update RStudio to 4.3.3
-- Update Xray to 1.8.9
+- Update Xray to 1.8.10
 
 ### Fixed
 
