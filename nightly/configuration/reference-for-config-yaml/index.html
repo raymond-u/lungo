@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.14">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.10ba22f1.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bcfcd587.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -541,11 +541,11 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../../overview/supported-applications/" class="md-nav__link">
+      <a href="../../overview/plugins/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Supported applications
+    Plugins
   </span>
   
 
@@ -653,6 +653,27 @@ You're not viewing the latest version.
   
   <span class="md-ellipsis">
     Configuring settings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/managing-plugins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Managing plugins
   </span>
   
 
@@ -1288,7 +1309,13 @@ You're not viewing the latest version.
 <span class="normal">253</span>
 <span class="normal">254</span>
 <span class="normal">255</span>
-<span class="normal">256</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><span class="c1">## Configuration file for general settings</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><span class="c1">## Configuration file for general settings</span>
 </span><span id="__span-0-2">
 </span><span id="__span-0-3"><span class="c1"># =========</span>
 </span><span id="__span-0-4"><span class="c1"># branding:</span>
@@ -1475,75 +1502,81 @@ You're not viewing the latest version.
 </span><span id="__span-0-185"><span class="c1"># security:</span>
 </span><span id="__span-0-186"><span class="c1"># =========</span>
 </span><span id="__span-0-187">
-</span><span id="__span-0-188"><span class="c1">#   # Rate limiting settings</span>
-</span><span id="__span-0-189"><span class="c1">#   rate_limiting:</span>
-</span><span id="__span-0-190">
-</span><span id="__span-0-191"><span class="c1">#     # Enable or disable rate limiting</span>
-</span><span id="__span-0-192"><span class="c1">#     # Type: boolean</span>
-</span><span id="__span-0-193"><span class="c1">#     # Default: false</span>
-</span><span id="__span-0-194"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-195"><span class="c1">#     enabled: false</span>
+</span><span id="__span-0-188"><span class="c1">#   # Maximum size of the request body allowed in megabytes (or 0 for unlimited)</span>
+</span><span id="__span-0-189"><span class="c1">#   # Type: integer</span>
+</span><span id="__span-0-190"><span class="c1">#   # Default: 0</span>
+</span><span id="__span-0-191"><span class="c1">#   # Required: no</span>
+</span><span id="__span-0-192"><span class="c1">#   max_body_size: 0</span>
+</span><span id="__span-0-193">
+</span><span id="__span-0-194"><span class="c1">#   # Rate limiting settings</span>
+</span><span id="__span-0-195"><span class="c1">#   rate_limiting:</span>
 </span><span id="__span-0-196">
-</span><span id="__span-0-197"><span class="c1">#     # Maximum number of requests in the given time window</span>
-</span><span id="__span-0-198"><span class="c1">#     # Type: int</span>
-</span><span id="__span-0-199"><span class="c1">#     # Default: 5</span>
+</span><span id="__span-0-197"><span class="c1">#     # Enable or disable rate limiting</span>
+</span><span id="__span-0-198"><span class="c1">#     # Type: boolean</span>
+</span><span id="__span-0-199"><span class="c1">#     # Default: false</span>
 </span><span id="__span-0-200"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-201"><span class="c1">#     max_requests: 5</span>
+</span><span id="__span-0-201"><span class="c1">#     enabled: false</span>
 </span><span id="__span-0-202">
-</span><span id="__span-0-203"><span class="c1">#     # Time window (in seconds, or a string describing a time span in ISO 8601 format)</span>
-</span><span id="__span-0-204"><span class="c1">#     # Type: int | string</span>
-</span><span id="__span-0-205"><span class="c1">#     # Default: &#39;PT1H&#39;</span>
+</span><span id="__span-0-203"><span class="c1">#     # Maximum number of requests in the given time window</span>
+</span><span id="__span-0-204"><span class="c1">#     # Type: integer</span>
+</span><span id="__span-0-205"><span class="c1">#     # Default: 5</span>
 </span><span id="__span-0-206"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-207"><span class="c1">#     time_window: &#39;PT1H&#39;</span>
+</span><span id="__span-0-207"><span class="c1">#     max_requests: 5</span>
 </span><span id="__span-0-208">
-</span><span id="__span-0-209"><span class="c1">#   # Session settings</span>
-</span><span id="__span-0-210"><span class="c1">#   session:</span>
-</span><span id="__span-0-211">
-</span><span id="__span-0-212"><span class="c1">#     # Session lifetime (in seconds, or a string describing a time span in ISO 8601 format)</span>
-</span><span id="__span-0-213"><span class="c1">#     # Type: int | string</span>
-</span><span id="__span-0-214"><span class="c1">#     # Default: &#39;P1DT&#39;</span>
-</span><span id="__span-0-215"><span class="c1">#     # Required: no</span>
-</span><span id="__span-0-216"><span class="c1">#     lifetime: &#39;P1DT&#39;</span>
+</span><span id="__span-0-209"><span class="c1">#     # Time window (in seconds, or a string describing a time span in ISO 8601 format)</span>
+</span><span id="__span-0-210"><span class="c1">#     # Type: integer | string</span>
+</span><span id="__span-0-211"><span class="c1">#     # Default: &#39;PT1H&#39;</span>
+</span><span id="__span-0-212"><span class="c1">#     # Required: no</span>
+</span><span id="__span-0-213"><span class="c1">#     time_window: &#39;PT1H&#39;</span>
+</span><span id="__span-0-214">
+</span><span id="__span-0-215"><span class="c1">#   # Session settings</span>
+</span><span id="__span-0-216"><span class="c1">#   session:</span>
 </span><span id="__span-0-217">
-</span><span id="__span-0-218"><span class="c1"># =====</span>
-</span><span id="__span-0-219"><span class="c1"># smtp:</span>
-</span><span id="__span-0-220"><span class="c1"># =====</span>
-</span><span id="__span-0-221">
-</span><span id="__span-0-222"><span class="c1">#   # SMTP server host</span>
-</span><span id="__span-0-223"><span class="c1">#   # Type: string</span>
-</span><span id="__span-0-224"><span class="c1">#   # Default: none</span>
-</span><span id="__span-0-225"><span class="c1">#   # Required: yes</span>
-</span><span id="__span-0-226"><span class="c1">#   host: smtp.gmail.com</span>
+</span><span id="__span-0-218"><span class="c1">#     # Session lifetime (in seconds, or a string describing a time span in ISO 8601 format)</span>
+</span><span id="__span-0-219"><span class="c1">#     # Type: integer | string</span>
+</span><span id="__span-0-220"><span class="c1">#     # Default: &#39;P1DT&#39;</span>
+</span><span id="__span-0-221"><span class="c1">#     # Required: no</span>
+</span><span id="__span-0-222"><span class="c1">#     lifetime: &#39;P1DT&#39;</span>
+</span><span id="__span-0-223">
+</span><span id="__span-0-224"><span class="c1"># =====</span>
+</span><span id="__span-0-225"><span class="c1"># smtp:</span>
+</span><span id="__span-0-226"><span class="c1"># =====</span>
 </span><span id="__span-0-227">
-</span><span id="__span-0-228"><span class="c1">#   # SMTP server port</span>
-</span><span id="__span-0-229"><span class="c1">#   # Type: integer</span>
+</span><span id="__span-0-228"><span class="c1">#   # SMTP server host</span>
+</span><span id="__span-0-229"><span class="c1">#   # Type: string</span>
 </span><span id="__span-0-230"><span class="c1">#   # Default: none</span>
 </span><span id="__span-0-231"><span class="c1">#   # Required: yes</span>
-</span><span id="__span-0-232"><span class="c1">#   port: 587</span>
+</span><span id="__span-0-232"><span class="c1">#   host: smtp.gmail.com</span>
 </span><span id="__span-0-233">
-</span><span id="__span-0-234"><span class="c1">#   # SMTP server username</span>
-</span><span id="__span-0-235"><span class="c1">#   # Type: string</span>
+</span><span id="__span-0-234"><span class="c1">#   # SMTP server port</span>
+</span><span id="__span-0-235"><span class="c1">#   # Type: integer</span>
 </span><span id="__span-0-236"><span class="c1">#   # Default: none</span>
 </span><span id="__span-0-237"><span class="c1">#   # Required: yes</span>
-</span><span id="__span-0-238"><span class="c1">#   username: joe</span>
+</span><span id="__span-0-238"><span class="c1">#   port: 587</span>
 </span><span id="__span-0-239">
-</span><span id="__span-0-240"><span class="c1">#   # SMTP server password</span>
+</span><span id="__span-0-240"><span class="c1">#   # SMTP server username</span>
 </span><span id="__span-0-241"><span class="c1">#   # Type: string</span>
 </span><span id="__span-0-242"><span class="c1">#   # Default: none</span>
 </span><span id="__span-0-243"><span class="c1">#   # Required: yes</span>
-</span><span id="__span-0-244"><span class="c1">#   password: joe123</span>
+</span><span id="__span-0-244"><span class="c1">#   username: joe</span>
 </span><span id="__span-0-245">
-</span><span id="__span-0-246"><span class="c1">#   # Sender name</span>
+</span><span id="__span-0-246"><span class="c1">#   # SMTP server password</span>
 </span><span id="__span-0-247"><span class="c1">#   # Type: string</span>
-</span><span id="__span-0-248"><span class="c1">#   # Default: &#39;Lungo&#39;</span>
-</span><span id="__span-0-249"><span class="c1">#   # Required: no</span>
-</span><span id="__span-0-250"><span class="c1">#   name: Lungo</span>
+</span><span id="__span-0-248"><span class="c1">#   # Default: none</span>
+</span><span id="__span-0-249"><span class="c1">#   # Required: yes</span>
+</span><span id="__span-0-250"><span class="c1">#   password: joe123</span>
 </span><span id="__span-0-251">
-</span><span id="__span-0-252"><span class="c1">#   # Sender email</span>
+</span><span id="__span-0-252"><span class="c1">#   # Sender name</span>
 </span><span id="__span-0-253"><span class="c1">#   # Type: string</span>
-</span><span id="__span-0-254"><span class="c1">#   # Default: none</span>
-</span><span id="__span-0-255"><span class="c1">#   # Required: yes</span>
-</span><span id="__span-0-256"><span class="c1">#   sender: joe@gmail.com</span>
+</span><span id="__span-0-254"><span class="c1">#   # Default: &#39;Lungo&#39;</span>
+</span><span id="__span-0-255"><span class="c1">#   # Required: no</span>
+</span><span id="__span-0-256"><span class="c1">#   name: Lungo</span>
+</span><span id="__span-0-257">
+</span><span id="__span-0-258"><span class="c1">#   # Sender email</span>
+</span><span id="__span-0-259"><span class="c1">#   # Type: string</span>
+</span><span id="__span-0-260"><span class="c1">#   # Default: none</span>
+</span><span id="__span-0-261"><span class="c1">#   # Required: yes</span>
+</span><span id="__span-0-262"><span class="c1">#   sender: joe@gmail.com</span>
 </span></code></pre></div></td></tr></table></div>
 
 
@@ -1641,7 +1674,7 @@ You're not viewing the latest version.
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.action.edit", "content.action.view", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.top", "search.highlight", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": ["nightly", "stable"], "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.bd41221c.min.js"></script>
+      <script src="../../assets/javascripts/bundle.1e8ae164.min.js"></script>
       
     
   <script>document$.subscribe(() => {document.querySelectorAll('.glightbox').forEach(function(element) {

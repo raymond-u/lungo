@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://raymond-u.github.io/lungo/stable/getting-started/configuring-settings/">
+        <link rel="canonical" href="https://raymond-u.github.io/lungo/stable/overview/plugins/">
       
       
-        <link rel="prev" href="../prerequisites/">
+        <link rel="prev" href="../security/">
       
       
-        <link rel="next" href="../managing-plugins/">
+        <link rel="next" href="../../installation/">
       
       
       <link rel="icon" href="../../assets/favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Configuring settings - Lungo</title>
+        <title>Plugins - Lungo</title>
       
     
     
@@ -85,7 +85,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#configuring-settings" class="md-skip">
+        <a href="#plugins" class="md-skip">
           Skip to content
         </a>
       
@@ -134,7 +134,7 @@ You're not viewing the latest version.
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Configuring settings
+              Plugins
             
           </span>
         </div>
@@ -268,11 +268,13 @@ You're not viewing the latest version.
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../overview/architecture/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../architecture/" class="md-tabs__link">
           
   
   Overview
@@ -303,13 +305,11 @@ You're not viewing the latest version.
         
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../prerequisites/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../getting-started/prerequisites/" class="md-tabs__link">
           
   
   Getting Started
@@ -458,23 +458,28 @@ You're not viewing the latest version.
       
   
   
+    
   
   
+  
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -485,7 +490,7 @@ You're not viewing the latest version.
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Overview
@@ -499,7 +504,7 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../../overview/architecture/" class="md-nav__link">
+      <a href="../architecture/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -520,7 +525,7 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../../overview/security/" class="md-nav__link">
+      <a href="../security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -538,10 +543,30 @@ You're not viewing the latest version.
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../overview/plugins/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Plugins
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -550,6 +575,44 @@ You're not viewing the latest version.
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      About plugins
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#built-in-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Built-in plugins
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -586,28 +649,23 @@ You're not viewing the latest version.
       
   
   
-    
   
   
-  
     
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -618,7 +676,7 @@ You're not viewing the latest version.
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Getting Started
@@ -632,7 +690,7 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../prerequisites/" class="md-nav__link">
+      <a href="../../getting-started/prerequisites/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -650,30 +708,10 @@ You're not viewing the latest version.
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Configuring settings
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../getting-started/configuring-settings/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -682,62 +720,6 @@ You're not viewing the latest version.
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#location-of-configuration-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      Location of configuration files
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#editing-settings" class="md-nav__link">
-    <span class="md-ellipsis">
-      Editing settings
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verifying-settings" class="md-nav__link">
-    <span class="md-ellipsis">
-      Verifying settings
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#applying-changes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Applying changes
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -750,7 +732,7 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../managing-plugins/" class="md-nav__link">
+      <a href="../../getting-started/managing-plugins/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -771,7 +753,7 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../managing-users/" class="md-nav__link">
+      <a href="../../getting-started/managing-users/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -792,7 +774,7 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../launching-the-service/" class="md-nav__link">
+      <a href="../../getting-started/launching-the-service/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1075,36 +1057,18 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#location-of-configuration-files" class="md-nav__link">
+  <a href="#about-plugins" class="md-nav__link">
     <span class="md-ellipsis">
-      Location of configuration files
+      About plugins
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#editing-settings" class="md-nav__link">
+  <a href="#built-in-plugins" class="md-nav__link">
     <span class="md-ellipsis">
-      Editing settings
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verifying-settings" class="md-nav__link">
-    <span class="md-ellipsis">
-      Verifying settings
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#applying-changes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Applying changes
+      Built-in plugins
     </span>
   </a>
   
@@ -1125,7 +1089,7 @@ You're not viewing the latest version.
                   
 
   
-    <a href="https://github.com/raymond-u/lungo/edit/main/docs/getting-started/configuring-settings.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/raymond-u/lungo/edit/main/docs/overview/plugins.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
     </a>
@@ -1134,56 +1098,81 @@ You're not viewing the latest version.
     
       
     
-    <a href="https://github.com/raymond-u/lungo/raw/main/docs/getting-started/configuring-settings.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/raymond-u/lungo/raw/main/docs/overview/plugins.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
     </a>
   
 
 
-<h1 id="configuring-settings">Configuring settings<a class="headerlink" href="#configuring-settings" title="Permanent link">#</a></h1>
-<h2 id="location-of-configuration-files">Location of configuration files<a class="headerlink" href="#location-of-configuration-files" title="Permanent link">#</a></h2>
-<p>Lungo utilizes two configuration files: <code>config.yaml</code>, which contains general settings, and <code>users.yaml</code>, dedicated to
-user management. By default, these files are located in a platform-dependent directory, such as <code>~/.config/lungo/</code> on
-Linux. You can override this location by passing the <code>--config-dir</code> option to Lungo.</p>
-<h2 id="editing-settings">Editing settings<a class="headerlink" href="#editing-settings" title="Permanent link">#</a></h2>
-<p>A minimal <code>config.yaml</code> file looks like this:</p>
-<div class="language-yaml highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">config.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><span class="nt">directories</span><span class="p">:</span>
-</span><span id="__span-0-2"><span class="w">    </span><span class="nt">users_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/lungo/users</span>
-</span><span id="__span-0-3">
-</span><span id="__span-0-4"><span class="nt">network</span><span class="p">:</span>
-</span><span id="__span-0-5"><span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lungo.com</span>
-</span><span id="__span-0-6">
-</span><span id="__span-0-7"><span class="nt">smtp</span><span class="p">:</span>
-</span><span id="__span-0-8"><span class="w">    </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">smtp.gmail.com</span>
-</span><span id="__span-0-9"><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">587</span>
-</span><span id="__span-0-10"><span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">joe</span>
-</span><span id="__span-0-11"><span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">joe123</span>
-</span><span id="__span-0-12"><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Lungo</span>
-</span><span id="__span-0-13"><span class="w">    </span><span class="nt">sender</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">joe@gmail.com</span>
-</span></code></pre></div></td></tr></table></div>
-<p>For a comprehensive list of available settings, please refer to
-the <a href="../../configuration/reference-for-config-yaml/">reference for config.yaml</a>
-and <a href="../../configuration/reference-for-users-yaml/">reference for users.yaml</a>.</p>
-<h2 id="verifying-settings">Verifying settings<a class="headerlink" href="#verifying-settings" title="Permanent link">#</a></h2>
-<p>You can verify the correctness of your configuration files by running:</p>
-<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1">lungo<span class="w"> </span>check
-</span></code></pre></div></td></tr></table></div>
-<h2 id="applying-changes">Applying changes<a class="headerlink" href="#applying-changes" title="Permanent link">#</a></h2>
-<p>After making any changes to the <code>config.yaml</code> file, you need to restart the Lungo service for the changes to take
-effect.</p>
+<h1 id="plugins">Plugins<a class="headerlink" href="#plugins" title="Permanent link">#</a></h1>
+<h2 id="about-plugins">About plugins<a class="headerlink" href="#about-plugins" title="Permanent link">#</a></h2>
+<p>Plugins are how Lungo extends its functionality. They are applications that run within containers alongside Lungo,
+offering additional services to users. Each plugin can be independently enabled or disabled, with its own configuration.</p>
+<p>Lungo has built-in plugins for several popular applications. You can also install custom plugins or even develop your
+own.</p>
+<p>Please be aware that insecure or malicious plugins may compromise the security of not only your Lungo instance but also
+your entire system. Therefore, it is strongly advised to install plugins exclusively from trusted sources.</p>
+<h2 id="built-in-plugins">Built-in plugins<a class="headerlink" href="#built-in-plugins" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Application</th>
+<th>Value</th>
+<th style="text-align: left;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><a href="https://filebrowser.org/">FileBrowser</a></td>
+<td><code>filebrowser</code></td>
+<td style="text-align: left;"><span class="twemoji icon green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8-1.41-1.42Z"/></svg></span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://jupyter.org/hub">JupyterHub</a></td>
+<td><code>jupyterhub</code></td>
+<td style="text-align: left;"><span class="twemoji icon green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8-1.41-1.42Z"/></svg></span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://privatebin.info/">PrivateBin</a></td>
+<td><code>privatebin</code></td>
+<td style="text-align: left;"><span class="twemoji icon green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8-1.41-1.42Z"/></svg></span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://posit.co/products/open-source/rstudio-server/">RStudio</a></td>
+<td><code>rstudio</code></td>
+<td style="text-align: left;"><span class="twemoji icon green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8-1.41-1.42Z"/></svg></span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://xtls.github.io/">Xray</a></td>
+<td><code>xray</code></td>
+<td style="text-align: left;"><span class="twemoji icon green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8-1.41-1.42Z"/></svg></span></td>
+</tr>
+</tbody>
+</table>
+<p>Legend:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Icon</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="twemoji icon green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8-1.41-1.42Z"/></svg></span></td>
+<td style="text-align: left;">Fully supported</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="twemoji icon yellow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 15h2v2h-2v-2m0-8h2v6h-2V7m1-5C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m0 18a8 8 0 0 1-8-8 8 8 0 0 1 8-8 8 8 0 0 1 8 8 8 8 0 0 1-8 8Z"/></svg></span></td>
+<td style="text-align: left;">Partially supported</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="twemoji icon blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.4 0 8-3.6 8-8s-3.6-8-8-8-8 3.6-8 8 3.6 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10S2 17.5 2 12 6.5 2 12 2m5 11.9-.7 1.3-5.3-2.9V7h1.5v4.4l4.5 2.5Z"/></svg></span></td>
+<td style="text-align: left;">Planned</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -1219,7 +1208,7 @@ effect.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../prerequisites/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Prerequisites">
+          <a href="../security/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Security">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -1229,20 +1218,20 @@ effect.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Prerequisites
+                Security
               </div>
             </div>
           </a>
         
         
           
-          <a href="../managing-plugins/" class="md-footer__link md-footer__link--next" aria-label="Next: Managing plugins">
+          <a href="../../installation/" class="md-footer__link md-footer__link--next" aria-label="Next: Installation">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Managing plugins
+                Installation
               </div>
             </div>
             <div class="md-footer__button md-icon">
