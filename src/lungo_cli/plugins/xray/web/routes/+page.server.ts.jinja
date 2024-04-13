@@ -1,9 +1,8 @@
 {% set xray = config.plugins.xray %}
 
 import { v5 as uuidv5 } from "uuid"
-import type { User } from "$lib/types"
 
-export async function load({ parent }: { parent: () => Promise<{ userInfo: User["traits"] | undefined }> }) {
+export async function load({ parent }) {
     const { userInfo } = await parent()
     const username = userInfo?.username ?? "anonymous"
 

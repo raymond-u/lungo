@@ -10,9 +10,7 @@
     const { allowScroll, currentApp, currentInlineFrame, darkTheme, isSafari, syncedScrollTops } = useStore()
 
     const handleFullscreen = () => {
-        if ($currentInlineFrame) {
-            $currentInlineFrame.requestFullscreen()
-        }
+        $currentInlineFrame?.requestFullscreen()
     }
 
     let checked: boolean | undefined

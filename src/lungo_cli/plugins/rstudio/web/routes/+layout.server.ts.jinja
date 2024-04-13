@@ -1,17 +1,7 @@
 import { load as loadHtmlString } from "cheerio"
-import type { Cookies } from "@sveltejs/kit"
-import { wrapFetch } from "$lib/server/api"
-import type { User } from "$lib/types"
+import { wrapFetch } from "$lib/utils"
 
-export async function load({
-    cookies,
-    fetch,
-    parent,
-}: {
-    cookies: Cookies
-    fetch: typeof global.fetch
-    parent: () => Promise<{ userInfo: User["traits"] | undefined }>
-}) {
+export async function load({ cookies, fetch, parent }) {
     const wrappedFetch = wrapFetch({
         fetch,
         baseUrl: "http://{{ ip_addresses['rstudio'] }}:80/",

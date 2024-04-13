@@ -1,6 +1,6 @@
 import { getAllApps } from "$lib/server/utils"
 
-export async function load({ url }: { url: URL }) {
+export async function load({ url }) {
     const pathBase = url.pathname.match("^/app/[^/]+")
 
     if (!pathBase) {

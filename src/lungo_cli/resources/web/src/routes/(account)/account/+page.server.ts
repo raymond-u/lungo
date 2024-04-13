@@ -1,10 +1,10 @@
-import { type Cookies, fail, redirect } from "@sveltejs/kit"
-import { createKratosClient } from "$lib/server/api"
+import { fail, redirect } from "@sveltejs/kit"
+import { createKratosClient } from "$lib/server/utils"
 import type { KratosComponents } from "$lib/types"
 import { getFlowId, getRandomId } from "$lib/utils"
 
 export const actions = {
-    default: async ({ cookies, request }: { cookies: Cookies; request: Request }) => {
+    default: async ({ cookies, fetch, request }) => {
         const data = await request.formData()
 
         const client = createKratosClient(cookies, fetch)
@@ -54,7 +54,7 @@ export const actions = {
     },
 }
 
-export async function load({ cookies, fetch }: { cookies: Cookies; fetch: typeof global.fetch }) {
+export async function load({ cookies, fetch }) {
     const client = createKratosClient(cookies, fetch)
     const response = await client.GET("/self-service/settings/browser", { params: {} })
 

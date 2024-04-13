@@ -1,8 +1,6 @@
-import createClient from "openapi-fetch"
-import parser from "set-cookie-parser"
 import { type Cookies, error } from "@sveltejs/kit"
-import { KETO_API_BASE_URL, KRATOS_API_BASE_URL } from "$lib/server/constants"
-import type { KetoPaths, KratosPaths } from "$lib/types"
+import parser from "set-cookie-parser"
+import { concatenateUrl } from "$lib/utils"
 
 export function wrapFetch({
     fetch,
@@ -14,7 +12,7 @@ export function wrapFetch({
     ensureOk,
 }: {
     fetch: typeof global.fetch
-    baseUrl?: string
+    baseUrl?: string | URL
     cookies?: Cookies
     cookiePath?: string
     credentials?: RequestCredentials
@@ -26,18 +24,10 @@ export function wrapFetch({
 
         try {
             if (baseUrl) {
-                if (typeof input === "string") {
-                    if (input.match("https?://")) {
-                        const url = new URL(input)
-                        input = new URL(url.pathname + url.search + url.hash, baseUrl)
-                    } else {
-                        input = new URL(input, baseUrl)
-                    }
-                } else if (input instanceof URL) {
-                    input = new URL(input.pathname + input.search + input.hash, baseUrl)
+                if (typeof input === "string" || input instanceof URL) {
+                    input = concatenateUrl(input, baseUrl)
                 } else if (input instanceof Request) {
-                    const url = new URL(input.url)
-                    input = new Request(new URL(url.pathname + url.search + url.hash, baseUrl), input)
+                    input = new Request(concatenateUrl(input.url, baseUrl), input)
                 }
             }
 
@@ -89,27 +79,4 @@ export function wrapFetch({
 
         return response
     }
-}
-
-export const createKetoClient = (fetch: typeof global.fetch) => {
-    return createClient<KetoPaths>({
-        fetch: wrapFetch({
-            fetch,
-            baseUrl: KETO_API_BASE_URL,
-            credentials: "include",
-            headers: { Accept: "application/json" },
-        }),
-    })
-}
-
-export const createKratosClient = (cookies: Cookies, fetch: typeof global.fetch) => {
-    return createClient<KratosPaths>({
-        fetch: wrapFetch({
-            fetch,
-            baseUrl: KRATOS_API_BASE_URL,
-            cookies,
-            credentials: "include",
-            headers: { Accept: "application/json" },
-        }),
-    })
 }

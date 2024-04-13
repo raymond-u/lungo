@@ -2,6 +2,34 @@ export function capitalize(text: string): string {
     return `${text[0]?.toUpperCase() ?? ""}${text.slice(1)}`
 }
 
+export function concatenateUrl(path: string | URL, baseUrl: string | URL): string {
+    let baseUrlString: string
+    let pathString: string
+
+    if (typeof baseUrl === "string") {
+        baseUrlString = baseUrl
+    } else {
+        baseUrlString = baseUrl.origin + baseUrl.pathname
+    }
+
+    if (baseUrlString.endsWith("/")) {
+        baseUrlString = baseUrlString.slice(0, -1)
+    }
+
+    if (typeof path === "string" && !path.match("https?://")) {
+        if (path.startsWith("/")) {
+            pathString = path
+        } else {
+            pathString = "/" + path
+        }
+    } else {
+        const pathUrl = new URL(path)
+        pathString = pathUrl.pathname + pathUrl.search + pathUrl.hash
+    }
+
+    return baseUrlString + pathString
+}
+
 export function getFlowId(url: string): string {
     return new URL(url).searchParams.get("flow") ?? ""
 }

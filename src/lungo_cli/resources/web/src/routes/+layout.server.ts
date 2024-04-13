@@ -1,6 +1,4 @@
-import type { Cookies } from "@sveltejs/kit"
-import { createKetoClient, createKratosClient } from "$lib/server/api"
-import { getAllApps } from "$lib/server/utils"
+import { createKetoClient, createKratosClient, getAllApps } from "$lib/server/utils"
 import type { AppInfo, User } from "$lib/types"
 
 async function getAllowedApps(fetch: typeof global.fetch, username?: string): Promise<AppInfo[]> {
@@ -29,7 +27,7 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
     return apps
 }
 
-export async function load({ cookies, fetch, url }: { cookies: Cookies; fetch: typeof global.fetch; url: URL }) {
+export async function load({ cookies, fetch, url }) {
     const title = url.pathname.split("/").pop() || "home"
 
     const client = createKratosClient(cookies, fetch)
