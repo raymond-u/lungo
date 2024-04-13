@@ -1,10 +1,11 @@
 import { load as loadHtmlString } from "cheerio"
+import { JUPYTERHUB_BASE_URL, JUPYTERHUB_PASSWORD } from "$lib/plugins/jupyterhub/server/constants.server"
 import { wrapFetch } from "$lib/utils"
 
 export async function load({ cookies, fetch, parent }) {
     const wrappedFetch = wrapFetch({
         fetch,
-        baseUrl: "http://{{ ip_addresses['jupyterhub'] }}:80/",
+        baseUrl: JUPYTERHUB_BASE_URL,
         cookies,
         cookiePath: "/app/jupyterhub",
         credentials: "include",
@@ -31,7 +32,7 @@ export async function load({ cookies, fetch, parent }) {
         body: new URLSearchParams({
             _xsrf: csrf,
             username,
-            password: "{{ jupyterhub_password }}",
+            password: JUPYTERHUB_PASSWORD,
         }),
     })
 }

@@ -1,10 +1,11 @@
 import { load as loadHtmlString } from "cheerio"
+import { RSTUDIO_BASE_URL, RSTUDIO_PASSWORD } from "$lib/plugins/rstudio/server/constants.server"
 import { wrapFetch } from "$lib/utils"
 
 export async function load({ cookies, fetch, parent }) {
     const wrappedFetch = wrapFetch({
         fetch,
-        baseUrl: "http://{{ ip_addresses['rstudio'] }}:80/",
+        baseUrl: RSTUDIO_BASE_URL,
         cookies,
         cookiePath: "/app/rstudio",
         credentials: "include",
@@ -40,7 +41,7 @@ export async function load({ cookies, fetch, parent }) {
     const { userInfo } = await parent()
 
     const username = userInfo?.username ?? "anonymous"
-    const payload = `${username}\n{{ rstudio_password }}`
+    const payload = `${username}\n${RSTUDIO_PASSWORD}`
 
     const csrf = $("form[name=realform] > input:eq(1)")
 

@@ -1,0 +1,5 @@
+export const XRAY_DOMAIN_KEYWORD_WHITELIST = `{{ xray.domain_keyword_whitelist|tojson }}`
+export const XRAY_DOMAIN_SUFFIX_WHITELIST = `{{ xray.domain_suffix_whitelist|tojson }}`
+export const XRAY_DOMAIN_WHITELIST = `{{ xray.domain_whitelist|tojson }}`
+export const XRAY_IP_RANGE_WHITELIST = `{{ xray.ip_range_whitelist|map('string')|list|tojson }}`
+export const XRAY_SALT = "{{ xray_salt|string }}"

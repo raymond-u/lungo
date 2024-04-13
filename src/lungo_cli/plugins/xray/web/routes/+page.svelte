@@ -5,7 +5,7 @@
 
     export let data
 
-    const clash_config = `
+    const clashConfig = `
         proxies:
           - name: VPN
             type: vless
@@ -19,7 +19,7 @@
             ws-opts:
               path: /app/xray
     `
-    const xray_config = `
+    const xrayConfig = `
         "outbounds": [
           {
             "tag": "VPN",
@@ -52,8 +52,8 @@
         ]
     `
 
-    let clash_rules = [] as string[]
-    let xray_rules = { routing: { rules: [] } } as {
+    let clashRules = [] as string[]
+    let xrayRules = { routing: { rules: [] } } as {
         routing: {
             rules: (
                 | { type: string; domain: string[]; outboundTag: string }
@@ -63,43 +63,43 @@
     }
 
     if (
-        data.domain_whitelist.length ||
-        data.domain_keyword_whitelist.length ||
-        data.domain_suffix_whitelist.length ||
-        data.ip_range_whitelist.length
+        data.xrayDomainWhitelist.length ||
+        data.xrayDomainKeywordWhitelist.length ||
+        data.xrayDomainSuffixWhitelist.length ||
+        data.xrayIpRangeWhitelist.length
     ) {
-        clash_rules.push("rules:")
+        clashRules.push("rules:")
 
-        for (const domain of data.domain_whitelist) {
-            clash_rules.push(`  - DOMAIN,${domain},VPN`)
+        for (const domain of data.xrayDomainWhitelist) {
+            clashRules.push(`  - DOMAIN,${domain},VPN`)
         }
-        for (const domain_keyword of data.domain_keyword_whitelist) {
-            clash_rules.push(`  - DOMAIN-KEYWORD,${domain_keyword},VPN`)
+        for (const domainKeyword of data.xrayDomainKeywordWhitelist) {
+            clashRules.push(`  - DOMAIN-KEYWORD,${domainKeyword},VPN`)
         }
-        for (const domain_suffix of data.domain_suffix_whitelist) {
-            clash_rules.push(`  - DOMAIN-SUFFIX,${domain_suffix},VPN`)
+        for (const domainSuffix of data.xrayDomainSuffixWhitelist) {
+            clashRules.push(`  - DOMAIN-SUFFIX,${domainSuffix},VPN`)
         }
-        for (const ip_range of data.ip_range_whitelist) {
-            clash_rules.push(`  - IP-CIDR,${ip_range},VPN,no-resolve`)
+        for (const ipRange of data.xrayIpRangeWhitelist) {
+            clashRules.push(`  - IP-CIDR,${ipRange},VPN,no-resolve`)
         }
     }
 
-    if (data.domain_whitelist.length || data.domain_keyword_whitelist.length || data.domain_suffix_whitelist.length) {
-        xray_rules.routing.rules.push({
+    if (data.xrayDomainWhitelist.length || data.xrayDomainKeywordWhitelist.length || data.xrayDomainSuffixWhitelist.length) {
+        xrayRules.routing.rules.push({
             type: "field",
             domain: [
-                ...data.domain_whitelist.map((x) => `full:${x}`),
-                ...data.domain_keyword_whitelist,
-                ...data.domain_suffix_whitelist.map((x) => `domain:${x}`),
+                ...data.xrayDomainWhitelist.map((x) => `full:${x}`),
+                ...data.xrayDomainKeywordWhitelist,
+                ...data.xrayDomainSuffixWhitelist.map((x) => `domain:${x}`),
             ],
             outboundTag: "VPN",
         })
     }
 
-    if (data.ip_range_whitelist.length) {
-        xray_rules.routing.rules.push({
+    if (data.xrayIpRangeWhitelist.length) {
+        xrayRules.routing.rules.push({
             type: "field",
-            ip: data.ip_range_whitelist,
+            ip: data.xrayIpRangeWhitelist,
             outboundTag: "VPN",
         })
     }
@@ -133,16 +133,16 @@
                             self-signed TLS certificate on the website.
                         </p>
                         <div class="not-prose my-5">
-                            <CodeBlock code={clash_config} highlightedLines={[7]} language="yaml" />
+                            <CodeBlock code={clashConfig} highlightedLines={[7]} language="yaml" />
                         </div>
                     </li>
-                    {#if clash_rules.length}
+                    {#if clashRules.length}
                         <li>
                             <p>
                                 Configure rules to forward requests to the internal network. Here is a minimal example.
                             </p>
                             <div class="not-prose my-5">
-                                <CodeBlock code={clash_rules.join("\n")} language="yaml" />
+                                <CodeBlock code={clashRules.join("\n")} language="yaml" />
                             </div>
                         </li>
                     {/if}
@@ -162,16 +162,16 @@
                             self-signed TLS certificate on the website.
                         </p>
                         <div class="not-prose my-5">
-                            <CodeBlock code={xray_config} highlightedLines={[21, 22, 23]} language="json" />
+                            <CodeBlock code={xrayConfig} highlightedLines={[21, 22, 23]} language="json" />
                         </div>
                     </li>
-                    {#if xray_rules.routing.rules.length}
+                    {#if xrayRules.routing.rules.length}
                         <li>
                             <p>
                                 Configure rules to forward requests to the internal network. Here is a minimal example.
                             </p>
                             <div class="not-prose my-5">
-                                <CodeBlock code={JSON.stringify(xray_rules, null, 2)} language="json" />
+                                <CodeBlock code={JSON.stringify(xrayRules, null, 2)} language="json" />
                             </div>
                         </li>
                     {/if}
