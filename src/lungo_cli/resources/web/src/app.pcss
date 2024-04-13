@@ -47,9 +47,24 @@
         @apply border-transparent;
     }
 
+    .link:disabled {
+        @apply cursor-not-allowed;
+        @apply text-base-content/20;
+    }
+
     .modal:not(dialog:not(.modal-open)),
     .modal::backdrop {
         @apply bg-black/60;
+    }
+
+    .select {
+        &:focus {
+            @apply border-transparent;
+        }
+
+        &:invalid {
+            -webkit-text-fill-color: var(--fallback-bc, oklch(var(--bc)/0.6));
+        }
     }
 
     .swap > * {
@@ -59,39 +74,18 @@
 }
 
 @layer utilities {
+    .required::after {
+        @apply content-['*'];
+        @apply ml-1;
+        @apply text-error;
+    }
+
     .scrollbar-none {
         scrollbar-width: none;
         -ms-overflow-style: none;
 
         &::-webkit-scrollbar {
             @apply hidden;
-        }
-    }
-
-    .scrollbar-transparent {
-        scrollbar-color: transparent transparent;
-
-        &::-webkit-scrollbar {
-            @apply w-4;
-            @apply bg-transparent;
-        }
-
-        &::-webkit-scrollbar-corner {
-            @apply bg-transparent;
-            @apply border-transparent;
-        }
-
-        &::-webkit-scrollbar-track {
-            @apply bg-transparent;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            @apply bg-base-content/20;
-            @apply bg-clip-padding;
-            @apply border-4;
-            @apply border-solid;
-            @apply border-transparent;
-            @apply rounded-full;
         }
     }
 
