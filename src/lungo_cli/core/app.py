@@ -264,14 +264,12 @@ class AppManager:
                 # Delay copying the web files until the templates have all been rendered
                 for plugin in self.plugin_manager.plugins:
                     for web_dir in (self.storage.installed_plugins_dir / plugin.config.name / "web").iterdir():
-                        if web_dir.name == "dependencies.txt":
-                            continue
+                        if web_dir.name == "lib":
+                            dst_prefix = self.storage.bundled_dir / "web" / "src" / "lib" / "plugins"
+                            self.file_utils.copy(web_dir, dst_prefix / plugin.config.name)
                         elif web_dir.name == "routes":
                             dst_prefix = self.storage.bundled_dir / "web" / "src" / "routes" / "(apps)" / "app"
                             self.file_utils.copy(web_dir, dst_prefix / plugin.config.name)
-                        else:
-                            dst_prefix = self.storage.bundled_dir / "web" / "src" / "lib" / "plugins"
-                            self.file_utils.copy(web_dir, dst_prefix / plugin.config.name / web_dir.name)
 
                 if self.context_manager.config.branding.cover:
                     self.file_utils.copy(
