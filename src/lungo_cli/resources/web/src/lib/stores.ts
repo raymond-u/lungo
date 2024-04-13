@@ -13,6 +13,10 @@ export function currentApp(page: Readable<Page>): Readable<AppInfo | undefined> 
     )
 }
 
+export function currentContainer(): Writable<HTMLDivElement | undefined> {
+    return writable(undefined)
+}
+
 export function currentInlineFrame(): Writable<HTMLIFrameElement | undefined> {
     return writable(undefined)
 }
@@ -49,6 +53,7 @@ export function syncedScrollTop(): Writable<number> {
 export class Store {
     allowScroll: Writable<boolean>
     currentApp: Readable<AppInfo | undefined>
+    currentContainer: Writable<HTMLDivElement | undefined>
     currentInlineFrame: Writable<HTMLIFrameElement | undefined>
     currentTheme: Writable<ETheme>
     darkTheme: Readable<boolean | undefined>
@@ -58,6 +63,7 @@ export class Store {
     constructor() {
         this.allowScroll = allowScroll()
         this.currentApp = currentApp(page)
+        this.currentContainer = currentContainer()
         this.currentInlineFrame = currentInlineFrame()
         this.currentTheme = currentTheme()
         this.darkTheme = darkTheme(this.currentTheme)
