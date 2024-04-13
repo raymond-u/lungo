@@ -96,3 +96,28 @@ export function scrollSync(node: HTMLElement, { stores, id }: SSParams): ActionR
         },
     }
 }
+
+export function skeleton(node: HTMLIFrameElement | HTMLImageElement): ActionReturn {
+    if (node instanceof HTMLIFrameElement) {
+        if (node.contentDocument === null || node.contentDocument.readyState === "complete") {
+            return {}
+        }
+    } else {
+        if (node.complete) {
+            return {}
+        }
+    }
+
+    const handler = () => {
+        node.classList.remove("skeleton")
+    }
+
+    node.classList.add("skeleton")
+    node.addEventListener("load", handler)
+
+    return {
+        destroy() {
+            node.removeEventListener("load", handler)
+        },
+    }
+}

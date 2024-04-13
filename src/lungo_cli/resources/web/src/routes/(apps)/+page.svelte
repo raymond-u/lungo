@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { skeleton } from "$lib/actions"
+    import CoverImage from "$lib/assets/cover.jpg?enhanced"
     import { HeroFrame } from "$lib/components"
     import { SITE_SUBTITLE, SITE_TITLE } from "$lib/constants"
     import { getRandomElement } from "$lib/utils"
@@ -11,7 +13,12 @@
 <HeroFrame>
     <div class="hero h-full">
         <div class="hero-content flex-col gap-16 lg:flex-row-reverse lg:gap-32">
-            <img src="/cover.jpg" alt="cover" class="max-h-48 w-80 rounded-box object-cover shadow-2xl lg:max-h-none" />
+            <enhanced:img
+                class="max-h-48 w-80 rounded-box object-cover shadow-2xl lg:max-h-none"
+                src={CoverImage}
+                alt="cover"
+                use:skeleton
+            />
             <div>
                 {#if data.userInfo}
                     <h1 class="text-4xl font-bold">Welcome back, {data.userInfo.name.first}</h1>

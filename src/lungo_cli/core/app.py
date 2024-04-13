@@ -258,7 +258,11 @@ class AppManager:
                     self.renderer.render_plugin(plugin)
                     self.context_manager.plugin_outputs.append(plugin.output)
 
-                    # Copy web related files of the plugin to the main web directory
+                self.renderer.render_main()
+                self.account_manager.update(self.context_manager.config, self.context_manager.users)
+
+                # Delay copying the web files until the templates have all been rendered
+                for plugin in self.plugin_manager.plugins:
                     for web_dir in (self.storage.installed_plugins_dir / plugin.config.name / "web").iterdir():
                         if web_dir.name == "dependencies.txt":
                             continue
@@ -269,7 +273,16 @@ class AppManager:
                             dst_prefix = self.storage.bundled_dir / "web" / "src" / "lib" / "plugins"
                             self.file_utils.copy(web_dir, dst_prefix / plugin.config.name / web_dir.name)
 
-                self.renderer.render_main()
-                self.account_manager.update(self.context_manager.config, self.context_manager.users)
+                if self.context_manager.config.branding.cover:
+                    self.file_utils.copy(
+                        self.context_manager.config.branding.cover,
+                        self.storage.bundled_dir / "web" / "src" / "lib" / "assets" / "cover.jpg",
+                    )
+
+                if self.context_manager.config.branding.logo:
+                    self.file_utils.copy(
+                        self.context_manager.config.branding.logo,
+                        self.storage.bundled_dir / "web" / "static" / "favicon.png",
+                    )
 
                 self.file_utils.write_text(self.storage.init_file, config_hash)

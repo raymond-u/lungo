@@ -199,18 +199,6 @@ services:
     expose:
       - 80
 
-    volumes:
-      {% if branding.cover or branding.logo %}
-        {% if branding.cover %}
-      - '{{ branding.cover }}:/app/cover.jpg:ro'
-        {% endif %}
-        {% if branding.logo %}
-      - '{{ branding.logo }}:/app/favicon.png:ro'
-        {% endif %}
-      {% else %}
-      [ ]
-      {% endif %}
-
     environment:
       - BODY_SIZE_LIMIT=Infinity
       - NODE_ENV=production
