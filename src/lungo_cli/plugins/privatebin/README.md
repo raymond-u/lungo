@@ -1,4 +1,6 @@
-# PrivateBin (plugin for Lungo)
+# PrivateBin
+
+A Lungo plugin.
 
 ## Configuration
 

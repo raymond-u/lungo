@@ -1,4 +1,6 @@
-# JupyterHub (plugin for Lungo)
+# JupyterHub
+
+A Lungo plugin.
 
 ## Configuration
 

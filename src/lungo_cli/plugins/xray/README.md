@@ -1,4 +1,6 @@
-# Xray (plugin for Lungo)
+# Xray
+
+A Lungo plugin.
 
 ## Configuration
 

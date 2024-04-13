@@ -1,4 +1,6 @@
-# File Browser (plugin for Lungo)
+# File Browser
+
+A Lungo plugin.
 
 ## Configuration
 

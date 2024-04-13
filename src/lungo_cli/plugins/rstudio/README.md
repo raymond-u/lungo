@@ -1,4 +1,6 @@
-# RStudio (plugin for Lungo)
+# RStudio
+
+A Lungo plugin.
 
 ## Configuration
 
