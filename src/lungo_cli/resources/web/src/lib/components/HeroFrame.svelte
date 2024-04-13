@@ -1,4 +1,5 @@
 <script lang="ts">
+    export let stretched = false
     export let wrapped = false
 </script>
 
@@ -7,6 +8,7 @@
         {#if wrapped}
             <div
                 class="flex max-w-md flex-1 flex-col items-center justify-center gap-4 rounded-box bg-base-200 px-12 py-16"
+                class:md:max-w-lg={stretched}
             >
                 <slot />
             </div>
