@@ -33,7 +33,7 @@
 
 - id: privatebin-private
   match:
-    url: '{{ base_url }}app/<privatebin><.*>'
+    url: '{{ base_url }}app/<privatebin><(?:$|/).*>'
     methods:
       - POST
       - DELETE
@@ -45,7 +45,7 @@
 
 - id: privatebin-public
   match:
-    url: '{{ base_url }}app/privatebin<.*>'
+    url: '{{ base_url }}app/privatebin<(?:$|/).*>'
     methods:
       - GET
   {{ PASS }}

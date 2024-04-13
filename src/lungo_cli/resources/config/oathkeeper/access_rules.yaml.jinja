@@ -33,16 +33,14 @@
 
 {% set plugins = config.plugins %}
 {% set app_with_rules %}
-  {% for plugin_output in plugin_outputs %}
-    {% if plugins[plugin_output.config.name].enabled and plugin_output.oathkeeper_rules -%}
-      {{ plugin_output.config.name }}{{ '|' if not loop.last }}
-    {%- endif %}
-  {% endfor %}
+  {% for plugin_output in plugin_outputs if plugins[plugin_output.config.name].enabled and plugin_output.oathkeeper_rules -%}
+    {{ plugin_output.config.name ~ '$' ~ '|' ~ plugin_output.config.name ~ '/' }}{{ '|' if not loop.last }}
+  {%- endfor %}
 {% endset %}
 
 - id: apps
   match:
-    url: '{{ base_url }}app/<(?!(?:{{ app_with_rules }})/)[^/]*><.*>'
+    url: '{{ base_url }}app/<(?!(?:{{ app_with_rules }}))[^/]*><.*>'
     methods:
       {{ ALL }}
   {{ AUTH }}

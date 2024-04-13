@@ -33,7 +33,7 @@
 
 - id: filebrowser-private
   match:
-    url: '{{ base_url }}app/<filebrowser><(?!/(?:api/public|share|static)/).*>'
+    url: '{{ base_url }}app/<filebrowser><(?:$|/)(?!(?:api/public|share|static)/).*>'
     methods:
       {{ ALL }}
   {{ AUTH }}
