@@ -17,7 +17,7 @@ export function currentContainer(): Writable<HTMLDivElement | undefined> {
     return writable(undefined)
 }
 
-export function currentInlineFrame(): Writable<HTMLIFrameElement | undefined> {
+export function currentIFrame(): Writable<HTMLIFrameElement | undefined> {
     return writable(undefined)
 }
 
@@ -54,7 +54,7 @@ export class Store {
     allowScroll: Writable<boolean>
     currentApp: Readable<AppInfo | undefined>
     currentContainer: Writable<HTMLDivElement | undefined>
-    currentInlineFrame: Writable<HTMLIFrameElement | undefined>
+    currentIFrame: Writable<HTMLIFrameElement | undefined>
     currentTheme: Writable<ETheme>
     darkTheme: Readable<boolean | undefined>
     isSafari: Writable<boolean>
@@ -64,7 +64,7 @@ export class Store {
         this.allowScroll = allowScroll()
         this.currentApp = currentApp(page)
         this.currentContainer = currentContainer()
-        this.currentInlineFrame = currentInlineFrame()
+        this.currentIFrame = currentIFrame()
         this.currentTheme = currentTheme()
         this.darkTheme = darkTheme(this.currentTheme)
         this.isSafari = isSafari()

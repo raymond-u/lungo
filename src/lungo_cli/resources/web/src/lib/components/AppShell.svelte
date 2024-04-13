@@ -7,10 +7,10 @@
     import { getNameInitials, useAppIcon, useStore } from "$lib/utils"
     import AccountDropdown from "./AccountDropdown.svelte"
 
-    const { allowScroll, currentApp, currentInlineFrame, darkTheme, isSafari, syncedScrollTops } = useStore()
+    const { allowScroll, currentApp, currentIFrame, darkTheme, isSafari, syncedScrollTops } = useStore()
 
     const handleFullscreen = () => {
-        $currentInlineFrame?.requestFullscreen()
+        $currentIFrame?.requestFullscreen()
     }
 
     let checked: boolean | undefined
@@ -65,7 +65,7 @@
         <div class="flex-1 px-4">
             <a class="text-xl" href="/">{SITE_TITLE}</a>
         </div>
-        {#if $currentInlineFrame}
+        {#if $currentIFrame}
             <div class="hidden flex-none md:flex">
                 <button class="btn btn-circle btn-ghost h-10 min-h-0 w-10" on:click={handleFullscreen}>
                     <span class="h-6 w-6">

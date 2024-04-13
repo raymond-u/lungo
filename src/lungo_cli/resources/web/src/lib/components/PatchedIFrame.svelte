@@ -5,7 +5,7 @@
     import { page } from "$app/stores"
     import { getUrlParts, isSameHost, useStore } from "$lib/utils"
 
-    const { currentApp, currentInlineFrame } = useStore()
+    const { currentApp, currentIFrame } = useStore()
 
     const getOriginalUrl = (url: string | URL) => {
         if (typeof url === "string") {
@@ -153,7 +153,7 @@
     let iFrame: HTMLIFrameElement | undefined
 
     onMount(() => {
-        $currentInlineFrame = iFrame
+        $currentIFrame = iFrame
         iFrame!.addEventListener("load", handleLoad)
         iFrame!.src = getModifiedUrl($page.url)
 
@@ -168,7 +168,7 @@
         return () => {
             unsubscribe()
             iFrame!.removeEventListener("load", handleLoad)
-            $currentInlineFrame = undefined
+            $currentIFrame = undefined
         }
     })
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { PatchedInlineFrame } from "$lib/components"
+    import { PatchedIFrame } from "$lib/components"
 </script>
 
-<PatchedInlineFrame />
+<PatchedIFrame />
