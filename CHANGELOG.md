@@ -16,9 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- The plugin system
+- New plugin system
 - Allow login through a one-time code sent via email
 - Allow control over the maximum size of the client request body
+- CLI now streams shell command output when in development mode
 
 ### Changed
 
