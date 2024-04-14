@@ -7,6 +7,7 @@ class Plugin(BasePlugin[BaseSettings]):
         descriptive_name="File Browser",
         version="0.1.0",
         description="File Browser as a Lungo plugin.",
+        compatible_with="~=0.3.0",
         have_backend=True,
         require_account=True,
         web_icon="icons/FolderOutline.svelte",

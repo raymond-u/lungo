@@ -19,6 +19,7 @@ class Plugin(BasePlugin[Settings]):
         descriptive_name="Xray",
         version="0.1.0",
         description="Xray as a Lungo plugin.",
+        compatible_with="~=0.3.0",
         have_backend=True,
         require_account=True,
         web_icon="icons/ProxyOutline.svelte",

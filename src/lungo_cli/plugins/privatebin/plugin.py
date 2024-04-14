@@ -9,6 +9,7 @@ class Plugin(BasePlugin[BaseSettings]):
         descriptive_name="Pastebin",
         version="0.1.0",
         description="PrivateBin as a Lungo plugin.",
+        compatible_with="~=0.3.0",
         have_backend=True,
         require_account=False,
         web_icon="icons/NoteOutline.svelte",
