@@ -18,7 +18,7 @@
     "devDependencies": {
         "@sveltejs/adapter-node": "^5.0.1",
         "@sveltejs/enhanced-img": "^0.2.0",
-        "@sveltejs/kit": "^2.5.5",
+        "@sveltejs/kit": "^2.5.6",
         "@sveltejs/vite-plugin-svelte": "^3.1.0",
         "@tailwindcss/typography": "^0.5.12",
         "@types/set-cookie-parser": "^2.4.7",
@@ -48,5 +48,5 @@
         "node": ">=20.0.0",
         "pnpm": "^8.0.0"
     },
-    "packageManager": "pnpm@8.15.6"
+    "packageManager": "pnpm@8.15.7"
 }
