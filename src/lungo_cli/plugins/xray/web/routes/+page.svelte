@@ -119,7 +119,7 @@
         </p>
         <div class="tabs tabs-lifted">
             <input
-                class="tab [--tab-border-color:oklch(var(--nc))]"
+                class="tab [--tab-border-color:var(--fallback-nc,oklch(var(--nc)))]"
                 type="radio"
                 name="proxy-client"
                 aria-label="Clash"
@@ -149,7 +149,7 @@
                 </ol>
             </div>
             <input
-                class="tab [--tab-border-color:oklch(var(--nc))]"
+                class="tab [--tab-border-color:var(--fallback-nc,oklch(var(--nc)))]"
                 type="radio"
                 name="proxy-client"
                 aria-label="Xray"
