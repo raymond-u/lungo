@@ -196,7 +196,7 @@ class AppManager:
                     f"v{get_app_version()}",
                     *(
                         map(
-                            lambda x: f"{x.config.name}{f'v{x.config.version}' if x.config.version else ''}",
+                            lambda x: f"{x.config.name}v{x.config.version}",
                             ordered_plugins,
                         )
                     ),

@@ -13,8 +13,8 @@ class BaseSettings(Base):
 
 class PluginConfig(Base):
     name: str
+    version: str
     descriptive_name: str | None = None
-    version: str | None = None
     description: str | None = None
 
     compatible_with: str

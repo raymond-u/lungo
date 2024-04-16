@@ -45,8 +45,7 @@ def main(
                     f"{f' ({plugin_cls.config.descriptive_name})' if plugin_cls.config.descriptive_name else ''}"
                 )
                 console().print(
-                    f"Version: {(plugin_cls.installed and plugin_cls.config.version) or '-'}"
-                    f" -> {(plugin_cls.installable and plugin_cls.alt_version) or '-'}"
+                    f"Version: {plugin_cls.config.version if plugin_cls.installed else '-'} -> {plugin_cls.alt_version}"
                     if plugin_cls.installable
                     else ""
                 )
@@ -78,8 +77,8 @@ def main(
         for plugin_cls in plugin_classes:
             table.add_row(
                 plugin_cls.config.name,
-                (plugin_cls.installed and plugin_cls.config.version) or "-",
-                (plugin_cls.installable and plugin_cls.alt_version) or "-",
+                plugin_cls.config.version if plugin_cls.installed else "-",
+                plugin_cls.alt_version if plugin_cls.installable else "-",
                 "Yes" if plugin_cls.installable else "No",
                 "Yes" if plugin_cls.installed else "No",
             )
