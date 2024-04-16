@@ -1,24 +1,26 @@
 import type { ComponentType } from "svelte"
 import { QuestionMarkIcon } from "$lib/icons"
-{% for plugin in plugin_outputs %}
-    {% set plugin_prefix = plugin.manifest.name|capitalize %}
-    {% if plugin.manifest.web_icon %}
-import {{ plugin_prefix ~ 'Icon' }} from "$lib/plugins/{{ plugin.manifest.name }}/{{ plugin.manifest.web_icon }}"
+{% for plugin_output in plugin_outputs %}
+    {% set plugin_name = plugin_output.manifest.name %}
+    {% set plugin_prefix = plugin_name|capitalize %}
+    {% if plugin_output.manifest.web_icon %}
+import {{ plugin_prefix ~ 'Icon' }} from "$lib/plugins/{{ plugin_name }}/{{ plugin_output.manifest.web_icon }}"
     {% endif %}
-    {% if plugin.manifest.web_alt_icon %}
-import {{ plugin_prefix ~ 'AltIcon' }} from "$lib/plugins/{{ plugin.manifest.name }}/{{ plugin.manifest.web_alt_icon }}"
+    {% if plugin_output.manifest.web_alt_icon %}
+import {{ plugin_prefix ~ 'AltIcon' }} from "$lib/plugins/{{ plugin_name }}/{{ plugin_output.manifest.web_alt_icon }}"
     {% endif %}
 {% endfor %}
 
 export function useAppIcon(name: string): { icon: ComponentType; altIcon: ComponentType } {
     const icons = {
-        {% for plugin in plugin_outputs %}
-            {% set plugin_prefix = plugin.manifest.name|capitalize %}
-            {% set plugin_icon = plugin_prefix ~ 'Icon' if plugin.manifest.web_icon else 'QuestionMarkIcon' %}
-        "{{ plugin.manifest.name }}":
+        {% for plugin_output in plugin_outputs %}
+            {% set plugin_name = plugin_output.manifest.name %}
+            {% set plugin_prefix = plugin_name|capitalize %}
+            {% set plugin_icon = plugin_prefix ~ 'Icon' if plugin_output.manifest.web_icon else 'QuestionMarkIcon' %}
+        "{{ plugin_name }}":
             {
                 icon: {{ plugin_icon }},
-                altIcon: {{ plugin_prefix ~ 'AltIcon' if plugin.manifest.web_alt_icon else plugin_icon }},
+                altIcon: {{ plugin_prefix ~ 'AltIcon' if plugin_output.manifest.web_alt_icon else plugin_icon }},
             },
         {% endfor %}
     }
