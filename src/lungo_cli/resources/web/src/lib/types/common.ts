@@ -1,5 +1,6 @@
 export type AppInfo = {
     name: string
+    path: string
     descriptiveName: string
     href: string
 }

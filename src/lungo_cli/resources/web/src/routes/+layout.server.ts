@@ -10,7 +10,7 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
             params: {
                 query: {
                     namespace: "app",
-                    object: app.name,
+                    object: app.path,
                     relation: "access",
                     subject_id: username ?? "anonymous",
                 },
