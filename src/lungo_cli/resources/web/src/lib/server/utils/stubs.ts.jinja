@@ -3,11 +3,12 @@ import type { AppInfo } from "$lib/types"
 export function getAllApps(): AppInfo[] {
     const apps = [
         {% for plugin in plugin_outputs %}
+            {% set plugin_web_path = plugin_output.config.web_path_name or plugin_output.config.name %}
         {
             name: "{{ plugin.config.name }}",
-            path: "{{ plugin.config.web_name or plugin.config.name }}",
+            path: "{{ plugin_web_path }}",
             descriptiveName: "{{ plugin.config.descriptive_name or plugin.config.name|capitalize }}",
-            href: "/app/{{ plugin.config.web_name or plugin.config.name }}",
+            href: "/app/{{ plugin_web_path }}",
         },
         {% endfor %}
     ]

@@ -21,13 +21,13 @@ class PluginConfig(Base):
     backend_port: PortType | None = None
     require_account: bool
 
-    web_name: str | None = None
+    web_path_name: str | None = None
     web_icon: str | None = None
     web_alt_icon: str | None = None
 
     @property
     def web_path(self) -> str:
-        return self.web_name or self.name
+        return self.web_path_name or self.name
 
 
 class PluginContext(Base):
