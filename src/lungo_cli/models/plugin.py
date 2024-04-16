@@ -1,7 +1,8 @@
+import re
 from ipaddress import IPv4Address
 from typing import Any
 
-from pydantic import AnyHttpUrl
+from pydantic import AnyHttpUrl, field_validator
 
 from .base import AppDirs, Base, PortType
 
@@ -28,6 +29,29 @@ class PluginConfig(Base):
     @property
     def web_path(self) -> str:
         return self.web_path_name or self.name
+
+    # noinspection PyNestedDecorators
+    @field_validator("name")
+    @classmethod
+    def name_field_validator(cls, v: str) -> str:
+        # Must be a valid file name
+        if not re.fullmatch("[a-zA-Z0-9_-]+", v):
+            raise ValueError("name must only contain alphanumeric characters, dash, or underscore")
+
+        return v
+
+    # noinspection PyNestedDecorators
+    @field_validator("web_path_name")
+    @classmethod
+    def web_path_name_field_validator(cls, v: str | None) -> str | None:
+        if v is None:
+            return None
+
+        # Must be a valid file name
+        if not re.fullmatch("[a-zA-Z0-9_-]+", v):
+            raise ValueError("web_path_name must only contain alphanumeric characters, dash, or underscore")
+
+        return v
 
 
 class PluginContext(Base):
