@@ -2,87 +2,87 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/changelog/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/cli-reference/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/installation/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/configuration/reference-for-config-yaml/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/configuration/reference-for-users-yaml/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/getting-started/configuring-settings/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/getting-started/launching-the-service/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/getting-started/managing-plugins/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/getting-started/managing-users/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/getting-started/prerequisites/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/guides/allowing-anonymous-access/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/guides/configuring-rate-limiting/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/guides/using-local-home-directories/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/overview/architecture/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/overview/plugins/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://raymond-u.github.io/lungo/stable/overview/security/</loc>
-         <lastmod>2024-04-14</lastmod>
+         <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
