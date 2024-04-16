@@ -33,8 +33,9 @@
 
 {% set plugins = config.plugins %}
 {% set app_with_rules %}
-  {% for plugin_output in plugin_outputs if plugins[plugin_output.config.name].enabled and plugin_output.oathkeeper_rules -%}
-    {{ plugin_output.config.name ~ '$' ~ '|' ~ plugin_output.config.name ~ '/' }}{{ '|' if not loop.last }}
+  {% for plugin_output in plugin_outputs if plugins[plugin_output.config.name].enabled and plugin_output.oathkeeper_rules %}
+    {% set plugin_web_path = plugin_output.config.web_name or plugin_output.config.name -%}
+    {{ plugin_web_path ~ '$' ~ '|' ~ plugin_web_path ~ '/' }}{{ '|' if not loop.last }}
   {%- endfor %}
 {% endset %}
 
