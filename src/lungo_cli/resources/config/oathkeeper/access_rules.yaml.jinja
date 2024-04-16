@@ -33,8 +33,8 @@
 
 {% set plugins = config.plugins %}
 {% set app_with_rules %}
-  {% for plugin_output in plugin_outputs if plugins[plugin_output.config.name].enabled and plugin_output.oathkeeper_rules %}
-    {% set plugin_web_path = plugin_output.config.web_path_name or plugin_output.config.name -%}
+  {% for plugin_output in plugin_outputs if plugins[plugin_output.manifest.name].enabled and plugin_output.oathkeeper_rules %}
+    {% set plugin_web_path = plugin_output.manifest.web_path_name or plugin_output.manifest.name -%}
     {{ plugin_web_path ~ '$' ~ '|' ~ plugin_web_path ~ '/' }}{{ '|' if not loop.last }}
   {%- endfor %}
 {% endset %}
@@ -47,7 +47,7 @@
   {{ AUTH }}
 
 {% for plugin_output in plugin_outputs %}
-  {% if plugins[plugin_output.config.name].enabled and plugin_output.oathkeeper_rules %}
+  {% if plugins[plugin_output.manifest.name].enabled and plugin_output.oathkeeper_rules %}
 {{ plugin_output.oathkeeper_rules }}
   {% endif %}
 {% endfor %}

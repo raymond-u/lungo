@@ -174,9 +174,9 @@ class AppManager:
 
                 if next(
                     (
-                        plugin_cls.config.require_account
+                        plugin_cls.manifest.require_account
                         for plugin_cls in self.plugin_manager.compatible_plugin_classes
-                        if plugin_cls.config.name == allowed_app
+                        if plugin_cls.manifest.name == allowed_app
                     ),
                     False,
                 ):
@@ -188,7 +188,7 @@ class AppManager:
 
     def generate_config_hash(self) -> str:
         """Generate a hash of the configuration files."""
-        ordered_plugins = sorted(self.plugin_manager.compatible_plugin_classes, key=lambda x: x.config.name)
+        ordered_plugins = sorted(self.plugin_manager.compatible_plugin_classes, key=lambda x: x.manifest.name)
 
         return hash_text(
             "+".join(
@@ -196,7 +196,7 @@ class AppManager:
                     f"v{get_app_version()}",
                     *(
                         map(
-                            lambda x: f"{x.config.name}v{x.config.version}",
+                            lambda x: f"{x.manifest.name}v{x.manifest.version}",
                             ordered_plugins,
                         )
                     ),
@@ -259,20 +259,20 @@ class AppManager:
                 for plugin in self.plugin_manager.plugins:
                     self.renderer.render_plugin(plugin)
                     self.context_manager.plugin_outputs.append(plugin.output)
-                    app_web_path_map[plugin.config.name] = plugin.config.web_path
+                    app_web_path_map[plugin.manifest.name] = plugin.manifest.web_path
 
                 self.renderer.render_main()
                 self.account_manager.update(self.context_manager.config, self.context_manager.users, app_web_path_map)
 
                 # Delay copying the web files until the templates have all been rendered
                 for plugin in self.plugin_manager.plugins:
-                    for web_dir in (self.storage.installed_plugins_dir / plugin.config.name / "web").iterdir():
+                    for web_dir in (self.storage.installed_plugins_dir / plugin.manifest.name / "web").iterdir():
                         if web_dir.name == "lib":
                             dst_prefix = self.storage.bundled_dir / "web" / "src" / "lib" / "plugins"
-                            self.file_utils.copy(web_dir, dst_prefix / plugin.config.name)
+                            self.file_utils.copy(web_dir, dst_prefix / plugin.manifest.name)
                         elif web_dir.name == "routes":
                             dst_prefix = self.storage.bundled_dir / "web" / "src" / "routes" / "(apps)" / "app"
-                            self.file_utils.copy(web_dir, dst_prefix / plugin.config.web_path)
+                            self.file_utils.copy(web_dir, dst_prefix / plugin.manifest.web_path)
 
                 if self.context_manager.config.branding.cover:
                     self.file_utils.copy(

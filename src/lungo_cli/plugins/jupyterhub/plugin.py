@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any, override
 
-from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginConfig
+from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginManifest
 from lungo_cli.helpers.crypto import generate_random_hex
 
 
@@ -10,10 +10,10 @@ class Settings(BaseSettings):
 
 
 class Plugin(BasePlugin[Settings]):
-    config = PluginConfig(
+    manifest = PluginManifest(
         name="jupyterhub",
-        descriptive_name="JupyterHub",
         version="0.1.0",
+        descriptive_name="JupyterHub",
         description="JupyterHub as a Lungo plugin.",
         compatible_with="~=0.3.0",
         have_backend=True,
@@ -24,11 +24,11 @@ class Plugin(BasePlugin[Settings]):
 
     @property
     def cookie_secret_file(self) -> Path:
-        return self.storage.generated_dir / self.config.name / "cookie_secret"
+        return self.storage.generated_dir / self.manifest.name / "cookie_secret"
 
     @property
     def password_file(self) -> Path:
-        return self.storage.generated_dir / self.config.name / "password"
+        return self.storage.generated_dir / self.manifest.name / "password"
 
     @classmethod
     @override

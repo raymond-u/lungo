@@ -53,9 +53,9 @@ class Renderer:
                 self.render(relative_path, file.with_suffix(""), **self.context_manager.context.model_dump())
 
     def render_plugin(self, plugin: BasePlugin) -> None:
-        self.console.print_info(f"Rendering templates for {format_program(plugin.config.name)}...")
+        self.console.print_info(f"Rendering templates for {format_program(plugin.manifest.name)}...")
 
-        for file in self.storage.installed_plugins_dir.joinpath(plugin.config.name).rglob("*.jinja"):
+        for file in self.storage.installed_plugins_dir.joinpath(plugin.manifest.name).rglob("*.jinja"):
             relative_path = file.relative_to(self.storage.bundled_dir)
             self.render(
                 relative_path,

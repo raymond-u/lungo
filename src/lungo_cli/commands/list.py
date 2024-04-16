@@ -30,22 +30,24 @@ def main(
     plugin_classes = plugin_manager().compatible_plugin_classes
 
     for installable_plugin_cls in plugin_manager().installable_plugin_classes:
-        if plugin_cls := next((x for x in plugin_classes if x.config.name == installable_plugin_cls.config.name), None):
+        if plugin_cls := next(
+            (x for x in plugin_classes if x.manifest.name == installable_plugin_cls.manifest.name), None
+        ):
             plugin_cls.installable = True
-            plugin_cls.alt_version = installable_plugin_cls.config.version
+            plugin_cls.alt_version = installable_plugin_cls.manifest.version
         else:
-            installable_plugin_cls.alt_version = installable_plugin_cls.config.version
+            installable_plugin_cls.alt_version = installable_plugin_cls.manifest.version
             plugin_classes.append(installable_plugin_cls)
 
     if args:
         for arg in args:
-            if plugin_cls := next((x for x in plugin_classes if x.config.name == arg), None):
+            if plugin_cls := next((x for x in plugin_classes if x.manifest.name == arg), None):
                 console().print(
-                    f"Name: {plugin_cls.config.name}"
-                    f"{f' ({plugin_cls.config.descriptive_name})' if plugin_cls.config.descriptive_name else ''}"
+                    f"Name: {plugin_cls.manifest.name}"
+                    f"{f' ({plugin_cls.manifest.descriptive_name})' if plugin_cls.manifest.descriptive_name else ''}"
                 )
                 console().print(
-                    f"Version: {plugin_cls.config.version if plugin_cls.installed else '-'} -> {plugin_cls.alt_version}"
+                    f"Version: {plugin_cls.manifest.version if plugin_cls.installed else '-'} -> {plugin_cls.alt_version}"
                     if plugin_cls.installable
                     else ""
                 )
@@ -54,7 +56,7 @@ def main(
                     f"{'installed' if plugin_cls.installed else 'not installed'} "
                     f"({'custom' if plugin_cls.custom else 'built-in'} plugin)."
                 )
-                console().print(f"Description: {plugin_cls.config.description or 'No description.'}")
+                console().print(f"Description: {plugin_cls.manifest.description or 'No description.'}")
             else:
                 console().print(f"Plugin {format_input(arg)} not found. Skipping it.")
 
@@ -64,7 +66,7 @@ def main(
             console().print("No plugins found.")
             return
 
-        plugin_classes.sort(key=lambda x: x.config.name)
+        plugin_classes.sort(key=lambda x: x.manifest.name)
         plugin_classes.sort(key=lambda x: not x.installed)
 
         table = Table()
@@ -76,8 +78,8 @@ def main(
 
         for plugin_cls in plugin_classes:
             table.add_row(
-                plugin_cls.config.name,
-                plugin_cls.config.version if plugin_cls.installed else "-",
+                plugin_cls.manifest.name,
+                plugin_cls.manifest.version if plugin_cls.installed else "-",
                 plugin_cls.alt_version if plugin_cls.installable else "-",
                 "Yes" if plugin_cls.installable else "No",
                 "Yes" if plugin_cls.installed else "No",

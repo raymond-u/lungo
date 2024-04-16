@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Any, override
 from uuid import UUID, uuid1, uuid5
 
-from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginConfig
+from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginManifest
 
 
 class Settings(BaseSettings):
@@ -14,10 +14,10 @@ class Settings(BaseSettings):
 
 
 class Plugin(BasePlugin[Settings]):
-    config = PluginConfig(
+    manifest = PluginManifest(
         name="xray",
-        descriptive_name="Xray",
         version="0.1.0",
+        descriptive_name="Xray",
         description="Xray as a Lungo plugin.",
         compatible_with="~=0.3.0",
         have_backend=True,
@@ -29,7 +29,7 @@ class Plugin(BasePlugin[Settings]):
 
     @property
     def salt_file(self) -> Path:
-        return self.storage.generated_dir / "xray" / "salt"
+        return self.storage.generated_dir / self.manifest.name / "salt"
 
     @classmethod
     @override

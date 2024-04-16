@@ -1,13 +1,13 @@
 from typing import Any, override
 
-from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginConfig
+from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginManifest
 
 
 class Plugin(BasePlugin[BaseSettings]):
-    config = PluginConfig(
+    manifest = PluginManifest(
         name="privatebin",
-        descriptive_name="Pastebin",
         version="0.1.0",
+        descriptive_name="Pastebin",
         description="PrivateBin as a Lungo plugin.",
         compatible_with="~=0.3.0",
         have_backend=True,
@@ -19,11 +19,9 @@ class Plugin(BasePlugin[BaseSettings]):
 
     @override
     def get_render_context(self) -> dict[str, Any]:
-        return {
-            "privatebin_version": "1.7.1",
-        }
+        return {"privatebin_version": "1.7.1"}
 
     @override
     def update_data(self) -> None:
         # Allow the non-root container user to write
-        self.file_utils.change_mode(self.storage.managed_dir / "privatebin", 0o777)
+        self.file_utils.change_mode(self.storage.managed_dir / self.manifest.name, 0o777)

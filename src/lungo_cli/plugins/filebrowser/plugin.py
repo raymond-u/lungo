@@ -1,13 +1,13 @@
 from typing import Any, override
 
-from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginConfig
+from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginManifest
 
 
 class Plugin(BasePlugin[BaseSettings]):
-    config = PluginConfig(
+    manifest = PluginManifest(
         name="filebrowser",
-        descriptive_name="File Browser",
         version="0.1.0",
+        descriptive_name="File Browser",
         description="File Browser as a Lungo plugin.",
         compatible_with="~=0.3.0",
         have_backend=True,

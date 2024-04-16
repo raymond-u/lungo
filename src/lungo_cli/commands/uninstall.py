@@ -29,7 +29,7 @@ def main(
     count = 0
 
     for arg in args:
-        plugin_cls = next((x for x in plugin_manager().installed_plugin_classes if x.config.name == arg), None)
+        plugin_cls = next((x for x in plugin_manager().installed_plugin_classes if x.manifest.name == arg), None)
 
         if plugin_cls is None:
             console().print_warning(f"Plugin {format_input(arg)} not found or not installed. Skipping it.")

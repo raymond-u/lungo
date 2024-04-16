@@ -1,5 +1,5 @@
 {% set directories = config.directories %}
-{% set plugin_name = plugin.config.name %}
+{% set plugin_name = plugin.manifest.name %}
 
 services:
   {{ plugin_name }}:
@@ -17,7 +17,7 @@ services:
       static:
         ipv4_address: {{ plugin.ip_address }}
     expose:
-      - {{ plugin.config.backend_port }}
+      - {{ plugin.manifest.backend_port }}
 
     volumes:
       - '{{ plugin.dirs.plugin_dir }}/config:/etc/jupyterhub:ro'

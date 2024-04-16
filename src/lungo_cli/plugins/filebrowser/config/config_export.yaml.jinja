@@ -59,7 +59,7 @@ server:
   socket: ""
   tlskey: ""
   tlscert: ""
-  port: "{{ plugin.config.backend_port }}"
+  port: "{{ plugin.manifest.backend_port }}"
   address: 0.0.0.0
   log: /var/log/filebrowser/filebrowser.log
   enablethumbnails: false

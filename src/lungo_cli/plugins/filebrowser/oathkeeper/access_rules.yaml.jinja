@@ -31,7 +31,7 @@
     - handler: json
 {% endset %}
 
-{% set plugin_name = plugin.config.name %}
+{% set plugin_name = plugin.manifest.name %}
 
 - id: {{ plugin_name }}-private
   match:

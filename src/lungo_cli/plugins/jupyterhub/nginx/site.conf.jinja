@@ -1,4 +1,4 @@
-{% set plugin_name = plugin.config.name %}
+{% set plugin_name = plugin.manifest.name %}
 
 location = {{ plugin.web_prefix }} {
     include snippets/proxy.conf;

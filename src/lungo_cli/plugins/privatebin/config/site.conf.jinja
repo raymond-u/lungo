@@ -1,6 +1,6 @@
 server {
-    listen {{ plugin.config.backend_port }} default_server;
-    listen [::]:{{ plugin.config.backend_port }} default_server;
+    listen {{ plugin.manifest.backend_port }} default_server;
+    listen [::]:{{ plugin.manifest.backend_port }} default_server;
 
     root /var/www;
     index index.php index.html index.htm;

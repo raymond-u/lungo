@@ -11,7 +11,7 @@ class BaseSettings(Base):
     enabled: bool = True
 
 
-class PluginConfig(Base):
+class PluginManifest(Base):
     name: str
     version: str
     descriptive_name: str | None = None
@@ -55,7 +55,7 @@ class PluginConfig(Base):
 
 
 class PluginContext(Base):
-    config: PluginConfig
+    manifest: PluginManifest
     backend_base_url: AnyHttpUrl
     dirs: AppDirs
     ip_address: IPv4Address
@@ -66,7 +66,7 @@ class PluginContext(Base):
 
 
 class PluginOutput(Base):
-    config: PluginConfig
+    manifest: PluginManifest
     compose_services: str
     compose_secrets: str
     nginx_site: str

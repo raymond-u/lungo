@@ -88,8 +88,8 @@ services:
       - oathkeeper
       - node
       {% for plugin_output in plugin_outputs %}
-        {% if plugin_output.config.have_backend and plugins[plugin_output.config.name].enabled %}
-      - {{ plugin_output.config.name }}
+        {% if plugin_output.manifest.have_backend and plugins[plugin_output.manifest.name].enabled %}
+      - {{ plugin_output.manifest.name }}
         {% endif %}
       {% endfor %}
 
@@ -224,7 +224,7 @@ services:
   # =============== #
 
   {% for plugin_output in plugin_outputs %}
-    {% if plugin_output.config.have_backend and plugins[plugin_output.config.name].enabled %}
+    {% if plugin_output.manifest.have_backend and plugins[plugin_output.manifest.name].enabled %}
   {{ plugin_output.compose_services }}
     {% endif %}
   {% endfor %}
@@ -246,7 +246,7 @@ secrets:
   KRATOS_SECRETS:
     file: '{{ app_dirs.generated_dir }}/kratos/secrets.yaml'
   {% for plugin_output in plugin_outputs %}
-    {% if plugin_output.config.have_backend and plugins[plugin_output.config.name].enabled %}
+    {% if plugin_output.manifest.have_backend and plugins[plugin_output.manifest.name].enabled %}
   {{ plugin_output.compose_secrets }}
     {% endif %}
   {% endfor %}

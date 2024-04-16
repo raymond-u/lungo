@@ -1,24 +1,24 @@
 import type { ComponentType } from "svelte"
 import { QuestionMarkIcon } from "$lib/icons"
 {% for plugin in plugin_outputs %}
-    {% set plugin_prefix = plugin.config.name|capitalize %}
-    {% if plugin.config.web_icon %}
-import {{ plugin_prefix ~ 'Icon' }} from "$lib/plugins/{{ plugin.config.name }}/{{ plugin.config.web_icon }}"
+    {% set plugin_prefix = plugin.manifest.name|capitalize %}
+    {% if plugin.manifest.web_icon %}
+import {{ plugin_prefix ~ 'Icon' }} from "$lib/plugins/{{ plugin.manifest.name }}/{{ plugin.manifest.web_icon }}"
     {% endif %}
-    {% if plugin.config.web_alt_icon %}
-import {{ plugin_prefix ~ 'AltIcon' }} from "$lib/plugins/{{ plugin.config.name }}/{{ plugin.config.web_alt_icon }}"
+    {% if plugin.manifest.web_alt_icon %}
+import {{ plugin_prefix ~ 'AltIcon' }} from "$lib/plugins/{{ plugin.manifest.name }}/{{ plugin.manifest.web_alt_icon }}"
     {% endif %}
 {% endfor %}
 
 export function useAppIcon(name: string): { icon: ComponentType; altIcon: ComponentType } {
     const icons = {
         {% for plugin in plugin_outputs %}
-            {% set plugin_prefix = plugin.config.name|capitalize %}
-            {% set plugin_icon = plugin_prefix ~ 'Icon' if plugin.config.web_icon else 'QuestionMarkIcon' %}
-        "{{ plugin.config.name }}":
+            {% set plugin_prefix = plugin.manifest.name|capitalize %}
+            {% set plugin_icon = plugin_prefix ~ 'Icon' if plugin.manifest.web_icon else 'QuestionMarkIcon' %}
+        "{{ plugin.manifest.name }}":
             {
                 icon: {{ plugin_icon }},
-                altIcon: {{ plugin_prefix ~ 'AltIcon' if plugin.config.web_alt_icon else plugin_icon }},
+                altIcon: {{ plugin_prefix ~ 'AltIcon' if plugin.manifest.web_alt_icon else plugin_icon }},
             },
         {% endfor %}
     }

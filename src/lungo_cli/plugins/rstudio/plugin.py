@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any, override
 
-from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginConfig
+from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginManifest
 from lungo_cli.helpers.crypto import generate_random_hex
 
 
@@ -10,10 +10,10 @@ class Settings(BaseSettings):
 
 
 class Plugin(BasePlugin[Settings]):
-    config = PluginConfig(
+    manifest = PluginManifest(
         name="rstudio",
-        descriptive_name="RStudio",
         version="0.1.0",
+        descriptive_name="RStudio",
         description="RStudio as a Lungo plugin.",
         compatible_with="~=0.3.0",
         have_backend=True,
@@ -25,7 +25,7 @@ class Plugin(BasePlugin[Settings]):
 
     @property
     def password_file(self) -> Path:
-        return self.storage.generated_dir / "rstudio" / "password"
+        return self.storage.generated_dir / self.manifest.name / "password"
 
     @classmethod
     @override
