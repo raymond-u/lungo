@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugins can now specify a custom name for use in the web path
 - Additional variables are now accessible in the rendering context for plugins
 
+### Fixed
+
+- Render dropdown menus correctly for Safari on iOS
+
 ## [0.3.0](https://github.com/raymond-u/lungo/compare/v0.2.3...v0.3.0) - 2024-4-15
 
 ### Breaking Changes
