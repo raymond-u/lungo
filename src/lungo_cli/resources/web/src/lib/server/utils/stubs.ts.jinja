@@ -5,9 +5,9 @@ export function getAllApps(): AppInfo[] {
         {% for plugin in plugin_outputs %}
         {
             name: "{{ plugin.config.name }}",
-            path: "{{ plugin.config.web_path }}",
+            path: "{{ plugin.config.web_name or plugin.config.name }}",
             descriptiveName: "{{ plugin.config.descriptive_name or plugin.config.name|capitalize }}",
-            href: "/app/{{ plugin.config.web_path }}",
+            href: "/app/{{ plugin.config.web_name or plugin.config.name }}",
         },
         {% endfor %}
     ]
