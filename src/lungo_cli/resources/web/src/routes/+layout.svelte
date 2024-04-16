@@ -11,9 +11,7 @@
     onMount(() => {
         const theme = localStorage.getItem("theme")
         $currentTheme = theme && Object.values(ETheme).includes(theme as ETheme) ? (theme as ETheme) : ETheme.Auto
-
-        // @ts-expect-error exists for Safari on macOS
-        $isSafari = window.safari !== undefined
+        $isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
     })
 </script>
 
