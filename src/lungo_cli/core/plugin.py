@@ -1,3 +1,4 @@
+import os
 import sys
 from abc import ABC
 from importlib import import_module
@@ -21,7 +22,7 @@ from ..helpers.format import format_path, format_program
 from ..models.base import AppDirs, EApp
 from ..models.config import Config, Plugins, Privilege, Privileges, Rules
 from ..models.context import Context
-from ..models.plugin import BaseSettings, PluginConfig, PluginOutput, PluginContext
+from ..models.plugin import BaseSettings, PluginConfig, PluginContext, PluginOutput
 from ..models.users import Account, Extra, Users
 
 
@@ -83,7 +84,7 @@ class BasePlugin[T: BaseSettings](ABC):
                 cache_dir=str(self.storage.cache_latest_dir / self.config.name),
                 generated_dir=str(self.storage.generated_dir / self.config.name),
                 managed_dir=str(self.storage.managed_dir / self.config.name),
-                plugin_dir=str(self.storage.plugins_rel / self.config.name),
+                plugin_dir=os.path.join(".", self.storage.plugins_rel / self.config.name),
             ),
             ip_address=ip_addresses[self.config.name],
             oathkeeper_url_regex=f"{base_url}{PLUGIN_WEB_ENTRYPOINT}/<{self.config.web_path}>",
