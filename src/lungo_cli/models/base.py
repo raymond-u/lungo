@@ -4,10 +4,6 @@ from aenum import auto, StrEnum
 from pydantic import BaseModel, ConfigDict, Field
 
 
-class Base(BaseModel):
-    model_config = ConfigDict(extra="forbid", frozen=True, str_strip_whitespace=True, use_enum_values=True)
-
-
 class EApp(StrEnum):
     pass
 
@@ -31,6 +27,17 @@ class ERole(StrEnum):
     GUEST = auto()
     USER = auto()
     ADMIN = auto()
+
+
+class Base(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True, str_strip_whitespace=True, use_enum_values=True)
+
+
+class AppDirs(Base):
+    cache_dir: str
+    generated_dir: str
+    managed_dir: str
+    plugin_dir: str
 
 
 AllowedAppsType: Final = Literal["all"] | list[EApp]

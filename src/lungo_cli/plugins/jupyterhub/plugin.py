@@ -17,17 +17,18 @@ class Plugin(BasePlugin[Settings]):
         description="JupyterHub as a Lungo plugin.",
         compatible_with="~=0.3.0",
         have_backend=True,
+        backend_port=80,
         require_account=True,
         web_icon="icons/Jupyter.svelte",
     )
 
     @property
     def cookie_secret_file(self) -> Path:
-        return self.storage.generated_dir / "jupyterhub" / "cookie_secret"
+        return self.storage.generated_dir / self.config.name / "cookie_secret"
 
     @property
     def password_file(self) -> Path:
-        return self.storage.generated_dir / "jupyterhub" / "password"
+        return self.storage.generated_dir / self.config.name / "password"
 
     @classmethod
     @override
@@ -36,7 +37,11 @@ class Plugin(BasePlugin[Settings]):
 
     @override
     def get_render_context(self) -> dict[str, Any]:
-        return {"jupyterhub_password": self.settings.password or self.file_utils.read_text(self.password_file)}
+        return {
+            "jupyterhub_password": self.settings.password or self.file_utils.read_text(self.password_file),
+            "jupyterhub_version": "4.1.5",
+            "jupyterlab_version": "4.1.6",
+        }
 
     @override
     def update_data(self) -> None:

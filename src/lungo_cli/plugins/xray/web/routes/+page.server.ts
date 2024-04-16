@@ -5,6 +5,7 @@ import {
     XRAY_DOMAIN_WHITELIST,
     XRAY_IP_RANGE_WHITELIST,
     XRAY_SALT,
+    XRAY_WEB_PREFIX,
 } from "$lib/plugins/xray/server/constants.server"
 
 export async function load({ parent }) {
@@ -17,5 +18,6 @@ export async function load({ parent }) {
         xrayDomainWhitelist: JSON.parse(XRAY_DOMAIN_WHITELIST) as string[],
         xrayId: uuidv5(username, XRAY_SALT),
         xrayIpRangeWhitelist: JSON.parse(XRAY_IP_RANGE_WHITELIST) as string[],
+        xrayWebPrefix: XRAY_WEB_PREFIX,
     }
 }

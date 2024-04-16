@@ -254,12 +254,15 @@ class AppManager:
             self.plugin_manager.initialize_plugins()
 
             if not self.storage.init_file.is_file():
+                app_web_path_map = {}
+
                 for plugin in self.plugin_manager.plugins:
                     self.renderer.render_plugin(plugin)
                     self.context_manager.plugin_outputs.append(plugin.output)
+                    app_web_path_map[plugin.config.name] = plugin.config.web_path
 
                 self.renderer.render_main()
-                self.account_manager.update(self.context_manager.config, self.context_manager.users)
+                self.account_manager.update(self.context_manager.config, self.context_manager.users, app_web_path_map)
 
                 # Delay copying the web files until the templates have all been rendered
                 for plugin in self.plugin_manager.plugins:
@@ -269,7 +272,7 @@ class AppManager:
                             self.file_utils.copy(web_dir, dst_prefix / plugin.config.name)
                         elif web_dir.name == "routes":
                             dst_prefix = self.storage.bundled_dir / "web" / "src" / "routes" / "(apps)" / "app"
-                            self.file_utils.copy(web_dir, dst_prefix / plugin.config.name)
+                            self.file_utils.copy(web_dir, dst_prefix / plugin.config.web_path)
 
                 if self.context_manager.config.branding.cover:
                     self.file_utils.copy(

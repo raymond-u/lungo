@@ -22,7 +22,7 @@ class AccountManager:
         self.file_utils = file_utils
         self.storage = storage
 
-    def update(self, config: Config, users: Users) -> None:
+    def update(self, config: Config, users: Users, app_web_path_map: dict[str, str]) -> None:
         # Ensure that the container can always be started even if it failed last time
         self.container.down(self.storage.service_keto_admin_dir)
         self.container.down(self.storage.service_kratos_admin_dir)
@@ -89,7 +89,7 @@ class AccountManager:
                         "action": "insert",
                         "relation_tuple": {
                             "namespace": "app",
-                            "object": app.value,
+                            "object": app_web_path_map[app.value],
                             "relation": "access",
                             "subject_set": {"namespace": "app", "object": "all", "relation": "access"},
                         },
@@ -124,7 +124,7 @@ class AccountManager:
                                 "action": "insert",
                                 "relation_tuple": {
                                     "namespace": "app",
-                                    "object": allowed_app.value,
+                                    "object": app_web_path_map[allowed_app.value],
                                     "relation": "access",
                                     "subject_set": {"namespace": "role", "object": role, "relation": "member"},
                                 },
@@ -171,7 +171,7 @@ class AccountManager:
                                 "action": "insert",
                                 "relation_tuple": {
                                     "namespace": "app",
-                                    "object": allowed_app.value,
+                                    "object": app_web_path_map[allowed_app.value],
                                     "relation": "access",
                                     "subject_id": account.username,
                                 },

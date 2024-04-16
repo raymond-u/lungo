@@ -1,6 +1,4 @@
-{% set PRIVATEBIN_VER = '1.7.1' %}
-
-FROM docker.io/privatebin/fs:{{ PRIVATEBIN_VER }}
+FROM docker.io/privatebin/fs:{{ plugin.custom.privatebin_version }}
 USER root
 COPY config/conf.php /etc/privatebin/conf.php
 COPY config/site.conf /etc/nginx/http.d/site.conf

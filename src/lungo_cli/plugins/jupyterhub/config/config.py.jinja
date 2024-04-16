@@ -14,7 +14,7 @@ c.JupyterHub.allow_named_servers = True
 c.JupyterHub.authenticator_class = 'jupyterhub.auth.PAMAuthenticator'
 
 ## The public facing URL of the whole JupyterHub application
-c.JupyterHub.bind_url = 'http://0.0.0.0:80/app/jupyterhub/'
+c.JupyterHub.bind_url = 'http://0.0.0.0:{{ plugin.config.backend_port }}{{ plugin.web_prefix }}/'
 
 ## The config file to load
 c.JupyterHub.config_file = '/etc/jupyterhub/config.py'

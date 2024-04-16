@@ -9,10 +9,10 @@
         {
             "protocol": "vless",
             "listen": "0.0.0.0",
-            "port": 80,
+            "port": {{ plugin.config.backend_port }},
             "settings": {
                 "clients": [
-                    {% for account in xray_accounts %}
+                    {% for account in plugin.custom.xray_accounts %}
                     {
                         "email": "{{ account[0] }}",
                         "id": "{{ account[1]|string }}"
@@ -31,7 +31,7 @@
                     ]
                 },
                 "wsSettings": {
-                    "path": "/app/xray"
+                    "path": "{{ plugin.web_prefix }}"
                 }
             }
         }

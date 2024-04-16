@@ -1,17 +1,17 @@
-{% set APP_NAME = 'rstudio' %}
+{% set plugin_name = plugin.config.name %}
 
-location = /app/{{ APP_NAME }} {
+location = {{ plugin.web_prefix }} {
     include snippets/proxy.conf;
     include snippets/auth.conf;
 
     if ($arg_iframe) {
-        return 307 $http_x_forwarded_proto://$http_x_forwarded_host/app/{{ APP_NAME }}/?$args;
+        return 307 $http_x_forwarded_proto://$http_x_forwarded_host{{ plugin.web_prefix }}/?$args;
     }
 
     proxy_pass http://node;
 }
 
-location /app/{{ APP_NAME }}/ {
+location {{ plugin.web_prefix }}/ {
     include snippets/proxy.conf;
     include snippets/auth.conf;
 
@@ -28,19 +28,19 @@ location /app/{{ APP_NAME }}/ {
         return 307 $http_x_forwarded_proto://$http_x_forwarded_host$escaped_uri?iframe=1&$args;
     }
 
-    error_page 480 = @{{ APP_NAME }};
+    error_page 480 = @{{ plugin_name }};
     proxy_pass http://node;
 }
 
-location @{{ APP_NAME }} {
+location @{{ plugin_name }} {
     include snippets/proxy.conf;
     include snippets/auth.conf;
 
     # Break into two lines to avoid regex capturing group being overwritten
     rewrite ^ $escaped_uri?$filtered_args?;
-    rewrite ^/app/{{ APP_NAME }}/(.*)$ /$1 break;
+    rewrite ^{{ plugin.web_prefix }}/(.*)$ /$1 break;
 
-    proxy_set_header X-RStudio-Root-Path /app/{{ APP_NAME }};
-    proxy_pass http://{{ APP_NAME }};
-    proxy_redirect ~*^(?:https?://[^/]+)?/app/{{ APP_NAME }}([^?]*)\??(.*)$ $http_x_forwarded_proto://$http_x_forwarded_host/app/{{ APP_NAME }}$1?iframe=1&$2;
+    proxy_set_header X-RStudio-Root-Path {{ plugin.web_prefix }};
+    proxy_pass http://{{ plugin_name }};
+    proxy_redirect ~*^(?:https?://[^/]+)?{{ plugin.web_prefix }}([^?]*)\??(.*)$ $http_x_forwarded_proto://$http_x_forwarded_host{{ plugin.web_prefix }}$1?iframe=1&$2;
 }

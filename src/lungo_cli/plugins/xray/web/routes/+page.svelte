@@ -17,7 +17,7 @@
             udp: true
             network: ws
             ws-opts:
-              path: /app/xray
+              path: ${data.xrayWebPrefix}
     `
     const xrayConfig = `
         "outbounds": [
@@ -45,7 +45,7 @@
                 "allowInsecure": true,
               },
               "wsSettings": {
-                "path": "/app/xray"
+                "path": "${data.xrayWebPrefix}"
               }
             }
           }

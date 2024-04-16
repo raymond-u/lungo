@@ -1,5 +1,5 @@
-port: 80
-baseURL: '/app/filebrowser'
+port: {{ plugin.config.backend_port }}
+baseURL: '{{ plugin.web_prefix }}'
 address: 0.0.0.0
 log: '/var/log/filebrowser/filebrowser.log'
 database: '/var/lib/filebrowser/filebrowser.db'

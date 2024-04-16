@@ -21,6 +21,7 @@ class Plugin(BasePlugin[Settings]):
         description="Xray as a Lungo plugin.",
         compatible_with="~=0.3.0",
         have_backend=True,
+        backend_port=80,
         require_account=True,
         web_icon="icons/ProxyOutline.svelte",
         web_alt_icon="icons/ProxySolid.svelte",
@@ -44,6 +45,7 @@ class Plugin(BasePlugin[Settings]):
                 (account.email, uuid5(salt, account.username)) for account in self.context_manager.users.accounts
             ],
             "xray_salt": salt,
+            "xray_version": "1.8.10",
         }
 
     @override

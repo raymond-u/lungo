@@ -31,9 +31,11 @@
     - handler: json
 {% endset %}
 
-- id: privatebin-private
+{% set plugin_name = plugin.config.name %}
+
+- id: {{ plugin_name }}-private
   match:
-    url: '{{ base_url }}app/<privatebin><(?:$|/).*>'
+    url: '{{ plugin.oathkeeper_url_regex }}<(?:$|/).*>'
     methods:
       - POST
       - DELETE
@@ -43,9 +45,9 @@
       - OPTIONS
   {{ AUTH }}
 
-- id: privatebin-public
+- id: {{ plugin_name }}-public
   match:
-    url: '{{ base_url }}app/privatebin<(?:$|/).*>'
+    url: '{{ plugin.oathkeeper_url_regex }}<(?:$|/).*>'
     methods:
       - GET
   {{ PASS }}

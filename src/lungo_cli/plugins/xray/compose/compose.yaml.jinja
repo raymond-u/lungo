@@ -1,11 +1,11 @@
-{% set XRAY_VER = '1.8.10' %}
+{% set plugin_name = plugin.config.name %}
 
 services:
-  xray:
-    container_name: xray
-    hostname: xray
+  {{ plugin_name }}:
+    container_name: {{ plugin_name }}
+    hostname: {{ plugin_name }}
 
-    image: 'docker.io/teddysun/xray:{{ XRAY_VER }}'
+    image: 'docker.io/teddysun/xray:{{ plugin.custom.xray_version }}'
 
     user: root
     entrypoint: [ ]
@@ -13,12 +13,12 @@ services:
 
     networks:
       static:
-        ipv4_address: {{ ip_addresses['xray'] }}
+        ipv4_address: {{ plugin.ip_address }}
     expose:
-      - 80
+      - {{ plugin.config.backend_port }}
 
     volumes:
-      - '{{ app_dirs.plugin_dir }}/xray/config:/etc/xray:ro'
-      - '{{ app_dirs.cache_dir }}/xray:/var/log/xray:rw'
+      - '{{ plugin.dirs.plugin_dir }}/config:/etc/xray:ro'
+      - '{{ plugin.dirs.cache_dir }}:/var/log/xray:rw'
 
     restart: 'unless-stopped'

@@ -9,7 +9,11 @@ upstream node {
 }
 
 {% for plugin_output in plugin_outputs %}
-    {% if plugin_output.config.have_backend and config.plugins[plugin_output.config.name].enabled %}
-{{ plugin_output.nginx_upstream }}
+    {% set plugin_name = plugin_output.config.name %}
+    {% if plugin_output.config.have_backend and config.plugins[plugin_name].enabled %}
+upstream {{ plugin_name }} {
+    server {{ ip_addresses[plugin_name] }}:{{ plugin_output.config.backend_port }};
+    keepalive 4;
+}
     {% endif %}
 {% endfor %}

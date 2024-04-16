@@ -61,7 +61,7 @@ class Renderer:
                 relative_path,
                 file.with_suffix(""),
                 **self.context_manager.context.model_dump(),
-                **plugin.get_render_context(),
+                plugin=plugin.context.model_dump(),
             )
 
         plugin.mark_as_rendered()

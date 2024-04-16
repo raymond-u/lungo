@@ -12,16 +12,16 @@ from pydantic.fields import FieldInfo
 from typer import Exit
 
 from .console import Console
-from .constants import PACKAGE_NAME
+from .constants import PACKAGE_NAME, PLUGIN_WEB_ENTRYPOINT
 from .context import ContextManager
 from .file import FileUtils
 from .storage import Storage
 from ..helpers.common import extract_multiline_value_from_yaml, get_app_version
 from ..helpers.format import format_path, format_program
-from ..models.base import EApp
+from ..models.base import AppDirs, EApp
 from ..models.config import Config, Plugins, Privilege, Privileges, Rules
 from ..models.context import Context
-from ..models.plugin import BaseSettings, PluginConfig, PluginOutput
+from ..models.plugin import BaseSettings, PluginConfig, PluginOutput, PluginContext
 from ..models.users import Account, Extra, Users
 
 
@@ -72,6 +72,28 @@ class BasePlugin[T: BaseSettings](ABC):
 
     @property
     @final
+    def context(self) -> PluginContext:
+        base_url = self.context_manager.context.base_url
+        ip_addresses = self.context_manager.context.ip_addresses
+
+        return PluginContext(
+            config=self.config,
+            backend_base_url=f"http://{ip_addresses[self.config.name]}:{self.config.backend_port}/",
+            dirs=AppDirs(
+                cache_dir=str(self.storage.cache_latest_dir / self.config.name),
+                generated_dir=str(self.storage.generated_dir / self.config.name),
+                managed_dir=str(self.storage.managed_dir / self.config.name),
+                plugin_dir=str(self.storage.plugins_rel / self.config.name),
+            ),
+            ip_address=ip_addresses[self.config.name],
+            oathkeeper_url_regex=f"{base_url}{PLUGIN_WEB_ENTRYPOINT}/<{self.config.web_path}>",
+            web_base_url=f"{base_url}{PLUGIN_WEB_ENTRYPOINT}/{self.config.web_path}/",
+            web_prefix=f"/{PLUGIN_WEB_ENTRYPOINT}/{self.config.web_path}",
+            custom=self.get_render_context(),
+        )
+
+    @property
+    @final
     def output(self) -> PluginOutput:
         if self._output is None:
             if not self.rendered:
@@ -83,7 +105,6 @@ class BasePlugin[T: BaseSettings](ABC):
             compose_content = self.file_utils.read_text(plugin_dir / "compose" / "compose.yaml", not_exist_ok=True)
             compose_services = extract_multiline_value_from_yaml(compose_content, "services")
             compose_secrets = extract_multiline_value_from_yaml(compose_content, "secrets")
-            nginx_upstream = self.file_utils.read_text(plugin_dir / "nginx" / "upstream.conf", not_exist_ok=True)
             nginx_site = self.file_utils.read_text(plugin_dir / "nginx" / "site.conf", not_exist_ok=True)
             oathkeeper_rules = self.file_utils.read_text(
                 plugin_dir / "oathkeeper" / "access_rules.yaml", not_exist_ok=True
@@ -96,7 +117,6 @@ class BasePlugin[T: BaseSettings](ABC):
                 config=self.config,
                 compose_services=compose_services,
                 compose_secrets=compose_secrets,
-                nginx_upstream=nginx_upstream,
                 nginx_site=nginx_site,
                 oathkeeper_rules=oathkeeper_rules,
                 web_dependencies=web_dependencies,

@@ -17,6 +17,7 @@ class Plugin(BasePlugin[Settings]):
         description="RStudio as a Lungo plugin.",
         compatible_with="~=0.3.0",
         have_backend=True,
+        backend_port=80,
         require_account=True,
         web_icon="icons/RStudioOutline.svelte",
         web_alt_icon="icons/RStudioSolid.svelte",
@@ -33,7 +34,10 @@ class Plugin(BasePlugin[Settings]):
 
     @override
     def get_render_context(self) -> dict[str, Any]:
-        return {"rstudio_password": self.settings.password or self.file_utils.read_text(self.password_file)}
+        return {
+            "rstudio_password": self.settings.password or self.file_utils.read_text(self.password_file),
+            "rstudio_version": "4.3.3",
+        }
 
     @override
     def update_data(self) -> None:

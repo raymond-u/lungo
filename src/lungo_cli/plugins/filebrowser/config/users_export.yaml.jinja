@@ -1,9 +1,7 @@
-{% set FILEBROWSER_DEFAULT_PASSWORD_HASH = '$2a$10$aulj1r/ROe0VnA1iE2/ojOItBBFeHK0KLMv5mnl3ECXfiNLKfcKHi' %}
-
 {% for account in users.accounts %}
 - id: 0
   username: {{ account.username }}
-  password: {{ FILEBROWSER_DEFAULT_PASSWORD_HASH }}
+  password: {{ plugin.custom.filebrowser_default_password_hash }}
   scope: /root/home/{{ account.username }}
   locale: en
   lockpassword: true

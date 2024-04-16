@@ -1,2 +1,3 @@
-export const RSTUDIO_BASE_URL = "http://{{ ip_addresses['rstudio'] }}:80/"
-export const RSTUDIO_PASSWORD = "{{ rstudio_password }}"
+export const RSTUDIO_BASE_URL = "{{ plugin.backend_base_url }}"
+export const RSTUDIO_PASSWORD = "{{ plugin.custom.rstudio_password }}"
+export const RSTUDIO_WEB_PREFIX = "{{ plugin.web_prefix }}"

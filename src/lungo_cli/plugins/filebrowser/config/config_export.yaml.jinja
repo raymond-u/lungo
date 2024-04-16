@@ -55,11 +55,11 @@ settings:
 
 server:
   root: /
-  baseurl: /app/filebrowser
+  baseurl: {{ plugin.web_prefix }}
   socket: ""
   tlskey: ""
   tlscert: ""
-  port: "80"
+  port: "{{ plugin.config.backend_port }}"
   address: 0.0.0.0
   log: /var/log/filebrowser/filebrowser.log
   enablethumbnails: false

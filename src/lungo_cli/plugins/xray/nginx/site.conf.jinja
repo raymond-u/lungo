@@ -1,6 +1,6 @@
-{% set APP_NAME = 'xray' %}
+{% set plugin_name = plugin.config.name %}
 
-location = /app/{{ APP_NAME }} {
+location = {{ plugin.web_prefix }} {
     include snippets/proxy.conf;
     include snippets/auth.conf;
 
@@ -8,11 +8,11 @@ location = /app/{{ APP_NAME }} {
         return 480;
     }
 
-    error_page 480 = @{{ APP_NAME }};
+    error_page 480 = @{{ plugin_name }};
     proxy_pass http://node;
 }
 
-location @{{ APP_NAME }} {
+location @{{ plugin_name }} {
     include snippets/proxy.conf;
-    proxy_pass http://{{ APP_NAME }};
+    proxy_pass http://{{ plugin_name }};
 }

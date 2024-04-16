@@ -1,10 +1,12 @@
+{% set plugin_name = plugin.config.name %}
+
 services:
-  privatebin:
-    container_name: privatebin
-    hostname: privatebin
+  {{ plugin_name }}:
+    container_name: {{ plugin_name }}
+    hostname: {{ plugin_name }}
 
     build:
-      context: {{ app_dirs.plugin_dir }}/privatebin
+      context: {{ plugin.dirs.plugin_dir }}
 
     user: 'nobody:www-data'
     entrypoint: [ ]
@@ -12,12 +14,12 @@ services:
 
     networks:
       static:
-        ipv4_address: {{ ip_addresses['privatebin'] }}
+        ipv4_address: {{ plugin.ip_address }}
     expose:
-      - 80
+      - {{ plugin.config.backend_port }}
 
     volumes:
-      - '{{ app_dirs.managed_dir }}/privatebin:/srv/data:rw'
+      - '{{ plugin.dirs.managed_dir }}:/srv/data:rw'
 
     environment:
       - CONFIG_PATH=/etc/privatebin

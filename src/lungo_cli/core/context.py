@@ -3,12 +3,13 @@ from ipaddress import IPv4Address
 from typer import Exit
 
 from .console import Console
+from .constants import APP_NAME, APP_NAME_CAPITALIZED, PACKAGE_NAME
 from .file import FileUtils
 from .storage import Storage
 from ..helpers.format import format_input
-from ..models.base import EApp, ECoreService
+from ..models.base import AppDirs, EApp, ECoreService
 from ..models.config import Config
-from ..models.context import AppDirs, Context
+from ..models.context import Constants, Context
 from ..models.plugin import PluginOutput
 from ..models.users import Users
 
@@ -25,6 +26,10 @@ class ContextManager:
         self._users = None
         self._plugin_outputs = []
         self._dev = False
+
+    @property
+    def constants(self) -> Constants:
+        return Constants(app_name=APP_NAME, app_name_capitalized=APP_NAME_CAPITALIZED, package_name=PACKAGE_NAME)
 
     @property
     def config(self) -> Config:
@@ -64,7 +69,7 @@ class ContextManager:
             cache_dir=str(self.storage.cache_latest_dir),
             generated_dir=str(self.storage.generated_dir),
             managed_dir=str(self.storage.managed_dir),
-            plugin_dir="./plugins",
+            plugin_dir=str(self.storage.plugins_rel),
         )
 
     @property
@@ -97,6 +102,7 @@ class ContextManager:
     @property
     def context(self) -> Context:
         return Context(
+            constants=self.constants,
             config=self.config,
             users=self.users,
             plugin_outputs=self.plugin_outputs,

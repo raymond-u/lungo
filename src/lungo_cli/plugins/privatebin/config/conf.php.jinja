@@ -5,12 +5,12 @@
 
 [main]
 ; (optional) set a project name to be displayed on the website
-name = "Pastebin"
+name = "{{ plugin.config.descriptive_name }}"
 
 ; The full URL, with the domain name and directories that point to the
 ; PrivateBin files, including an ending slash (/). This URL is essential to
 ; allow Opengraph images to be displayed on social networks.
-basepath = "{{ base_url }}app/pastebin/"
+basepath = "{{ plugin.web_base_url }}"
 
 ; enable or disable the discussion feature, defaults to true
 discussion = true

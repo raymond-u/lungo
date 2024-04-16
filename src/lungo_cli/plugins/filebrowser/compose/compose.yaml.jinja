@@ -1,10 +1,13 @@
+{% set directories = config.directories %}
+{% set plugin_name = plugin.config.name %}
+
 services:
-  filebrowser:
-    container_name: filebrowser
-    hostname: filebrowser
+  {{ plugin_name }}:
+    container_name: {{ plugin_name }}
+    hostname: {{ plugin_name }}
 
     build:
-      context: {{ app_dirs.plugin_dir }}/filebrowser
+      context: {{ plugin.dirs.plugin_dir }}
 
     user: root
     entrypoint: [ ]
@@ -21,25 +24,25 @@ services:
 
     networks:
       static:
-        ipv4_address: {{ ip_addresses['filebrowser'] }}
+        ipv4_address: {{ plugin.ip_address }}
     expose:
-      - 80
+      - {{ plugin.config.backend_port }}
 
     volumes:
-      - '{{ app_dirs.plugin_dir }}/filebrowser/config:/etc/filebrowser:ro'
-      - '{{ app_dirs.cache_dir }}/filebrowser:/var/log/filebrowser:rw'
-      - '{{ app_dirs.managed_dir }}/filebrowser:/var/lib/filebrowser:rw'
+      - '{{ plugin.dirs.plugin_dir }}/config:/etc/filebrowser:ro'
+      - '{{ plugin.dirs.cache_dir }}:/var/log/filebrowser:rw'
+      - '{{ plugin.dirs.managed_dir }}:/var/lib/filebrowser:rw'
       {% for account in users.accounts %}
         {% if account.extra.user_dir %}
       - '{{ account.extra.user_dir }}:/mnt/home/{{ account.username }}:rw'
         {% else %}
-      - '{{ config.directories.users_dir }}/{{ account.username }}:/mnt/home/{{ account.username }}:rw'
+      - '{{ directories.users_dir }}/{{ account.username }}:/mnt/home/{{ account.username }}:rw'
         {% endif %}
         {% for shared_dir in account.extra.shared_dirs %}
       - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
         {% endfor %}
       {% endfor %}
-      {% for shared_dir in config.directories.shared_dirs %}
+      {% for shared_dir in directories.shared_dirs %}
       - '{{ shared_dir.source }}:/mnt/{{ shared_dir.name }}:{{ 'ro' if shared_dir.read_only else 'rw' }}'
       {% endfor %}
 
