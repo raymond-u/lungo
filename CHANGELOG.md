@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Breaking Changes
 
 - Custom variables in the rendering context provided by plugins are now located under `plugin.custom`
+- `compatible_with` is now a required field for plugins
 
 ### Added
 

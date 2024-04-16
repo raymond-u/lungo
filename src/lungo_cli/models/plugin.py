@@ -17,7 +17,7 @@ class PluginConfig(Base):
     version: str | None = None
     description: str | None = None
 
-    compatible_with: str | None = None
+    compatible_with: str
     have_backend: bool
     backend_port: PortType | None = None
     require_account: bool

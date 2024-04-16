@@ -261,27 +261,25 @@ class PluginManager:
                 sys.path.insert(0, str(plugin_dir))
 
                 plugin_cls = import_module("plugin").Plugin
+                plugin_version = plugin_cls.config.version
 
-                if plugin_cls.config.compatible_with:
-                    plugin_version = plugin_cls.config.version
-
-                    try:
-                        if get_app_version() not in SpecifierSet(plugin_cls.config.compatible_with):
-                            self.console.print_warning(
-                                f"Plugin {format_program(plugin_cls.config.name)} "
-                                f"{f'version {plugin_version}' if plugin_version else 'with an unknown version'} "
-                                "is not compatible with the current version of the application. Skipping it."
-                            )
-
-                            plugin_cls.compatible = False
-                    except InvalidSpecifier:
+                try:
+                    if get_app_version() not in SpecifierSet(plugin_cls.config.compatible_with):
                         self.console.print_warning(
                             f"Plugin {format_program(plugin_cls.config.name)} "
                             f"{f'version {plugin_version}' if plugin_version else 'with an unknown version'} "
-                            "has an invalid version specifier. Skipping it."
+                            "is not compatible with the current version of the application. Skipping it."
                         )
 
                         plugin_cls.compatible = False
+                except InvalidSpecifier:
+                    self.console.print_warning(
+                        f"Plugin {format_program(plugin_cls.config.name)} "
+                        f"{f'version {plugin_version}' if plugin_version else 'with an unknown version'} "
+                        "has an invalid version specifier. Skipping it."
+                    )
+
+                    plugin_cls.compatible = False
 
                 plugin_classes.append(plugin_cls)
             except Exception as e:
