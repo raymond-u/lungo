@@ -35,7 +35,7 @@ class PluginContext(Base):
     backend_base_url: AnyHttpUrl
     dirs: AppDirs
     ip_address: IPv4Address
-    oathkeeper_url_regex: AnyHttpUrl
+    oathkeeper_url_regex: str
     web_base_url: AnyHttpUrl
     web_prefix: str
     custom: dict[str, Any]
