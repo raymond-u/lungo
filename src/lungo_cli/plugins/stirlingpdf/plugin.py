@@ -12,7 +12,7 @@ class Plugin(BasePlugin[BaseSettings]):
         compatible_with="~=0.3.0",
         have_backend=True,
         backend_port=8080,
-        require_account=True,
+        require_account=False,
         web_icon="icons/StirlingPdf.svelte",
     )
 
