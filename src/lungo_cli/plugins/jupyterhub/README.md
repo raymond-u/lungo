@@ -9,10 +9,10 @@ A Lungo plugin.
 # plugins:
 # ========
 
-#   # Settings for the JupyterHub module
+#   # Settings for the JupyterHub plugin
 #   jupyterhub:
 
-#     # Enable or disable the module
+#     # Enable or disable the plugin
 #     # Type: boolean
 #     # Default: true
 #     # Required: no

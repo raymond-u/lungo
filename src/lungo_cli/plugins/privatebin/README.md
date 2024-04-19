@@ -9,10 +9,10 @@ A Lungo plugin.
 # plugins:
 # ========
 
-#   # Settings for the PrivateBin module
+#   # Settings for the PrivateBin plugin
 #   privatebin:
 
-#     # Enable or disable the module
+#     # Enable or disable the plugin
 #     # Type: boolean
 #     # Default: true
 #     # Required: no

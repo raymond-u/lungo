@@ -9,10 +9,10 @@ A Lungo plugin.
 # plugins:
 # ========
 
-#   # Settings for the File Browser module
+#   # Settings for the File Browser plugin
 #   filebrowser:
 
-#     # Enable or disable the module
+#     # Enable or disable the plugin
 #     # Type: boolean
 #     # Default: true
 #     # Required: no

@@ -9,10 +9,10 @@ A Lungo plugin.
 # plugins:
 # ========
 
-#   # Settings for the RStudio module
+#   # Settings for the RStudio plugin
 #   rstudio:
 
-#     # Enable or disable the module
+#     # Enable or disable the plugin
 #     # Type: boolean
 #     # Default: true
 #     # Required: no

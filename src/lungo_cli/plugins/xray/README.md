@@ -9,10 +9,10 @@ A Lungo plugin.
 # plugins:
 # ========
 
-#   # Settings for the Xray module
+#   # Settings for the Xray plugin
 #   xray:
 
-#     # Enable or disable the module
+#     # Enable or disable the plugin
 #     # Type: boolean
 #     # Default: true
 #     # Required: no
