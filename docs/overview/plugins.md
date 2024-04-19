@@ -15,10 +15,11 @@ your entire system. Therefore, it is strongly advised to install plugins exclusi
 
 | Application                                                      | Value         | Status                                          |
 |:-----------------------------------------------------------------|---------------|:------------------------------------------------|
-| [FileBrowser](https://filebrowser.org/)                          | `filebrowser` | :material-check-circle-outline:{ .icon .green } |
+| [File Browser](https://filebrowser.org/)                         | `filebrowser` | :material-check-circle-outline:{ .icon .green } |
 | [JupyterHub](https://jupyter.org/hub)                            | `jupyterhub`  | :material-check-circle-outline:{ .icon .green } |
 | [PrivateBin](https://privatebin.info/)                           | `privatebin`  | :material-check-circle-outline:{ .icon .green } |
 | [RStudio](https://posit.co/products/open-source/rstudio-server/) | `rstudio`     | :material-check-circle-outline:{ .icon .green } |
+| [Stirling PDF](https://stirlingtools.com/)                       | `stirlingpdf` | :material-check-circle-outline:{ .icon .green } |
 | [Xray](https://xtls.github.io/)                                  | `xray`        | :material-check-circle-outline:{ .icon .green } |
 
 Legend:

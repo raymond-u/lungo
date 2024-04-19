@@ -1,0 +1,10 @@
+security:
+  enableLogin: false
+  csrfDisabled: false
+
+system:
+  defaultLocale: 'en-US'
+  googlevisibility: false
+
+metrics:
+  enabled: false

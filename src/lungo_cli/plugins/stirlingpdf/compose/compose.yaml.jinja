@@ -1,0 +1,29 @@
+{% set directories = config.directories %}
+{% set plugin_name = plugin.manifest.name %}
+
+services:
+  {{ plugin_name }}:
+    container_name: {{ plugin_name }}
+    hostname: {{ plugin_name }}
+
+    image: 'docker.io/frooodle/s-pdf:{{ plugin.custom.stirlingpdf_version }}'
+
+    user: root
+    entrypoint: [ ]
+    command: tini -- /scripts/init.sh java -Dfile.encoding=UTF-8 -jar /app.jar
+
+    networks:
+      static:
+        ipv4_address: {{ plugin.ip_address }}
+    expose:
+      - {{ plugin.manifest.backend_port }}
+
+    volumes:
+      - '{{ plugin.dirs.plugin_dir }}/config:/configs:ro'
+      - '{{ plugin.dirs.cache_dir }}:/logs:rw'
+
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+      - SYSTEM_ROOTURIPATH={{ plugin.web_prefix }}
+
+    restart: 'unless-stopped'

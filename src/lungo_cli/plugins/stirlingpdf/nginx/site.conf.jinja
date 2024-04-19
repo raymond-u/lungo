@@ -1,0 +1,36 @@
+{% set plugin_name = plugin.manifest.name %}
+
+location = {{ plugin.web_prefix }} {
+    include snippets/proxy.conf;
+    include snippets/auth.conf;
+
+    if ($arg_iframe) {
+        return 307 $http_x_forwarded_proto://$http_x_forwarded_host{{ plugin.web_prefix }}/?$args;
+    }
+
+    proxy_pass http://node;
+}
+
+location {{ plugin.web_prefix }}/ {
+    include snippets/proxy.conf;
+    include snippets/auth.conf;
+
+    if ($arg_iframe) {
+        return 480;
+    }
+
+    if ($http_referer ~* \?.*iframe=1.*$) {
+        return 307 $http_x_forwarded_proto://$http_x_forwarded_host$escaped_uri?iframe=1&$args;
+    }
+
+    error_page 480 = @{{ plugin_name }};
+    proxy_pass http://node;
+}
+
+location @{{ plugin_name }} {
+    include snippets/proxy.conf;
+    include snippets/auth.conf;
+
+    proxy_pass http://{{ plugin_name }}$escaped_uri?$filtered_args;
+    proxy_redirect ~*^(?:https?://[^/]+)?{{ plugin.web_prefix }}([^?]*)\??(.*)$ $http_x_forwarded_proto://$http_x_forwarded_host{{ plugin.web_prefix }}$1?iframe=1&$2;
+}

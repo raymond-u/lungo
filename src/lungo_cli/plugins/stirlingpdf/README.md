@@ -1,0 +1,20 @@
+# Stirling PDF
+
+A Lungo plugin.
+
+## Configuration
+
+```yaml
+# ========
+# plugins:
+# ========
+
+#   # Settings for the Stirling PDF plugin
+#   stirlingpdf:
+
+#     # Enable or disable the plugin
+#     # Type: boolean
+#     # Default: true
+#     # Required: no
+#     enabled: true
+```

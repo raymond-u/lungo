@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Built-in Stirling PDF plugin
 - Plugins can now specify a custom name for use in the web path
 - Additional variables are now accessible in the rendering context for plugins
 
