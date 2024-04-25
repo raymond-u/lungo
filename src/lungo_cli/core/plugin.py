@@ -327,6 +327,14 @@ class PluginManager:
                 raise Exit(code=1)
 
             plugin = plugin_cls(plugin_settings, self.console, self.context_manager, self.file_utils, self.storage)
-            plugin.update_data()
+
+            try:
+                plugin.update_data()
+            except Exception as e:
+                self.console.print_error(
+                    f"Failed to update data for plugin {format_program(plugin.manifest.name)} ({e})."
+                )
+                raise Exit(code=1)
+
             self.plugins.append(plugin)
             self.console.print_debug(f"Loaded plugin {format_program(plugin.manifest.name)}.")
