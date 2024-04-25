@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Render dropdown menus correctly for Safari on iOS
+- Ensure that the required directories always exist
 
 ## [0.3.0](https://github.com/raymond-u/lungo/compare/v0.2.3...v0.3.0) - 2024-4-15
 
