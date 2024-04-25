@@ -1,5 +1,5 @@
 FROM docker.io/filebrowser/filebrowser:{{ plugin.custom.filebrowser_version }}
-RUN : && \
+RUN \
     {% for account in users.accounts %}
     mkdir -p '/root/home/{{ account.username }}' && \
     ln -s '/mnt/home/{{ account.username }}' '/root/home/{{ account.username }}/home' && \

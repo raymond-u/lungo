@@ -1,5 +1,5 @@
 FROM docker.io/rocker/verse:{{ plugin.custom.rstudio_version }}
-RUN : && \
+RUN \
     {% for account in users.accounts %}
         {% if account.role == 'admin' %}
     useradd --no-log-init -g root -G sudo -m -s /usr/bin/bash '{{ account.username }}' && \

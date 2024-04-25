@@ -4,7 +4,7 @@ FROM docker.io/library/node:{{ NODE_VER }} AS builder
 WORKDIR /app
 COPY package.json pnpm-lock.yaml .
 RUN corepack enable && pnpm install --frozen-lockfile
-RUN : && \
+RUN \
     {% for plugin_output in plugin_outputs %}
         {% for dependency in plugin_output.web_dependencies %}
     pnpm add '{{ dependency }}' && \
