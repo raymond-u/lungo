@@ -3,7 +3,7 @@ from ipaddress import IPv4Address
 from typer import Exit
 
 from .console import Console
-from .constants import APP_NAME, APP_NAME_CAPITALIZED, PACKAGE_NAME
+from .constants import APP_NAME, APP_NAME_CAPITALIZED, ARCHITECTURE, PACKAGE_NAME
 from .file import FileUtils
 from .storage import Storage
 from ..helpers.format import format_input
@@ -29,7 +29,12 @@ class ContextManager:
 
     @property
     def constants(self) -> Constants:
-        return Constants(app_name=APP_NAME, app_name_capitalized=APP_NAME_CAPITALIZED, package_name=PACKAGE_NAME)
+        return Constants(
+            app_name=APP_NAME,
+            app_name_capitalized=APP_NAME_CAPITALIZED,
+            architecture=ARCHITECTURE,
+            package_name=PACKAGE_NAME,
+        )
 
     @property
     def config(self) -> Config:

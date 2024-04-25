@@ -1,3 +1,4 @@
+import platform
 from typing import Final
 
 APP_NAME: Final = "lungo"
@@ -17,3 +18,11 @@ DOCKER_URL: Final = "https://www.docker.com/"
 DOCKER_COMPOSE_URL: Final = "https://github.com/docker/compose"
 PODMAN_URL: Final = "https://podman.io/"
 PODMAN_COMPOSE_URL: Final = "https://github.com/containers/podman-compose"
+
+match platform.machine():
+    case "aarch64" | "arm64":
+        ARCHITECTURE: Final = "aarch64"
+    case "amd64" | "x86_64":
+        ARCHITECTURE: Final = "x86_64"
+    case _:
+        ARCHITECTURE: Final = platform.machine()

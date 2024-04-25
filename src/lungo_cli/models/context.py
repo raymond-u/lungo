@@ -11,6 +11,7 @@ from .users import Users
 class Constants(Base):
     app_name: str
     app_name_capitalized: str
+    architecture: str
     package_name: str
 
 
