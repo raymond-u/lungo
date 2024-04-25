@@ -74,8 +74,8 @@ class BasePlugin[T: BaseSettings](ABC):
     @property
     @final
     def context(self) -> PluginContext:
-        base_url = self.context_manager.context.base_url
-        ip_addresses = self.context_manager.context.ip_addresses
+        base_url = self.context_manager.base_url
+        ip_addresses = self.context_manager.ip_addresses
 
         return PluginContext(
             manifest=self.manifest,
