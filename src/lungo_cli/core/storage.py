@@ -160,24 +160,7 @@ class Storage:
     def kratos_secrets_file(self) -> Path:
         return self.generated_dir / "kratos" / "secrets.yaml"
 
-    def validate(self) -> None:
-        if self.data_latest_dir.is_dir():
-            return
-
-        largest_version = -1
-
-        # List all directories in the data directory
-        for dir_ in self.data_dir.glob(f"{STORAGE_PREFIX}*{os.sep}"):
-            if (version := dir_.name.split(STORAGE_PREFIX, 1)[1]).isdigit():
-                version_number = int(version)
-
-                if version_number > largest_version:
-                    largest_version = version_number
-
-        if largest_version >= 0:
-            self.migrate(self.data_dir / f"{STORAGE_PREFIX}{largest_version}")
-
-        # Always make sure the directories exist
+    def create_dirs(self) -> None:
         app: EApp | ECoreService
         for app in *EApp, *ECoreService:
             self.file_utils.create_dir(self.cache_latest_dir / app.value)
@@ -194,3 +177,18 @@ class Storage:
             self.file_utils.copy(from_ / self.managed_rel, self.managed_dir)
         except Exit:
             ...
+
+    def migrate_if_needed(self) -> None:
+        if not self.data_latest_dir.is_dir():
+            largest_version = -1
+
+            # List all directories in the data directory
+            for dir_ in self.data_dir.glob(f"{STORAGE_PREFIX}*{os.sep}"):
+                if (version := dir_.name.split(STORAGE_PREFIX, 1)[1]).isdigit():
+                    version_number = int(version)
+
+                    if version_number > largest_version:
+                        largest_version = version_number
+
+            if largest_version >= 0:
+                self.migrate(self.data_dir / f"{STORAGE_PREFIX}{largest_version}")

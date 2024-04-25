@@ -117,6 +117,8 @@ class AppManager:
         if core_config.directories.data_dir:
             self.storage.data_dir = core_config.directories.data_dir.resolve()
 
+        self.storage.migrate_if_needed()
+
     def load_full_config(self) -> None:
         """Load the full configuration files into the context manager."""
         self.load_core_config()
@@ -211,8 +213,6 @@ class AppManager:
         config_hash = self.generate_config_hash()
 
         with self.console.status("Updating app data..."):
-            self.storage.validate()
-
             if (
                 self.force_init
                 or not self.storage.bundled_dir.is_dir()
@@ -232,6 +232,9 @@ class AppManager:
 
                 self.file_utils.change_mode(self.storage.bundled_dir, 0o700)
                 self.file_utils.remove(self.storage.init_file)
+
+            # Always ensure that the required directories exist
+            self.storage.create_dirs()
 
             if not self.storage.nginx_gateway_cert_file.is_file() or not self.storage.nginx_gateway_key_file.is_file():
                 self.console.print_info("Generating self-signed certificate...")
