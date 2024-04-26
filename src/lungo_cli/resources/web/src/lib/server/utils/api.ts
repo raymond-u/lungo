@@ -6,6 +6,7 @@ import { wrapFetch } from "$lib/utils"
 
 export const createKetoClient = (fetch: typeof global.fetch) => {
     return createClient<KetoPaths>({
+        baseUrl: KETO_API_BASE_URL,
         fetch: wrapFetch({
             fetch,
             baseUrl: KETO_API_BASE_URL,
@@ -17,6 +18,7 @@ export const createKetoClient = (fetch: typeof global.fetch) => {
 
 export const createKratosClient = (cookies: Cookies, fetch: typeof global.fetch) => {
     return createClient<KratosPaths>({
+        baseUrl: KRATOS_API_BASE_URL,
         fetch: wrapFetch({
             fetch,
             baseUrl: KRATOS_API_BASE_URL,

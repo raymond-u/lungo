@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   openapi-fetch:
-    specifier: ^0.8.2
-    version: 0.8.2
+    specifier: ^0.9.4
+    version: 0.9.4
   set-cookie-parser:
     specifier: ^2.6.0
     version: 2.6.0
@@ -2535,14 +2535,14 @@ packages:
       wrappy: 1.0.2
     dev: true
 
-  /openapi-fetch@0.8.2:
-    resolution: {integrity: sha512-4g+NLK8FmQ51RW6zLcCBOVy/lwYmFJiiT+ckYZxJWxUxH4XFhsNcX2eeqVMfVOi+mDNFja6qDXIZAz2c5J/RVw==}
+  /openapi-fetch@0.9.4:
+    resolution: {integrity: sha512-Bmn1PFEKdwgkBk51hNXJotfDs1ESxyhgJU5nh55zMbMdN+hYIREtWwoPQN21oNrJfRLnD9CjK0Eg11CM91uUqg==}
     dependencies:
-      openapi-typescript-helpers: 0.0.5
+      openapi-typescript-helpers: 0.0.8
     dev: false
 
-  /openapi-typescript-helpers@0.0.5:
-    resolution: {integrity: sha512-MRffg93t0hgGZbYTxg60hkRIK2sRuEOHEtCUgMuLgbCC33TMQ68AmxskzUlauzZYD47+ENeGV/ElI7qnWqrAxA==}
+  /openapi-typescript-helpers@0.0.8:
+    resolution: {integrity: sha512-1eNjQtbfNi5Z/kFhagDIaIRj6qqDzhjNJKz8cmMW0CVdGwT6e1GLbAfgI0d28VTJa1A8jz82jm/4dG8qNoNS8g==}
     dev: false
 
   /openapi-typescript@6.7.5:

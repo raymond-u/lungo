@@ -23,6 +23,14 @@ export function wrapFetch({
         let response: Response
 
         try {
+            init ??= {}
+
+            if (input instanceof Request) {
+                init.headers = new Headers(init.headers || input.headers)
+            } else {
+                init.headers = new Headers(init.headers)
+            }
+
             if (baseUrl) {
                 if (typeof input === "string" || input instanceof URL) {
                     input = concatenateUrl(input, baseUrl)
@@ -32,8 +40,6 @@ export function wrapFetch({
             }
 
             if (cookies && cookies.getAll().length > 0) {
-                init ??= {}
-                init.headers = new Headers(init.headers)
                 init.headers.set(
                     "Cookie",
                     cookies
@@ -44,20 +50,20 @@ export function wrapFetch({
             }
 
             if (credentials) {
-                init ??= {}
                 init.credentials = credentials
             }
 
             if (headers) {
-                init ??= {}
-                init.headers = new Headers(init.headers)
                 for (const [key, value] of Object.entries(headers)) {
                     init.headers.set(key, value)
                 }
             }
 
-            // @ts-expect-error fetch type definition is incomplete
-            response = await fetch(input, init)
+            if (input instanceof Request) {
+                response = await fetch(new Request(input, init))
+            } else {
+                response = await fetch(input, init)
+            }
 
             if (cookies) {
                 for (const cookie of parser.parse(response.headers.getSetCookie(), { decodeValues: false })) {
