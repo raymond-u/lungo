@@ -41,7 +41,7 @@
 
 - id: apps
   match:
-    url: '{{ base_url }}app/<(?!(?:{{ app_with_rules }}))[^/]*><.*>'
+    url: '{{ base_url }}app/<(?!(?:{{ '$|' ~ app_with_rules if app_with_rules else '$' }}))[^/]*><.*>'
     methods:
       {{ ALL }}
   {{ AUTH }}
@@ -54,7 +54,7 @@
 
 - id: catch-all
   match:
-    url: '{{ base_url }}<(?!app/).*>'
+    url: '{{ base_url }}<(?!app/.+).*>'
     methods:
       {{ ALL }}
   {{ PASS }}
