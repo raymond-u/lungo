@@ -19,3 +19,7 @@ class Plugin(BasePlugin[BaseSettings]):
     @override
     def get_render_context(self) -> dict[str, Any]:
         return {"stirlingpdf_version": "0.22.8"}
+
+    @override
+    def update_data(self) -> None:
+        self.file_utils.create_dir(self.storage.cache_latest_dir / self.manifest.name / "logs")
