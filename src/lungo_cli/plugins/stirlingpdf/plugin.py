@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Any, override
 
 from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginManifest
@@ -16,10 +17,14 @@ class Plugin(BasePlugin[BaseSettings]):
         web_icon="icons/StirlingPdf.svelte",
     )
 
+    @property
+    def logs_dir(self) -> Path:
+        return self.storage.cache_latest_dir / self.manifest.name / "logs"
+
     @override
     def get_render_context(self) -> dict[str, Any]:
         return {"stirlingpdf_version": "0.22.8"}
 
     @override
     def update_data(self) -> None:
-        self.file_utils.create_dir(self.storage.cache_latest_dir / self.manifest.name / "logs")
+        self.file_utils.create_dir(self.logs_dir)
