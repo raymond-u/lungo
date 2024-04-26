@@ -19,7 +19,7 @@ services:
       - {{ plugin.manifest.backend_port }}
 
     volumes:
-      - '{{ plugin.dirs.managed_dir }}:/srv/data:rw'
+      - '{{ plugin.dirs.managed_dir }}/data:/srv/data:rw'
 
     environment:
       - CONFIG_PATH=/etc/privatebin

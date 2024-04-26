@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Any, override
 
 from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginManifest
@@ -17,6 +18,10 @@ class Plugin(BasePlugin[BaseSettings]):
         web_alt_icon="icons/NoteSolid.svelte",
     )
 
+    @property
+    def data_dir(self) -> Path:
+        return self.storage.managed_dir / self.manifest.name / "data"
+
     @override
     def get_render_context(self) -> dict[str, Any]:
         return {"privatebin_version": "1.7.1"}
@@ -24,4 +29,5 @@ class Plugin(BasePlugin[BaseSettings]):
     @override
     def update_data(self) -> None:
         # Allow the non-root container user to write
-        self.file_utils.change_mode(self.storage.managed_dir / self.manifest.name, 0o777)
+        self.file_utils.create_dir(self.data_dir)
+        self.file_utils.change_mode(self.data_dir, 0o777)
