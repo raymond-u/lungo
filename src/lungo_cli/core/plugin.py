@@ -330,6 +330,8 @@ class PluginManager:
 
             try:
                 plugin.update_data()
+            except Exit:
+                raise
             except Exception as e:
                 self.console.print_error(
                     f"Failed to update data for plugin {format_program(plugin.manifest.name)} ({e})."
