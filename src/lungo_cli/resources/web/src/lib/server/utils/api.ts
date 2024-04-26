@@ -9,7 +9,6 @@ export const createKetoClient = (fetch: typeof global.fetch) => {
         baseUrl: KETO_API_BASE_URL,
         fetch: wrapFetch({
             fetch,
-            baseUrl: KETO_API_BASE_URL,
             credentials: "include",
             headers: { Accept: "application/json" },
         }),
@@ -21,7 +20,6 @@ export const createKratosClient = (cookieHeader: string | null, cookies: Cookies
         baseUrl: KRATOS_API_BASE_URL,
         fetch: wrapFetch({
             fetch,
-            baseUrl: KRATOS_API_BASE_URL,
             cookieHeader,
             cookies,
             credentials: "include",
