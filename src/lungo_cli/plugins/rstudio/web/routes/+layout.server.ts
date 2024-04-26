@@ -1,13 +1,14 @@
 import { load as loadHtmlString } from "cheerio"
 import { RSTUDIO_BASE_URL, RSTUDIO_PASSWORD, RSTUDIO_WEB_PREFIX } from "$lib/plugins/rstudio/server/constants.server"
-import { wrapFetch } from "$lib/utils"
+import { getCookieHeader, wrapFetch } from "$lib/utils"
 
-export async function load({ cookies, fetch, parent }) {
+export async function load({ cookies, fetch, parent, request }) {
     const wrappedFetch = wrapFetch({
         fetch,
         baseUrl: RSTUDIO_BASE_URL,
-        cookies,
+        cookieHeader: getCookieHeader(request),
         cookiePath: RSTUDIO_WEB_PREFIX,
+        cookies,
         credentials: "include",
         ensureOk: true,
     })

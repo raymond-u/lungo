@@ -2,19 +2,25 @@ import { type Cookies, error } from "@sveltejs/kit"
 import parser from "set-cookie-parser"
 import { concatenateUrl } from "$lib/utils"
 
+export function getCookieHeader(request: Request): string | null {
+    return request.headers.get("Cookie")
+}
+
 export function wrapFetch({
     fetch,
     baseUrl,
-    cookies,
+    cookieHeader,
     cookiePath,
+    cookies,
     credentials,
     headers,
     ensureOk,
 }: {
     fetch: typeof global.fetch
     baseUrl?: string | URL
-    cookies?: Cookies
+    cookieHeader?: string | null
     cookiePath?: string
+    cookies?: Cookies
     credentials?: RequestCredentials
     headers?: HeadersInit
     ensureOk?: boolean
@@ -39,14 +45,8 @@ export function wrapFetch({
                 }
             }
 
-            if (cookies && cookies.getAll().length > 0) {
-                init.headers.set(
-                    "Cookie",
-                    cookies
-                        .getAll()
-                        .map(({ name, value }) => `${name}=${value}`)
-                        .join("; ")
-                )
+            if (cookieHeader) {
+                init.headers.set("Cookie", cookieHeader)
             }
 
             if (credentials) {

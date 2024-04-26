@@ -1,4 +1,4 @@
-export { wrapFetch } from "./api"
+export { getCookieHeader, wrapFetch } from "./api"
 export { createStore, usePageTitle, useStore } from "./app"
 export {
     capitalize,

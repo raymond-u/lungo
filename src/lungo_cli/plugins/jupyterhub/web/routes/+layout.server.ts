@@ -4,14 +4,15 @@ import {
     JUPYTERHUB_PASSWORD,
     JUPYTERHUB_WEB_PREFIX,
 } from "$lib/plugins/jupyterhub/server/constants.server"
-import { wrapFetch } from "$lib/utils"
+import { getCookieHeader, wrapFetch } from "$lib/utils"
 
-export async function load({ cookies, fetch, parent }) {
+export async function load({ cookies, fetch, parent, request }) {
     const wrappedFetch = wrapFetch({
         fetch,
         baseUrl: JUPYTERHUB_BASE_URL,
-        cookies,
+        cookieHeader: getCookieHeader(request),
         cookiePath: JUPYTERHUB_WEB_PREFIX,
+        cookies,
         credentials: "include",
         ensureOk: true,
     })

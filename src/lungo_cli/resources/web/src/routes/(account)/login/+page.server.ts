@@ -1,13 +1,13 @@
 import { fail, redirect } from "@sveltejs/kit"
 import { createKratosClient } from "$lib/server/utils"
 import type { KratosComponents } from "$lib/types"
-import { getFlowId, getRandomId } from "$lib/utils"
+import { getCookieHeader, getFlowId, getRandomId } from "$lib/utils"
 
 export const actions = {
     default: async ({ cookies, fetch, request }) => {
         const data = await request.formData()
 
-        const client = createKratosClient(cookies, fetch)
+        const client = createKratosClient(getCookieHeader(request), cookies, fetch)
         const response = await client.POST("/self-service/login", {
             params: { query: { flow: data.get("flow") as string } },
             body: {
@@ -56,8 +56,8 @@ export const actions = {
     },
 }
 
-export async function load({ cookies, fetch }) {
-    const client = createKratosClient(cookies, fetch)
+export async function load({ cookies, fetch, request }) {
+    const client = createKratosClient(getCookieHeader(request), cookies, fetch)
     const response = await client.GET("/self-service/login/browser", { params: {} })
 
     switch (response.response.status) {

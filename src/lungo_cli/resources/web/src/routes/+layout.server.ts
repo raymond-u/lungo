@@ -1,5 +1,6 @@
 import { createKetoClient, createKratosClient, getAllApps } from "$lib/server/utils"
 import type { AppInfo, User } from "$lib/types"
+import { getCookieHeader } from "$lib/utils"
 
 async function getAllowedApps(fetch: typeof global.fetch, username?: string): Promise<AppInfo[]> {
     const client = createKetoClient(fetch)
@@ -27,10 +28,10 @@ async function getAllowedApps(fetch: typeof global.fetch, username?: string): Pr
     return apps
 }
 
-export async function load({ cookies, fetch, url }) {
+export async function load({ cookies, fetch, request, url }) {
     const title = url.pathname.split("/").pop() || "home"
 
-    const client = createKratosClient(cookies, fetch)
+    const client = createKratosClient(getCookieHeader(request), cookies, fetch)
     const response = await client.GET("/sessions/whoami", { params: {} })
 
     switch (response.response.status) {

@@ -16,12 +16,13 @@ export const createKetoClient = (fetch: typeof global.fetch) => {
     })
 }
 
-export const createKratosClient = (cookies: Cookies, fetch: typeof global.fetch) => {
+export const createKratosClient = (cookieHeader: string | null, cookies: Cookies, fetch: typeof global.fetch) => {
     return createClient<KratosPaths>({
         baseUrl: KRATOS_API_BASE_URL,
         fetch: wrapFetch({
             fetch,
             baseUrl: KRATOS_API_BASE_URL,
+            cookieHeader,
             cookies,
             credentials: "include",
             headers: { Accept: "application/json" },
