@@ -210,28 +210,8 @@ class AppManager:
 
     def update_app_data(self) -> None:
         """Ensure that all the application data exists and is up-to-date."""
-        config_hash = self.generate_config_hash()
-
         with self.console.status("Updating app data..."):
-            if (
-                self.force_init
-                or not self.storage.bundled_dir.is_dir()
-                or not self.storage.init_file.is_file()
-                or self.file_utils.read_text(self.storage.init_file) != config_hash
-            ):
-                self.console.print_info("Updating bundled resources...")
-
-                # Backup the installed plugins directory if it exists
-                if self.storage.installed_plugins_dir.is_dir():
-                    self.file_utils.move(self.storage.installed_plugins_dir, self.storage.cache_plugins_dir)
-
-                self.file_utils.copy_package_resources(f"{PACKAGE_NAME}.resources", ".", self.storage.bundled_dir)
-
-                if self.storage.cache_plugins_dir.is_dir():
-                    self.file_utils.move(self.storage.cache_plugins_dir, self.storage.installed_plugins_dir)
-
-                self.file_utils.change_mode(self.storage.bundled_dir, 0o700)
-                self.file_utils.remove(self.storage.init_file)
+            config_hash = self.generate_config_hash()
 
             # Always ensure that the required directories exist
             self.storage.create_dirs()
@@ -256,7 +236,12 @@ class AppManager:
 
             self.plugin_manager.initialize_plugins()
 
-            if not self.storage.init_file.is_file():
+            if (
+                self.force_init
+                or not self.storage.bundled_dir.is_dir()
+                or not self.storage.init_file.is_file()
+                or self.file_utils.read_text(self.storage.init_file) != config_hash
+            ):
                 app_web_path_map = {}
 
                 for plugin in self.plugin_manager.plugins:
@@ -264,7 +249,9 @@ class AppManager:
                     self.context_manager.plugin_outputs.append(plugin.output)
                     app_web_path_map[plugin.manifest.name] = plugin.manifest.web_path
 
-                self.renderer.render_main()
+                self.storage.update_bundled_files()
+                self.renderer.render_core()
+
                 self.account_manager.update(self.context_manager.config, self.context_manager.users, app_web_path_map)
 
                 # Delay copying the web files until the templates have all been rendered

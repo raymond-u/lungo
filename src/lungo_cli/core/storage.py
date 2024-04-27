@@ -6,7 +6,7 @@ from platformdirs import user_cache_path, user_config_path, user_data_path
 from typer import Exit
 
 from .console import Console
-from .constants import APP_AUTHOR, APP_NAME, STORAGE_PREFIX, STORAGE_VERSION
+from .constants import APP_AUTHOR, APP_NAME, PACKAGE_NAME, STORAGE_PREFIX, STORAGE_VERSION
 from .file import FileUtils
 from ..helpers.format import format_path
 from ..models.base import EApp, ECoreService
@@ -192,3 +192,18 @@ class Storage:
 
             if largest_version >= 0:
                 self.migrate(self.data_dir / f"{STORAGE_PREFIX}{largest_version}")
+
+    def update_bundled_files(self) -> None:
+        self.console.print_info("Updating bundled files...")
+
+        # Backup installed plugins before overwriting the whole directory
+        if self.installed_plugins_dir.is_dir():
+            self.file_utils.move(self.installed_plugins_dir, self.cache_plugins_dir)
+
+        self.file_utils.copy_package_resources(f"{PACKAGE_NAME}.resources", ".", self.bundled_dir)
+
+        if self.cache_plugins_dir.is_dir():
+            self.file_utils.move(self.cache_plugins_dir, self.installed_plugins_dir)
+
+        self.file_utils.change_mode(self.bundled_dir, 0o700)
+        self.file_utils.remove(self.init_file)

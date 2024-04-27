@@ -24,6 +24,8 @@ class AccountManager:
 
     def update(self, config: Config, users: Users, app_web_path_map: dict[str, str]) -> None:
         # Ensure that the container can always be started even if it failed last time
+        self.console.print_info("Updating user accounts...")
+
         self.container.down(self.storage.service_keto_admin_dir)
         self.container.down(self.storage.service_kratos_admin_dir)
 

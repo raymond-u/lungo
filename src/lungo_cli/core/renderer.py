@@ -43,8 +43,8 @@ class Renderer:
             self.console.print_error(f"Failed to render {format_path(src)} ({e}).")
             raise Exit(code=1)
 
-    def render_main(self) -> None:
-        self.console.print_info("Rendering templates...")
+    def render_core(self) -> None:
+        self.console.print_info("Rendering core templates...")
 
         for file in self.storage.bundled_dir.rglob("*.jinja"):
             relative_path = file.relative_to(self.storage.bundled_dir)
