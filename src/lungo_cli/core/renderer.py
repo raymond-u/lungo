@@ -7,7 +7,6 @@ from typer import Exit
 from .console import Console
 from .context import ContextManager
 from .file import FileUtils
-from .plugin import BasePlugin
 from .storage import Storage
 from ..helpers.format import format_path, format_program
 
@@ -52,16 +51,11 @@ class Renderer:
             if relative_path.parts[0] not in [str(self.storage.excluded_rel), str(self.storage.plugins_rel)]:
                 self.render(relative_path, file.with_suffix(""), **self.context_manager.context.model_dump())
 
-    def render_plugin(self, plugin: BasePlugin) -> None:
-        self.console.print_info(f"Rendering templates for {format_program(plugin.manifest.name)}...")
+    def render_plugin(self, name: str, context: dict[str, Any]) -> None:
+        self.console.print_info(f"Rendering templates for {format_program(name)}...")
 
-        for file in self.storage.installed_plugins_dir.joinpath(plugin.manifest.name).rglob("*.jinja"):
+        for file in self.storage.installed_plugins_dir.joinpath(name).rglob("*.jinja"):
             relative_path = file.relative_to(self.storage.bundled_dir)
             self.render(
-                relative_path,
-                file.with_suffix(""),
-                **self.context_manager.context.model_dump(),
-                plugin=plugin.context.model_dump(),
+                relative_path, file.with_suffix(""), **self.context_manager.context.model_dump(), plugin=context
             )
-
-        plugin.mark_as_rendered()

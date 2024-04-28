@@ -398,9 +398,10 @@ class PluginManager:
                 self.console.print_error(f"Failed to render plugin {format_program(plugin.manifest.name)} ({e}).")
                 raise Exit(code=1)
 
-            self.renderer.render_plugin(plugin)
-            self.context_manager.plugin_outputs.append(plugin.output)
+            self.renderer.render_plugin(plugin.manifest.name, plugin.context.model_dump())
+            plugin.mark_as_rendered()
 
+            self.context_manager.plugin_outputs.append(plugin.output)
             self.console.print_debug(f"Rendered plugin {format_program(plugin.manifest.name)}.")
 
     def update_rendered_plugin_files(self) -> None:
