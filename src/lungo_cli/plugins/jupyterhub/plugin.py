@@ -36,7 +36,7 @@ class Plugin(BasePlugin[Settings]):
         return Settings
 
     @override
-    def get_render_context(self) -> dict[str, Any]:
+    def get_custom_rendering_context(self) -> dict[str, Any]:
         return {
             "jupyterhub_password": self.settings.password or self.file_utils.read_text(self.password_file),
             "jupyterhub_version": "4.1.5",
@@ -44,7 +44,7 @@ class Plugin(BasePlugin[Settings]):
         }
 
     @override
-    def update_data(self) -> None:
+    def on_plugin_initialization(self) -> None:
         if not self.cookie_secret_file.is_file():
             self.console.print_info("Generating JupyterHub cookie secret...")
             self.file_utils.write_text(self.cookie_secret_file, generate_random_hex(), True)

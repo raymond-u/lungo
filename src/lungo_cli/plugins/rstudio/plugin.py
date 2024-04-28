@@ -33,14 +33,14 @@ class Plugin(BasePlugin[Settings]):
         return Settings
 
     @override
-    def get_render_context(self) -> dict[str, Any]:
+    def get_custom_rendering_context(self) -> dict[str, Any]:
         return {
             "rstudio_password": self.settings.password or self.file_utils.read_text(self.password_file),
             "rstudio_version": "4.3.3",
         }
 
     @override
-    def update_data(self) -> None:
+    def on_plugin_initialization(self) -> None:
         if not self.password_file.is_file():
             self.console.print_info("Generating RStudio password...")
             self.file_utils.write_text(self.password_file, generate_random_hex(), True)

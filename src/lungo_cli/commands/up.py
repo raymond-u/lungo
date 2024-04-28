@@ -34,7 +34,7 @@ def main(
     if remove_lock:
         file_utils().remove(storage().lock_file)
 
-    app_manager().update_app_data()
+    app_manager().initialize()
 
     if render_only:
         return

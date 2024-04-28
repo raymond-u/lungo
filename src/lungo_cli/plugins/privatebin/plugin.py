@@ -23,11 +23,11 @@ class Plugin(BasePlugin[BaseSettings]):
         return self.storage.managed_dir / self.manifest.name / "data"
 
     @override
-    def get_render_context(self) -> dict[str, Any]:
+    def get_custom_rendering_context(self) -> dict[str, Any]:
         return {"privatebin_version": "1.7.1"}
 
     @override
-    def update_data(self) -> None:
+    def on_plugin_initialization(self) -> None:
         # Allow the non-root container user to write
         self.file_utils.create_dir(self.data_dir)
         self.file_utils.change_mode(self.data_dir, 0o777)

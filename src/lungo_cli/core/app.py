@@ -208,33 +208,44 @@ class AppManager:
             )
         )
 
-    def update_app_data(self) -> None:
-        """Ensure that all the application data exists and is up-to-date."""
-        with self.console.status("Updating app data..."):
+    def initialize_core(self) -> None:
+        """Initialize the core part of the application."""
+        if not self.storage.nginx_gateway_cert_file.is_file() or not self.storage.nginx_gateway_key_file.is_file():
+            self.console.print_info("Generating self-signed certificate...")
+            cert, key = generate_self_signed_cert()
+            self.file_utils.write_bytes(self.storage.nginx_gateway_cert_file, cert)
+            self.file_utils.write_bytes(self.storage.nginx_gateway_key_file, key, True)
+
+        # Remove the socket file every time to avoid binding issues
+        self.file_utils.remove(self.storage.nginx_gateway_socket_file)
+
+        if not self.storage.kratos_secrets_file.is_file():
+            self.console.print_info("Generating Kratos secrets...")
+            self.renderer.render(
+                self.storage.template_kratos_secrets_rel,
+                self.storage.kratos_secrets_file,
+                secret_cookie=generate_random_hex(),
+            )
+            self.file_utils.change_mode(self.storage.kratos_secrets_file, 0o600)
+
+    def render_core(self) -> None:
+        """Render core templates."""
+        app_web_path_map = {plugin.manifest.name: plugin.manifest.web_path for plugin in self.plugin_manager.plugins}
+        self.account_manager.update(self.context_manager.config, self.context_manager.users, app_web_path_map)
+
+        self.storage.update_bundled_files()
+        self.renderer.render_core()
+
+    def initialize(self) -> None:
+        """Initialize the application."""
+        with self.console.status("Initializing..."):
             config_hash = self.generate_config_hash()
 
             # Always ensure that the required directories exist
             self.storage.create_dirs()
 
-            if not self.storage.nginx_gateway_cert_file.is_file() or not self.storage.nginx_gateway_key_file.is_file():
-                self.console.print_info("Generating self-signed certificate...")
-                cert, key = generate_self_signed_cert()
-                self.file_utils.write_bytes(self.storage.nginx_gateway_cert_file, cert)
-                self.file_utils.write_bytes(self.storage.nginx_gateway_key_file, key, True)
-
-            # Remove the socket file every time to avoid binding issues
-            self.file_utils.remove(self.storage.nginx_gateway_socket_file)
-
-            if not self.storage.kratos_secrets_file.is_file():
-                self.console.print_info("Generating Kratos secrets...")
-                self.renderer.render(
-                    self.storage.template_kratos_secrets_rel,
-                    self.storage.kratos_secrets_file,
-                    secret_cookie=generate_random_hex(),
-                )
-                self.file_utils.change_mode(self.storage.kratos_secrets_file, 0o600)
-
             self.plugin_manager.initialize_plugins()
+            self.initialize_core()
 
             if (
                 self.force_init
@@ -242,38 +253,9 @@ class AppManager:
                 or not self.storage.init_file.is_file()
                 or self.file_utils.read_text(self.storage.init_file) != config_hash
             ):
-                app_web_path_map = {}
-
-                for plugin in self.plugin_manager.plugins:
-                    self.renderer.render_plugin(plugin)
-                    self.context_manager.plugin_outputs.append(plugin.output)
-                    app_web_path_map[plugin.manifest.name] = plugin.manifest.web_path
-
-                self.storage.update_bundled_files()
-                self.renderer.render_core()
-
-                self.account_manager.update(self.context_manager.config, self.context_manager.users, app_web_path_map)
+                self.plugin_manager.render_plugins()
+                self.render_core()
 
                 # Delay copying the web files until the templates have all been rendered
-                for plugin in self.plugin_manager.plugins:
-                    for web_dir in (self.storage.installed_plugins_dir / plugin.manifest.name / "web").iterdir():
-                        if web_dir.name == "lib":
-                            dst_prefix = self.storage.bundled_dir / "web" / "src" / "lib" / "plugins"
-                            self.file_utils.copy(web_dir, dst_prefix / plugin.manifest.name)
-                        elif web_dir.name == "routes":
-                            dst_prefix = self.storage.bundled_dir / "web" / "src" / "routes" / "(apps)" / "app"
-                            self.file_utils.copy(web_dir, dst_prefix / plugin.manifest.web_path)
-
-                if self.context_manager.config.branding.cover:
-                    self.file_utils.copy(
-                        self.context_manager.config.branding.cover,
-                        self.storage.bundled_dir / "web" / "src" / "lib" / "assets" / "cover.jpg",
-                    )
-
-                if self.context_manager.config.branding.logo:
-                    self.file_utils.copy(
-                        self.context_manager.config.branding.logo,
-                        self.storage.bundled_dir / "web" / "static" / "favicon.png",
-                    )
-
+                self.plugin_manager.update_rendered_plugin_files()
                 self.file_utils.write_text(self.storage.init_file, config_hash)

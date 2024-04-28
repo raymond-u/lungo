@@ -16,6 +16,7 @@ from .console import Console
 from .constants import PACKAGE_NAME, PLUGIN_WEB_ENTRYPOINT
 from .context import ContextManager
 from .file import FileUtils
+from .renderer import Renderer
 from .storage import Storage
 from ..helpers.common import extract_multiline_value_from_yaml, get_app_version
 from ..helpers.format import format_path, format_program
@@ -31,13 +32,13 @@ class BasePlugin[T: BaseSettings](ABC):
 
     manifest: ClassVar[PluginManifest]
 
-    custom: ClassVar[bool] = False
-    installable: ClassVar[bool] = False
-    installed: ClassVar[bool] = False
-    compatible: ClassVar[bool] = True
+    is_custom: ClassVar[bool] = False
+    is_installable: ClassVar[bool] = False
+    is_installed: ClassVar[bool] = False
+    is_compatible: ClassVar[bool] = True
     alt_version: ClassVar[str | None] = None
 
-    rendered: ClassVar[bool] = False
+    is_rendered: ClassVar[bool] = False
 
     def __init__(
         self,
@@ -59,17 +60,58 @@ class BasePlugin[T: BaseSettings](ABC):
     # `ClassVar` parameter cannot include type variables
     @classmethod
     def get_plugin_settings_cls(cls) -> type[T]:
+        """
+        Retrieve the settings class for the plugin.
+
+        This method returns the class that defines the settings for the plugin. An instance of this class will be
+        passed to the plugin during its initialization, which is set by the user.
+
+        This method can be overridden in subclasses to provide custom settings classes. If not overridden, the default
+        implementation returns the `BaseSettings` class.
+        """
         return BaseSettings
 
-    def get_render_context(self) -> dict[str, Any]:
+    def get_custom_rendering_context(self) -> dict[str, Any]:
+        """
+        Retrieve the custom template rendering context.
+
+        This method returns a dictionary that can be used to provide custom context data for template rendering.
+        The returned dictionary can be accessed in the templates under the `plugin.custom` key.
+
+        This method can be overridden in subclasses to provide custom context data. If not overridden, the default
+        implementation returns an empty dictionary.
+        """
         return {}
 
-    def update_data(self) -> None: ...
+    def on_plugin_initialization(self) -> None:
+        """
+        Execute during the plugin initialization event.
+
+        This method is invoked when the plugin is initialized. It can be used to perform actions like creating
+        directories, generating secrets, etc.
+
+        This method can be overridden in subclasses to provide custom initialization behavior. If not overridden, the
+        default implementation does nothing.
+        """
+        ...
+
+    def on_plugin_rendering(self) -> None:
+        """
+        Execute before the plugin rendering process.
+
+        The rendering process is triggered when there are changes in the settings, the plugin itself, or the
+        application. This method is intended to handle actions that cannot be performed with templates, such as
+        updating database records.
+
+        This method can be overridden in subclasses to provide custom behavior during the rendering process. If not
+        overridden, the default implementation of this method does nothing.
+        """
+        ...
 
     @classmethod
     @final
     def mark_as_rendered(cls) -> None:
-        cls.rendered = True
+        cls.is_rendered = True
 
     @property
     @final
@@ -90,14 +132,14 @@ class BasePlugin[T: BaseSettings](ABC):
             oathkeeper_url_regex=f"{base_url}{PLUGIN_WEB_ENTRYPOINT}/<{self.manifest.web_path}>",
             web_base_url=f"{base_url}{PLUGIN_WEB_ENTRYPOINT}/{self.manifest.web_path}/",
             web_prefix=f"/{PLUGIN_WEB_ENTRYPOINT}/{self.manifest.web_path}",
-            custom=self.get_render_context(),
+            custom=self.get_custom_rendering_context(),
         )
 
     @property
     @final
     def output(self) -> PluginOutput:
         if self._output is None:
-            if not self.rendered:
+            if not self.is_rendered:
                 self.console.print_error(f"Plugin {format_program(self.manifest.name)} has not been rendered.")
                 raise Exit(code=1)
 
@@ -134,11 +176,13 @@ class PluginManager:
         console: Console,
         context_manager: ContextManager,
         file_utils: FileUtils,
+        renderer: Renderer,
         storage: Storage,
     ):
         self.console = console
         self.context_manager = context_manager
         self.file_utils = file_utils
+        self.renderer = renderer
         self.storage = storage
 
         self._builtin_plugin_classes = None
@@ -155,7 +199,7 @@ class PluginManager:
                 plugin_classes = self.import_plugins(package_dir)
 
                 for plugin_cls in plugin_classes:
-                    plugin_cls.installable = True
+                    plugin_cls.is_installable = True
 
                 self._builtin_plugin_classes = plugin_classes
 
@@ -167,8 +211,8 @@ class PluginManager:
             plugin_classes = self.import_plugins(self.storage.custom_plugins_dir)
 
             for plugin_cls in plugin_classes:
-                plugin_cls.custom = True
-                plugin_cls.installable = True
+                plugin_cls.is_custom = True
+                plugin_cls.is_installable = True
 
             self._custom_plugin_classes = plugin_classes
 
@@ -187,7 +231,7 @@ class PluginManager:
             plugin_classes = self.import_plugins(self.storage.installed_plugins_dir)
 
             for plugin_cls in plugin_classes:
-                plugin_cls.installed = True
+                plugin_cls.is_installed = True
 
             self._installed_plugin_classes = plugin_classes
 
@@ -197,7 +241,7 @@ class PluginManager:
     def compatible_plugin_classes(self) -> list[type[BasePlugin]]:
         if self._compatible_plugin_classes is None:
             self._compatible_plugin_classes = [
-                plugin_cls for plugin_cls in self.installed_plugin_classes if plugin_cls.compatible
+                plugin_cls for plugin_cls in self.installed_plugin_classes if plugin_cls.is_compatible
             ]
 
         return self._compatible_plugin_classes
@@ -208,7 +252,7 @@ class PluginManager:
 
     def add_plugin(self, plugin_cls: type[BasePlugin]) -> bool:
         """Add a plugin to the application."""
-        if not plugin_cls.installable:
+        if not plugin_cls.is_installable:
             self.console.print_warning(
                 f"Plugin {format_program(plugin_cls.manifest.name)} is not installable. Skipping it."
             )
@@ -216,17 +260,17 @@ class PluginManager:
 
         dst = self.storage.installed_plugins_dir / plugin_cls.manifest.name
 
-        if plugin_cls.custom:
+        if plugin_cls.is_custom:
             self.file_utils.copy(self.storage.custom_plugins_dir / plugin_cls.manifest.name, dst)
         else:
             self.file_utils.copy_package_resources(f"{PACKAGE_NAME}.plugins", plugin_cls.manifest.name, dst)
 
-        plugin_cls.installed = True
+        plugin_cls.is_installed = True
         return True
 
     def remove_plugin(self, plugin_cls: type[BasePlugin]) -> bool:
         """Remove a plugin from the application."""
-        if not plugin_cls.installed:
+        if not plugin_cls.is_installed:
             self.console.print_warning(
                 f"Plugin {format_program(plugin_cls.manifest.name)} is not installed. Skipping it."
             )
@@ -234,7 +278,7 @@ class PluginManager:
 
         self.file_utils.remove(self.storage.installed_plugins_dir / plugin_cls.manifest.name)
 
-        plugin_cls.installed = False
+        plugin_cls.is_installed = False
         return True
 
     def import_plugins(self, src: str | PathLike[str]) -> list[type[BasePlugin]]:
@@ -271,7 +315,7 @@ class PluginManager:
                             "is not compatible with the current version of the application. Skipping it."
                         )
 
-                        plugin_cls.compatible = False
+                        plugin_cls.is_compatible = False
                 except InvalidSpecifier:
                     self.console.print_warning(
                         f"Plugin {format_program(plugin_cls.manifest.name)} "
@@ -279,7 +323,7 @@ class PluginManager:
                         "has an invalid version specifier. Skipping it."
                     )
 
-                    plugin_cls.compatible = False
+                    plugin_cls.is_compatible = False
 
                 plugin_classes.append(plugin_cls)
             except Exception as e:
@@ -329,14 +373,50 @@ class PluginManager:
             plugin = plugin_cls(plugin_settings, self.console, self.context_manager, self.file_utils, self.storage)
 
             try:
-                plugin.update_data()
+                plugin.on_plugin_initialization()
             except Exit:
                 raise
             except Exception as e:
-                self.console.print_error(
-                    f"Failed to update data for plugin {format_program(plugin.manifest.name)} ({e})."
-                )
+                self.console.print_error(f"Failed to initialize plugin {format_program(plugin.manifest.name)} ({e}).")
                 raise Exit(code=1)
 
             self.plugins.append(plugin)
-            self.console.print_debug(f"Loaded plugin {format_program(plugin.manifest.name)}.")
+            self.console.print_debug(f"Initialized plugin {format_program(plugin.manifest.name)}.")
+
+    def render_plugins(self) -> None:
+        """Render all plugins."""
+        for plugin in self.plugins:
+            try:
+                plugin.on_plugin_rendering()
+            except Exit:
+                raise
+            except Exception as e:
+                self.console.print_error(f"Failed to render plugin {format_program(plugin.manifest.name)} ({e}).")
+                raise Exit(code=1)
+
+            self.renderer.render_plugin(plugin)
+            self.context_manager.plugin_outputs.append(plugin.output)
+
+            self.console.print_debug(f"Rendered plugin {format_program(plugin.manifest.name)}.")
+
+    def update_rendered_plugin_files(self) -> None:
+        for plugin in self.plugins:
+            for web_dir in (self.storage.installed_plugins_dir / plugin.manifest.name / "web").iterdir():
+                if web_dir.name == "lib":
+                    dst_prefix = self.storage.bundled_dir / "web" / "src" / "lib" / "plugins"
+                    self.file_utils.copy(web_dir, dst_prefix / plugin.manifest.name)
+                elif web_dir.name == "routes":
+                    dst_prefix = self.storage.bundled_dir / "web" / "src" / "routes" / "(apps)" / "app"
+                    self.file_utils.copy(web_dir, dst_prefix / plugin.manifest.web_path)
+
+        if self.context_manager.config.branding.cover:
+            self.file_utils.copy(
+                self.context_manager.config.branding.cover,
+                self.storage.bundled_dir / "web" / "src" / "lib" / "assets" / "cover.jpg",
+            )
+
+        if self.context_manager.config.branding.logo:
+            self.file_utils.copy(
+                self.context_manager.config.branding.logo,
+                self.storage.bundled_dir / "web" / "static" / "favicon.png",
+            )

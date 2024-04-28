@@ -18,7 +18,7 @@ class Plugin(BasePlugin[BaseSettings]):
     )
 
     @override
-    def get_render_context(self) -> dict[str, Any]:
+    def get_custom_rendering_context(self) -> dict[str, Any]:
         return {
             "filebrowser_default_password_hash": "$2a$10$aulj1r/ROe0VnA1iE2/ojOItBBFeHK0KLMv5mnl3ECXfiNLKfcKHi",
             "filebrowser_version": "v2.27.0",

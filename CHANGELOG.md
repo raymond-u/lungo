@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Breaking Changes
 
-- `Plugin.config` has been renamed to `Plugin.manifest`
+- `BasePlugin.config` has been renamed to `BasePlugin.manifest`
+- `BasePlugin.get_render_context` has been renamed to `BasePlugin.get_custom_rendering_context`
+- `BasePlugin.update_data` has been renamed to `BasePlugin.on_plugin_initialization`
 - `compatible_with` is now a required field for plugins
 - `version` is now a required field for plugins
 - Custom variables in the rendering context provided by plugins are now located under `plugin.custom`
@@ -17,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Built-in Stirling PDF plugin
+- Plugins can now perform custom actions before the rendering process
 - Plugins can now specify a custom name for use in the web path
 - Additional variables are now accessible in the rendering context for plugins
 

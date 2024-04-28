@@ -15,8 +15,8 @@ _file_utils = FileUtils(_console)
 _storage = Storage(_console, _file_utils)
 _context_manager = ContextManager(_console, _file_utils, _storage)
 _container = Container(_console, _context_manager, _file_utils, _storage)
-_plugin_manager = PluginManager(_console, _context_manager, _file_utils, _storage)
 _renderer = Renderer(_console, _context_manager, _file_utils, _storage)
+_plugin_manager = PluginManager(_console, _context_manager, _file_utils, _renderer, _storage)
 _account_manager = AccountManager(_client, _console, _container, _file_utils, _storage)
 _app_manager = AppManager(
     _account_manager, _console, _context_manager, _file_utils, _plugin_manager, _renderer, _storage
@@ -43,12 +43,12 @@ def container() -> Container:
     return _container
 
 
-def plugin_manager() -> PluginManager:
-    return _plugin_manager
-
-
 def renderer() -> Renderer:
     return _renderer
+
+
+def plugin_manager() -> PluginManager:
+    return _plugin_manager
 
 
 def account_manager() -> AccountManager:

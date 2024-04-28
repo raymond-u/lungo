@@ -33,7 +33,7 @@ def main(
         if plugin_cls := next(
             (x for x in plugin_classes if x.manifest.name == installable_plugin_cls.manifest.name), None
         ):
-            plugin_cls.installable = True
+            plugin_cls.is_installable = True
             plugin_cls.alt_version = installable_plugin_cls.manifest.version
         else:
             installable_plugin_cls.alt_version = installable_plugin_cls.manifest.version
@@ -47,14 +47,14 @@ def main(
                     f"{f' ({plugin_cls.manifest.descriptive_name})' if plugin_cls.manifest.descriptive_name else ''}"
                 )
                 console().print(
-                    f"Version: {plugin_cls.manifest.version if plugin_cls.installed else '-'} -> {plugin_cls.alt_version}"
-                    if plugin_cls.installable
+                    f"Version: {plugin_cls.manifest.version if plugin_cls.is_installed else '-'} -> {plugin_cls.alt_version}"
+                    if plugin_cls.is_installable
                     else ""
                 )
                 console().print(
-                    f"Status: {'installable' if plugin_cls.installable else 'not installable'}, "
-                    f"{'installed' if plugin_cls.installed else 'not installed'} "
-                    f"({'custom' if plugin_cls.custom else 'built-in'} plugin)."
+                    f"Status: {'installable' if plugin_cls.is_installable else 'not installable'}, "
+                    f"{'installed' if plugin_cls.is_installed else 'not installed'} "
+                    f"({'custom' if plugin_cls.is_custom else 'built-in'} plugin)."
                 )
                 console().print(f"Description: {plugin_cls.manifest.description or 'No description.'}")
             else:
@@ -67,7 +67,7 @@ def main(
             return
 
         plugin_classes.sort(key=lambda x: x.manifest.name)
-        plugin_classes.sort(key=lambda x: not x.installed)
+        plugin_classes.sort(key=lambda x: not x.is_installed)
 
         table = Table()
         table.add_column("Name")
@@ -79,10 +79,10 @@ def main(
         for plugin_cls in plugin_classes:
             table.add_row(
                 plugin_cls.manifest.name,
-                plugin_cls.manifest.version if plugin_cls.installed else "-",
-                plugin_cls.alt_version if plugin_cls.installable else "-",
-                "Yes" if plugin_cls.installable else "No",
-                "Yes" if plugin_cls.installed else "No",
+                plugin_cls.manifest.version if plugin_cls.is_installed else "-",
+                plugin_cls.alt_version if plugin_cls.is_installable else "-",
+                "Yes" if plugin_cls.is_installable else "No",
+                "Yes" if plugin_cls.is_installed else "No",
             )
 
         console().print(table)
