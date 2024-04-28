@@ -102,6 +102,7 @@ class ContextManager:
         hosts = list(self.config.network.subnet.hosts())
 
         # Reserve the first 16 addresses for gateway and other services
+        # Assign an IP address to each service, regardless of whether it is needed or not
         return {app.value: hosts[i + 16] for i, app in enumerate((*ECoreService, *EApp))}
 
     @property
