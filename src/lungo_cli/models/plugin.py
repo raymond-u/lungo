@@ -56,7 +56,7 @@ class PluginManifest(Base):
 
 class PluginContext(Base):
     manifest: PluginManifest
-    backend_base_url: AnyHttpUrl
+    backend_base_url: AnyHttpUrl | None
     dirs: AppDirs
     ip_address: IPv4Address
     oathkeeper_url_regex: str

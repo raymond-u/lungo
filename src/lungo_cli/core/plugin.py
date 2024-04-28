@@ -121,7 +121,11 @@ class BasePlugin[T: BaseSettings](ABC):
 
         return PluginContext(
             manifest=self.manifest,
-            backend_base_url=f"http://{ip_addresses[self.manifest.name]}:{self.manifest.backend_port}/",
+            backend_base_url=(
+                f"http://{ip_addresses[self.manifest.name]}:{self.manifest.backend_port}/"
+                if self.manifest.backend_port
+                else None
+            ),
             dirs=AppDirs(
                 cache_dir=str(self.storage.cache_latest_dir / self.manifest.name),
                 generated_dir=str(self.storage.generated_dir / self.manifest.name),

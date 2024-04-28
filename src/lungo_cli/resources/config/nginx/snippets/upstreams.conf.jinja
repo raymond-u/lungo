@@ -10,7 +10,7 @@ upstream node {
 
 {% for plugin_output in plugin_outputs %}
     {% set plugin_name = plugin_output.manifest.name %}
-    {% if plugin_output.manifest.have_backend and config.plugins[plugin_name].enabled %}
+    {% if plugin_output.manifest.have_backend and plugin_output.manifest.backend_port and config.plugins[plugin_name].enabled %}
 upstream {{ plugin_name }} {
     server {{ ip_addresses[plugin_name] }}:{{ plugin_output.manifest.backend_port }};
     keepalive 4;
