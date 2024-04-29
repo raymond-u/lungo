@@ -1,7 +1,3 @@
-{% set KETO_VER = 'v0.12.0' %}
-{% set KRATOS_VER = 'v1.1.0' %}
-{% set OATHKEEPER_VER = 'v0.40.7' %}
-
 {% set accounts = users.accounts %}
 {% set branding = config.branding %}
 {% set directories = config.directories %}
@@ -103,7 +99,7 @@ services:
     container_name: keto
     hostname: keto
 
-    image: 'docker.io/oryd/keto:{{ KETO_VER }}'
+    image: 'docker.io/oryd/keto:{{ constants.keto_version }}'
 
     user: root
     entrypoint: [ ]
@@ -128,7 +124,7 @@ services:
     container_name: kratos
     hostname: kratos
 
-    image: 'docker.io/oryd/kratos:{{ KRATOS_VER }}'
+    image: 'docker.io/oryd/kratos:{{ constants.kratos_version }}'
 
     user: root
     entrypoint: [ ]
@@ -160,7 +156,7 @@ services:
     container_name: oathkeeper
     hostname: oathkeeper
 
-    image: 'docker.io/oryd/oathkeeper:{{ OATHKEEPER_VER }}'
+    image: 'docker.io/oryd/oathkeeper:{{ constants.oathkeeper_version }}'
 
     user: root
     entrypoint: [ ]

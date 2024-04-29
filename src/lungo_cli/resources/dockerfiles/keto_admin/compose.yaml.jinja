@@ -1,11 +1,9 @@
-{% set KETO_VER = 'v0.12.0' %}
-
 services:
   keto_admin:
     container_name: keto_admin
     hostname: keto_admin
 
-    image: 'docker.io/oryd/keto:{{ KETO_VER }}'
+    image: 'docker.io/oryd/keto:{{ constants.keto_version }}'
 
     user: root
     entrypoint: [ ]

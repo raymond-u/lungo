@@ -3,7 +3,17 @@ from ipaddress import IPv4Address
 from typer import Exit
 
 from .console import Console
-from .constants import APP_NAME, APP_NAME_CAPITALIZED, ARCHITECTURE, PACKAGE_NAME
+from .constants import (
+    APP_NAME,
+    APP_NAME_CAPITALIZED,
+    ARCHITECTURE,
+    KETO_VERSION,
+    KRATOS_VERSION,
+    NGINX_VERSION,
+    NODE_VERSION,
+    OATHKEEPER_VERSION,
+    PACKAGE_NAME,
+)
 from .file import FileUtils
 from .storage import Storage
 from ..helpers.format import format_input
@@ -34,6 +44,11 @@ class ContextManager:
             app_name_capitalized=APP_NAME_CAPITALIZED,
             architecture=ARCHITECTURE,
             package_name=PACKAGE_NAME,
+            nginx_version=NGINX_VERSION,
+            keto_version=KETO_VERSION,
+            kratos_version=KRATOS_VERSION,
+            oathkeeper_version=OATHKEEPER_VERSION,
+            node_version=NODE_VERSION,
         )
 
     @property

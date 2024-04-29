@@ -13,6 +13,11 @@ class Constants(Base):
     app_name_capitalized: str
     architecture: str
     package_name: str
+    openresty_version: str
+    keto_version: str
+    kratos_version: str
+    oathkeeper_version: str
+    node_version: str
 
 
 class Context(Base):

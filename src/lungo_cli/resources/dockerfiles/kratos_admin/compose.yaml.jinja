@@ -1,11 +1,9 @@
-{% set KRATOS_VER = 'v1.1.0' %}
-
 services:
   kratos_admin:
     container_name: kratos_admin
     hostname: kratos_admin
 
-    image: 'docker.io/oryd/kratos:{{ KRATOS_VER }}'
+    image: 'docker.io/oryd/kratos:{{ constants.kratos_version }}'
 
     user: root
     entrypoint: [ ]
