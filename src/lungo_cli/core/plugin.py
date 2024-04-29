@@ -315,7 +315,7 @@ class PluginManager:
                     if get_app_version() not in SpecifierSet(plugin_cls.manifest.compatible_with):
                         self.console.print_warning(
                             f"Plugin {format_program(plugin_cls.manifest.name)} "
-                            f"{f'version {plugin_version}' if plugin_version else 'with an unknown version'} "
+                            f"{f"version {plugin_version}" if plugin_version else "with an unknown version"} "
                             "is not compatible with the current version of the application. Skipping it."
                         )
 
@@ -323,7 +323,7 @@ class PluginManager:
                 except InvalidSpecifier:
                     self.console.print_warning(
                         f"Plugin {format_program(plugin_cls.manifest.name)} "
-                        f"{f'version {plugin_version}' if plugin_version else 'with an unknown version'} "
+                        f"{f"version {plugin_version}" if plugin_version else "with an unknown version"} "
                         "has an invalid version specifier. Skipping it."
                     )
 

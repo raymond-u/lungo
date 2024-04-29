@@ -212,11 +212,11 @@ class AccountManager:
 
                 if data:
                     self.console.print_debug(f"Updating account {format_input(new_account.username)}...")
-                    self.client.patch(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities/{old_account['id']}", data)
+                    self.client.patch(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities/{old_account["id"]}", data)
             else:
                 # Remove the account
-                self.console.print_debug(f"Removing account {format_input(old_account['traits']['username'])}...")
-                self.client.delete(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities/{old_account['id']}")
+                self.console.print_debug(f"Removing account {format_input(old_account["traits"]["username"])}...")
+                self.client.delete(f"{KRATOS_ADMIN_API_BASE_URL}/admin/identities/{old_account["id"]}")
 
         for new_account in accounts:
             # Create the account

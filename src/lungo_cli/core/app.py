@@ -140,7 +140,7 @@ class AppManager:
         for account in users.accounts:
             if account.username == "anonymous":
                 self.console.print_info(
-                    f"Found username {format_input('anonymous')}. "
+                    f"Found username {format_input("anonymous")}. "
                     "This user will serve as a shared account for anonymous access."
                 )
                 anonymous_account_exists = True

@@ -169,7 +169,7 @@ class FileUtils:
                 else:
                     error_msg += "root"
 
-                error_msg += f": {error['msg']}"
+                error_msg += f": {error["msg"]}"
 
             self.console.print_error(error_msg)
             raise Exit(code=1)
