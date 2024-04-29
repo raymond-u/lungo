@@ -12,7 +12,7 @@
         "format": "prettier --write ."
     },
     "dependencies": {
-        "openapi-fetch": "^0.9.4",
+        "openapi-fetch": "^0.9.5",
         "set-cookie-parser": "^2.6.0"
     },
     "devDependencies": {
@@ -20,7 +20,7 @@
         "@sveltejs/enhanced-img": "^0.2.0",
         "@sveltejs/kit": "^2.5.7",
         "@sveltejs/vite-plugin-svelte": "^3.1.0",
-        "@tailwindcss/typography": "^0.5.12",
+        "@tailwindcss/typography": "^0.5.13",
         "@types/set-cookie-parser": "^2.4.7",
         "@typescript-eslint/eslint-plugin": "^7.7.1",
         "@typescript-eslint/parser": "^7.7.1",

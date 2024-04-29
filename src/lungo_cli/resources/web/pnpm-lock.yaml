@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   openapi-fetch:
-    specifier: ^0.9.4
-    version: 0.9.4
+    specifier: ^0.9.5
+    version: 0.9.5
   set-cookie-parser:
     specifier: ^2.6.0
     version: 2.6.0
@@ -26,8 +26,8 @@ devDependencies:
     specifier: ^3.1.0
     version: 3.1.0(svelte@4.2.15)(vite@5.2.10)
   '@tailwindcss/typography':
-    specifier: ^0.5.12
-    version: 0.5.12(tailwindcss@3.4.3)
+    specifier: ^0.5.13
+    version: 0.5.13(tailwindcss@3.4.3)
   '@types/set-cookie-parser':
     specifier: ^2.4.7
     version: 2.4.7
@@ -1038,8 +1038,8 @@ packages:
       - supports-color
     dev: true
 
-  /@tailwindcss/typography@0.5.12(tailwindcss@3.4.3):
-    resolution: {integrity: sha512-CNwpBpconcP7ppxmuq3qvaCxiRWnbhANpY/ruH4L5qs2GCiVDJXde/pjj2HWPV1+Q4G9+V/etrwUYopdcjAlyg==}
+  /@tailwindcss/typography@0.5.13(tailwindcss@3.4.3):
+    resolution: {integrity: sha512-ADGcJ8dX21dVVHIwTRgzrcunY6YY9uSlAHHGVKvkA+vLc5qLwEszvKts40lx7z0qc4clpjclwLeK5rVCV2P/uw==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
     dependencies:
@@ -2535,8 +2535,8 @@ packages:
       wrappy: 1.0.2
     dev: true
 
-  /openapi-fetch@0.9.4:
-    resolution: {integrity: sha512-Bmn1PFEKdwgkBk51hNXJotfDs1ESxyhgJU5nh55zMbMdN+hYIREtWwoPQN21oNrJfRLnD9CjK0Eg11CM91uUqg==}
+  /openapi-fetch@0.9.5:
+    resolution: {integrity: sha512-ToRnypJB2G5bEUZqJ4mGty/qDVgAZ4BW0znlXQAECxAp4EM8dYtgQ1mrw2Ij6W7knN4VawHvFq8uTqzXyMGNPA==}
     dependencies:
       openapi-typescript-helpers: 0.0.8
     dev: false
