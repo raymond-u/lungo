@@ -25,7 +25,7 @@ requests = "^2.31.0"
 typer = "^0.12.3"
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.4.0"
+black = "^24.4.2"
 
 [tool.poetry.group.docs]
 optional = true
@@ -33,7 +33,7 @@ optional = true
 [tool.poetry.group.docs.dependencies]
 mike = "^2.0.0"
 mkdocs-glightbox = "^0.3.7"
-mkdocs-material = "^9.5.19"
+mkdocs-material = "^9.5.20"
 mkdocs-typer = "^0.0.3"
 
 [tool.poetry.scripts]
