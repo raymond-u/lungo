@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugins can now specify a custom name for use in the web path
 - Additional variables are now accessible in the rendering context for plugins
 
+### Changed
+
+- Websocket connections can now remain open for up to 1 hour
+
 ### Fixed
 
 - Plugins can be correctly installed even if the directory name differs from the plugin name
