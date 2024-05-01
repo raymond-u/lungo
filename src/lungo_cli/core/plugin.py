@@ -37,6 +37,7 @@ class BasePlugin[T: BaseSettings](ABC):
     is_installed: ClassVar[bool] = False
     is_compatible: ClassVar[bool] = True
     alt_version: ClassVar[str | None] = None
+    source: ClassVar[Path | None] = None
 
     is_rendered: ClassVar[bool] = False
 
@@ -265,7 +266,7 @@ class PluginManager:
         dst = self.storage.installed_plugins_dir / plugin_cls.manifest.name
 
         if plugin_cls.is_custom:
-            self.file_utils.copy(self.storage.custom_plugins_dir / plugin_cls.manifest.name, dst)
+            self.file_utils.copy(plugin_cls.source, dst)
         else:
             self.file_utils.copy_package_resources(f"{PACKAGE_NAME}.plugins", plugin_cls.manifest.name, dst)
 
@@ -329,6 +330,7 @@ class PluginManager:
 
                     plugin_cls.is_compatible = False
 
+                plugin_cls.source = plugin_dir
                 plugin_classes.append(plugin_cls)
             except Exception as e:
                 self.console.print_warning(

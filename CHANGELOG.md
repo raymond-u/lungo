@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Plugins can be correctly installed even if the directory name differs from the plugin name
 - Render dropdown menus correctly for Safari on iOS
 - Ensure that the required directories always exist
 
