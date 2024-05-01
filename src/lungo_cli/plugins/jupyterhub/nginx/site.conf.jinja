@@ -35,6 +35,7 @@ location {{ plugin.web_prefix }}/ {
 location @{{ plugin_name }} {
     include snippets/proxy.conf;
     include snippets/auth.conf;
+    proxy_send_timeout 3600s;
 
     proxy_pass http://{{ plugin_name }}$escaped_uri?$filtered_args;
     proxy_redirect ~*^(?:https?://[^/]+)?{{ plugin.web_prefix }}([^?]*)\??(.*)$ $http_x_forwarded_proto://$http_x_forwarded_host{{ plugin.web_prefix }}$1?iframe=1&$2;
