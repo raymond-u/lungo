@@ -49,16 +49,7 @@ def main(
 
         console().print("Build completed.")
     else:
-        http_port = context_manager().config.network.http.port
-        https_port = context_manager().config.network.https.port
-
-        if context_manager().config.network.http.enabled and not port_is_available(http_port):
-            console().print_error(f"Port {format_input(http_port)} is in use.")
-            raise Exit(code=1)
-
-        if not port_is_available(https_port):
-            console().print_error(f"Port {format_input(https_port)} is in use.")
-            raise Exit(code=1)
+        app_manager().ensure_port_availability()
 
         with console().status(
             "Starting the service (could take a few minutes, depending on the internet connection)..."

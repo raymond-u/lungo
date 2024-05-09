@@ -12,9 +12,9 @@ from .file import FileUtils
 from .plugin import PluginManager
 from .renderer import Renderer
 from .storage import Storage
-from ..helpers.common import get_app_version, get_file_permissions
+from ..helpers.common import get_app_version, get_file_permissions, port_is_available
 from ..helpers.crypto import generate_random_hex, generate_self_signed_cert, hash_text
-from ..helpers.format import format_input, format_path
+from ..helpers.format import format_input, format_path, format_program
 from ..models.base import EApp
 from ..models.config import Config, CoreConfig
 from ..models.users import Users
@@ -259,3 +259,52 @@ class AppManager:
                 # Delay copying the web files until the templates have all been rendered
                 self.plugin_manager.update_rendered_plugin_files()
                 self.file_utils.write_text(self.storage.init_file, config_hash)
+
+    def ensure_port_availability(self) -> None:
+        """Ensure that the required ports are available."""
+        ports: list[tuple[int, str]] = []
+
+        if self.context_manager.config.network.http.enabled:
+            ports.append((self.context_manager.config.network.http.port, "HTTP service"))
+
+        ports.append((self.context_manager.config.network.https.port, "HTTPS service"))
+
+        ports.extend(
+            (
+                (port, plugin_cls.manifest.name)
+                for plugin_cls in self.plugin_manager.compatible_plugin_classes
+                for port in (plugin_cls.manifest.backend_host_ports or [])
+            )
+        )
+
+        unique_ports: list[tuple[int, str]] = []
+        duplicate_ports: list[tuple[int, list[str]]] = []
+
+        for port, name in ports:
+            for p, n in unique_ports:
+                if port == p:
+                    for pp, nn in duplicate_ports:
+                        if port == pp:
+                            nn.append(name)
+                            break
+                    else:
+                        duplicate_ports.append((port, [n, name]))
+                    break
+            else:
+                unique_ports.append((port, name))
+
+        if duplicate_ports:
+            for port, names in duplicate_ports:
+                self.console.print_error(
+                    f"Port {format_input(port)} is required by multiple services "
+                    f"({', '.join(map(format_program, names))})."
+                )
+            raise Exit(code=1)
+
+        for port, name in ports:
+
+            if not port_is_available(port):
+                self.console.print_error(
+                    f"Port {format_input(port)} is in use but is required by {format_program(name)}."
+                )
+                raise Exit(code=1)

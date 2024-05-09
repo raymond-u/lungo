@@ -30,7 +30,7 @@ def format_link(value: str, title: str | None = None) -> str:
         return f"[link={value}]{format_path(value)}[/link]"
 
 
-def format_input(value: str | Enum) -> str:
+def format_input(value: int | str | Enum) -> str:
     """Format user input for console output."""
     if isinstance(value, Enum):
         return f"[cyan]{value.value}[/cyan]"

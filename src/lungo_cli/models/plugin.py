@@ -19,6 +19,7 @@ class PluginManifest(Base):
 
     compatible_with: str
     have_backend: bool
+    backend_host_ports: list[PortType] | None = None
     backend_port: PortType | None = None
     require_account: bool
 
