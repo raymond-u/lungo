@@ -13,19 +13,31 @@ class BaseSettings(Base):
 
 class PluginManifest(Base):
     name: str
+    """The name of the plugin. Must only contain alphanumeric characters, dash, or underscore."""
     version: str
+    """The version of the plugin. Must be a valid semantic version."""
     descriptive_name: str | None = None
+    """A human-readable name for the plugin. If not provided, it will be the same as the name."""
     description: str | None = None
+    """A description of the plugin."""
 
     compatible_with: str
+    """The version of Lungo that this plugin is compatible with. Must be a valid semantic version."""
     have_backend: bool
+    """Whether the plugin requires a backend."""
     backend_host_ports: list[PortType] | None = None
+    """The ports that the backend requires. If provided, they will be checked for availability."""
     backend_port: PortType | None = None
+    """The port that the backend exposes to the web interface."""
     require_account: bool
+    """Whether the plugin requires an account to be used. This determines if an anonymous account is needed."""
 
     web_path_name: str | None = None
+    """The name of the slug for the web interface. If not provided, it will be the same as the name."""
     web_icon: str | None = None
+    """The path to the icon for the web app. If not provided, it will be a default icon."""
     web_alt_icon: str | None = None
+    """The path to the icon when highlighted for the web app. If not provided, it will be the same as the icon."""
 
     @property
     def web_path(self) -> str:
