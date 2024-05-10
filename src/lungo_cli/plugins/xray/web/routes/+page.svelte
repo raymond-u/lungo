@@ -1,7 +1,7 @@
 <script lang="ts">
     import { HOSTNAME, HTTPS_PORT } from "$lib/constants"
-    import CodeBlock from "$lib/plugins/xray/components/CodeBlock.svelte"
-    import NetworkLockIcon from "$lib/plugins/xray/icons/NetworkLock.svelte"
+    import { CodeBlock } from "$lib/plugins/xray/components"
+    import { NetworkLockIcon } from "$lib/plugins/xray/icons"
 
     export let data
 
