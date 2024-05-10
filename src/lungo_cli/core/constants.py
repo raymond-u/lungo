@@ -15,7 +15,7 @@ OPENRESTY_VERSION: Final = "1.25.3.1-alpine-apk"
 KETO_VERSION: Final = "v0.12.0"
 KRATOS_VERSION: Final = "v1.1.0"
 OATHKEEPER_VERSION: Final = "v0.40.7"
-NODE_VERSION: Final = "20.12.2-alpine"
+NODE_VERSION: Final = "20.13.1-alpine"
 
 KETO_ADMIN_API_BASE_URL: Final = "http://127.0.0.1:3939"
 KRATOS_ADMIN_API_BASE_URL: Final = "http://127.0.0.1:3940"

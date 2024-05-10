@@ -40,7 +40,7 @@ class Plugin(BasePlugin[Settings]):
         return {
             "jupyterhub_password": self.settings.password or self.file_utils.read_text(self.password_file),
             "jupyterhub_version": "4.1.5",
-            "jupyterlab_version": "4.1.6",
+            "jupyterlab_version": "4.2.0",
         }
 
     @override

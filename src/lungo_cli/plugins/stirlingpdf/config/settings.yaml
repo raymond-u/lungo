@@ -8,6 +8,7 @@ system:
   defaultLocale: 'en-US'
   googlevisibility: false
   enableAlphaFunctionality: false
+  showUpdate: false
 
 endpoints:
   toRemove: []

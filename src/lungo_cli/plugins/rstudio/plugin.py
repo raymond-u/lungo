@@ -36,7 +36,7 @@ class Plugin(BasePlugin[Settings]):
     def get_custom_rendering_context(self) -> dict[str, Any]:
         return {
             "rstudio_password": self.settings.password or self.file_utils.read_text(self.password_file),
-            "rstudio_version": "4.3.3",
+            "rstudio_version": "4.4.0",
         }
 
     @override
