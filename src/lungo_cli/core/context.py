@@ -9,9 +9,9 @@ from .constants import (
     ARCHITECTURE,
     KETO_VERSION,
     KRATOS_VERSION,
-    NGINX_VERSION,
     NODE_VERSION,
     OATHKEEPER_VERSION,
+    OPENRESTY_VERSION,
     PACKAGE_NAME,
 )
 from .file import FileUtils
@@ -44,7 +44,7 @@ class ContextManager:
             app_name_capitalized=APP_NAME_CAPITALIZED,
             architecture=ARCHITECTURE,
             package_name=PACKAGE_NAME,
-            nginx_version=NGINX_VERSION,
+            openresty_version=OPENRESTY_VERSION,
             keto_version=KETO_VERSION,
             kratos_version=KRATOS_VERSION,
             oathkeeper_version=OATHKEEPER_VERSION,

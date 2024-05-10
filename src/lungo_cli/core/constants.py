@@ -11,7 +11,7 @@ STORAGE_VERSION: Final = "v0"
 
 PLUGIN_WEB_ENTRYPOINT: Final = "app"
 
-NGINX_VERSION: Final = "1.25.3.1-alpine-apk"
+OPENRESTY_VERSION: Final = "1.25.3.1-alpine-apk"
 KETO_VERSION: Final = "v0.12.0"
 KRATOS_VERSION: Final = "v1.1.0"
 OATHKEEPER_VERSION: Final = "v0.40.7"
