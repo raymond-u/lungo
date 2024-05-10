@@ -1,3 +1,4 @@
+import socket
 from ipaddress import IPv4Address
 
 from typer import Exit
@@ -36,6 +37,7 @@ class ContextManager:
         self._users = None
         self._plugin_outputs = []
         self._dev = False
+        self._local_ip = None
 
     @property
     def constants(self) -> Constants:
@@ -121,6 +123,20 @@ class ContextManager:
         return {app.value: hosts[i + 16] for i, app in enumerate((*ECoreService, *EApp))}
 
     @property
+    def local_ip(self) -> IPv4Address:
+        if self._local_ip is None:
+            with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+                try:
+                    s.settimeout(0)
+                    s.connect(("10.254.254.254", 1))
+
+                    self._local_ip = IPv4Address(s.getsockname()[0])
+                except Exception:
+                    self._local_ip = IPv4Address("127.0.0.1")
+
+        return self._local_ip
+
+    @property
     def context(self) -> Context:
         return Context(
             constants=self.constants,
@@ -131,4 +147,5 @@ class ContextManager:
             base_url=self.base_url,
             dev=self.dev,
             ip_addresses=self.ip_addresses,
+            local_ip=self.local_ip,
         )

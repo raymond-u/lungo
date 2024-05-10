@@ -1,0 +1,43 @@
+{% set plugin_name = plugin.manifest.name %}
+
+services:
+  {{ plugin_name }}:
+    container_name: {{ plugin_name }}
+    hostname: {{ plugin_name }}
+
+    image: 'docker.io/rustdesk/rustdesk-server-s6:{{ plugin.custom.rustdesk_server_version }}'
+
+    user: root
+    entrypoint: [ ]
+    command: /init
+
+    networks:
+      static:
+        ipv4_address: {{ plugin.ip_address }}
+    ports:
+      - 21115:21115
+      - 21116:21116
+      - 21116:21116/udp
+      - 21117:21117
+      # Disable the following ports as they are only used for the web client
+      # - 21118:21118
+      # - 21119:21119
+
+    volumes:
+      - '{{ plugin.dirs.managed_dir }}:/data:rw'
+
+    secrets:
+      - RUSTDESK_PRIVATE_KEY
+      - RUSTDESK_PUBLIC_KEY
+
+    environment:
+      - RELAY={{ local_ip }}:21117
+      - ENCRYPTED_ONLY=1
+
+    restart: 'unless-stopped'
+
+secrets:
+  RUSTDESK_PRIVATE_KEY:
+    file: '{{ plugin.dirs.generated_dir }}/id_ed25519'
+  RUSTDESK_PUBLIC_KEY:
+    file: '{{ plugin.dirs.generated_dir }}/id_ed25519.pub'

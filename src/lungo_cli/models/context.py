@@ -29,3 +29,4 @@ class Context(Base):
     base_url: AnyHttpUrl
     dev: bool
     ip_addresses: dict[str, IPv4Address]
+    local_ip: IPv4Address

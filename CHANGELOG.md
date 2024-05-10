@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Built-in RustDeck plugin
 - Built-in Stirling PDF plugin
 - Plugins can now perform custom actions before the rendering process
 - Plugins can now specify a custom name for use in the web path

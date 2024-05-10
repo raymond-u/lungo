@@ -6,9 +6,27 @@ from typing import BinaryIO
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
-from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives.asymmetric import ed25519, rsa
 
 from ..core.constants import APP_NAME_CAPITALIZED
+
+
+def generate_raw_ed25519_keypair() -> tuple[bytes, bytes]:
+    """Generate a raw Ed25519 keypair."""
+    private_key = ed25519.Ed25519PrivateKey.generate()
+    public_key = private_key.public_key()
+
+    public_key_bytes = public_key.public_bytes(
+        encoding=serialization.Encoding.Raw,
+        format=serialization.PublicFormat.Raw,
+    )
+    private_key_bytes = private_key.private_bytes(
+        encoding=serialization.Encoding.Raw,
+        format=serialization.PrivateFormat.Raw,
+        encryption_algorithm=serialization.NoEncryption(),
+    )
+
+    return public_key_bytes, private_key_bytes
 
 
 def generate_self_signed_cert() -> tuple[bytes, bytes]:
@@ -31,14 +49,14 @@ def generate_self_signed_cert() -> tuple[bytes, bytes]:
         .sign(key, hashes.SHA256(), default_backend())
     )
 
-    cert_pem = cert.public_bytes(encoding=serialization.Encoding.PEM)
-    key_pem = key.private_bytes(
+    cert_bytes = cert.public_bytes(encoding=serialization.Encoding.PEM)
+    key_bytes = key.private_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PrivateFormat.TraditionalOpenSSL,
         encryption_algorithm=serialization.NoEncryption(),
     )
 
-    return cert_pem, key_pem
+    return cert_bytes, key_bytes
 
 
 def generate_random_hex() -> str:
