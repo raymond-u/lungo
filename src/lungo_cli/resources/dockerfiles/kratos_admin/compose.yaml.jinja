@@ -18,11 +18,12 @@ services:
       - '../../config/kratos:/etc/kratos:ro'
       - '{{ app_dirs.managed_dir }}/kratos:/var/lib/kratos:rw'
 
-    environment:
-      - DSN=sqlite:////var/lib/kratos/db.sqlite3?_fk=true&mode=rwc
     secrets:
       - source: KRATOS_SECRETS
         target: /etc/kratos/secrets.yaml
+
+    environment:
+      - DSN=sqlite:////var/lib/kratos/db.sqlite3?_fk=true&mode=rwc
 
 secrets:
   KRATOS_SECRETS:
