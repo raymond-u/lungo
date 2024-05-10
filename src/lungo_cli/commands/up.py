@@ -1,12 +1,11 @@
 from typing import Annotated, Optional
 
-from typer import Exit, Option
+from typer import Option
 
 from .base import ConfigDirType, DevType, ForceInitType, QuietType, VerbosityType
 from ..app.state import app_manager, console, container, context_manager, file_utils, storage
 from ..core.constants import APP_NAME, APP_NAME_CAPITALIZED
-from ..helpers.common import port_is_available
-from ..helpers.format import format_command, format_input, format_link
+from ..helpers.format import format_command, format_link
 from ..models.base import EContainer
 
 
