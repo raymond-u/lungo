@@ -30,6 +30,7 @@ class Plugin(BasePlugin[BaseSettings]):
     @override
     def get_custom_rendering_context(self) -> dict[str, Any]:
         return {
+            "rustdesk_private_key": self.file_utils.read_text(self.private_key_file),
             "rustdesk_public_key": self.file_utils.read_text(self.public_key_file),
             "rustdesk_server_version": "1.1.10-3",
         }

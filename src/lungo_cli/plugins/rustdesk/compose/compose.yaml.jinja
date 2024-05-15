@@ -26,18 +26,10 @@ services:
     volumes:
       - '{{ plugin.dirs.managed_dir }}:/data:rw'
 
-    secrets:
-      - RUSTDESK_PRIVATE_KEY
-      - RUSTDESK_PUBLIC_KEY
-
     environment:
-      - RELAY={{ local_ip }}:21117
       - ENCRYPTED_ONLY=1
+      - KEY_PRIV={{ plugin.custom.rustdesk_private_key }}
+      - KEY_PUB={{ plugin.custom.rustdesk_public_key }}
+      - RELAY={{ local_ip }}:21117
 
     restart: 'unless-stopped'
-
-secrets:
-  RUSTDESK_PRIVATE_KEY:
-    file: '{{ plugin.dirs.generated_dir }}/id_ed25519'
-  RUSTDESK_PUBLIC_KEY:
-    file: '{{ plugin.dirs.generated_dir }}/id_ed25519.pub'
