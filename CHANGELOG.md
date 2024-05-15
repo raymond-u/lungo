@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Websocket connections can now remain open for up to 1 hour
 - Update JupyterLab to 4.2.0
+- Update PrivateBin to 1.7.3
 - Update RStudio to 4.4.0
 - Update Xray to 1.8.11
 
