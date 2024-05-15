@@ -1,0 +1,27 @@
+.w-4\/5 {
+    width: 80%;
+}
+
+.icon {
+    font-size: 0.75rem;
+}
+
+.blue {
+    color: steelblue;
+}
+
+.green {
+    color: green;
+}
+
+.yellow {
+    color: darkorange;
+}
+
+.md-typeset table:not([class]) {
+    display: table;
+}
+
+.md-typeset__table {
+    min-width: 100%;
+}
