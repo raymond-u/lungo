@@ -41,7 +41,7 @@ class Plugin(BasePlugin[BaseSettings]):
             self.console.print_info("Generating RustDesk keypair...")
 
             public_key, private_key = generate_raw_ed25519_keypair()
-            private_key_b64 = base64.b64encode(private_key).decode()
+            private_key_b64 = base64.b64encode(private_key + public_key).decode()
             public_key_b64 = base64.b64encode(public_key).decode()
 
             self.file_utils.write_text(self.private_key_file, private_key_b64, True)
