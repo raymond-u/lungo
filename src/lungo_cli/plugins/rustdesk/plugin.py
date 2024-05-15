@@ -12,7 +12,7 @@ class Plugin(BasePlugin[BaseSettings]):
         version="0.1.0",
         descriptive_name="RustDesk",
         description="RustDesk as a Lungo plugin.",
-        compatible_with="~=0.3.0",
+        compatible_with="~=0.4.0",
         have_backend=True,
         backend_host_ports=[21115, 21116, 21117],
         require_account=False,

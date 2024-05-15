@@ -10,7 +10,7 @@ class Plugin(BasePlugin[BaseSettings]):
         version="0.1.0",
         descriptive_name="Stirling PDF",
         description="Stirling PDF as a Lungo plugin.",
-        compatible_with="~=0.3.0",
+        compatible_with="~=0.4.0",
         have_backend=True,
         backend_port=8080,
         require_account=False,
