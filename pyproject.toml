@@ -33,7 +33,7 @@ optional = true
 [tool.poetry.group.docs.dependencies]
 mike = "^2.1.1"
 mkdocs-glightbox = "^0.4.0"
-mkdocs-material = "^9.5.22"
+mkdocs-material = "^9.5.23"
 mkdocs-typer = "^0.0.3"
 
 [tool.poetry.scripts]

@@ -101,6 +101,7 @@ extra:
   generator: false
   version:
     provider: mike
+    alias: true
     default:
       - nightly
       - stable
