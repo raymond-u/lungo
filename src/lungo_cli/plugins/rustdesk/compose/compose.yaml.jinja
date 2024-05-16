@@ -32,4 +32,8 @@ services:
       - KEY_PUB={{ plugin.custom.rustdesk_public_key }}
       - RELAY={{ local_ip }}:21117
 
+      - LIMIT_SPEED=838860800
+      - SINGLE_BANDWIDTH=838860800
+      - TOTAL_BANDWIDTH=838860800
+
     restart: 'unless-stopped'
