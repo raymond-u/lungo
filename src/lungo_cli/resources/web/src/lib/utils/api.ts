@@ -25,7 +25,9 @@ export function wrapFetch({
     headers?: HeadersInit
     ensureOk?: boolean
 }): typeof global.fetch {
-    const cookieStore = Object.fromEntries(cookieHeader?.split(";").map((cookie) => cookie.trim().split("=")) ?? [])
+    const cookieStore = Object.fromEntries(
+        cookieHeader?.split(";").map((cookie) => cookie.trim().split(/=(.*)/, 2)) ?? []
+    )
 
     return async (input, init?) => {
         let response: Response
