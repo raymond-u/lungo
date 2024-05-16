@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.4.0...HEAD)
 
+### Fixed
+
+- Forward cookies set back to the backend in subsequent sequential requests
+
 ## [0.4.0](https://github.com/raymond-u/lungo/compare/v0.3.0...v0.4.0) - 2024-5-15
 
 ### Breaking Changes

@@ -25,6 +25,8 @@ export function wrapFetch({
     headers?: HeadersInit
     ensureOk?: boolean
 }): typeof global.fetch {
+    const cookieStore = Object.fromEntries(cookieHeader?.split(";").map((cookie) => cookie.trim().split("=")) ?? [])
+
     return async (input, init?) => {
         let response: Response
 
@@ -45,9 +47,12 @@ export function wrapFetch({
                 }
             }
 
-            if (cookieHeader) {
-                init.headers.set("Cookie", cookieHeader)
-            }
+            init.headers.set(
+                "Cookie",
+                Object.entries(cookieStore)
+                    .map(([key, value]) => `${key}=${value}`)
+                    .join("; ")
+            )
 
             if (credentials) {
                 init.credentials = credentials
@@ -65,8 +70,10 @@ export function wrapFetch({
                 response = await fetch(input, init)
             }
 
-            if (cookies) {
-                for (const cookie of parser.parse(response.headers.getSetCookie(), { decodeValues: false })) {
+            for (const cookie of parser.parse(response.headers.getSetCookie(), { decodeValues: false })) {
+                cookieStore[cookie.name] = cookie.value
+
+                if (cookies) {
                     cookies.set(cookie.name, cookie.value, {
                         encode: (value) => value,
                         path: cookiePath || "/",
