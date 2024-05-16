@@ -27,7 +27,7 @@ def main(
     app_manager().process_cli_options(config_dir, dev, quiet, verbosity)
     app_manager().load_core_config()
 
-    plugin_classes = plugin_manager().compatible_plugin_classes
+    plugin_classes = plugin_manager().installed_plugin_classes
 
     for installable_plugin_cls in plugin_manager().installable_plugin_classes:
         if plugin_cls := next(
