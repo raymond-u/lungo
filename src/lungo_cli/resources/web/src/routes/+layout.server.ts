@@ -32,7 +32,7 @@ export async function load({ cookies, fetch, request, url }) {
     const title = url.pathname.split("/").pop() || "home"
 
     const client = createKratosClient(getCookieHeader(request), cookies, fetch)
-    const response = await client.GET("/sessions/whoami", { params: {} })
+    const response = await client.GET("/sessions/whoami")
 
     switch (response.response.status) {
         case 200:
@@ -46,7 +46,7 @@ export async function load({ cookies, fetch, request, url }) {
             }
     }
 
-    const response2 = await client.GET("/self-service/logout/browser", { params: {} })
+    const response2 = await client.GET("/self-service/logout/browser")
 
     switch (response2.response.status) {
         case 200:

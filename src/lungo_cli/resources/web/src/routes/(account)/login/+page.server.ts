@@ -58,7 +58,7 @@ export const actions = {
 
 export async function load({ cookies, fetch, request }) {
     const client = createKratosClient(getCookieHeader(request), cookies, fetch)
-    const response = await client.GET("/self-service/login/browser", { params: {} })
+    const response = await client.GET("/self-service/login/browser")
 
     switch (response.response.status) {
         case 200:
