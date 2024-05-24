@@ -49,7 +49,10 @@ class Container:
                     cwd=cwd or self.storage.bundled_dir,
                 ) as process:
                     for line in process.stdout:
-                        self.console.print(line.decode("utf8"))
+                        self.console.print(line.decode(), end="")
+
+                if process.returncode != 0:
+                    raise subprocess.CalledProcessError(process.returncode, command)
             else:
                 subprocess.run(
                     command,

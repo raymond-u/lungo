@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Stream the output from the container tool to the console when verbose mode is enabled
+- Always check the return code of the container tool
 
 ## [0.4.1](https://github.com/raymond-u/lungo/compare/v0.4.0...v0.4.1) - 2024-5-16
 
