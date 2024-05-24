@@ -3,7 +3,7 @@ from os import PathLike
 
 from typer import Exit
 
-from .console import Console
+from .console import Console, LogLevels
 from .constants import APP_NAME_CAPITALIZED, DOCKER_COMPOSE_URL, DOCKER_URL, PODMAN_COMPOSE_URL, PODMAN_URL
 from .context import ContextManager
 from .file import FileUtils
@@ -41,7 +41,7 @@ class Container:
         command = list(filter(None, command))
 
         try:
-            if self.context_manager.dev:
+            if self.console.log_level < LogLevels.INFO:
                 with subprocess.Popen(
                     command,
                     stdout=subprocess.PIPE,

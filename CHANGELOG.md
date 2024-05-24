@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Increase the bandwidth limit for RustDesk
 
+### Fixed
+
+- Stream the output from the container tool to the console when verbose mode is enabled
+
 ## [0.4.1](https://github.com/raymond-u/lungo/compare/v0.4.0...v0.4.1) - 2024-5-16
 
 ### Fixed
