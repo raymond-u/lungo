@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Increase the bandwidth limit for RustDesk
+- Update File Browser to 2.30.0
+- Update JupyterLab to 4.2.1
+- Update RustDesk Server to 1.1.11-1
+- Update Xray to 1.8.13
 
 ### Fixed
 
@@ -36,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Built-in RustDeck plugin
+- Built-in RustDesk plugin
 - Built-in Stirling PDF plugin
 - Plugins can now perform custom actions before the rendering process
 - Plugins can now specify a custom name for use in the web path
@@ -90,7 +94,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove lock file when the service fails to start
 - Fix the recurrent Nginx socket binding issue
 - Remove an incorrect instruction from the documentation
-- Do not recreate FileBrowser database file on every start
+- Do not recreate File Browser database file on every start
 
 ## [0.2.3](https://github.com/raymond-u/lungo/compare/v0.2.2...v0.2.3) - 2024-2-16
 
