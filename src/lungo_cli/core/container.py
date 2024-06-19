@@ -48,7 +48,7 @@ class Container:
                     stderr=subprocess.STDOUT,
                     cwd=cwd or self.storage.bundled_dir,
                 ) as process:
-                    self.console.print_debug(f"Streaming output of command {format_command(*command)}.")
+                    self.console.print_debug(f"Streaming the output of command {format_command(*command)}.")
                     self.console.request_newline()
 
                     for line in process.stdout:
