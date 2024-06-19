@@ -59,36 +59,31 @@ class Console:
         if self.log_level > LogLevels.TRACE:
             return
 
-        kwargs["highlight"] = kwargs.get("highlight", False)
-        self.stdout.print("[TRACE]", *args, **kwargs)
+        self.print("[TRACE]", *args, **kwargs)
 
     def print_debug(self, *args: Any, **kwargs: Any):
         if self.log_level > LogLevels.DEBUG:
             return
 
-        kwargs["highlight"] = kwargs.get("highlight", False)
-        self.stdout.print("[DEBUG]", *args, **kwargs)
+        self.print("[DEBUG]", *args, **kwargs)
 
     def print_info(self, *args: Any, **kwargs: Any):
         if self.log_level > LogLevels.INFO:
             return
 
-        kwargs["highlight"] = kwargs.get("highlight", False)
-        self.stdout.print("[INFO]", *args, **kwargs)
+        self.print("[INFO]", *args, **kwargs)
 
     def print_warning(self, *args: Any, **kwargs: Any):
         if self.log_level > LogLevels.WARNING:
             return
 
-        kwargs["highlight"] = kwargs.get("highlight", False)
-        self.stdout.print("[bold yellow][WARNING][/bold yellow]", *args, **kwargs)
+        self.print("[bold yellow][WARNING][/bold yellow]", *args, **kwargs)
 
     def print_error(self, *args: Any, **kwargs: Any):
         if self.log_level > LogLevels.ERROR:
             return
 
-        kwargs["highlight"] = kwargs.get("highlight", False)
-        self.stdout.print("[bold red][ERROR][/bold red]", *args, **kwargs)
+        self.print("[bold red][ERROR][/bold red]", *args, **kwargs)
 
     def show_epilogue(self):
         self.request_newline()
