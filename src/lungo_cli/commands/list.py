@@ -51,11 +51,7 @@ def main(
                     if plugin_cls.is_installable
                     else ""
                 )
-                console().print(
-                    f"Status: {'installable' if plugin_cls.is_installable else 'not installable'}, "
-                    f"{'installed' if plugin_cls.is_installed else 'not installed'} "
-                    f"({'custom' if plugin_cls.is_custom else 'built-in'} plugin)."
-                )
+                console().print(f"Category: {'custom' if plugin_cls.is_custom else 'built-in'} plugin")
                 console().print(f"Description: {plugin_cls.manifest.description or 'No description.'}")
             else:
                 console().print(f"Plugin {format_input(arg)} not found. Skipping it.")
@@ -73,16 +69,12 @@ def main(
         table.add_column("Name")
         table.add_column("Current")
         table.add_column("Available")
-        table.add_column("Installable")
-        table.add_column("Installed")
 
         for plugin_cls in plugin_classes:
             table.add_row(
                 plugin_cls.manifest.name,
                 plugin_cls.manifest.version if plugin_cls.is_installed else "-",
                 plugin_cls.alt_version if plugin_cls.is_installable else "-",
-                "Yes" if plugin_cls.is_installable else "No",
-                "Yes" if plugin_cls.is_installed else "No",
             )
 
         console().print(table)

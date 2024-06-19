@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Simplify the output of `lungo list` command
 - Update JupyterLab to 4.2.2
 - Update RStudio to 4.4.1
 - Update Stirling PDF to 0.26.1
