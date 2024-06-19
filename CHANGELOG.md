@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.4.2...HEAD)
 
+### Changed
+
+- Update JupyterLab to 4.2.2
+- Update RStudio to 4.4.1
+- Update Stirling PDF to 0.26.1
+- Update Xray to 1.8.15
+
 ### Fixed
 
 - The console tab of File Browser is now working correctly

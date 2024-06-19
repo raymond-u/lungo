@@ -23,7 +23,7 @@ class Plugin(BasePlugin[BaseSettings]):
 
     @override
     def get_custom_rendering_context(self) -> dict[str, Any]:
-        return {"stirlingpdf_version": "0.23.1"}
+        return {"stirlingpdf_version": "0.26.1"}
 
     @override
     def on_plugin_initialization(self) -> None:
