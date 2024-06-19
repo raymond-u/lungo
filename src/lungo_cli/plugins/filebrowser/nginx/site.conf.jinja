@@ -19,6 +19,11 @@ location {{ plugin.web_prefix }}/ {
         return 480;
     }
 
+    # Just pass them through because websocket requests have no referer header and cannot be reliably patched
+    if ($http_upgrade ~* websocket) {
+        return 480;
+    }
+
     if ($http_referer ~* \?.*iframe=1.*$) {
         return 307 $http_x_forwarded_proto://$http_x_forwarded_host$escaped_uri?iframe=1&$args;
     }
@@ -41,6 +46,7 @@ location {{ plugin.web_prefix }}/api/public {
 location @{{ plugin_name }} {
     include snippets/proxy.conf;
     include snippets/auth.conf;
+    proxy_send_timeout 3600s;
 
     proxy_pass http://{{ plugin_name }}$escaped_uri?$filtered_args;
     proxy_redirect ~*^(?:https?://[^/]+)?{{ plugin.web_prefix }}([^?]*)\??(.*)$ $http_x_forwarded_proto://$http_x_forwarded_host{{ plugin.web_prefix }}$1?iframe=1&$2;
