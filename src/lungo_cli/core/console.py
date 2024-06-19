@@ -38,7 +38,7 @@ class Console:
     def ensure_newline(self):
         if self.need_newline:
             self.need_newline = False
-            print()
+            self.stdout.print()
 
         self.is_empty = False
 
