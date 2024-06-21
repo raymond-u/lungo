@@ -3,7 +3,7 @@
     export let wrapped = false
 </script>
 
-<div class="flex h-full w-full flex-col items-center">
+<div class="flex size-full flex-col items-center">
     <div class="flex w-full flex-1 items-center justify-center py-16">
         {#if wrapped}
             <div

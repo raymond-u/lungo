@@ -173,4 +173,12 @@
     })
 </script>
 
-<iframe title={$currentApp?.name ?? ""} class="h-full w-full border-2 border-base-content" bind:this={iFrame} />
+{#if $page.data.apps.length > 0}
+    <div class="size-full border-t-2 border-base-content/20 md:border-l-2">
+        <iframe title={$currentApp?.name ?? ""} class="size-full" bind:this={iFrame} />
+    </div>
+{:else}
+    <div class="size-full border-t-2 border-base-content/20">
+        <iframe title={$currentApp?.name ?? ""} class="size-full" bind:this={iFrame} />
+    </div>
+{/if}
