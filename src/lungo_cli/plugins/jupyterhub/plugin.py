@@ -12,10 +12,10 @@ class Settings(BaseSettings):
 class Plugin(BasePlugin[Settings]):
     manifest = PluginManifest(
         name="jupyterhub",
-        version="0.2.1",
+        version="0.3.0",
         descriptive_name="JupyterHub",
         description="JupyterHub as a Lungo plugin.",
-        compatible_with="~=0.4.0",
+        compatible_with="~=0.5.0",
         have_backend=True,
         backend_port=80,
         require_account=True,

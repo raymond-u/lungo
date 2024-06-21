@@ -9,10 +9,10 @@ from lungo_cli.helpers.crypto import generate_raw_ed25519_keypair
 class Plugin(BasePlugin[BaseSettings]):
     manifest = PluginManifest(
         name="rustdesk",
-        version="0.1.1",
+        version="0.2.0",
         descriptive_name="RustDesk",
         description="RustDesk as a Lungo plugin.",
-        compatible_with="~=0.4.0",
+        compatible_with="~=0.5.0",
         have_backend=True,
         backend_host_ports=[21115, 21116, 21117],
         require_account=False,
