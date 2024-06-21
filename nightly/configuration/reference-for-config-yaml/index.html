@@ -1394,11 +1394,11 @@ You're not viewing the latest version.
 </span><span id="__span-0-77"><span class="c1"># network:</span>
 </span><span id="__span-0-78"><span class="c1"># ========</span>
 </span><span id="__span-0-79">
-</span><span id="__span-0-80"><span class="c1">#   # Hostname of the website</span>
-</span><span id="__span-0-81"><span class="c1">#   # Type: string</span>
+</span><span id="__span-0-80"><span class="c1">#   # Base URL to the website</span>
+</span><span id="__span-0-81"><span class="c1">#   # Type: URL</span>
 </span><span id="__span-0-82"><span class="c1">#   # Default: none</span>
 </span><span id="__span-0-83"><span class="c1">#   # Required: yes</span>
-</span><span id="__span-0-84"><span class="c1">#   hostname: lungo.com</span>
+</span><span id="__span-0-84"><span class="c1">#   base_url: https://lungo.com/</span>
 </span><span id="__span-0-85">
 </span><span id="__span-0-86"><span class="c1">#   # Subnet to use for the internal network, in CIDR notation (must have a minimum of 256 addresses)</span>
 </span><span id="__span-0-87"><span class="c1">#   # Type: string</span>
@@ -1406,7 +1406,7 @@ You're not viewing the latest version.
 </span><span id="__span-0-89"><span class="c1">#   # Required: no</span>
 </span><span id="__span-0-90"><span class="c1">#   subnet: 192.168.2.0/24</span>
 </span><span id="__span-0-91">
-</span><span id="__span-0-92"><span class="c1">#   # Trusted proxies (external IP addresses that are trusted to set the client IP address)</span>
+</span><span id="__span-0-92"><span class="c1">#   # IP addresses of external reverse proxies that are trusted when determining the real IP address of the client</span>
 </span><span id="__span-0-93"><span class="c1">#   # Type: array</span>
 </span><span id="__span-0-94"><span class="c1">#   # Default: [ ]</span>
 </span><span id="__span-0-95"><span class="c1">#   # Required: no</span>
