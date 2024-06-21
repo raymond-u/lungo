@@ -173,4 +173,4 @@
     })
 </script>
 
-<iframe title={$currentApp?.name ?? ""} class="h-full w-full" bind:this={iFrame} />
+<iframe title={$currentApp?.name ?? ""} class="h-full w-full border-2 border-base-content" bind:this={iFrame} />
