@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.4.2...HEAD)
 
+### Breaking Changes
+
+- `network.hostname` has been replaced by `network.base_url` in the configuration file to support custom ports
+
 ### Changed
 
 - Simplify the output of `lungo list` command

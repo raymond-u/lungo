@@ -77,11 +77,11 @@
 # network:
 # ========
 
-#   # Hostname of the website
-#   # Type: string
+#   # Base URL to the website
+#   # Type: URL
 #   # Default: none
 #   # Required: yes
-#   hostname: lungo.com
+#   base_url: https://lungo.com/
 
 #   # Subnet to use for the internal network, in CIDR notation (must have a minimum of 256 addresses)
 #   # Type: string
@@ -89,7 +89,7 @@
 #   # Required: no
 #   subnet: 192.168.2.0/24
 
-#   # Trusted proxies (external IP addresses that are trusted to set the client IP address)
+#   # IP addresses of external reverse proxies that are trusted when determining the real IP address of the client
 #   # Type: array
 #   # Default: [ ]
 #   # Required: no

@@ -31,7 +31,9 @@
     - handler: json
 {% endset %}
 
+{% set network = config.network %}
 {% set plugins = config.plugins %}
+
 {% set app_with_rules %}
   {% for plugin_output in plugin_outputs if plugins[plugin_output.manifest.name].enabled and plugin_output.oathkeeper_rules %}
     {% set plugin_web_path = plugin_output.manifest.web_path_name or plugin_output.manifest.name -%}
@@ -41,7 +43,7 @@
 
 - id: apps
   match:
-    url: '{{ base_url }}app/<(?!(?:{{ '$|' ~ app_with_rules if app_with_rules else '$' }}))[^/]*><.*>'
+    url: '{{ network.base_url }}app/<(?!(?:{{ '$|' ~ app_with_rules if app_with_rules else '$' }}))[^/]*><.*>'
     methods:
       {{ ALL }}
   {{ AUTH }}
@@ -54,7 +56,7 @@
 
 - id: catch-all
   match:
-    url: '{{ base_url }}<(?!app/.+).*>'
+    url: '{{ network.base_url }}<(?!app/.+).*>'
     methods:
       {{ ALL }}
   {{ PASS }}

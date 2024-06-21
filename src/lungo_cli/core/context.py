@@ -95,11 +95,6 @@ class ContextManager:
         )
 
     @property
-    def base_url(self) -> str:
-        port = f":{self.config.network.https.port}" if self.config.network.https.port != 443 else ""
-        return f"https://{self.config.network.hostname}{port}/"
-
-    @property
     def dev(self) -> bool:
         return self._dev
 
@@ -144,7 +139,6 @@ class ContextManager:
             users=self.users,
             plugin_outputs=self.plugin_outputs,
             app_dirs=self.app_dirs,
-            base_url=self.base_url,
             dev=self.dev,
             ip_addresses=self.ip_addresses,
             local_ip=self.local_ip,

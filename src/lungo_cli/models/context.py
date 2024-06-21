@@ -1,7 +1,5 @@
 from ipaddress import IPv4Address
 
-from pydantic import AnyHttpUrl
-
 from .base import AppDirs, Base
 from .config import Config
 from .plugin import PluginOutput
@@ -26,7 +24,6 @@ class Context(Base):
     users: Users
     plugin_outputs: list[PluginOutput]
     app_dirs: AppDirs
-    base_url: AnyHttpUrl
     dev: bool
     ip_addresses: dict[str, IPv4Address]
     local_ip: IPv4Address

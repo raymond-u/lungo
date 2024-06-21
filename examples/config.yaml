@@ -18,7 +18,7 @@ directories:
       read_only: true
 
 network:
-  hostname: lungo.com
+  base_url: https://lungo.com/
   subnet: 192.168.2.0/24
   http:
     enabled: true

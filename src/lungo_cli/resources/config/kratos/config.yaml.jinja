@@ -7,7 +7,7 @@ dsn: 'sqlite:////var/lib/kratos/db.sqlite3?_fk=true&mode=rwc'
 serve:
   public:
     port: 80
-    base_url: '{{ base_url }}'
+    base_url: '{{ network.base_url }}'
   admin:
     port: 8080
 
@@ -33,7 +33,7 @@ identity:
       url: 'file:///etc/kratos/user.schema.json'
 
 selfservice:
-  default_browser_return_url: '{{ base_url }}'
+  default_browser_return_url: '{{ network.base_url }}'
   flows:
     registration:
       enabled: false
@@ -60,7 +60,6 @@ courier:
     connection_uri: 'smtp://{{ smtp.username|urlencode }}:{{ smtp.password }}@{{ smtp.host }}:{{ smtp.port }}/'
     from_address: '{{ smtp.sender }}'
     from_name: '{{ smtp.name }}'
-    local_name: '{{ network.hostname }}'
   templates:
     login_code:
       valid:

@@ -1,16 +1,19 @@
 <script lang="ts">
-    import { HOSTNAME, HTTPS_PORT } from "$lib/constants"
+    import { BASE_URL } from "$lib/constants"
     import { CodeBlock } from "$lib/plugins/xray/components"
     import { NetworkLockIcon } from "$lib/plugins/xray/icons"
 
     export let data
 
+    const hostname = new URL(BASE_URL).hostname
+    const port = new URL(BASE_URL).port || "443"
+
     const clashConfig = `
         proxies:
           - name: VPN
             type: vless
-            server: ${HOSTNAME}
-            port: ${HTTPS_PORT}
+            server: ${hostname}
+            port: ${port}
             uuid: "${data.xrayId}"
             tls: true
             skip-cert-verify: true
@@ -27,8 +30,8 @@
             "settings": {
               "vnext": [
                 {
-                  "address": "${HOSTNAME}",
-                  "port": ${HTTPS_PORT},
+                  "address": "${hostname}",
+                  "port": ${port},
                   "users": [
                     {
                       "id": "${data.xrayId}",

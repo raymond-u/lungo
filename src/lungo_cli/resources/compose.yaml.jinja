@@ -206,8 +206,7 @@ services:
       - PROTOCOL_HEADER=X-Forwarded-Proto
       - XFF_DEPTH={{ network.trusted_proxies|length + 1 }}
 
-      - 'PUBLIC_HOSTNAME={{ network.hostname }}'
-      - 'PUBLIC_HTTPS_PORT={{ network.https.port }}'
+      - 'PUBLIC_BASE_URL={{ network.base_url }}'
       - 'PUBLIC_SITE_SUBTITLE={{ branding.subtitle|tojson }}'
       - 'PUBLIC_SITE_TITLE={{ branding.name }}'
 

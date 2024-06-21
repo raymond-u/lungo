@@ -12,7 +12,7 @@ from pydantic import (
     PositiveInt,
 )
 
-from .base import AllowedAppsType, Base, FileNameType, PortType
+from .base import AllowedAppsType, Base, FileNameType, HttpsUrl, PortType
 from ..core.constants import APP_NAME_CAPITALIZED
 
 
@@ -62,7 +62,7 @@ class Https(Base):
 
 
 class Network(Base):
-    hostname: str
+    base_url: HttpsUrl
     subnet: IPv4Network = IPv4Network("192.168.2.0/24")
     trusted_proxies: list[IPv4Address] = []
     http: Http = Http()

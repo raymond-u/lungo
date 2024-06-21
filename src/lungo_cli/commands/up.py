@@ -56,6 +56,6 @@ def main(
             container().up()
 
         console().print(
-            f"{APP_NAME_CAPITALIZED} is now available at {format_link(context_manager().base_url)}. "
+            f"{APP_NAME_CAPITALIZED} is now available at {format_link(context_manager().config.network.base_url)}. "
             f"To stop it, run {format_command(APP_NAME, 'down', '--dev' if context_manager().dev else '')}."
         )

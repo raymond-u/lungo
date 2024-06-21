@@ -1,7 +1,7 @@
 from typing import Annotated, Final, Literal
 
 from aenum import auto, StrEnum
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import AnyUrl, BaseModel, ConfigDict, Field, UrlConstraints
 
 
 class EApp(StrEnum):
@@ -42,6 +42,7 @@ class AppDirs(Base):
 
 AllowedAppsType: Final = Literal["all"] | list[EApp]
 FileNameType: Final = Annotated[str, Field(pattern=r"^[a-zA-Z0-9._-]+$")]
+HttpsUrl: Final = Annotated[AnyUrl, UrlConstraints(allowed_schemes=["https"], host_required=True)]
 NameStrType: Final = Annotated[str, Field(max_length=32)]
 PortType: Final = Annotated[int, Field(ge=1, le=65535)]
 UsernameType: Final = Annotated[str, Field(pattern=r"^[a-z_](?:[a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\$)$")]
