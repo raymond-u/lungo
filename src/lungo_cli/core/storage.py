@@ -89,10 +89,6 @@ class Storage:
         return Path("managed")
 
     @property
-    def excluded_rel(self) -> Path:
-        return Path("excluded")
-
-    @property
     def plugins_rel(self) -> Path:
         return Path("plugins")
 
@@ -139,10 +135,6 @@ class Storage:
     @property
     def template_users_rel(self) -> Path:
         return Path("assets") / "config_references" / "users.yaml"
-
-    @property
-    def template_kratos_secrets_rel(self) -> Path:
-        return self.excluded_rel / "kratos" / "secrets.yaml.jinja"
 
     @property
     def nginx_gateway_cert_file(self) -> Path:

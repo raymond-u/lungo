@@ -48,7 +48,7 @@ class Renderer:
         for file in self.storage.bundled_dir.rglob("*.jinja"):
             relative_path = file.relative_to(self.storage.bundled_dir)
 
-            if relative_path.parts[0] not in [str(self.storage.excluded_rel), str(self.storage.plugins_rel)]:
+            if relative_path.parts[0] != str(self.storage.plugins_rel):
                 self.render(relative_path, file.with_suffix(""), **self.context_manager.context.model_dump())
 
     def render_plugin(self, name: str, context: dict[str, Any]) -> None:

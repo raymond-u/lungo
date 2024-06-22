@@ -221,11 +221,15 @@ class AppManager:
 
         if not self.storage.kratos_secrets_file.is_file():
             self.console.print_info("Generating Kratos secrets...")
-            self.renderer.render(
-                self.storage.template_kratos_secrets_rel,
-                self.storage.kratos_secrets_file,
-                secret_cookie=generate_random_hex(),
-            )
+
+            secret_cookie = generate_random_hex()
+            secret_text = f"""secrets:
+  cookie:
+    - {secret_cookie}
+  default:
+    - {secret_cookie}"""
+
+            self.file_utils.write_text(self.storage.kratos_secrets_file, secret_text)
             self.file_utils.change_mode(self.storage.kratos_secrets_file, 0o600)
 
     def render_core(self) -> None:
