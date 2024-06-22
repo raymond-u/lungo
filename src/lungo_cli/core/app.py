@@ -234,11 +234,11 @@ class AppManager:
 
     def render_core(self) -> None:
         """Render core templates."""
-        app_web_path_map = {plugin.manifest.name: plugin.manifest.web_path for plugin in self.plugin_manager.plugins}
-        self.account_manager.update(self.context_manager.config, self.context_manager.users, app_web_path_map)
-
         self.storage.update_bundled_files()
         self.renderer.render_core()
+
+        app_web_path_map = {plugin.manifest.name: plugin.manifest.web_path for plugin in self.plugin_manager.plugins}
+        self.account_manager.update(self.context_manager.config, self.context_manager.users, app_web_path_map)
 
     def initialize(self) -> None:
         """Initialize the application."""
