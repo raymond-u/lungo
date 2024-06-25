@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.5.2...HEAD)
 
+### Fixed
+
+- Disable rich markup when printing the output of shell commands
+
 ## [0.5.2](https://github.com/raymond-u/lungo/compare/v0.5.1...v0.5.2) - 2024-6-22
 
 ### Fixed

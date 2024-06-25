@@ -52,7 +52,7 @@ class Container:
                     self.console.request_newline()
 
                     for line in process.stdout:
-                        self.console.print(line.decode(), end="")
+                        self.console.print(line.decode(), end="", markup=False)
 
                     self.console.request_newline()
 
