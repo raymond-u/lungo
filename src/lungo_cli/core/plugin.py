@@ -134,7 +134,7 @@ class BasePlugin[T: BaseSettings](ABC):
                 plugin_dir=os.path.join(".", self.storage.plugins_rel / self.manifest.name),
             ),
             ip_address=ip_addresses[self.manifest.name],
-            oathkeeper_url_regex=f"{base_url}{PLUGIN_WEB_ENTRYPOINT}/<{self.manifest.web_path}>",
+            oathkeeper_url_regex=f"<(?:http|https)://[^/]+>/{PLUGIN_WEB_ENTRYPOINT}/<{self.manifest.web_path}>",
             web_base_url=f"{base_url}{PLUGIN_WEB_ENTRYPOINT}/{self.manifest.web_path}/",
             web_prefix=f"/{PLUGIN_WEB_ENTRYPOINT}/{self.manifest.web_path}",
             custom=self.get_custom_rendering_context(),

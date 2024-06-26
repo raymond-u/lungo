@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Enable the access of the website using raw IP addresses
 - Update Xray to 1.8.16
 
 ### Fixed
