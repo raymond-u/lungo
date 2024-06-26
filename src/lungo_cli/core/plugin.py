@@ -357,6 +357,8 @@ class PluginManager:
                 )
                 continue
 
+        Config.model_fields["plugins"] = FieldInfo(annotation=Plugins, default=Plugins())
+
         Plugins.model_rebuild(force=True)
         Privilege.model_rebuild(force=True)
         Privileges.model_rebuild(force=True)

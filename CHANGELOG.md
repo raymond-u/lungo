@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.5.3...HEAD)
 
+### Fixed
+
+- Allow `plugins` in the configuration file to be omitted
+
 ## [0.5.3](https://github.com/raymond-u/lungo/compare/v0.5.2...v0.5.3) - 2024-6-25
 
 ### Fixed
