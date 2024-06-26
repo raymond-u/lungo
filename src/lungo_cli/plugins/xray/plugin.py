@@ -45,7 +45,7 @@ class Plugin(BasePlugin[Settings]):
                 (account.email, uuid5(salt, account.username)) for account in self.context_manager.users.accounts
             ],
             "xray_salt": salt,
-            "xray_version": "1.8.15",
+            "xray_version": "1.8.16",
         }
 
     @override
