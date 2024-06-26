@@ -53,8 +53,8 @@ devDependencies:
     specifier: ^2.41.0
     version: 2.41.0(eslint@8.57.0)(svelte@4.2.18)
   json-schema-to-typescript:
-    specifier: ^14.0.5
-    version: 14.0.5
+    specifier: ^14.1.0
+    version: 14.1.0
   openapi-typescript:
     specifier: ^6.7.6
     version: 6.7.6
@@ -2259,8 +2259,8 @@ packages:
     resolution: {integrity: sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==}
     dev: true
 
-  /json-schema-to-typescript@14.0.5:
-    resolution: {integrity: sha512-JmHsbgY0KKo8Pw0HRXpGzAlZYxlu+M5kFhSzhNkUSrVJ4sCXPdAGIdSpzva5ev2/Kybz10S6AfnNdF4o3Pzt3A==}
+  /json-schema-to-typescript@14.1.0:
+    resolution: {integrity: sha512-VIeAFQkn88gFh26MSHWG4uX7TjK/arTw0NVLMZn6vX1WrSF+P6xu5MyEdovu+9PJ0uiS5gm0wzwQvYW9eSq1uw==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     dependencies:
@@ -2274,7 +2274,6 @@ packages:
       lodash: 4.17.21
       minimist: 1.2.8
       mkdirp: 3.0.1
-      mz: 2.7.0
       node-fetch: 3.3.2
       prettier: 3.3.2
     dev: true
