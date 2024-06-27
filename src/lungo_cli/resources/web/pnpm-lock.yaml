@@ -41,8 +41,8 @@ devDependencies:
     specifier: ^10.4.19
     version: 10.4.19(postcss@8.4.38)
   daisyui:
-    specifier: ^4.12.8
-    version: 4.12.8(postcss@8.4.38)
+    specifier: ^4.12.10
+    version: 4.12.10(postcss@8.4.38)
   eslint:
     specifier: ^8.57.0
     version: 8.57.0
@@ -77,8 +77,8 @@ devDependencies:
     specifier: ^4.2.18
     version: 4.2.18
   svelte-check:
-    specifier: ^3.8.2
-    version: 3.8.2(postcss-load-config@4.0.2)(postcss@8.4.38)(svelte@4.2.18)
+    specifier: ^3.8.4
+    version: 3.8.4(postcss-load-config@4.0.2)(postcss@8.4.38)(svelte@4.2.18)
   tailwindcss:
     specifier: ^3.4.4
     version: 3.4.4
@@ -1514,8 +1514,8 @@ packages:
       type: 2.7.2
     dev: true
 
-  /daisyui@4.12.8(postcss@8.4.38):
-    resolution: {integrity: sha512-FDdh0z9BsWMI0VeUSwZy6rwp9frEuUgd83SCPOaCYV3iULPzcgTEQT3IlcAbMCrsriu2ziDYZfGOUwPYHkHrfw==}
+  /daisyui@4.12.10(postcss@8.4.38):
+    resolution: {integrity: sha512-jp1RAuzbHhGdXmn957Z2XsTZStXGHzFfF0FgIOZj3Wv9sH7OZgLfXTRZNfKVYxltGUOBsG1kbWAdF5SrqjebvA==}
     engines: {node: '>=16.9.0'}
     dependencies:
       css-selector-tokenizer: 0.8.0
@@ -3161,8 +3161,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-check@3.8.2(postcss-load-config@4.0.2)(postcss@8.4.38)(svelte@4.2.18):
-    resolution: {integrity: sha512-n6bVsE71RPuMXZz1CalD2fXO0RIyEDHn1YdGhcFEwZrwc/HoS5wWoEvEe+mcL9tivCTRtQIdbxLLStfIHFOX+Q==}
+  /svelte-check@3.8.4(postcss-load-config@4.0.2)(postcss@8.4.38)(svelte@4.2.18):
+    resolution: {integrity: sha512-61aHMkdinWyH8BkkTX9jPLYxYzaAAz/FK/VQqdr2FiCQQ/q04WCwDlpGbHff1GdrMYTmW8chlTFvRWL9k0A8vg==}
     hasBin: true
     peerDependencies:
       svelte: ^3.55.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
