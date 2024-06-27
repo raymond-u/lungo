@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.5.6...HEAD)
 
+### Fixed
+
+- Check if the file exists before removing it
+
 ## [0.5.6](https://github.com/raymond-u/lungo/compare/v0.5.5...v0.5.6) - 2024-6-27
 
 ### Changed

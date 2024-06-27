@@ -82,10 +82,11 @@ class FileUtils:
         path = Path(path)
 
         try:
-            if path.is_dir():
-                shutil.rmtree(path)
-            else:
-                path.unlink()
+            if path.exists():
+                if path.is_dir():
+                    shutil.rmtree(path)
+                else:
+                    path.unlink()
         except Exception as e:
             self.console.print_error(f"Failed to remove {format_path(path.name)} ({e}).")
             raise Exit(code=1)
