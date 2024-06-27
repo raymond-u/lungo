@@ -16,7 +16,7 @@ class Settings(BaseSettings):
 class Plugin(BasePlugin[Settings]):
     manifest = PluginManifest(
         name="xray",
-        version="0.3.0",
+        version="0.3.1",
         descriptive_name="Xray",
         description="Xray as a Lungo plugin.",
         compatible_with="~=0.5.0",
