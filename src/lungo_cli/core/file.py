@@ -19,6 +19,7 @@ class FileUtils:
         self.console = console
 
     def create(self, path: str | PathLike[str]) -> None:
+        self.console.print_trace(f"Creating file in {format_path(path)}...")
         path = Path(path)
 
         try:
@@ -29,6 +30,7 @@ class FileUtils:
             raise Exit(code=1)
 
     def create_dir(self, path: str | PathLike[str]) -> None:
+        self.console.print_trace(f"Creating directory in {format_path(path)}...")
         path = Path(path)
 
         try:
@@ -38,6 +40,7 @@ class FileUtils:
             raise Exit(code=1)
 
     def copy(self, src: str | PathLike[str], dst: str | PathLike[str], merge: bool = False) -> None:
+        self.console.print_trace(f"Copying {format_path(src)} to {format_path(dst)}...")
         src = Path(src)
         dst = Path(dst)
 
@@ -59,6 +62,7 @@ class FileUtils:
             raise Exit(code=1)
 
     def move(self, src: str | PathLike[str], dst: str | PathLike[str], merge: bool = False) -> None:
+        self.console.print_trace(f"Moving {format_path(src)} to {format_path(dst)}...")
         src = Path(src)
         dst = Path(dst)
 
@@ -74,6 +78,7 @@ class FileUtils:
             raise Exit(code=1)
 
     def remove(self, path: str | PathLike[str]) -> None:
+        self.console.print_trace(f"Removing {format_path(path)}...")
         path = Path(path)
 
         try:
@@ -83,6 +88,16 @@ class FileUtils:
                 path.unlink()
         except Exception as e:
             self.console.print_error(f"Failed to remove {format_path(path.name)} ({e}).")
+            raise Exit(code=1)
+
+    def change_mode(self, path: str | PathLike[str], mode: int) -> None:
+        self.console.print_trace(f"Changing mode of {format_path(path)} to {mode}...")
+        path = Path(path)
+
+        try:
+            path.chmod(mode)
+        except Exception as e:
+            self.console.print_error(f"Failed to change mode of {format_path(path.name)} ({e}).")
             raise Exit(code=1)
 
     def copy_package_resources(self, package: str, src: str | PathLike[str], dst: str | PathLike[str]) -> None:
@@ -129,15 +144,6 @@ class FileUtils:
                 self.change_mode(path, 0o600)
         except Exception as e:
             self.console.print_error(f"Failed to write {format_path(path.name)} ({e}).")
-            raise Exit(code=1)
-
-    def change_mode(self, path: str | PathLike[str], mode: int) -> None:
-        path = Path(path)
-
-        try:
-            path.chmod(mode)
-        except Exception as e:
-            self.console.print_error(f"Failed to change mode of {format_path(path.name)} ({e}).")
             raise Exit(code=1)
 
     def hash_sha256(self, path: str | PathLike[str]) -> str:
