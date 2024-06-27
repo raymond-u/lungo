@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update JupyterLab to 4.2.3
 
+### Fixed
+
+- Ensure the removal of the socket file during launch
+
 ## [0.5.5](https://github.com/raymond-u/lungo/compare/v0.5.4...v0.5.5) - 2024-6-26
 
 ### Changed
