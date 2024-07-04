@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.5.7...HEAD)
 
+### Fixed
+
+- Websocket connections can now remain open for up to 1 hour
+
 ## [0.5.7](https://github.com/raymond-u/lungo/compare/v0.5.6...v0.5.7) - 2024-6-27
 
 ### Fixed
@@ -32,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Allow `plugins` in the configuration file to be omitted (try again)
+- Allow `plugins` in the configuration file to be omitted
 - Prevent unnecessary downloads when rebuilding JupyterHub image
 
 ## [0.5.4](https://github.com/raymond-u/lungo/compare/v0.5.3...v0.5.4) - 2024-6-26

@@ -46,6 +46,7 @@ location {{ plugin.web_prefix }}/api/public {
 location @{{ plugin_name }} {
     include snippets/proxy.conf;
     include snippets/auth.conf;
+    proxy_read_timeout 3600s;
     proxy_send_timeout 3600s;
 
     proxy_pass http://{{ plugin_name }}$escaped_uri?$filtered_args;

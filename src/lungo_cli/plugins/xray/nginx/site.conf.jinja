@@ -14,6 +14,7 @@ location = {{ plugin.web_prefix }} {
 
 location @{{ plugin_name }} {
     include snippets/proxy.conf;
+    proxy_read_timeout 3600s;
     proxy_send_timeout 3600s;
 
     proxy_pass http://{{ plugin_name }};
