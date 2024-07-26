@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Allow passwordless sudo in JupyterLab
 - Allow passwordless sudo in RStudio
+- Update JupyterLab to 4.2.4
+- Update PrivateBin to 1.7.4
+- Update Xray to 1.8.21
 
 ### Fixed
 

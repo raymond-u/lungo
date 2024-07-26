@@ -11,11 +11,11 @@ STORAGE_VERSION: Final = "v0"
 
 PLUGIN_WEB_ENTRYPOINT: Final = "app"
 
-OPENRESTY_VERSION: Final = "1.25.3.1-alpine-apk"
+OPENRESTY_VERSION: Final = "1.25.3.2-alpine-apk"
 KETO_VERSION: Final = "v0.12.0"
 KRATOS_VERSION: Final = "v1.1.0"
 OATHKEEPER_VERSION: Final = "v0.40.7"
-NODE_VERSION: Final = "20.15.0-alpine"
+NODE_VERSION: Final = "20.16.0-alpine"
 
 KETO_ADMIN_API_BASE_URL: Final = "http://127.0.0.1:3939"
 KRATOS_ADMIN_API_BASE_URL: Final = "http://127.0.0.1:3940"

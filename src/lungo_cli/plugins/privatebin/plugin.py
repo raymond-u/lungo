@@ -24,7 +24,7 @@ class Plugin(BasePlugin[BaseSettings]):
 
     @override
     def get_custom_rendering_context(self) -> dict[str, Any]:
-        return {"privatebin_version": "1.7.3"}
+        return {"privatebin_version": "1.7.4"}
 
     @override
     def on_plugin_initialization(self) -> None:
