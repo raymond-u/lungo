@@ -22,6 +22,7 @@ services:
     volumes:
       - '{{ plugin.dirs.plugin_dir }}/config/rserver.conf:/etc/rstudio/rserver.conf:ro'
       - '{{ plugin.dirs.plugin_dir }}/config/rsession.conf:/etc/rstudio/rsession.conf:ro'
+      - '{{ plugin.dirs.plugin_dir }}/config/sudoers:/etc/sudoers:ro'
       - '{{ plugin.dirs.managed_dir }}:/var/lib/rstudio-server:rw'
       {% for account in users.accounts %}
         {% if account.extra.user_dir %}

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.5.7...HEAD)
 
+### Changed
+
+- Allow passwordless sudo in RStudio
+
 ### Fixed
 
 - Websocket connections can now remain open for up to 1 hour
