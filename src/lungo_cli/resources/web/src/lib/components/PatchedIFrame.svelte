@@ -9,9 +9,14 @@
 
     const getOriginalUrl = (url: string | URL) => {
         if (typeof url === "string") {
-            const { path, query, hash } = getUrlParts(url)
+            let { path, query, hash } = getUrlParts(url)
             const params = new URLSearchParams(query)
             params.delete("iframe", "1")
+
+            // Prevent SvelteKit from viewing `/app/foo` and `/app/foo/` as different endpoints
+            if ($currentApp && path === `${$currentApp.href}/`) {
+                path = $currentApp.href
+            }
 
             if (params.size > 0) {
                 return `${path}?${params.toString()}${hash}`
