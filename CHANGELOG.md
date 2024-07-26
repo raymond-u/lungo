@@ -9,11 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Allow passwordless sudo in JupyterLab
 - Allow passwordless sudo in RStudio
 
 ### Fixed
 
 - Websocket connections can now remain open for up to 1 hour
+- Admin accounts can now use sudo in JupyterLab
 
 ## [0.5.7](https://github.com/raymond-u/lungo/compare/v0.5.6...v0.5.7) - 2024-6-27
 

@@ -20,7 +20,8 @@ services:
       - {{ plugin.manifest.backend_port }}
 
     volumes:
-      - '{{ plugin.dirs.plugin_dir }}/config:/etc/jupyterhub:ro'
+      - '{{ plugin.dirs.plugin_dir }}/config/config.py:/etc/jupyterhub/config.py:ro'
+      - '{{ plugin.dirs.plugin_dir }}/config/sudoers:/etc/sudoers:ro'
       - '{{ plugin.dirs.managed_dir }}:/srv/jupyterhub:rw'
         {% for account in users.accounts %}
           {% if account.extra.user_dir %}

@@ -1,5 +1,8 @@
 FROM docker.io/jupyterhub/jupyterhub:{{ plugin.custom.jupyterhub_version }}
-RUN python3 -m pip install --no-cache-dir --upgrade setuptools pip && \
+RUN apt-get update && \
+    apt-get install -y sudo && \
+    rm -rf /var/lib/apt/lists/* && \
+    python3 -m pip install --no-cache-dir --upgrade setuptools pip && \
     python3 -m pip install --no-cache-dir 'jupyterlab=={{ plugin.custom.jupyterlab_version }}'
 RUN \
     {% for account in users.accounts %}
