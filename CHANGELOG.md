@@ -15,8 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Websocket connections can now remain open for up to 1 hour
+- Prevent new tabs from opening when clicking on a shared link in File Browser
 - Admin accounts can now use sudo in JupyterLab
-- Prevent the loading view from popping up when opening a share link directly in PrivateBin
+- Prevent the loading view from popping up when opening a shared link in PrivateBin
 
 ## [0.5.7](https://github.com/raymond-u/lungo/compare/v0.5.6...v0.5.7) - 2024-6-27
 
