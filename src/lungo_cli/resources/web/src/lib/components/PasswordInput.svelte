@@ -27,7 +27,7 @@
         {autocomplete}
         {placeholder}
     />
-    <button class="absolute right-3 top-3 h-6 w-6" type="button" on:click={handleClick}>
+    <button class="absolute right-3 top-3 size-6" type="button" on:click={handleClick}>
         <SwappableIcon icon={VisibilityOnIcon} altIcon={VisibilityOffIcon} altIconActive={visible} />
     </button>
 </span>

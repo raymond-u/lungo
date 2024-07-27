@@ -25,7 +25,7 @@
 
 <div class="flex items-center">
     <button class="btn btn-circle btn-ghost h-10 min-h-0 w-10" on:click={handleSwitchTheme}>
-        <span class="h-6 w-6">
+        <span class="size-6">
             <SwappableIcon icon={DarkModeIcon} altIcon={LightModeIcon} altIconActive={$darkTheme} rotate>
                 <input class="theme-controller" type="checkbox" value="dark" />
             </SwappableIcon>
@@ -34,14 +34,14 @@
 
     {#if $isSafari}
         <details class="dropdown dropdown-end dropdown-bottom flex items-center">
-            <summary class="h-6 w-6 cursor-pointer">
+            <summary class="size-6 cursor-pointer">
                 <ExpandIcon />
             </summary>
             <ThemeSelectorDropdown {handleSelectTheme} />
         </details>
     {:else}
         <div class="dropdown dropdown-end dropdown-bottom flex items-center">
-            <button class="h-6 w-6">
+            <button class="size-6">
                 <ExpandIcon />
             </button>
             <ThemeSelectorDropdown {handleSelectTheme} />

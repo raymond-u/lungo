@@ -7,7 +7,7 @@
 <div class="flex flex-1 flex-col items-center">
     <div class="prose flex max-w-md flex-col items-center px-4 py-8 md:max-w-2xl md:px-8 md:py-16">
         <div class="flex flex-col items-center">
-            <span class="h-24 w-24 py-2">
+            <span class="size-24 py-2">
                 <ScreenCastIcon />
             </span>
             <h1 class="text-center">Using the RustDesk Relay Server</h1>

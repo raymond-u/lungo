@@ -38,7 +38,7 @@
     <li><div class="divider menu-title pointer-events-none"></div></li>
     <li>
         <a href="/account">
-            <span class="h-6 w-6">
+            <span class="size-6">
                 <SettingsIcon />
             </span>
             <span>Manage account</span>
@@ -46,7 +46,7 @@
     </li>
     <li>
         <button use:safeClick={{ callback: handleLogout }}>
-            <span class="h-6 w-6">
+            <span class="size-6">
                 <LogoutIcon />
             </span>
             <span>Log out</span>

@@ -26,7 +26,7 @@
                     {value}
                     on:click={handleSelectTheme(value)}
                 />
-                <span class="pointer-events-none absolute left-3 top-3 hidden h-6 w-6 peer-checked:inline">
+                <span class="pointer-events-none absolute left-3 top-3 hidden size-6 peer-checked:inline">
                     <CheckIcon />
                 </span>
                 {#if value !== ETheme.Auto}

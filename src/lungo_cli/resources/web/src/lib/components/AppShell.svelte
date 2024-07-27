@@ -24,7 +24,7 @@
             <input id="nav-drawer" type="checkbox" class="drawer-toggle" bind:checked />
             <div class="drawer-content">
                 <label for="nav-drawer" class="btn btn-circle btn-ghost drawer-button">
-                    <span class="h-6 w-6">
+                    <span class="size-6">
                         <SwappableIcon icon={MenuIcon} altIcon={CloseIcon} altIconActive={checked} rotate />
                     </span>
                 </label>
@@ -46,7 +46,7 @@
                                     class:!active={active}
                                     {href}
                                 >
-                                    <span class="h-6 w-6">
+                                    <span class="size-6">
                                         <SwappableIcon
                                             class={active && $darkTheme === false ? "fill-neutral-content" : ""}
                                             {icon}
@@ -68,7 +68,7 @@
         {#if $currentIFrame}
             <div class="hidden flex-none md:flex">
                 <button class="btn btn-circle btn-ghost h-10 min-h-0 w-10" on:click={handleFullscreen}>
-                    <span class="h-6 w-6">
+                    <span class="size-6">
                         <FullscreenIcon />
                     </span>
                 </button>
@@ -83,7 +83,7 @@
                 {#if $isSafari}
                     <details class="dropdown dropdown-end dropdown-bottom">
                         <summary
-                            class="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-accent text-sm font-bold text-accent-content"
+                            class="inline-flex size-8 cursor-pointer items-center justify-center rounded-full bg-accent text-sm font-bold text-accent-content"
                         >
                             {getNameInitials(name.first, name.last)}
                         </summary>
@@ -92,7 +92,7 @@
                 {:else}
                     <div class="dropdown dropdown-end dropdown-bottom">
                         <button
-                            class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-accent text-sm font-bold text-accent-content"
+                            class="inline-flex size-8 items-center justify-center rounded-full bg-accent text-sm font-bold text-accent-content"
                         >
                             {getNameInitials(name.first, name.last)}
                         </button>
