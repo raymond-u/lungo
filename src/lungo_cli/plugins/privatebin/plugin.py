@@ -7,7 +7,7 @@ from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginManifest
 class Plugin(BasePlugin[BaseSettings]):
     manifest = PluginManifest(
         name="privatebin",
-        version="0.3.0",
+        version="0.3.1",
         descriptive_name="Pastebin",
         description="PrivateBin as a Lungo plugin.",
         compatible_with="~=0.5.0",

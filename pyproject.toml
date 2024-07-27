@@ -3,7 +3,7 @@ line-length = 120
 
 [tool.poetry]
 name = "lungo-cli"
-version = "0.5.7"
+version = "0.5.8"
 description = "A user-friendly home lab setup designed for small-to-mid-scale on-premises hosting."
 authors = ["raymond-u <36328498+raymond-u@users.noreply.github.com>"]
 readme = "README.md"
