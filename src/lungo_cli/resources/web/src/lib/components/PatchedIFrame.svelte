@@ -6,18 +6,12 @@
     import { getUrlParts, isSameHost, useStore } from "$lib/utils"
 
     const { currentApp, currentIFrame } = useStore()
-    let timer: ReturnType<typeof setTimeout>
 
     const getOriginalUrl = (url: string | URL) => {
         if (typeof url === "string") {
             let { path, query, hash } = getUrlParts(url)
             const params = new URLSearchParams(query)
             params.delete("iframe", "1")
-
-            // Prevent SvelteKit from viewing `/app/foo` and `/app/foo/` as different endpoints
-            if ($currentApp && path === `${$currentApp.href}/`) {
-                path = $currentApp.href
-            }
 
             if (params.size > 0) {
                 return `${path}?${params.toString()}${hash}`
@@ -113,32 +107,26 @@
         }
 
         // Patch all links
-        const patchLinks = () => {
-            for (const node of iframe.contentDocument!.querySelectorAll("a, area, base, form")) {
-                if (
-                    node instanceof HTMLAnchorElement ||
-                    node instanceof HTMLAreaElement ||
-                    node instanceof HTMLBaseElement
-                ) {
-                    if (isSameHost(node.href, $page.url.host)) {
-                        node.href = getModifiedUrl(node.href)
-                        node.target = "_self"
-                    }
+        for (const node of iframe.contentDocument!.querySelectorAll("a, area, base, form")) {
+            if (
+                node instanceof HTMLAnchorElement ||
+                node instanceof HTMLAreaElement ||
+                node instanceof HTMLBaseElement
+            ) {
+                if (isSameHost(node.href, $page.url.host)) {
+                    node.href = getModifiedUrl(node.href)
+                    node.target = "_self"
+                }
 
-                    if (node.target === "_top") {
-                        node.target = "_self"
-                    }
-                } else if (node instanceof HTMLFormElement) {
-                    if (node.target === "_blank" || node.target === "_top") {
-                        node.target = "_self"
-                    }
+                if (node.target === "_top") {
+                    node.target = "_self"
+                }
+            } else if (node instanceof HTMLFormElement) {
+                if (node.target === "_blank" || node.target === "_top") {
+                    node.target = "_self"
                 }
             }
         }
-
-        // Make two calls with a pause in between to handle content rendered after the initial draw
-        patchLinks()
-        timer = setTimeout(patchLinks, 1000)
 
         // Patch the cookie setter
         Object.defineProperty(iframe.contentDocument, "cookie", {
@@ -180,7 +168,6 @@
         return () => {
             unsubscribe()
             iFrame!.removeEventListener("load", handleLoad)
-            clearTimeout(timer)
             $currentIFrame = undefined
         }
     })
