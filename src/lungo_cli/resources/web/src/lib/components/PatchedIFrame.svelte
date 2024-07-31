@@ -48,7 +48,6 @@
                 const node = childNode as HTMLAnchorElement | HTMLAreaElement | HTMLBaseElement
 
                 if (isSameHost(node.href, $page.url.host)) {
-                    node.href = getModifiedUrl(node.href)
                     node.target = "_self"
                 } else if (node.target === "_top") {
                     node.target = "_self"
