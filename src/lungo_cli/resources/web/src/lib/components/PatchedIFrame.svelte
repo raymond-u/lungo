@@ -61,6 +61,10 @@
                 }
             }
 
+            if (childNode.tagName === "A") {
+                childNode.removeAttribute("referrerpolicy")
+            }
+
             if (childNode.tagName === "A" || childNode.tagName === "AREA" || childNode.tagName === "FORM") {
                 const node = childNode as HTMLAnchorElement | HTMLAreaElement | HTMLFormElement
                 node.relList.remove("noreferrer")
