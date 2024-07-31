@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.5.8...HEAD)
 
+### Fixed
+
+- Opening shared links from within File Browser no longer creates a new tab
+- Opening shared links from within PrivateBin no longer results in a hanging loading screen
+
 ## [0.5.8](https://github.com/raymond-u/lungo/compare/v0.5.7...v0.5.8) - 2024-7-28
 
 ### Changed

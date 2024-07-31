@@ -41,6 +41,53 @@
         }
     }
 
+    const patchRedirects = (parentNode: HTMLElement) => {
+        for (const node of parentNode.querySelectorAll("a, area, base, form")) {
+            if (
+                node instanceof HTMLAnchorElement ||
+                node instanceof HTMLAreaElement ||
+                node instanceof HTMLBaseElement
+            ) {
+                if (isSameHost(node.href, $page.url.host)) {
+                    node.href = getModifiedUrl(node.href)
+                    node.target = "_self"
+                }
+
+                if (node.target === "_top") {
+                    node.target = "_self"
+                }
+            } else if (node instanceof HTMLFormElement) {
+                if (node.target === "_blank" || node.target === "_top") {
+                    node.target = "_self"
+                }
+            }
+
+            if (
+                node instanceof HTMLAnchorElement ||
+                node instanceof HTMLAreaElement ||
+                node instanceof HTMLFormElement
+            ) {
+                node.relList.remove("noreferrer")
+            }
+        }
+    }
+
+    const observer = new MutationObserver((mutations: MutationRecord[]) => {
+        const parentElements = new Set<HTMLElement>()
+
+        for (const mutation of mutations) {
+            const parentElement = mutation.addedNodes[0]?.parentElement
+
+            if (parentElement) {
+                parentElements.add(parentElement)
+            }
+        }
+
+        for (const parentElement of parentElements) {
+            patchRedirects(parentElement)
+        }
+    })
+
     const handleLoad = (e: Event) => {
         const iframe = e.target as HTMLIFrameElement
         const open = iframe.contentWindow!.open.bind(iframe.contentWindow!)
@@ -106,35 +153,12 @@
             }
         }
 
-        // Patch all links
-        for (const node of iframe.contentDocument!.querySelectorAll("a, area, base, form")) {
-            if (
-                node instanceof HTMLAnchorElement ||
-                node instanceof HTMLAreaElement ||
-                node instanceof HTMLBaseElement
-            ) {
-                if (isSameHost(node.href, $page.url.host)) {
-                    node.href = getModifiedUrl(node.href)
-                    node.target = "_self"
-                }
-
-                if (node.target === "_top") {
-                    node.target = "_self"
-                }
-            } else if (node instanceof HTMLFormElement) {
-                if (node.target === "_blank" || node.target === "_top") {
-                    node.target = "_self"
-                }
-            }
-
-            if (
-                node instanceof HTMLAnchorElement ||
-                node instanceof HTMLAreaElement ||
-                node instanceof HTMLFormElement
-            ) {
-                node.relList.remove("noreferrer")
-            }
-        }
+        // Patch all redirects
+        patchRedirects(iframe.contentDocument!.body)
+        observer.observe(iframe.contentDocument!.body, {
+            childList: true,
+            subtree: true,
+        })
 
         // Patch the cookie setter
         Object.defineProperty(iframe.contentDocument, "cookie", {
@@ -176,6 +200,7 @@
         return () => {
             unsubscribe()
             iFrame!.removeEventListener("load", handleLoad)
+            observer.disconnect()
             $currentIFrame = undefined
         }
     })
