@@ -72,21 +72,7 @@
         }
     }
 
-    const observer = new MutationObserver((mutations: MutationRecord[]) => {
-        const parentElements = new Set<HTMLElement>()
-
-        for (const mutation of mutations) {
-            const parentElement = mutation.addedNodes[0]?.parentElement
-
-            if (parentElement) {
-                parentElements.add(parentElement)
-            }
-        }
-
-        for (const parentElement of parentElements) {
-            patchRedirects(parentElement)
-        }
-    })
+    let observer: MutationObserver
 
     const handleLoad = (e: Event) => {
         const iframe = e.target as HTMLIFrameElement
@@ -186,6 +172,21 @@
 
     onMount(() => {
         $currentIFrame = iFrame
+        observer = new MutationObserver((mutations: MutationRecord[]) => {
+            const parentElements = new Set<HTMLElement>()
+
+            for (const mutation of mutations) {
+                const parentElement = mutation.addedNodes[0]?.parentElement
+
+                if (parentElement) {
+                    parentElements.add(parentElement)
+                }
+            }
+
+            for (const parentElement of parentElements) {
+                patchRedirects(parentElement)
+            }
+        })
         iFrame!.addEventListener("load", handleLoad)
         iFrame!.src = getModifiedUrl($page.url)
 
