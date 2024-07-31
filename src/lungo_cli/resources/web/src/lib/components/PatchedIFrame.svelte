@@ -42,31 +42,27 @@
     }
 
     const patchRedirects = (parentNode: HTMLElement) => {
-        for (const node of parentNode.querySelectorAll("a, area, base, form")) {
-            if (
-                node instanceof HTMLAnchorElement ||
-                node instanceof HTMLAreaElement ||
-                node instanceof HTMLBaseElement
-            ) {
+        for (const childNode of parentNode.querySelectorAll("a, area, base, form")) {
+            // Do not use `instanceof` here because the element might be from a different global context
+            if (childNode.tagName === "A" || childNode.tagName === "AREA" || childNode.tagName === "BASE") {
+                const node = childNode as HTMLAnchorElement | HTMLAreaElement | HTMLBaseElement
+
                 if (isSameHost(node.href, $page.url.host)) {
                     node.href = getModifiedUrl(node.href)
                     node.target = "_self"
-                }
-
-                if (node.target === "_top") {
+                } else if (node.target === "_top") {
                     node.target = "_self"
                 }
-            } else if (node instanceof HTMLFormElement) {
+            } else if (childNode.tagName === "FORM") {
+                const node = childNode as HTMLFormElement
+
                 if (node.target === "_blank" || node.target === "_top") {
                     node.target = "_self"
                 }
             }
 
-            if (
-                node instanceof HTMLAnchorElement ||
-                node instanceof HTMLAreaElement ||
-                node instanceof HTMLFormElement
-            ) {
+            if (childNode.tagName === "A" || childNode.tagName === "AREA" || childNode.tagName === "FORM") {
+                const node = childNode as HTMLAnchorElement | HTMLAreaElement | HTMLFormElement
                 node.relList.remove("noreferrer")
             }
         }
@@ -127,9 +123,7 @@
                 if (isSameHost(url, $page.url.host)) {
                     url = getModifiedUrl(url)
                     target = "_self"
-                }
-
-                if (target === "_top") {
+                } else if (target === "_top") {
                     target = "_self"
                 }
 
