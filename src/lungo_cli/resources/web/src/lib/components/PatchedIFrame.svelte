@@ -126,6 +126,14 @@
                     node.target = "_self"
                 }
             }
+
+            if (
+                node instanceof HTMLAnchorElement ||
+                node instanceof HTMLAreaElement ||
+                node instanceof HTMLFormElement
+            ) {
+                node.relList.remove("noreferrer")
+            }
         }
 
         // Patch the cookie setter
