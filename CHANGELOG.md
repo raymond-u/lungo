@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The `Volumes` top-level key in the plugin's compose file is now supported
 - JupyterLab now comes with `git`, `less`, `nano`, and `vim` pre-installed
+- RStudio now comes with `nano` pre-installed
 
 ### Changed
 

@@ -1,4 +1,7 @@
 FROM docker.io/rocker/verse:{{ plugin.custom.rstudio_version }}
+RUN apt-get update && \
+    apt-get install -y nano && \
+    rm -rf /var/lib/apt/lists/*
 RUN \
     {% for account in users.accounts %}
         {% if account.role == 'admin' %}
