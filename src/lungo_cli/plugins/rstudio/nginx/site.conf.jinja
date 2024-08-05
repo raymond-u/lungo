@@ -32,6 +32,17 @@ location {{ plugin.web_prefix }}/ {
     proxy_pass http://node;
 }
 
+location {{ plugin.web_prefix }}/rstudio/deferredjs/ {
+    include snippets/proxy.conf;
+    include snippets/auth.conf;
+
+    if ($arg_iframe = "") {
+        return 307 $http_x_forwarded_proto://$http_x_forwarded_host$escaped_uri?iframe=1&$args;
+    }
+
+    proxy_pass http://{{ plugin_name }};
+}
+
 location @{{ plugin_name }} {
     include snippets/proxy.conf;
     include snippets/auth.conf;
