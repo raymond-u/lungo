@@ -1,6 +1,6 @@
 FROM docker.io/jupyterhub/jupyterhub:{{ plugin.custom.jupyterhub_version }}
 RUN apt-get update && \
-    apt-get install -y sudo && \
+    apt-get install -y git-all less nano sudo vim && \
     rm -rf /var/lib/apt/lists/* && \
     python3 -m pip install --no-cache-dir --upgrade setuptools pip && \
     python3 -m pip install --no-cache-dir 'jupyterlab=={{ plugin.custom.jupyterlab_version }}'
