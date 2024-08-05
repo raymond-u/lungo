@@ -15,7 +15,7 @@ directories:
     users_dir: /home/lungo/users
 
 network:
-    hostname: lungo.com
+    base_url: https://lungo.com/
 
 smtp:
     host: smtp.gmail.com
