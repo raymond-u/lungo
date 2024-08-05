@@ -1,13 +1,12 @@
-Dockerfile
 .dockerignore
 .env
 .git
 .gitignore
-.eslintignore
-.eslintrc.cjs
 .prettierignore
 .prettierrc
 .svelte-kit
+Dockerfile
+eslint.config.js
 assets
 build
 node_modules
