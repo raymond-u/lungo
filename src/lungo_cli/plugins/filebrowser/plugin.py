@@ -6,7 +6,7 @@ from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginManifest
 class Plugin(BasePlugin[BaseSettings]):
     manifest = PluginManifest(
         name="filebrowser",
-        version="0.3.1",
+        version="0.3.2",
         descriptive_name="File Browser",
         description="File Browser as a Lungo plugin.",
         compatible_with="~=0.5.0",
