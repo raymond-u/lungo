@@ -231,6 +231,13 @@ networks:
       config:
         - subnet: {{ network.subnet }}
 
+volumes:
+  {% for plugin_output in plugin_outputs %}
+    {% if plugin_output.manifest.have_backend and plugins[plugin_output.manifest.name].enabled %}
+  {{ plugin_output.compose_volumes }}
+    {% endif %}
+  {% endfor %}
+
 secrets:
   NGINX_PRIVATE_KEY:
     file: >-

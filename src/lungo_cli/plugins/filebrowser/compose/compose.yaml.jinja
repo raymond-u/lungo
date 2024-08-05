@@ -29,6 +29,7 @@ services:
       - {{ plugin.manifest.backend_port }}
 
     volumes:
+      - '{{ plugin_name }}-home:/root/home'
       - '{{ plugin.dirs.plugin_dir }}/config:/etc/filebrowser:ro'
       - '{{ plugin.dirs.cache_dir }}:/var/log/filebrowser:rw'
       - '{{ plugin.dirs.managed_dir }}:/var/lib/filebrowser:rw'
@@ -47,3 +48,7 @@ services:
       {% endfor %}
 
     restart: 'unless-stopped'
+
+volumes:
+  {{ plugin_name }}-home:
+    name: {{ plugin_name }}-home

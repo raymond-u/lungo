@@ -20,6 +20,7 @@ services:
       - {{ plugin.manifest.backend_port }}
 
     volumes:
+      - '{{ plugin_name }}-home:/home'
       - '{{ plugin.dirs.plugin_dir }}/config/rserver.conf:/etc/rstudio/rserver.conf:ro'
       - '{{ plugin.dirs.plugin_dir }}/config/rsession.conf:/etc/rstudio/rsession.conf:ro'
       - '{{ plugin.dirs.plugin_dir }}/config/sudoers:/etc/sudoers:ro'
@@ -39,3 +40,7 @@ services:
       {% endfor %}
 
     restart: 'unless-stopped'
+
+volumes:
+  {{ plugin_name }}-home:
+    name: {{ plugin_name }}-home

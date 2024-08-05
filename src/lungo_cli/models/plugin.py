@@ -81,6 +81,7 @@ class PluginContext(Base):
 class PluginOutput(Base):
     manifest: PluginManifest
     compose_services: str
+    compose_volumes: str
     compose_secrets: str
     nginx_site: str
     oathkeeper_rules: str

@@ -152,6 +152,7 @@ class BasePlugin[T: BaseSettings](ABC):
 
             compose_content = self.file_utils.read_text(plugin_dir / "compose" / "compose.yaml", not_exist_ok=True)
             compose_services = extract_multiline_value_from_yaml(compose_content, "services")
+            compose_volumes = extract_multiline_value_from_yaml(compose_content, "volumes")
             compose_secrets = extract_multiline_value_from_yaml(compose_content, "secrets")
             nginx_site = self.file_utils.read_text(plugin_dir / "nginx" / "site.conf", not_exist_ok=True)
             oathkeeper_rules = self.file_utils.read_text(
@@ -164,6 +165,7 @@ class BasePlugin[T: BaseSettings](ABC):
             self._output = PluginOutput(
                 manifest=self.manifest,
                 compose_services=compose_services,
+                compose_volumes=compose_volumes,
                 compose_secrets=compose_secrets,
                 nginx_site=nginx_site,
                 oathkeeper_rules=oathkeeper_rules,
