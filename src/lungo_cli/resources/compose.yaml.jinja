@@ -45,7 +45,7 @@ services:
       {% endif %}
 
     secrets:
-      - source: NGINX_PRIVATE_KEY
+      - source: nginx_private_key
         target: /etc/ssl/private/lungo.key
 
     depends_on:
@@ -145,7 +145,7 @@ services:
       - '{{ app_dirs.managed_dir }}/kratos:/var/lib/kratos:rw'
 
     secrets:
-      - source: KRATOS_SECRETS
+      - source: kratos_secrets
         target: /etc/kratos/secrets.yaml
 
     environment:
@@ -239,14 +239,14 @@ volumes:
   {% endfor %}
 
 secrets:
-  NGINX_PRIVATE_KEY:
+  nginx_private_key:
     file: >-
       {% if network.https.tls %}
       {{ network.https.tls.key }}
       {% else %}
       {{ app_dirs.generated_dir }}/nginx_gateway/lungo.key
       {% endif %}
-  KRATOS_SECRETS:
+  kratos_secrets:
     file: '{{ app_dirs.generated_dir }}/kratos/secrets.yaml'
   {% for plugin_output in plugin_outputs %}
     {% if plugin_output.manifest.have_backend and plugins[plugin_output.manifest.name].enabled %}

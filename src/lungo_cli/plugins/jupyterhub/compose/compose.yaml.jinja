@@ -20,7 +20,7 @@ services:
       - {{ plugin.manifest.backend_port }}
 
     volumes:
-      - '{{ plugin_name }}-home:/home'
+      - '{{ plugin_name }}_home:/home'
       - '{{ plugin.dirs.plugin_dir }}/config/config.py:/etc/jupyterhub/config.py:ro'
       - '{{ plugin.dirs.plugin_dir }}/config/sudoers:/etc/sudoers:ro'
       - '{{ plugin.dirs.managed_dir }}:/srv/jupyterhub:rw'
@@ -39,15 +39,15 @@ services:
         {% endfor %}
 
     secrets:
-      - source: JUPYTERHUB_COOKIE_SECRET
+      - source: {{ plugin_name }}_cookie_secret
         target: /etc/jupyterhub/cookie_secret
 
     restart: 'unless-stopped'
 
 volumes:
-  {{ plugin_name }}-home:
-    name: {{ plugin_name }}-home
+  {{ plugin_name }}_home:
+    name: {{ plugin_name }}_home
 
 secrets:
-  JUPYTERHUB_COOKIE_SECRET:
+  {{ plugin_name }}_cookie_secret:
     file: '{{ plugin.dirs.generated_dir }}/cookie_secret'
