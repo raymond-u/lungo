@@ -40,7 +40,8 @@ location ~* ^{{ plugin.web_prefix }}/(?:api/public|static/assets)/ {
         return 307 $http_x_forwarded_proto://$http_x_forwarded_host$escaped_uri?iframe=1&$args;
     }
 
-    proxy_pass http://{{ plugin_name }};
+    error_page 480 = @{{ plugin_name }};
+    return 480;
 }
 
 location @{{ plugin_name }} {
