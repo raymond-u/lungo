@@ -84,7 +84,7 @@ export function wrapFetch({
                     })
                 }
             }
-        } catch (e) {
+        } catch {
             error(500)
         }
 

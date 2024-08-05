@@ -47,7 +47,7 @@
     let currentGroup: KratosComponents["schemas"]["uiNode"]["group"] =
         primaryGroup && nodes.some((node) => node.group === primaryGroup)
             ? primaryGroup
-            : nodes.find((node) => node.group !== "default")?.group ?? "default"
+            : (nodes.find((node) => node.group !== "default")?.group ?? "default")
     let otherGroups: KratosComponents["schemas"]["uiNode"]["group"][]
 
     $: actionNodes = nodes.filter(

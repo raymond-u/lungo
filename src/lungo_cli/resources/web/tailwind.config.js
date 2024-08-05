@@ -7,6 +7,7 @@ export default {
     daisyui: {
         logs: false,
         themes: [
+            // prettier-ignore
             {
                 light: {
                     "color-scheme": "light",
@@ -51,8 +52,5 @@ export default {
         extend: {},
     },
 
-    plugins: [
-        typography,
-        daisyui,
-    ],
+    plugins: [typography, daisyui],
 }
