@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.5.8...HEAD)
 
+### Added
+
+- The `Volumes` top-level key in the plugin's compose file is now supported
+
 ### Changed
 
 - The changes made to user home directories are now retained across container restarts in File Browser
