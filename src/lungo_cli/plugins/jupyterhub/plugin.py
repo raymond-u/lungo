@@ -39,7 +39,7 @@ class Plugin(BasePlugin[Settings]):
     def get_custom_rendering_context(self) -> dict[str, Any]:
         return {
             "jupyterhub_password": self.settings.password or self.file_utils.read_text(self.password_file),
-            "jupyterhub_version": "4.1.5",
+            "jupyterhub_version": "4.1.6",
             "jupyterlab_version": "4.2.4",
         }
 
