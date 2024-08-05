@@ -1,8 +1,7 @@
-const typography = require("@tailwindcss/typography")
-const daisyui = require("daisyui")
+import typography from "@tailwindcss/typography"
+import daisyui from "daisyui"
 
-/** @type {import("tailwindcss").Config}*/
-const config = {
+export default {
     content: ["./src/**/*.{html,js,svelte,ts}"],
 
     daisyui: {
@@ -57,5 +56,3 @@ const config = {
         daisyui,
     ],
 }
-
-module.exports = config
