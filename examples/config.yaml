@@ -44,7 +44,7 @@ rules:
 
 security:
   session:
-    lifetime: P2DT
+    lifetime: P2D
 
 smtp:
   host: smtp.gmail.com

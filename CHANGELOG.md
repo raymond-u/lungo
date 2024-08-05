@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The default session lifetime is now 48 hours
 - The changes made to user home directories are now retained across container restarts in File Browser
 - The changes made to user home directories are now retained across container restarts in JupyterLab
 - The changes made to user home directories are now retained across container restarts in RStudio

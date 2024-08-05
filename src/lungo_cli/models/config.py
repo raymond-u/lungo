@@ -95,7 +95,7 @@ class RateLimiting(Base):
 
 
 class Session(Base):
-    lifetime: timedelta = timedelta(days=1)
+    lifetime: timedelta = timedelta(days=2)
 
 
 class Security(Base):

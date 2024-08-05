@@ -217,9 +217,9 @@
 
 #     # Session lifetime (in seconds, or a string describing a time span in ISO 8601 format)
 #     # Type: integer | string
-#     # Default: 'P1DT'
+#     # Default: 'P2D'
 #     # Required: no
-#     lifetime: 'P1DT'
+#     lifetime: 'P2D'
 
 # =====
 # smtp:
