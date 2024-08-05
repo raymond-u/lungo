@@ -32,7 +32,7 @@ location {{ plugin.web_prefix }}/ {
     proxy_pass http://node;
 }
 
-location {{ plugin.web_prefix }}/api/public {
+location ~* ^{{ plugin.web_prefix }}/(?:api/public|static/assets)/ {
     include snippets/proxy.conf;
     include snippets/auth.conf;
 
