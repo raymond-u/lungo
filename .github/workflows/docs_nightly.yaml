@@ -9,8 +9,8 @@ on:
       - 'docs/**'
       - 'src/lungo_cli/app/main.py'
       - 'src/lungo_cli/commands/*.py'
-      - 'src/lungo_cli/resources/excluded/config.yaml'
-      - 'src/lungo_cli/resources/excluded/users.yaml'
+      - 'src/lungo_cli/resources/assets/config_references/config.yaml'
+      - 'src/lungo_cli/resources/assets/config_references/users.yaml'
       - 'CHANGELOG.md'
       - 'mkdocs.yaml'
 
