@@ -1,10 +1,10 @@
 from pathlib import Path
-from typing import Annotated, Final, Optional
+from typing import Annotated, Final
 
 from typer import Option
 
 ConfigDirType: Final = Annotated[
-    Optional[Path], Option("--config-dir", "-c", help="Path to the configuration directory.", show_default=False)
+    Path | None, Option("--config-dir", "-c", help="Path to the configuration directory.", show_default=False)
 ]
 DevType: Final = Annotated[bool, Option("--dev", help="Use the development configuration.", show_default=False)]
 ForceInitType: Final = Annotated[bool, Option("--force-init", help="Do a fresh initialization.", show_default=False)]

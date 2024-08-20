@@ -1,4 +1,4 @@
-from typing import Annotated, Optional
+from typing import Annotated
 
 from typer import Option
 
@@ -12,7 +12,7 @@ from ..models.base import EContainer
 def main(
     build_only: Annotated[bool, Option("--build-only", help="Only build the containers.", show_default=False)] = False,
     container_tool: Annotated[
-        Optional[EContainer], Option("--container-tool", help="Container management tool to use.", show_default=False)
+        EContainer | None, Option("--container-tool", help="Container management tool to use.", show_default=False)
     ] = None,
     render_only: Annotated[
         bool, Option("--render-only", help="Only render the templates.", show_default=False)

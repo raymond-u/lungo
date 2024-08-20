@@ -1,4 +1,4 @@
-from typing import Annotated, Optional
+from typing import Annotated
 
 from rich.table import Table
 from typer import Argument
@@ -10,7 +10,7 @@ from ..helpers.format import format_input
 
 def main(
     args: Annotated[
-        Optional[list[str]],
+        list[str] | None,
         Argument(
             help="Names of the plugins to list.",
             show_default=False,

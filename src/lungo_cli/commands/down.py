@@ -1,4 +1,4 @@
-from typing import Annotated, Optional
+from typing import Annotated
 
 from typer import Option
 
@@ -10,7 +10,7 @@ from ..models.base import EContainer
 
 def main(
     container_tool: Annotated[
-        Optional[EContainer], Option("--container-tool", help="Container management tool to use.", show_default=False)
+        EContainer | None, Option("--container-tool", help="Container management tool to use.", show_default=False)
     ] = None,
     config_dir: ConfigDirType = None,
     dev: DevType = False,
