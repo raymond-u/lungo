@@ -47,9 +47,9 @@
             if (childNode.tagName === "A" || childNode.tagName === "AREA" || childNode.tagName === "BASE") {
                 const node = childNode as HTMLAnchorElement | HTMLAreaElement | HTMLBaseElement
 
-                if (isSameHost(node.href, $page.url.host)) {
+                if (node.target === "_top") {
                     node.target = "_self"
-                } else if (node.target === "_top") {
+                } else if (isSameHost(node.href, $page.url.host) && node.target === "_blank") {
                     node.target = "_self"
                 }
             } else if (childNode.tagName === "FORM") {
@@ -123,10 +123,10 @@
             windowFeatures: Parameters<typeof open>[2] = undefined
         ) => {
             if (url) {
-                if (isSameHost(url, $page.url.host)) {
-                    url = getModifiedUrl(url)
+                if (target === "_top") {
                     target = "_self"
-                } else if (target === "_top") {
+                } else if (isSameHost(url, $page.url.host) && target === "_blank" && !windowFeatures) {
+                    url = getModifiedUrl(url)
                     target = "_self"
                 }
 
