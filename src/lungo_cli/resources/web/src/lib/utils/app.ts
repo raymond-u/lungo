@@ -10,10 +10,10 @@ export function createStore(): Store {
     return store
 }
 
-export function useStore(): Store {
-    return getContext<Store>("globalStore")
+export function getPageTitle(slug: string): string {
+    return `${capitalize(slug)} | ${SITE_TITLE}`
 }
 
-export function usePageTitle(slug: string): string {
-    return `${capitalize(slug)} | ${SITE_TITLE}`
+export function useStore(): Store {
+    return getContext<Store>("globalStore")
 }

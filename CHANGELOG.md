@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Nightly](https://github.com/raymond-u/lungo/compare/v0.5.10...HEAD)
 
+### Added
+
+- Better link sharing preview for the web UI
+
 ### Changed
 
 - Enable GitHub Copilot integration in RStudio
