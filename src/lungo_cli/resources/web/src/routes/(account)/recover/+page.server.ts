@@ -10,11 +10,17 @@ export const actions = {
         const client = createKratosClient(getCookieHeader(request), cookies, fetch)
         const response = await client.POST("/self-service/recovery", {
             params: { query: { flow: data.get("flow") as string } },
-            body: {
-                csrf_token: data.get("csrf_token") as string,
-                method: data.get("method") as "code" | "link",
-                ...(data.get("email") ? { email: data.get("email") as string } : { code: data.get("code") as string }),
-            },
+            body: data.get("email")
+                ? {
+                      csrf_token: data.get("csrf_token") as string,
+                      method: data.get("method") as "code" | "link",
+                      email: data.get("email") as string,
+                  }
+                : {
+                      csrf_token: data.get("csrf_token") as string,
+                      method: data.get("method") as "code",
+                      code: data.get("code") as string,
+                  },
         })
 
         switch (response.response.status) {

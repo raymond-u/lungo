@@ -5,893 +5,1468 @@
 
 export interface paths {
     "/.well-known/ory/webauthn.js": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Get WebAuthn JavaScript
          * @description This endpoint provides JavaScript which is needed in order to perform WebAuthn login and registration.
          *
-         * If you are building a JavaScript Browser App (e.g. in ReactJS or AngularJS) you will need to load this file:
+         *     If you are building a JavaScript Browser App (e.g. in ReactJS or AngularJS) you will need to load this file:
          *
-         * ```html
-         * <script src="https://public-kratos.example.org/.well-known/ory/webauthn.js" type="script" async />
-         * ```
+         *     ```html
+         *     <script src="https://public-kratos.example.org/.well-known/ory/webauthn.js" type="script" async />
+         *     ```
          *
-         * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
+         *     More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
          */
         get: operations["getWebAuthnJavaScript"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/admin/courier/messages": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * List Messages
          * @description Lists all messages by given status and recipient.
          */
         get: operations["listCourierMessages"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/admin/courier/messages/{id}": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Get a Message
          * @description Gets a specific messages by the given ID.
          */
         get: operations["getCourierMessage"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/admin/identities": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * List Identities
          * @description Lists all [identities](https://www.ory.sh/docs/kratos/concepts/identity-user-model) in the system.
          */
         get: operations["listIdentities"]
+        put?: never
         /**
          * Create an Identity
          * @description Create an [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model).  This endpoint can also be used to
-         * [import credentials](https://www.ory.sh/docs/kratos/manage-identities/import-user-accounts-identities)
-         * for instance passwords, social sign in configurations or multifactor methods.
+         *     [import credentials](https://www.ory.sh/docs/kratos/manage-identities/import-user-accounts-identities)
+         *     for instance passwords, social sign in configurations or multifactor methods.
          */
         post: operations["createIdentity"]
+        delete?: never
+        options?: never
+        head?: never
         /**
          * Create and deletes multiple identities
          * @description Creates or delete multiple
-         * [identities](https://www.ory.sh/docs/kratos/concepts/identity-user-model).
-         * This endpoint can also be used to [import
-         * credentials](https://www.ory.sh/docs/kratos/manage-identities/import-user-accounts-identities)
-         * for instance passwords, social sign in configurations or multifactor methods.
+         *     [identities](https://www.ory.sh/docs/kratos/concepts/identity-user-model).
+         *     This endpoint can also be used to [import
+         *     credentials](https://www.ory.sh/docs/kratos/manage-identities/import-user-accounts-identities)
+         *     for instance passwords, social sign in configurations or multifactor methods.
          */
         patch: operations["batchPatchIdentities"]
+        trace?: never
     }
     "/admin/identities/{id}": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Get an Identity
          * @description Return an [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model) by its ID. You can optionally
-         * include credentials (e.g. social sign in connections) in the response by using the `include_credential` query parameter.
+         *     include credentials (e.g. social sign in connections) in the response by using the `include_credential` query parameter.
          */
         get: operations["getIdentity"]
         /**
          * Update an Identity
          * @description This endpoint updates an [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model). The full identity
-         * payload (except credentials) is expected. It is possible to update the identity's credentials as well.
+         *     payload (except credentials) is expected. It is possible to update the identity's credentials as well.
          */
         put: operations["updateIdentity"]
+        post?: never
         /**
          * Delete an Identity
          * @description Calling this endpoint irrecoverably and permanently deletes the [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model) given its ID. This action can not be undone.
-         * This endpoint returns 204 when the identity was deleted or when the identity was not found, in which case it is
-         * assumed that is has been deleted already.
+         *     This endpoint returns 204 when the identity was deleted or when the identity was not found, in which case it is
+         *     assumed that is has been deleted already.
          */
         delete: operations["deleteIdentity"]
+        options?: never
+        head?: never
         /**
          * Patch an Identity
          * @description Partially updates an [identity's](https://www.ory.sh/docs/kratos/concepts/identity-user-model) field using [JSON Patch](https://jsonpatch.com/).
-         * The fields `id`, `stateChangedAt` and `credentials` can not be updated using this method.
+         *     The fields `id`, `stateChangedAt` and `credentials` can not be updated using this method.
          */
         patch: operations["patchIdentity"]
+        trace?: never
     }
     "/admin/identities/{id}/credentials/{type}": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
+        post?: never
         /**
          * Delete a credential for a specific identity
          * @description Delete an [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model) credential by its type
-         * You can only delete second factor (aal2) credentials.
+         *     You can only delete second factor (aal2) credentials.
          */
         delete: operations["deleteIdentityCredentials"]
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/admin/identities/{id}/sessions": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * List an Identity's Sessions
          * @description This endpoint returns all sessions that belong to the given Identity.
          */
         get: operations["listIdentitySessions"]
+        put?: never
+        post?: never
         /**
          * Delete & Invalidate an Identity's Sessions
          * @description Calling this endpoint irrecoverably and permanently deletes and invalidates all sessions that belong to the given Identity.
          */
         delete: operations["deleteIdentitySessions"]
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/admin/recovery/code": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /**
          * Create a Recovery Code
          * @description This endpoint creates a recovery code which should be given to the user in order for them to recover
-         * (or activate) their account.
+         *     (or activate) their account.
          */
         post: operations["createRecoveryCodeForIdentity"]
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/admin/recovery/link": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /**
          * Create a Recovery Link
          * @description This endpoint creates a recovery link which should be given to the user in order for them to recover
-         * (or activate) their account.
+         *     (or activate) their account.
          */
         post: operations["createRecoveryLinkForIdentity"]
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/admin/sessions": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * List All Sessions
          * @description Listing all sessions that exist.
          */
         get: operations["listSessions"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/admin/sessions/{id}": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Get Session
          * @description This endpoint is useful for:
          *
-         * Getting a session object with all specified expandables that exist in an administrative context.
+         *     Getting a session object with all specified expandables that exist in an administrative context.
          */
         get: operations["getSession"]
+        put?: never
+        post?: never
         /**
          * Deactivate a Session
          * @description Calling this endpoint deactivates the specified session. Session data is not deleted.
          */
         delete: operations["disableSession"]
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/admin/sessions/{id}/extend": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
         /**
          * Extend a Session
          * @description Calling this endpoint extends the given session ID. If `session.earliest_possible_extend` is set it
-         * will only extend the session after the specified time has passed.
+         *     will only extend the session after the specified time has passed.
          *
-         * Retrieve the session ID from the `/sessions/whoami` endpoint / `toSession` SDK method.
+         *     Retrieve the session ID from the `/sessions/whoami` endpoint / `toSession` SDK method.
          */
         patch: operations["extendSession"]
+        trace?: never
     }
     "/health/alive": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Check HTTP Server Status
          * @description This endpoint returns a HTTP 200 status code when Ory Kratos is accepting incoming
-         * HTTP requests. This status does currently not include checks whether the database connection is working.
+         *     HTTP requests. This status does currently not include checks whether the database connection is working.
          *
-         * If the service supports TLS Edge Termination, this endpoint does not require the
-         * `X-Forwarded-Proto` header to be set.
+         *     If the service supports TLS Edge Termination, this endpoint does not require the
+         *     `X-Forwarded-Proto` header to be set.
          *
-         * Be aware that if you are running multiple nodes of this service, the health status will never
-         * refer to the cluster state, only to a single instance.
+         *     Be aware that if you are running multiple nodes of this service, the health status will never
+         *     refer to the cluster state, only to a single instance.
          */
         get: operations["isAlive"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/health/ready": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Check HTTP Server and Database Status
          * @description This endpoint returns a HTTP 200 status code when Ory Kratos is up running and the environment dependencies (e.g.
-         * the database) are responsive as well.
+         *     the database) are responsive as well.
          *
-         * If the service supports TLS Edge Termination, this endpoint does not require the
-         * `X-Forwarded-Proto` header to be set.
+         *     If the service supports TLS Edge Termination, this endpoint does not require the
+         *     `X-Forwarded-Proto` header to be set.
          *
-         * Be aware that if you are running multiple nodes of Ory Kratos, the health status will never
-         * refer to the cluster state, only to a single instance.
+         *     Be aware that if you are running multiple nodes of Ory Kratos, the health status will never
+         *     refer to the cluster state, only to a single instance.
          */
         get: operations["isReady"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/schemas": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Get all Identity Schemas
          * @description Returns a list of all identity schemas currently in use.
          */
         get: operations["listIdentitySchemas"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/schemas/{id}": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Get Identity JSON Schema
          * @description Return a specific identity schema.
          */
         get: operations["getIdentitySchema"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/errors": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Get User-Flow Errors
          * @description This endpoint returns the error associated with a user-facing self service errors.
          *
-         * This endpoint supports stub values to help you implement the error UI:
+         *     This endpoint supports stub values to help you implement the error UI:
          *
-         * `?id=stub:500` - returns a stub 500 (Internal Server Error) error.
+         *     `?id=stub:500` - returns a stub 500 (Internal Server Error) error.
          *
-         * More information can be found at [Ory Kratos User User Facing Error Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-facing-errors).
+         *     More information can be found at [Ory Kratos User User Facing Error Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-facing-errors).
          */
         get: operations["getFlowError"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/login": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /**
          * Submit a Login Flow
          * @description Use this endpoint to complete a login flow. This endpoint
-         * behaves differently for API and browser flows.
+         *     behaves differently for API and browser flows.
          *
-         * API flows expect `application/json` to be sent in the body and responds with
-         * HTTP 200 and a application/json body with the session token on success;
-         * HTTP 410 if the original flow expired with the appropriate error messages set and optionally a `use_flow_id` parameter in the body;
-         * HTTP 400 on form validation errors.
+         *     API flows expect `application/json` to be sent in the body and responds with
+         *     HTTP 200 and a application/json body with the session token on success;
+         *     HTTP 410 if the original flow expired with the appropriate error messages set and optionally a `use_flow_id` parameter in the body;
+         *     HTTP 400 on form validation errors.
          *
-         * Browser flows expect a Content-Type of `application/x-www-form-urlencoded` or `application/json` to be sent in the body and respond with
-         * a HTTP 303 redirect to the post/after login URL or the `return_to` value if it was set and if the login succeeded;
-         * a HTTP 303 redirect to the login UI URL with the flow ID containing the validation errors otherwise.
+         *     Browser flows expect a Content-Type of `application/x-www-form-urlencoded` or `application/json` to be sent in the body and respond with
+         *     a HTTP 303 redirect to the post/after login URL or the `return_to` value if it was set and if the login succeeded;
+         *     a HTTP 303 redirect to the login UI URL with the flow ID containing the validation errors otherwise.
          *
-         * Browser flows with an accept header of `application/json` will not redirect but instead respond with
-         * HTTP 200 and a application/json body with the signed in identity and a `Set-Cookie` header on success;
-         * HTTP 303 redirect to a fresh login flow if the original flow expired with the appropriate error messages set;
-         * HTTP 400 on form validation errors.
+         *     Browser flows with an accept header of `application/json` will not redirect but instead respond with
+         *     HTTP 200 and a application/json body with the signed in identity and a `Set-Cookie` header on success;
+         *     HTTP 303 redirect to a fresh login flow if the original flow expired with the appropriate error messages set;
+         *     HTTP 400 on form validation errors.
          *
-         * If this endpoint is called with `Accept: application/json` in the header, the response contains the flow without a redirect. In the
-         * case of an error, the `error.id` of the JSON response body can be one of:
+         *     If this endpoint is called with `Accept: application/json` in the header, the response contains the flow without a redirect. In the
+         *     case of an error, the `error.id` of the JSON response body can be one of:
          *
-         * `session_already_available`: The user is already signed in.
-         * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-         * `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
-         * `browser_location_change_required`: Usually sent when an AJAX request indicates that the browser needs to open a specific URL.
-         * Most likely used in Social Sign In flows.
+         *     `session_already_available`: The user is already signed in.
+         *     `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
+         *     `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
+         *     `browser_location_change_required`: Usually sent when an AJAX request indicates that the browser needs to open a specific URL.
+         *     Most likely used in Social Sign In flows.
          *
-         * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
+         *     More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
          */
         post: operations["updateLoginFlow"]
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/login/api": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Create Login Flow for Native Apps
          * @description This endpoint initiates a login flow for native apps that do not use a browser, such as mobile devices, smart TVs, and so on.
          *
-         * If a valid provided session cookie or session token is provided, a 400 Bad Request error
-         * will be returned unless the URL query parameter `?refresh=true` is set.
+         *     If a valid provided session cookie or session token is provided, a 400 Bad Request error
+         *     will be returned unless the URL query parameter `?refresh=true` is set.
          *
-         * To fetch an existing login flow call `/self-service/login/flows?flow=<flow_id>`.
+         *     To fetch an existing login flow call `/self-service/login/flows?flow=<flow_id>`.
          *
-         * You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
-         * Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
-         * you vulnerable to a variety of CSRF attacks, including CSRF login attacks.
+         *     You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
+         *     Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
+         *     you vulnerable to a variety of CSRF attacks, including CSRF login attacks.
          *
-         * In the case of an error, the `error.id` of the JSON response body can be one of:
+         *     In the case of an error, the `error.id` of the JSON response body can be one of:
          *
-         * `session_already_available`: The user is already signed in.
-         * `session_aal1_required`: Multi-factor auth (e.g. 2fa) was requested but the user has no session yet.
-         * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
+         *     `session_already_available`: The user is already signed in.
+         *     `session_aal1_required`: Multi-factor auth (e.g. 2fa) was requested but the user has no session yet.
+         *     `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
          *
-         * This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
+         *     This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
          *
-         * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
+         *     More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
          */
         get: operations["createNativeLoginFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/login/browser": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Create Login Flow for Browsers
          * @description This endpoint initializes a browser-based user login flow. This endpoint will set the appropriate
-         * cookies and anti-CSRF measures required for browser-based flows.
+         *     cookies and anti-CSRF measures required for browser-based flows.
          *
-         * If this endpoint is opened as a link in the browser, it will be redirected to
-         * `selfservice.flows.login.ui_url` with the flow ID set as the query parameter `?flow=`. If a valid user session
-         * exists already, the browser will be redirected to `urls.default_redirect_url` unless the query parameter
-         * `?refresh=true` was set.
+         *     If this endpoint is opened as a link in the browser, it will be redirected to
+         *     `selfservice.flows.login.ui_url` with the flow ID set as the query parameter `?flow=`. If a valid user session
+         *     exists already, the browser will be redirected to `urls.default_redirect_url` unless the query parameter
+         *     `?refresh=true` was set.
          *
-         * If this endpoint is called via an AJAX request, the response contains the flow without a redirect. In the
-         * case of an error, the `error.id` of the JSON response body can be one of:
+         *     If this endpoint is called via an AJAX request, the response contains the flow without a redirect. In the
+         *     case of an error, the `error.id` of the JSON response body can be one of:
          *
-         * `session_already_available`: The user is already signed in.
-         * `session_aal1_required`: Multi-factor auth (e.g. 2fa) was requested but the user has no session yet.
-         * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-         * `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
+         *     `session_already_available`: The user is already signed in.
+         *     `session_aal1_required`: Multi-factor auth (e.g. 2fa) was requested but the user has no session yet.
+         *     `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
+         *     `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
          *
-         * The optional query parameter login_challenge is set when using Kratos with
-         * Hydra in an OAuth2 flow. See the oauth2_provider.url configuration
-         * option.
+         *     The optional query parameter login_challenge is set when using Kratos with
+         *     Hydra in an OAuth2 flow. See the oauth2_provider.url configuration
+         *     option.
          *
-         * This endpoint is NOT INTENDED for clients that do not have a browser (Chrome, Firefox, ...) as cookies are needed.
+         *     This endpoint is NOT INTENDED for clients that do not have a browser (Chrome, Firefox, ...) as cookies are needed.
          *
-         * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
+         *     More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
          */
         get: operations["createBrowserLoginFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/login/flows": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Get Login Flow
          * @description This endpoint returns a login flow's context with, for example, error details and other information.
          *
-         * Browser flows expect the anti-CSRF cookie to be included in the request's HTTP Cookie Header.
-         * For AJAX requests you must ensure that cookies are included in the request or requests will fail.
+         *     Browser flows expect the anti-CSRF cookie to be included in the request's HTTP Cookie Header.
+         *     For AJAX requests you must ensure that cookies are included in the request or requests will fail.
          *
-         * If you use the browser-flow for server-side apps, the services need to run on a common top-level-domain
-         * and you need to forward the incoming HTTP Cookie header to this endpoint:
+         *     If you use the browser-flow for server-side apps, the services need to run on a common top-level-domain
+         *     and you need to forward the incoming HTTP Cookie header to this endpoint:
          *
-         * ```js
-         * pseudo-code example
-         * router.get('/login', async function (req, res) {
-         * const flow = await client.getLoginFlow(req.header('cookie'), req.query['flow'])
+         *     ```js
+         *     pseudo-code example
+         *     router.get('/login', async function (req, res) {
+         *     const flow = await client.getLoginFlow(req.header('cookie'), req.query['flow'])
          *
-         * res.render('login', flow)
-         * })
-         * ```
+         *     res.render('login', flow)
+         *     })
+         *     ```
          *
-         * This request may fail due to several reasons. The `error.id` can be one of:
+         *     This request may fail due to several reasons. The `error.id` can be one of:
          *
-         * `session_already_available`: The user is already signed in.
-         * `self_service_flow_expired`: The flow is expired and you should request a new one.
+         *     `session_already_available`: The user is already signed in.
+         *     `self_service_flow_expired`: The flow is expired and you should request a new one.
          *
-         * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
+         *     More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
          */
         get: operations["getLoginFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/logout": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Update Logout Flow
          * @description This endpoint logs out an identity in a self-service manner.
          *
-         * If the `Accept` HTTP header is not set to `application/json`, the browser will be redirected (HTTP 303 See Other)
-         * to the `return_to` parameter of the initial request or fall back to `urls.default_return_to`.
+         *     If the `Accept` HTTP header is not set to `application/json`, the browser will be redirected (HTTP 303 See Other)
+         *     to the `return_to` parameter of the initial request or fall back to `urls.default_return_to`.
          *
-         * If the `Accept` HTTP header is set to `application/json`, a 204 No Content response
-         * will be sent on successful logout instead.
+         *     If the `Accept` HTTP header is set to `application/json`, a 204 No Content response
+         *     will be sent on successful logout instead.
          *
-         * This endpoint is NOT INTENDED for API clients and only works
-         * with browsers (Chrome, Firefox, ...). For API clients you can
-         * call the `/self-service/logout/api` URL directly with the Ory Session Token.
+         *     This endpoint is NOT INTENDED for API clients and only works
+         *     with browsers (Chrome, Firefox, ...). For API clients you can
+         *     call the `/self-service/logout/api` URL directly with the Ory Session Token.
          *
-         * More information can be found at [Ory Kratos User Logout Documentation](https://www.ory.sh/docs/next/kratos/self-service/flows/user-logout).
+         *     More information can be found at [Ory Kratos User Logout Documentation](https://www.ory.sh/docs/next/kratos/self-service/flows/user-logout).
          */
         get: operations["updateLogoutFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/logout/api": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
+        post?: never
         /**
          * Perform Logout for Native Apps
          * @description Use this endpoint to log out an identity using an Ory Session Token. If the Ory Session Token was successfully
-         * revoked, the server returns a 204 No Content response. A 204 No Content response is also sent when
-         * the Ory Session Token has been revoked already before.
+         *     revoked, the server returns a 204 No Content response. A 204 No Content response is also sent when
+         *     the Ory Session Token has been revoked already before.
          *
-         * If the Ory Session Token is malformed or does not exist a 403 Forbidden response will be returned.
+         *     If the Ory Session Token is malformed or does not exist a 403 Forbidden response will be returned.
          *
-         * This endpoint does not remove any HTTP
-         * Cookies - use the Browser-Based Self-Service Logout Flow instead.
+         *     This endpoint does not remove any HTTP
+         *     Cookies - use the Browser-Based Self-Service Logout Flow instead.
          */
         delete: operations["performNativeLogout"]
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/logout/browser": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Create a Logout URL for Browsers
          * @description This endpoint initializes a browser-based user logout flow and a URL which can be used to log out the user.
          *
-         * This endpoint is NOT INTENDED for API clients and only works
-         * with browsers (Chrome, Firefox, ...). For API clients you can
-         * call the `/self-service/logout/api` URL directly with the Ory Session Token.
+         *     This endpoint is NOT INTENDED for API clients and only works
+         *     with browsers (Chrome, Firefox, ...). For API clients you can
+         *     call the `/self-service/logout/api` URL directly with the Ory Session Token.
          *
-         * The URL is only valid for the currently signed in user. If no user is signed in, this endpoint returns
-         * a 401 error.
+         *     The URL is only valid for the currently signed in user. If no user is signed in, this endpoint returns
+         *     a 401 error.
          *
-         * When calling this endpoint from a backend, please ensure to properly forward the HTTP cookies.
+         *     When calling this endpoint from a backend, please ensure to properly forward the HTTP cookies.
          */
         get: operations["createBrowserLogoutFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/recovery": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /**
          * Update Recovery Flow
          * @description Use this endpoint to update a recovery flow. This endpoint
-         * behaves differently for API and browser flows and has several states:
+         *     behaves differently for API and browser flows and has several states:
          *
-         * `choose_method` expects `flow` (in the URL query) and `email` (in the body) to be sent
-         * and works with API- and Browser-initiated flows.
-         * For API clients and Browser clients with HTTP Header `Accept: application/json` it either returns a HTTP 200 OK when the form is valid and HTTP 400 OK when the form is invalid.
-         * and a HTTP 303 See Other redirect with a fresh recovery flow if the flow was otherwise invalid (e.g. expired).
-         * For Browser clients without HTTP Header `Accept` or with `Accept: text/*` it returns a HTTP 303 See Other redirect to the Recovery UI URL with the Recovery Flow ID appended.
-         * `sent_email` is the success state after `choose_method` for the `link` method and allows the user to request another recovery email. It
-         * works for both API and Browser-initiated flows and returns the same responses as the flow in `choose_method` state.
-         * `passed_challenge` expects a `token` to be sent in the URL query and given the nature of the flow ("sending a recovery link")
-         * does not have any API capabilities. The server responds with a HTTP 303 See Other redirect either to the Settings UI URL
-         * (if the link was valid) and instructs the user to update their password, or a redirect to the Recover UI URL with
-         * a new Recovery Flow ID which contains an error message that the recovery link was invalid.
+         *     `choose_method` expects `flow` (in the URL query) and `email` (in the body) to be sent
+         *     and works with API- and Browser-initiated flows.
+         *     For API clients and Browser clients with HTTP Header `Accept: application/json` it either returns a HTTP 200 OK when the form is valid and HTTP 400 OK when the form is invalid.
+         *     and a HTTP 303 See Other redirect with a fresh recovery flow if the flow was otherwise invalid (e.g. expired).
+         *     For Browser clients without HTTP Header `Accept` or with `Accept: text/*` it returns a HTTP 303 See Other redirect to the Recovery UI URL with the Recovery Flow ID appended.
+         *     `sent_email` is the success state after `choose_method` for the `link` method and allows the user to request another recovery email. It
+         *     works for both API and Browser-initiated flows and returns the same responses as the flow in `choose_method` state.
+         *     `passed_challenge` expects a `token` to be sent in the URL query and given the nature of the flow ("sending a recovery link")
+         *     does not have any API capabilities. The server responds with a HTTP 303 See Other redirect either to the Settings UI URL
+         *     (if the link was valid) and instructs the user to update their password, or a redirect to the Recover UI URL with
+         *     a new Recovery Flow ID which contains an error message that the recovery link was invalid.
          *
-         * More information can be found at [Ory Kratos Account Recovery Documentation](../self-service/flows/account-recovery).
+         *     More information can be found at [Ory Kratos Account Recovery Documentation](../self-service/flows/account-recovery).
          */
         post: operations["updateRecoveryFlow"]
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/recovery/api": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Create Recovery Flow for Native Apps
          * @description This endpoint initiates a recovery flow for API clients such as mobile devices, smart TVs, and so on.
          *
-         * If a valid provided session cookie or session token is provided, a 400 Bad Request error.
+         *     If a valid provided session cookie or session token is provided, a 400 Bad Request error.
          *
-         * On an existing recovery flow, use the `getRecoveryFlow` API endpoint.
+         *     On an existing recovery flow, use the `getRecoveryFlow` API endpoint.
          *
-         * You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
-         * Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
-         * you vulnerable to a variety of CSRF attacks.
+         *     You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
+         *     Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
+         *     you vulnerable to a variety of CSRF attacks.
          *
-         * This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
+         *     This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
          *
-         * More information can be found at [Ory Kratos Account Recovery Documentation](../self-service/flows/account-recovery).
+         *     More information can be found at [Ory Kratos Account Recovery Documentation](../self-service/flows/account-recovery).
          */
         get: operations["createNativeRecoveryFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/recovery/browser": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Create Recovery Flow for Browsers
          * @description This endpoint initializes a browser-based account recovery flow. Once initialized, the browser will be redirected to
-         * `selfservice.flows.recovery.ui_url` with the flow ID set as the query parameter `?flow=`. If a valid user session
-         * exists, the browser is returned to the configured return URL.
+         *     `selfservice.flows.recovery.ui_url` with the flow ID set as the query parameter `?flow=`. If a valid user session
+         *     exists, the browser is returned to the configured return URL.
          *
-         * If this endpoint is called via an AJAX request, the response contains the recovery flow without any redirects
-         * or a 400 bad request error if the user is already authenticated.
+         *     If this endpoint is called via an AJAX request, the response contains the recovery flow without any redirects
+         *     or a 400 bad request error if the user is already authenticated.
          *
-         * This endpoint is NOT INTENDED for clients that do not have a browser (Chrome, Firefox, ...) as cookies are needed.
+         *     This endpoint is NOT INTENDED for clients that do not have a browser (Chrome, Firefox, ...) as cookies are needed.
          *
-         * More information can be found at [Ory Kratos Account Recovery Documentation](../self-service/flows/account-recovery).
+         *     More information can be found at [Ory Kratos Account Recovery Documentation](../self-service/flows/account-recovery).
          */
         get: operations["createBrowserRecoveryFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/recovery/flows": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Get Recovery Flow
          * @description This endpoint returns a recovery flow's context with, for example, error details and other information.
          *
-         * Browser flows expect the anti-CSRF cookie to be included in the request's HTTP Cookie Header.
-         * For AJAX requests you must ensure that cookies are included in the request or requests will fail.
+         *     Browser flows expect the anti-CSRF cookie to be included in the request's HTTP Cookie Header.
+         *     For AJAX requests you must ensure that cookies are included in the request or requests will fail.
          *
-         * If you use the browser-flow for server-side apps, the services need to run on a common top-level-domain
-         * and you need to forward the incoming HTTP Cookie header to this endpoint:
+         *     If you use the browser-flow for server-side apps, the services need to run on a common top-level-domain
+         *     and you need to forward the incoming HTTP Cookie header to this endpoint:
          *
-         * ```js
-         * pseudo-code example
-         * router.get('/recovery', async function (req, res) {
-         * const flow = await client.getRecoveryFlow(req.header('Cookie'), req.query['flow'])
+         *     ```js
+         *     pseudo-code example
+         *     router.get('/recovery', async function (req, res) {
+         *     const flow = await client.getRecoveryFlow(req.header('Cookie'), req.query['flow'])
          *
-         * res.render('recovery', flow)
-         * })
-         * ```
+         *     res.render('recovery', flow)
+         *     })
+         *     ```
          *
-         * More information can be found at [Ory Kratos Account Recovery Documentation](../self-service/flows/account-recovery).
+         *     More information can be found at [Ory Kratos Account Recovery Documentation](../self-service/flows/account-recovery).
          */
         get: operations["getRecoveryFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/registration": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /**
          * Update Registration Flow
          * @description Use this endpoint to complete a registration flow by sending an identity's traits and password. This endpoint
-         * behaves differently for API and browser flows.
+         *     behaves differently for API and browser flows.
          *
-         * API flows expect `application/json` to be sent in the body and respond with
-         * HTTP 200 and a application/json body with the created identity success - if the session hook is configured the
-         * `session` and `session_token` will also be included;
-         * HTTP 410 if the original flow expired with the appropriate error messages set and optionally a `use_flow_id` parameter in the body;
-         * HTTP 400 on form validation errors.
+         *     API flows expect `application/json` to be sent in the body and respond with
+         *     HTTP 200 and a application/json body with the created identity success - if the session hook is configured the
+         *     `session` and `session_token` will also be included;
+         *     HTTP 410 if the original flow expired with the appropriate error messages set and optionally a `use_flow_id` parameter in the body;
+         *     HTTP 400 on form validation errors.
          *
-         * Browser flows expect a Content-Type of `application/x-www-form-urlencoded` or `application/json` to be sent in the body and respond with
-         * a HTTP 303 redirect to the post/after registration URL or the `return_to` value if it was set and if the registration succeeded;
-         * a HTTP 303 redirect to the registration UI URL with the flow ID containing the validation errors otherwise.
+         *     Browser flows expect a Content-Type of `application/x-www-form-urlencoded` or `application/json` to be sent in the body and respond with
+         *     a HTTP 303 redirect to the post/after registration URL or the `return_to` value if it was set and if the registration succeeded;
+         *     a HTTP 303 redirect to the registration UI URL with the flow ID containing the validation errors otherwise.
          *
-         * Browser flows with an accept header of `application/json` will not redirect but instead respond with
-         * HTTP 200 and a application/json body with the signed in identity and a `Set-Cookie` header on success;
-         * HTTP 303 redirect to a fresh login flow if the original flow expired with the appropriate error messages set;
-         * HTTP 400 on form validation errors.
+         *     Browser flows with an accept header of `application/json` will not redirect but instead respond with
+         *     HTTP 200 and a application/json body with the signed in identity and a `Set-Cookie` header on success;
+         *     HTTP 303 redirect to a fresh login flow if the original flow expired with the appropriate error messages set;
+         *     HTTP 400 on form validation errors.
          *
-         * If this endpoint is called with `Accept: application/json` in the header, the response contains the flow without a redirect. In the
-         * case of an error, the `error.id` of the JSON response body can be one of:
+         *     If this endpoint is called with `Accept: application/json` in the header, the response contains the flow without a redirect. In the
+         *     case of an error, the `error.id` of the JSON response body can be one of:
          *
-         * `session_already_available`: The user is already signed in.
-         * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-         * `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
-         * `browser_location_change_required`: Usually sent when an AJAX request indicates that the browser needs to open a specific URL.
-         * Most likely used in Social Sign In flows.
+         *     `session_already_available`: The user is already signed in.
+         *     `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
+         *     `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
+         *     `browser_location_change_required`: Usually sent when an AJAX request indicates that the browser needs to open a specific URL.
+         *     Most likely used in Social Sign In flows.
          *
-         * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
+         *     More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
          */
         post: operations["updateRegistrationFlow"]
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/registration/api": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Create Registration Flow for Native Apps
          * @description This endpoint initiates a registration flow for API clients such as mobile devices, smart TVs, and so on.
          *
-         * If a valid provided session cookie or session token is provided, a 400 Bad Request error
-         * will be returned unless the URL query parameter `?refresh=true` is set.
+         *     If a valid provided session cookie or session token is provided, a 400 Bad Request error
+         *     will be returned unless the URL query parameter `?refresh=true` is set.
          *
-         * To fetch an existing registration flow call `/self-service/registration/flows?flow=<flow_id>`.
+         *     To fetch an existing registration flow call `/self-service/registration/flows?flow=<flow_id>`.
          *
-         * You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
-         * Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
-         * you vulnerable to a variety of CSRF attacks.
+         *     You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
+         *     Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
+         *     you vulnerable to a variety of CSRF attacks.
          *
-         * In the case of an error, the `error.id` of the JSON response body can be one of:
+         *     In the case of an error, the `error.id` of the JSON response body can be one of:
          *
-         * `session_already_available`: The user is already signed in.
-         * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
+         *     `session_already_available`: The user is already signed in.
+         *     `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
          *
-         * This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
+         *     This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
          *
-         * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
+         *     More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
          */
         get: operations["createNativeRegistrationFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/registration/browser": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Create Registration Flow for Browsers
          * @description This endpoint initializes a browser-based user registration flow. This endpoint will set the appropriate
-         * cookies and anti-CSRF measures required for browser-based flows.
+         *     cookies and anti-CSRF measures required for browser-based flows.
          *
-         * If this endpoint is opened as a link in the browser, it will be redirected to
-         * `selfservice.flows.registration.ui_url` with the flow ID set as the query parameter `?flow=`. If a valid user session
-         * exists already, the browser will be redirected to `urls.default_redirect_url`.
+         *     If this endpoint is opened as a link in the browser, it will be redirected to
+         *     `selfservice.flows.registration.ui_url` with the flow ID set as the query parameter `?flow=`. If a valid user session
+         *     exists already, the browser will be redirected to `urls.default_redirect_url`.
          *
-         * If this endpoint is called via an AJAX request, the response contains the flow without a redirect. In the
-         * case of an error, the `error.id` of the JSON response body can be one of:
+         *     If this endpoint is called via an AJAX request, the response contains the flow without a redirect. In the
+         *     case of an error, the `error.id` of the JSON response body can be one of:
          *
-         * `session_already_available`: The user is already signed in.
-         * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-         * `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
+         *     `session_already_available`: The user is already signed in.
+         *     `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
+         *     `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
          *
-         * If this endpoint is called via an AJAX request, the response contains the registration flow without a redirect.
+         *     If this endpoint is called via an AJAX request, the response contains the registration flow without a redirect.
          *
-         * This endpoint is NOT INTENDED for clients that do not have a browser (Chrome, Firefox, ...) as cookies are needed.
+         *     This endpoint is NOT INTENDED for clients that do not have a browser (Chrome, Firefox, ...) as cookies are needed.
          *
-         * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
+         *     More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
          */
         get: operations["createBrowserRegistrationFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/registration/flows": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Get Registration Flow
          * @description This endpoint returns a registration flow's context with, for example, error details and other information.
          *
-         * Browser flows expect the anti-CSRF cookie to be included in the request's HTTP Cookie Header.
-         * For AJAX requests you must ensure that cookies are included in the request or requests will fail.
+         *     Browser flows expect the anti-CSRF cookie to be included in the request's HTTP Cookie Header.
+         *     For AJAX requests you must ensure that cookies are included in the request or requests will fail.
          *
-         * If you use the browser-flow for server-side apps, the services need to run on a common top-level-domain
-         * and you need to forward the incoming HTTP Cookie header to this endpoint:
+         *     If you use the browser-flow for server-side apps, the services need to run on a common top-level-domain
+         *     and you need to forward the incoming HTTP Cookie header to this endpoint:
          *
-         * ```js
-         * pseudo-code example
-         * router.get('/registration', async function (req, res) {
-         * const flow = await client.getRegistrationFlow(req.header('cookie'), req.query['flow'])
+         *     ```js
+         *     pseudo-code example
+         *     router.get('/registration', async function (req, res) {
+         *     const flow = await client.getRegistrationFlow(req.header('cookie'), req.query['flow'])
          *
-         * res.render('registration', flow)
-         * })
-         * ```
+         *     res.render('registration', flow)
+         *     })
+         *     ```
          *
-         * This request may fail due to several reasons. The `error.id` can be one of:
+         *     This request may fail due to several reasons. The `error.id` can be one of:
          *
-         * `session_already_available`: The user is already signed in.
-         * `self_service_flow_expired`: The flow is expired and you should request a new one.
+         *     `session_already_available`: The user is already signed in.
+         *     `self_service_flow_expired`: The flow is expired and you should request a new one.
          *
-         * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
+         *     More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
          */
         get: operations["getRegistrationFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/settings": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /**
          * Complete Settings Flow
          * @description Use this endpoint to complete a settings flow by sending an identity's updated password. This endpoint
-         * behaves differently for API and browser flows.
+         *     behaves differently for API and browser flows.
          *
-         * API-initiated flows expect `application/json` to be sent in the body and respond with
-         * HTTP 200 and an application/json body with the session token on success;
-         * HTTP 303 redirect to a fresh settings flow if the original flow expired with the appropriate error messages set;
-         * HTTP 400 on form validation errors.
-         * HTTP 401 when the endpoint is called without a valid session token.
-         * HTTP 403 when `selfservice.flows.settings.privileged_session_max_age` was reached or the session's AAL is too low.
-         * Implies that the user needs to re-authenticate.
+         *     API-initiated flows expect `application/json` to be sent in the body and respond with
+         *     HTTP 200 and an application/json body with the session token on success;
+         *     HTTP 303 redirect to a fresh settings flow if the original flow expired with the appropriate error messages set;
+         *     HTTP 400 on form validation errors.
+         *     HTTP 401 when the endpoint is called without a valid session token.
+         *     HTTP 403 when `selfservice.flows.settings.privileged_session_max_age` was reached or the session's AAL is too low.
+         *     Implies that the user needs to re-authenticate.
          *
-         * Browser flows without HTTP Header `Accept` or with `Accept: text/*` respond with
-         * a HTTP 303 redirect to the post/after settings URL or the `return_to` value if it was set and if the flow succeeded;
-         * a HTTP 303 redirect to the Settings UI URL with the flow ID containing the validation errors otherwise.
-         * a HTTP 303 redirect to the login endpoint when `selfservice.flows.settings.privileged_session_max_age` was reached or the session's AAL is too low.
+         *     Browser flows without HTTP Header `Accept` or with `Accept: text/*` respond with
+         *     a HTTP 303 redirect to the post/after settings URL or the `return_to` value if it was set and if the flow succeeded;
+         *     a HTTP 303 redirect to the Settings UI URL with the flow ID containing the validation errors otherwise.
+         *     a HTTP 303 redirect to the login endpoint when `selfservice.flows.settings.privileged_session_max_age` was reached or the session's AAL is too low.
          *
-         * Browser flows with HTTP Header `Accept: application/json` respond with
-         * HTTP 200 and a application/json body with the signed in identity and a `Set-Cookie` header on success;
-         * HTTP 303 redirect to a fresh login flow if the original flow expired with the appropriate error messages set;
-         * HTTP 401 when the endpoint is called without a valid session cookie.
-         * HTTP 403 when the page is accessed without a session cookie or the session's AAL is too low.
-         * HTTP 400 on form validation errors.
+         *     Browser flows with HTTP Header `Accept: application/json` respond with
+         *     HTTP 200 and a application/json body with the signed in identity and a `Set-Cookie` header on success;
+         *     HTTP 303 redirect to a fresh login flow if the original flow expired with the appropriate error messages set;
+         *     HTTP 401 when the endpoint is called without a valid session cookie.
+         *     HTTP 403 when the page is accessed without a session cookie or the session's AAL is too low.
+         *     HTTP 400 on form validation errors.
          *
-         * Depending on your configuration this endpoint might return a 403 error if the session has a lower Authenticator
-         * Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
-         * credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
-         * to sign in with the second factor (happens automatically for server-side browser flows) or change the configuration.
+         *     Depending on your configuration this endpoint might return a 403 error if the session has a lower Authenticator
+         *     Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
+         *     credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
+         *     to sign in with the second factor (happens automatically for server-side browser flows) or change the configuration.
          *
-         * If this endpoint is called with a `Accept: application/json` HTTP header, the response contains the flow without a redirect. In the
-         * case of an error, the `error.id` of the JSON response body can be one of:
+         *     If this endpoint is called with a `Accept: application/json` HTTP header, the response contains the flow without a redirect. In the
+         *     case of an error, the `error.id` of the JSON response body can be one of:
          *
-         * `session_refresh_required`: The identity requested to change something that needs a privileged session. Redirect
-         * the identity to the login init endpoint with query parameters `?refresh=true&return_to=<the-current-browser-url>`,
-         * or initiate a refresh login flow otherwise.
-         * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-         * `session_inactive`: No Ory Session was found - sign in a user first.
-         * `security_identity_mismatch`: The flow was interrupted with `session_refresh_required` but apparently some other
-         * identity logged in instead.
-         * `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
-         * `browser_location_change_required`: Usually sent when an AJAX request indicates that the browser needs to open a specific URL.
-         * Most likely used in Social Sign In flows.
+         *     `session_refresh_required`: The identity requested to change something that needs a privileged session. Redirect
+         *     the identity to the login init endpoint with query parameters `?refresh=true&return_to=<the-current-browser-url>`,
+         *     or initiate a refresh login flow otherwise.
+         *     `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
+         *     `session_inactive`: No Ory Session was found - sign in a user first.
+         *     `security_identity_mismatch`: The flow was interrupted with `session_refresh_required` but apparently some other
+         *     identity logged in instead.
+         *     `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
+         *     `browser_location_change_required`: Usually sent when an AJAX request indicates that the browser needs to open a specific URL.
+         *     Most likely used in Social Sign In flows.
          *
-         * More information can be found at [Ory Kratos User Settings & Profile Management Documentation](../self-service/flows/user-settings).
+         *     More information can be found at [Ory Kratos User Settings & Profile Management Documentation](../self-service/flows/user-settings).
          */
         post: operations["updateSettingsFlow"]
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/settings/api": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Create Settings Flow for Native Apps
          * @description This endpoint initiates a settings flow for API clients such as mobile devices, smart TVs, and so on.
-         * You must provide a valid Ory Kratos Session Token for this endpoint to respond with HTTP 200 OK.
+         *     You must provide a valid Ory Kratos Session Token for this endpoint to respond with HTTP 200 OK.
          *
-         * To fetch an existing settings flow call `/self-service/settings/flows?flow=<flow_id>`.
+         *     To fetch an existing settings flow call `/self-service/settings/flows?flow=<flow_id>`.
          *
-         * You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
-         * Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
-         * you vulnerable to a variety of CSRF attacks.
+         *     You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
+         *     Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
+         *     you vulnerable to a variety of CSRF attacks.
          *
-         * Depending on your configuration this endpoint might return a 403 error if the session has a lower Authenticator
-         * Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
-         * credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
-         * to sign in with the second factor or change the configuration.
+         *     Depending on your configuration this endpoint might return a 403 error if the session has a lower Authenticator
+         *     Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
+         *     credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
+         *     to sign in with the second factor or change the configuration.
          *
-         * In the case of an error, the `error.id` of the JSON response body can be one of:
+         *     In the case of an error, the `error.id` of the JSON response body can be one of:
          *
-         * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-         * `session_inactive`: No Ory Session was found - sign in a user first.
+         *     `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
+         *     `session_inactive`: No Ory Session was found - sign in a user first.
          *
-         * This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
+         *     This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
          *
-         * More information can be found at [Ory Kratos User Settings & Profile Management Documentation](../self-service/flows/user-settings).
+         *     More information can be found at [Ory Kratos User Settings & Profile Management Documentation](../self-service/flows/user-settings).
          */
         get: operations["createNativeSettingsFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/settings/browser": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Create Settings Flow for Browsers
          * @description This endpoint initializes a browser-based user settings flow. Once initialized, the browser will be redirected to
-         * `selfservice.flows.settings.ui_url` with the flow ID set as the query parameter `?flow=`. If no valid
-         * Ory Kratos Session Cookie is included in the request, a login flow will be initialized.
+         *     `selfservice.flows.settings.ui_url` with the flow ID set as the query parameter `?flow=`. If no valid
+         *     Ory Kratos Session Cookie is included in the request, a login flow will be initialized.
          *
-         * If this endpoint is opened as a link in the browser, it will be redirected to
-         * `selfservice.flows.settings.ui_url` with the flow ID set as the query parameter `?flow=`. If no valid user session
-         * was set, the browser will be redirected to the login endpoint.
+         *     If this endpoint is opened as a link in the browser, it will be redirected to
+         *     `selfservice.flows.settings.ui_url` with the flow ID set as the query parameter `?flow=`. If no valid user session
+         *     was set, the browser will be redirected to the login endpoint.
          *
-         * If this endpoint is called via an AJAX request, the response contains the settings flow without any redirects
-         * or a 401 forbidden error if no valid session was set.
+         *     If this endpoint is called via an AJAX request, the response contains the settings flow without any redirects
+         *     or a 401 forbidden error if no valid session was set.
          *
-         * Depending on your configuration this endpoint might return a 403 error if the session has a lower Authenticator
-         * Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
-         * credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
-         * to sign in with the second factor (happens automatically for server-side browser flows) or change the configuration.
+         *     Depending on your configuration this endpoint might return a 403 error if the session has a lower Authenticator
+         *     Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
+         *     credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
+         *     to sign in with the second factor (happens automatically for server-side browser flows) or change the configuration.
          *
-         * If this endpoint is called via an AJAX request, the response contains the flow without a redirect. In the
-         * case of an error, the `error.id` of the JSON response body can be one of:
+         *     If this endpoint is called via an AJAX request, the response contains the flow without a redirect. In the
+         *     case of an error, the `error.id` of the JSON response body can be one of:
          *
-         * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-         * `session_inactive`: No Ory Session was found - sign in a user first.
-         * `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
+         *     `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
+         *     `session_inactive`: No Ory Session was found - sign in a user first.
+         *     `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
          *
-         * This endpoint is NOT INTENDED for clients that do not have a browser (Chrome, Firefox, ...) as cookies are needed.
+         *     This endpoint is NOT INTENDED for clients that do not have a browser (Chrome, Firefox, ...) as cookies are needed.
          *
-         * More information can be found at [Ory Kratos User Settings & Profile Management Documentation](../self-service/flows/user-settings).
+         *     More information can be found at [Ory Kratos User Settings & Profile Management Documentation](../self-service/flows/user-settings).
          */
         get: operations["createBrowserSettingsFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/settings/flows": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Get Settings Flow
          * @description When accessing this endpoint through Ory Kratos' Public API you must ensure that either the Ory Kratos Session Cookie
-         * or the Ory Kratos Session Token are set.
+         *     or the Ory Kratos Session Token are set.
          *
-         * Depending on your configuration this endpoint might return a 403 error if the session has a lower Authenticator
-         * Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
-         * credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
-         * to sign in with the second factor or change the configuration.
+         *     Depending on your configuration this endpoint might return a 403 error if the session has a lower Authenticator
+         *     Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
+         *     credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
+         *     to sign in with the second factor or change the configuration.
          *
-         * You can access this endpoint without credentials when using Ory Kratos' Admin API.
+         *     You can access this endpoint without credentials when using Ory Kratos' Admin API.
          *
-         * If this endpoint is called via an AJAX request, the response contains the flow without a redirect. In the
-         * case of an error, the `error.id` of the JSON response body can be one of:
+         *     If this endpoint is called via an AJAX request, the response contains the flow without a redirect. In the
+         *     case of an error, the `error.id` of the JSON response body can be one of:
          *
-         * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-         * `session_inactive`: No Ory Session was found - sign in a user first.
-         * `security_identity_mismatch`: The flow was interrupted with `session_refresh_required` but apparently some other
-         * identity logged in instead.
+         *     `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
+         *     `session_inactive`: No Ory Session was found - sign in a user first.
+         *     `security_identity_mismatch`: The flow was interrupted with `session_refresh_required` but apparently some other
+         *     identity logged in instead.
          *
-         * More information can be found at [Ory Kratos User Settings & Profile Management Documentation](../self-service/flows/user-settings).
+         *     More information can be found at [Ory Kratos User Settings & Profile Management Documentation](../self-service/flows/user-settings).
          */
         get: operations["getSettingsFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/verification": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /**
          * Complete Verification Flow
          * @description Use this endpoint to complete a verification flow. This endpoint
-         * behaves differently for API and browser flows and has several states:
+         *     behaves differently for API and browser flows and has several states:
          *
-         * `choose_method` expects `flow` (in the URL query) and `email` (in the body) to be sent
-         * and works with API- and Browser-initiated flows.
-         * For API clients and Browser clients with HTTP Header `Accept: application/json` it either returns a HTTP 200 OK when the form is valid and HTTP 400 OK when the form is invalid
-         * and a HTTP 303 See Other redirect with a fresh verification flow if the flow was otherwise invalid (e.g. expired).
-         * For Browser clients without HTTP Header `Accept` or with `Accept: text/*` it returns a HTTP 303 See Other redirect to the Verification UI URL with the Verification Flow ID appended.
-         * `sent_email` is the success state after `choose_method` when using the `link` method and allows the user to request another verification email. It
-         * works for both API and Browser-initiated flows and returns the same responses as the flow in `choose_method` state.
-         * `passed_challenge` expects a `token` to be sent in the URL query and given the nature of the flow ("sending a verification link")
-         * does not have any API capabilities. The server responds with a HTTP 303 See Other redirect either to the Settings UI URL
-         * (if the link was valid) and instructs the user to update their password, or a redirect to the Verification UI URL with
-         * a new Verification Flow ID which contains an error message that the verification link was invalid.
+         *     `choose_method` expects `flow` (in the URL query) and `email` (in the body) to be sent
+         *     and works with API- and Browser-initiated flows.
+         *     For API clients and Browser clients with HTTP Header `Accept: application/json` it either returns a HTTP 200 OK when the form is valid and HTTP 400 OK when the form is invalid
+         *     and a HTTP 303 See Other redirect with a fresh verification flow if the flow was otherwise invalid (e.g. expired).
+         *     For Browser clients without HTTP Header `Accept` or with `Accept: text/*` it returns a HTTP 303 See Other redirect to the Verification UI URL with the Verification Flow ID appended.
+         *     `sent_email` is the success state after `choose_method` when using the `link` method and allows the user to request another verification email. It
+         *     works for both API and Browser-initiated flows and returns the same responses as the flow in `choose_method` state.
+         *     `passed_challenge` expects a `token` to be sent in the URL query and given the nature of the flow ("sending a verification link")
+         *     does not have any API capabilities. The server responds with a HTTP 303 See Other redirect either to the Settings UI URL
+         *     (if the link was valid) and instructs the user to update their password, or a redirect to the Verification UI URL with
+         *     a new Verification Flow ID which contains an error message that the verification link was invalid.
          *
-         * More information can be found at [Ory Kratos Email and Phone Verification Documentation](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation).
+         *     More information can be found at [Ory Kratos Email and Phone Verification Documentation](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation).
          */
         post: operations["updateVerificationFlow"]
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/verification/api": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Create Verification Flow for Native Apps
          * @description This endpoint initiates a verification flow for API clients such as mobile devices, smart TVs, and so on.
          *
-         * To fetch an existing verification flow call `/self-service/verification/flows?flow=<flow_id>`.
+         *     To fetch an existing verification flow call `/self-service/verification/flows?flow=<flow_id>`.
          *
-         * You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
-         * Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
-         * you vulnerable to a variety of CSRF attacks.
+         *     You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
+         *     Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
+         *     you vulnerable to a variety of CSRF attacks.
          *
-         * This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
+         *     This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
          *
-         * More information can be found at [Ory Email and Phone Verification Documentation](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation).
+         *     More information can be found at [Ory Email and Phone Verification Documentation](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation).
          */
         get: operations["createNativeVerificationFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/verification/browser": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Create Verification Flow for Browser Clients
          * @description This endpoint initializes a browser-based account verification flow. Once initialized, the browser will be redirected to
-         * `selfservice.flows.verification.ui_url` with the flow ID set as the query parameter `?flow=`.
+         *     `selfservice.flows.verification.ui_url` with the flow ID set as the query parameter `?flow=`.
          *
-         * If this endpoint is called via an AJAX request, the response contains the recovery flow without any redirects.
+         *     If this endpoint is called via an AJAX request, the response contains the recovery flow without any redirects.
          *
-         * This endpoint is NOT INTENDED for API clients and only works with browsers (Chrome, Firefox, ...).
+         *     This endpoint is NOT INTENDED for API clients and only works with browsers (Chrome, Firefox, ...).
          *
-         * More information can be found at [Ory Kratos Email and Phone Verification Documentation](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation).
+         *     More information can be found at [Ory Kratos Email and Phone Verification Documentation](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation).
          */
         get: operations["createBrowserVerificationFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/self-service/verification/flows": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Get Verification Flow
          * @description This endpoint returns a verification flow's context with, for example, error details and other information.
          *
-         * Browser flows expect the anti-CSRF cookie to be included in the request's HTTP Cookie Header.
-         * For AJAX requests you must ensure that cookies are included in the request or requests will fail.
+         *     Browser flows expect the anti-CSRF cookie to be included in the request's HTTP Cookie Header.
+         *     For AJAX requests you must ensure that cookies are included in the request or requests will fail.
          *
-         * If you use the browser-flow for server-side apps, the services need to run on a common top-level-domain
-         * and you need to forward the incoming HTTP Cookie header to this endpoint:
+         *     If you use the browser-flow for server-side apps, the services need to run on a common top-level-domain
+         *     and you need to forward the incoming HTTP Cookie header to this endpoint:
          *
-         * ```js
-         * pseudo-code example
-         * router.get('/recovery', async function (req, res) {
-         * const flow = await client.getVerificationFlow(req.header('cookie'), req.query['flow'])
+         *     ```js
+         *     pseudo-code example
+         *     router.get('/recovery', async function (req, res) {
+         *     const flow = await client.getVerificationFlow(req.header('cookie'), req.query['flow'])
          *
-         * res.render('verification', flow)
-         * })
-         * ```
+         *     res.render('verification', flow)
+         *     })
+         *     ```
          *
-         * More information can be found at [Ory Kratos Email and Phone Verification Documentation](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation).
+         *     More information can be found at [Ory Kratos Email and Phone Verification Documentation](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation).
          */
         get: operations["getVerificationFlow"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/sessions": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Get My Active Sessions
          * @description This endpoints returns all other active sessions that belong to the logged-in user.
-         * The current session can be retrieved by calling the `/sessions/whoami` endpoint.
+         *     The current session can be retrieved by calling the `/sessions/whoami` endpoint.
          */
         get: operations["listMySessions"]
+        put?: never
+        post?: never
         /**
          * Disable my other sessions
          * @description Calling this endpoint invalidates all except the current session that belong to the logged-in user.
-         * Session data are not deleted.
+         *     Session data are not deleted.
          */
         delete: operations["disableMyOtherSessions"]
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/sessions/token-exchange": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** Exchange Session Token */
         get: operations["exchangeSessionToken"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/sessions/whoami": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Check Who the Current HTTP Session Belongs To
          * @description Uses the HTTP Headers in the GET request to determine (e.g. by using checking the cookies) who is authenticated.
-         * Returns a session object in the body or 401 if the credentials are invalid or no credentials were sent.
-         * When the request it successful it adds the user ID to the 'X-Kratos-Authenticated-Identity-Id' header
-         * in the response.
+         *     Returns a session object in the body or 401 if the credentials are invalid or no credentials were sent.
+         *     When the request it successful it adds the user ID to the 'X-Kratos-Authenticated-Identity-Id' header
+         *     in the response.
          *
-         * If you call this endpoint from a server-side application, you must forward the HTTP Cookie Header to this endpoint:
+         *     If you call this endpoint from a server-side application, you must forward the HTTP Cookie Header to this endpoint:
          *
-         * ```js
-         * pseudo-code example
-         * router.get('/protected-endpoint', async function (req, res) {
-         * const session = await client.toSession(undefined, req.header('cookie'))
+         *     ```js
+         *     pseudo-code example
+         *     router.get('/protected-endpoint', async function (req, res) {
+         *     const session = await client.toSession(undefined, req.header('cookie'))
          *
-         * console.log(session)
-         * })
-         * ```
+         *     console.log(session)
+         *     })
+         *     ```
          *
-         * When calling this endpoint from a non-browser application (e.g. mobile app) you must include the session token:
+         *     When calling this endpoint from a non-browser application (e.g. mobile app) you must include the session token:
          *
-         * ```js
-         * pseudo-code example
-         * ...
-         * const session = await client.toSession("the-session-token")
+         *     ```js
+         *     pseudo-code example
+         *     ...
+         *     const session = await client.toSession("the-session-token")
          *
-         * console.log(session)
-         * ```
+         *     console.log(session)
+         *     ```
          *
-         * When using a token template, the token is included in the `tokenized` field of the session.
+         *     When using a token template, the token is included in the `tokenized` field of the session.
          *
-         * ```js
-         * pseudo-code example
-         * ...
-         * const session = await client.toSession("the-session-token", { tokenize_as: "example-jwt-template" })
+         *     ```js
+         *     pseudo-code example
+         *     ...
+         *     const session = await client.toSession("the-session-token", { tokenize_as: "example-jwt-template" })
          *
-         * console.log(session.tokenized) // The JWT
-         * ```
+         *     console.log(session.tokenized) // The JWT
+         *     ```
          *
-         * Depending on your configuration this endpoint might return a 403 status code if the session has a lower Authenticator
-         * Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
-         * credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
-         * to sign in with the second factor or change the configuration.
+         *     Depending on your configuration this endpoint might return a 403 status code if the session has a lower Authenticator
+         *     Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
+         *     credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
+         *     to sign in with the second factor or change the configuration.
          *
-         * This endpoint is useful for:
+         *     This endpoint is useful for:
          *
-         * AJAX calls. Remember to send credentials and set up CORS correctly!
-         * Reverse proxies and API Gateways
-         * Server-side calls - use the `X-Session-Token` header!
+         *     AJAX calls. Remember to send credentials and set up CORS correctly!
+         *     Reverse proxies and API Gateways
+         *     Server-side calls - use the `X-Session-Token` header!
          *
-         * This endpoint authenticates users by checking:
+         *     This endpoint authenticates users by checking:
          *
-         * if the `Cookie` HTTP header was set containing an Ory Kratos Session Cookie;
-         * if the `Authorization: bearer <ory-session-token>` HTTP header was set with a valid Ory Kratos Session Token;
-         * if the `X-Session-Token` HTTP header was set with a valid Ory Kratos Session Token.
+         *     if the `Cookie` HTTP header was set containing an Ory Kratos Session Cookie;
+         *     if the `Authorization: bearer <ory-session-token>` HTTP header was set with a valid Ory Kratos Session Token;
+         *     if the `X-Session-Token` HTTP header was set with a valid Ory Kratos Session Token.
          *
-         * If none of these headers are set or the cookie or token are invalid, the endpoint returns a HTTP 401 status code.
+         *     If none of these headers are set or the cookie or token are invalid, the endpoint returns a HTTP 401 status code.
          *
-         * As explained above, this request may fail due to several reasons. The `error.id` can be one of:
+         *     As explained above, this request may fail due to several reasons. The `error.id` can be one of:
          *
-         * `session_inactive`: No active session was found in the request (e.g. no Ory Session Cookie / Ory Session Token).
-         * `session_aal2_required`: An active session was found but it does not fulfil the Authenticator Assurance Level, implying that the session must (e.g.) authenticate the second factor.
+         *     `session_inactive`: No active session was found in the request (e.g. no Ory Session Cookie / Ory Session Token).
+         *     `session_aal2_required`: An active session was found but it does not fulfil the Authenticator Assurance Level, implying that the session must (e.g.) authenticate the second factor.
          */
         get: operations["toSession"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/sessions/{id}": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
+        post?: never
         /**
          * Disable one of my sessions
          * @description Calling this endpoint invalidates the specified session. The current session cannot be revoked.
-         * Session data are not deleted.
+         *     Session data are not deleted.
          */
         delete: operations["disableMySession"]
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
     "/version": {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * Return Running Software Version.
          * @description This endpoint returns the version of Ory Kratos.
          *
-         * If the service supports TLS Edge Termination, this endpoint does not require the
-         * `X-Forwarded-Proto` header to be set.
+         *     If the service supports TLS Edge Termination, this endpoint does not require the
+         *     `X-Forwarded-Proto` header to be set.
          *
-         * Be aware that if you are running multiple nodes of this service, the version will never
-         * refer to the cluster state, only to a single instance.
+         *     Be aware that if you are running multiple nodes of this service, the version will never
+         *     refer to the cluster state, only to a single instance.
          */
         get: operations["getVersion"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
     }
 }
-
 export type webhooks = Record<string, never>
-
 export interface components {
     schemas: {
         DefaultError: unknown
         /**
          * Format: int64
          * @description A Duration represents the elapsed time between two instants
-         * as an int64 nanosecond count. The representation limits the
-         * largest representable duration to approximately 290 years.
+         *     as an int64 nanosecond count. The representation limits the
+         *     largest representable duration to approximately 290 years.
          */
         Duration: number
         /** Format: int64 */
@@ -1046,12 +1621,12 @@ export interface components {
         /**
          * Authenticator Assurance Level (AAL)
          * @description The authenticator assurance level can be one of "aal1", "aal2", or "aal3". A higher number means that it is harder
-         * for an attacker to compromise the account.
+         *     for an attacker to compromise the account.
          *
-         * Generally, "aal1" implies that one authentication factor was used while AAL2 implies that two factors (e.g.
-         * password + TOTP) have been used.
+         *     Generally, "aal1" implies that one authentication factor was used while AAL2 implies that two factors (e.g.
+         *     password + TOTP) have been used.
          *
-         * To learn more about these levels please head over to: https://www.ory.sh/kratos/docs/concepts/credentials
+         *     To learn more about these levels please head over to: https://www.ory.sh/kratos/docs/concepts/credentials
          * @enum {string}
          */
         authenticatorAssuranceLevel: "aal0" | "aal1" | "aal2" | "aal3"
@@ -1065,23 +1640,23 @@ export interface components {
             /**
              * @description Read Consistency Level (preview)
              *
-             * The read consistency level determines the consistency guarantee for reads:
+             *     The read consistency level determines the consistency guarantee for reads:
              *
-             * strong (slow): The read is guaranteed to return the most recent data committed at the start of the read.
-             * eventual (very fast): The result will return data that is about 4.8 seconds old.
+             *     strong (slow): The read is guaranteed to return the most recent data committed at the start of the read.
+             *     eventual (very fast): The result will return data that is about 4.8 seconds old.
              *
-             * The default consistency guarantee can be changed in the Ory Network Console or using the Ory CLI with
-             * `ory patch project --replace '/previews/default_read_consistency_level="strong"'`.
+             *     The default consistency guarantee can be changed in the Ory Network Console or using the Ory CLI with
+             *     `ory patch project --replace '/previews/default_read_consistency_level="strong"'`.
              *
-             * Setting the default consistency level to `eventual` may cause regressions in the future as we add consistency
-             * controls to more APIs. Currently, the following APIs will be affected by this setting:
+             *     Setting the default consistency level to `eventual` may cause regressions in the future as we add consistency
+             *     controls to more APIs. Currently, the following APIs will be affected by this setting:
              *
-             * `GET /admin/identities`
+             *     `GET /admin/identities`
              *
-             * This feature is in preview and only available in Ory Network.
-             *  ConsistencyLevelUnset  ConsistencyLevelUnset is the unset / default consistency level.
-             * strong ConsistencyLevelStrong  ConsistencyLevelStrong is the strong consistency level.
-             * eventual ConsistencyLevelEventual  ConsistencyLevelEventual is the eventual consistency level using follower read timestamps.
+             *     This feature is in preview and only available in Ory Network.
+             *      ConsistencyLevelUnset  ConsistencyLevelUnset is the unset / default consistency level.
+             *     strong ConsistencyLevelStrong  ConsistencyLevelStrong is the strong consistency level.
+             *     eventual ConsistencyLevelEventual  ConsistencyLevelEventual is the eventual consistency level using follower read timestamps.
              * @enum {string}
              */
             consistency?: "" | "strong" | "eventual"
@@ -1095,7 +1670,7 @@ export interface components {
         continueWithRecoveryUi: {
             /**
              * @description Action will always be `show_recovery_ui`
-             * show_recovery_ui ContinueWithActionShowRecoveryUIString
+             *     show_recovery_ui ContinueWithActionShowRecoveryUIString (enum property replaced by openapi-typescript)
              * @enum {string}
              */
             action: "show_recovery_ui"
@@ -1114,7 +1689,7 @@ export interface components {
         continueWithSetOrySessionToken: {
             /**
              * @description Action will always be `set_ory_session_token`
-             * set_ory_session_token ContinueWithActionSetOrySessionTokenString
+             *     set_ory_session_token ContinueWithActionSetOrySessionTokenString (enum property replaced by openapi-typescript)
              * @enum {string}
              */
             action: "set_ory_session_token"
@@ -1125,7 +1700,7 @@ export interface components {
         continueWithSettingsUi: {
             /**
              * @description Action will always be `show_settings_ui`
-             * show_settings_ui ContinueWithActionShowSettingsUIString
+             *     show_settings_ui ContinueWithActionShowSettingsUIString (enum property replaced by openapi-typescript)
              * @enum {string}
              */
             action: "show_settings_ui"
@@ -1142,7 +1717,7 @@ export interface components {
         continueWithVerificationUi: {
             /**
              * @description Action will always be `show_verification_ui`
-             * show_verification_ui ContinueWithActionShowVerificationUIString
+             *     show_verification_ui ContinueWithActionShowVerificationUIString (enum property replaced by openapi-typescript)
              * @enum {string}
              */
             action: "show_verification_ui"
@@ -1175,74 +1750,62 @@ export interface components {
             credentials?: components["schemas"]["identityWithCredentials"]
             /** @description Store metadata about the user which is only accessible through admin APIs such as `GET /admin/identities/<id>`. */
             metadata_admin?: unknown
-            /**
-             * @description Store metadata about the identity which the identity itself can see when calling for example the
-             * session endpoint. Do not store sensitive information (e.g. credit score) about the identity in this field.
-             */
+            /** @description Store metadata about the identity which the identity itself can see when calling for example the
+             *     session endpoint. Do not store sensitive information (e.g. credit score) about the identity in this field. */
             metadata_public?: unknown
-            /**
-             * @description RecoveryAddresses contains all the addresses that can be used to recover an identity.
+            /** @description RecoveryAddresses contains all the addresses that can be used to recover an identity.
              *
-             * Use this structure to import recovery addresses for an identity. Please keep in mind
-             * that the address needs to be represented in the Identity Schema or this field will be overwritten
-             * on the next identity update.
-             */
+             *     Use this structure to import recovery addresses for an identity. Please keep in mind
+             *     that the address needs to be represented in the Identity Schema or this field will be overwritten
+             *     on the next identity update. */
             recovery_addresses?: components["schemas"]["recoveryIdentityAddress"][]
             /** @description SchemaID is the ID of the JSON Schema to be used for validating the identity's traits. */
             schema_id: string
             /**
              * @description State is the identity's state.
-             * active StateActive
-             * inactive StateInactive
+             *     active StateActive
+             *     inactive StateInactive
              * @enum {string}
              */
             state?: "active" | "inactive"
-            /**
-             * @description Traits represent an identity's traits. The identity is able to create, modify, and delete traits
-             * in a self-service manner. The input will always be validated against the JSON Schema defined
-             * in `schema_url`.
-             */
+            /** @description Traits represent an identity's traits. The identity is able to create, modify, and delete traits
+             *     in a self-service manner. The input will always be validated against the JSON Schema defined
+             *     in `schema_url`. */
             traits: Record<string, never>
-            /**
-             * @description VerifiableAddresses contains all the addresses that can be verified by the user.
+            /** @description VerifiableAddresses contains all the addresses that can be verified by the user.
              *
-             * Use this structure to import verified addresses for an identity. Please keep in mind
-             * that the address needs to be represented in the Identity Schema or this field will be overwritten
-             * on the next identity update.
-             */
+             *     Use this structure to import verified addresses for an identity. Please keep in mind
+             *     that the address needs to be represented in the Identity Schema or this field will be overwritten
+             *     on the next identity update. */
             verifiable_addresses?: components["schemas"]["verifiableIdentityAddress"][]
         }
         /** @description Create Recovery Code for Identity Request Body */
         createRecoveryCodeForIdentityBody: {
-            /**
-             * @description Code Expires In
+            /** @description Code Expires In
              *
-             * The recovery code will expire after that amount of time has passed. Defaults to the configuration value of
-             * `selfservice.methods.code.config.lifespan`.
-             */
+             *     The recovery code will expire after that amount of time has passed. Defaults to the configuration value of
+             *     `selfservice.methods.code.config.lifespan`. */
             expires_in?: string
             /**
              * Format: uuid
              * @description Identity to Recover
              *
-             * The identity's ID you wish to recover.
+             *     The identity's ID you wish to recover.
              */
             identity_id: string
         }
         /** @description Create Recovery Link for Identity Request Body */
         createRecoveryLinkForIdentityBody: {
-            /**
-             * @description Link Expires In
+            /** @description Link Expires In
              *
-             * The recovery link will expire after that amount of time has passed. Defaults to the configuration value of
-             * `selfservice.methods.code.config.lifespan`.
-             */
+             *     The recovery link will expire after that amount of time has passed. Defaults to the configuration value of
+             *     `selfservice.methods.code.config.lifespan`. */
             expires_in?: string
             /**
              * Format: uuid
              * @description Identity to Recover
              *
-             * The identity's ID you wish to recover.
+             *     The identity's ID you wish to recover.
              */
             identity_id: string
         }
@@ -1310,23 +1873,21 @@ export interface components {
             /**
              * @description Debug information
              *
-             * This field is often not exposed to protect against leaking
-             * sensitive information.
+             *     This field is often not exposed to protect against leaking
+             *     sensitive information.
              * @example SQL field "foo" is not a bool.
              */
             debug?: string
             /** @description Further error details */
             details?: Record<string, never>
-            /**
-             * @description The error ID
+            /** @description The error ID
              *
-             * Useful when trying to identify various errors in application logic.
-             */
+             *     Useful when trying to identify various errors in application logic. */
             id?: string
             /**
              * @description Error message
              *
-             * The error's message.
+             *     The error's message.
              * @example The resource could not be found
              */
             message: string
@@ -1338,8 +1899,8 @@ export interface components {
             /**
              * @description The request ID
              *
-             * The request ID is often exposed internally in order to trace
-             * errors across service architectures. This is often a UUID.
+             *     The request ID is often exposed internally in order to trace
+             *     errors across service architectures. This is often a UUID.
              * @example d7ef54b1-ec15-46e6-bccb-524b82c035e6
              */
             request?: string
@@ -1377,8 +1938,8 @@ export interface components {
              * Format: uuid
              * @description ID is the identity's unique identifier.
              *
-             * The Identity ID can not be changed and can not be chosen. This ensures future
-             * compatibility and optimization for distributed stores such as CockroachDB.
+             *     The Identity ID can not be changed and can not be chosen. This ensures future
+             *     compatibility and optimization for distributed stores such as CockroachDB.
              */
             id: string
             metadata_admin?: components["schemas"]["nullJsonRawMessage"]
@@ -1388,18 +1949,16 @@ export interface components {
             recovery_addresses?: components["schemas"]["recoveryIdentityAddress"][]
             /** @description SchemaID is the ID of the JSON Schema to be used for validating the identity's traits. */
             schema_id: string
-            /**
-             * @description SchemaURL is the URL of the endpoint where the identity's traits schema can be fetched from.
+            /** @description SchemaURL is the URL of the endpoint where the identity's traits schema can be fetched from.
              *
-             * format: url
-             */
+             *     format: url */
             schema_url: string
             /**
              * @description State is the identity's state.
              *
-             * This value has currently no effect.
-             * active StateActive
-             * inactive StateInactive
+             *     This value has currently no effect.
+             *     active StateActive
+             *     inactive StateInactive
              * @enum {string}
              */
             state?: "active" | "inactive"
@@ -1425,14 +1984,14 @@ export interface components {
             identifiers?: string[]
             /**
              * @description Type discriminates between different types of credentials.
-             * password CredentialsTypePassword
-             * oidc CredentialsTypeOIDC
-             * totp CredentialsTypeTOTP
-             * lookup_secret CredentialsTypeLookup
-             * webauthn CredentialsTypeWebAuthn
-             * code CredentialsTypeCodeAuth
-             * link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
-             * code_recovery CredentialsTypeRecoveryCode
+             *     password CredentialsTypePassword
+             *     oidc CredentialsTypeOIDC
+             *     totp CredentialsTypeTOTP
+             *     lookup_secret CredentialsTypeLookup
+             *     webauthn CredentialsTypeWebAuthn
+             *     code CredentialsTypeCodeAuth
+             *     link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
+             *     code_recovery CredentialsTypeRecoveryCode
              * @enum {string}
              */
             type?:
@@ -1486,9 +2045,9 @@ export interface components {
              * Format: uuid
              * @description The ID of this patch.
              *
-             * The patch ID is optional. If specified, the ID will be returned in the
-             * response, so consumers of this API can correlate the response with the
-             * patch.
+             *     The patch ID is optional. If specified, the ID will be returned in the
+             *     response, so consumers of this API can correlate the response with the
+             *     patch.
              */
             patch_id?: string
         }
@@ -1496,7 +2055,7 @@ export interface components {
         identityPatchResponse: {
             /**
              * @description The action for this specific patch
-             * create ActionCreate  Create this identity.
+             *     create ActionCreate  Create this identity.
              * @enum {string}
              */
             action?: "create"
@@ -1522,11 +2081,9 @@ export interface components {
         }
         /** @description List of Identity JSON Schemas */
         identitySchemas: components["schemas"]["identitySchemaContainer"][]
-        /**
-         * @description Traits represent an identity's traits. The identity is able to create, modify, and delete traits
-         * in a self-service manner. The input will always be validated against the JSON Schema defined
-         * in `schema_url`.
-         */
+        /** @description Traits represent an identity's traits. The identity is able to create, modify, and delete traits
+         *     in a self-service manner. The input will always be validated against the JSON Schema defined
+         *     in `schema_url`. */
         identityTraits: unknown
         /** @description VerifiableAddressStatus must not exceed 16 characters as that is the limitation in the SQL Schema */
         identityVerifiableAddressStatus: string
@@ -1567,7 +2124,7 @@ export interface components {
             /**
              * @description This field is used together with operation "move" and uses JSON Pointer notation.
              *
-             * Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).
+             *     Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).
              * @example /name
              */
             from?: string
@@ -1579,14 +2136,14 @@ export interface components {
             /**
              * @description The path to the target path. Uses JSON pointer notation.
              *
-             * Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).
+             *     Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).
              * @example /name
              */
             path: string
             /**
              * @description The value to be used within the operations.
              *
-             * Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).
+             *     Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).
              * @example foobar
              */
             value?: unknown
@@ -1596,23 +2153,23 @@ export interface components {
         /**
          * Login Flow
          * @description This object represents a login flow. A login flow is initiated at the "Initiate Login API / Browser Flow"
-         * endpoint by a client.
+         *     endpoint by a client.
          *
-         * Once a login flow is completed successfully, a session cookie or session token will be issued.
+         *     Once a login flow is completed successfully, a session cookie or session token will be issued.
          */
         loginFlow: {
             /**
              * @description The active login method
              *
-             * If set contains the login method used. If the flow is new, it is unset.
-             * password CredentialsTypePassword
-             * oidc CredentialsTypeOIDC
-             * totp CredentialsTypeTOTP
-             * lookup_secret CredentialsTypeLookup
-             * webauthn CredentialsTypeWebAuthn
-             * code CredentialsTypeCodeAuth
-             * link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
-             * code_recovery CredentialsTypeRecoveryCode
+             *     If set contains the login method used. If the flow is new, it is unset.
+             *     password CredentialsTypePassword
+             *     oidc CredentialsTypeOIDC
+             *     totp CredentialsTypeTOTP
+             *     lookup_secret CredentialsTypeLookup
+             *     webauthn CredentialsTypeWebAuthn
+             *     code CredentialsTypeCodeAuth
+             *     link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
+             *     code_recovery CredentialsTypeRecoveryCode
              * @enum {string}
              */
             active?:
@@ -1632,13 +2189,13 @@ export interface components {
             /**
              * Format: date-time
              * @description ExpiresAt is the time (UTC) when the flow expires. If the user still wishes to log in,
-             * a new flow has to be initiated.
+             *     a new flow has to be initiated.
              */
             expires_at: string
             /**
              * Format: uuid
              * @description ID represents the flow's unique ID. When performing the login flow, this
-             * represents the id in the login UI's query parameter: http://<selfservice.flows.login.ui_url>/?flow=<flow_id>
+             *     represents the id in the login UI's query parameter: http://<selfservice.flows.login.ui_url>/?flow=<flow_id>
              */
             id: string
             /**
@@ -1646,38 +2203,30 @@ export interface components {
              * @description IssuedAt is the time (UTC) when the flow started.
              */
             issued_at: string
-            /**
-             * @description Ory OAuth 2.0 Login Challenge.
+            /** @description Ory OAuth 2.0 Login Challenge.
              *
-             * This value is set using the `login_challenge` query parameter of the registration and login endpoints.
-             * If set will cooperate with Ory OAuth2 and OpenID to act as an OAuth2 server / OpenID Provider.
-             */
+             *     This value is set using the `login_challenge` query parameter of the registration and login endpoints.
+             *     If set will cooperate with Ory OAuth2 and OpenID to act as an OAuth2 server / OpenID Provider. */
             oauth2_login_challenge?: string
             oauth2_login_request?: components["schemas"]["OAuth2LoginRequest"]
             organization_id?: components["schemas"]["NullUUID"]
             /** @description Refresh stores whether this login flow should enforce re-authentication. */
             refresh?: boolean
-            /**
-             * @description RequestURL is the initial URL that was requested from Ory Kratos. It can be used
-             * to forward information contained in the URL's path or query for example.
-             */
+            /** @description RequestURL is the initial URL that was requested from Ory Kratos. It can be used
+             *     to forward information contained in the URL's path or query for example. */
             request_url: string
             requested_aal?: components["schemas"]["authenticatorAssuranceLevel"]
             /** @description ReturnTo contains the requested return_to URL. */
             return_to?: string
-            /**
-             * @description SessionTokenExchangeCode holds the secret code that the client can use to retrieve a session token after the login flow has been completed.
-             * This is only set if the client has requested a session token exchange code, and if the flow is of type "api",
-             * and only on creating the login flow.
-             */
+            /** @description SessionTokenExchangeCode holds the secret code that the client can use to retrieve a session token after the login flow has been completed.
+             *     This is only set if the client has requested a session token exchange code, and if the flow is of type "api",
+             *     and only on creating the login flow. */
             session_token_exchange_code?: string
-            /**
-             * @description State represents the state of this request:
+            /** @description State represents the state of this request:
              *
-             * choose_method: ask the user to choose a method to sign in with
-             * sent_email: the email has been sent to the user
-             * passed_challenge: the request was successful and the login challenge was passed.
-             */
+             *     choose_method: ask the user to choose a method to sign in with
+             *     sent_email: the email has been sent to the user
+             *     passed_challenge: the request was successful and the login challenge was passed. */
             state: unknown
             type: components["schemas"]["selfServiceFlowType"]
             ui: components["schemas"]["uiContainer"]
@@ -1691,9 +2240,9 @@ export interface components {
          * Login Flow State
          * @description The state represents the state of the login flow.
          *
-         * choose_method: ask the user to choose a method (e.g. login account via email)
-         * sent_email: the email has been sent to the user
-         * passed_challenge: the request was successful and the login challenge was passed.
+         *     choose_method: ask the user to choose a method (e.g. login account via email)
+         *     sent_email: the email has been sent to the user
+         *     passed_challenge: the request was successful and the login challenge was passed.
          * @enum {unknown}
          */
         loginFlowState: "choose_method" | "sent_email" | "passed_challenge"
@@ -1701,11 +2250,9 @@ export interface components {
         logoutFlow: {
             /** @description LogoutToken can be used to perform logout using AJAX. */
             logout_token: string
-            /**
-             * @description LogoutURL can be opened in a browser to sign the user out.
+            /** @description LogoutURL can be opened in a browser to sign the user out.
              *
-             * format: uri
-             */
+             *     format: uri */
             logout_url: string
         }
         message: {
@@ -1716,10 +2263,8 @@ export interface components {
              * @description CreatedAt is a helper struct field for gobuffalo.pop.
              */
             created_at: string
-            /**
-             * @description Dispatches store information about the attempts of delivering a message
-             * May contain an error if any happened, or just the `success` state.
-             */
+            /** @description Dispatches store information about the attempts of delivering a message
+             *     May contain an error if any happened, or just the `success` state. */
             dispatches?: components["schemas"]["messageDispatch"][]
             /** Format: uuid */
             id: string
@@ -1730,17 +2275,17 @@ export interface components {
             subject: string
             /**
              * @description
-             * recovery_invalid TypeRecoveryInvalid
-             * recovery_valid TypeRecoveryValid
-             * recovery_code_invalid TypeRecoveryCodeInvalid
-             * recovery_code_valid TypeRecoveryCodeValid
-             * verification_invalid TypeVerificationInvalid
-             * verification_valid TypeVerificationValid
-             * verification_code_invalid TypeVerificationCodeInvalid
-             * verification_code_valid TypeVerificationCodeValid
-             * stub TypeTestStub
-             * login_code_valid TypeLoginCodeValid
-             * registration_code_valid TypeRegistrationCodeValid
+             *     recovery_invalid TypeRecoveryInvalid
+             *     recovery_valid TypeRecoveryValid
+             *     recovery_code_invalid TypeRecoveryCodeInvalid
+             *     recovery_code_valid TypeRecoveryCodeValid
+             *     verification_invalid TypeVerificationInvalid
+             *     verification_valid TypeVerificationValid
+             *     verification_code_invalid TypeVerificationCodeInvalid
+             *     verification_code_valid TypeVerificationCodeValid
+             *     stub TypeTestStub
+             *     login_code_valid TypeLoginCodeValid
+             *     registration_code_valid TypeRegistrationCodeValid
              * @enum {string}
              */
             template_type:
@@ -1762,10 +2307,8 @@ export interface components {
              */
             updated_at: string
         }
-        /**
-         * @description MessageDispatch represents an attempt of sending a courier message
-         * It contains the status of the attempt (failed or successful) and the error if any occured
-         */
+        /** @description MessageDispatch represents an attempt of sending a courier message
+         *     It contains the status of the attempt (failed or successful) and the error if any occured */
         messageDispatch: {
             /**
              * Format: date-time
@@ -1785,9 +2328,9 @@ export interface components {
             message_id: string
             /**
              * @description The status of this dispatch
-             * Either "failed" or "success"
-             * failed CourierMessageDispatchStatusFailed
-             * success CourierMessageDispatchStatusSuccess
+             *     Either "failed" or "success"
+             *     failed CourierMessageDispatchStatusFailed
+             *     success CourierMessageDispatchStatusSuccess
              * @enum {string}
              */
             status: "failed" | "success"
@@ -1814,20 +2357,16 @@ export interface components {
         nullTime: string
         /** @description Patch Identities Body */
         patchIdentitiesBody: {
-            /**
-             * @description Identities holds the list of patches to apply
+            /** @description Identities holds the list of patches to apply
              *
-             * required
-             */
+             *     required */
             identities?: components["schemas"]["identityPatch"][]
         }
         /** @description Perform Native Logout Request Body */
         performNativeLogoutBody: {
-            /**
-             * @description The Session Token
+            /** @description The Session Token
              *
-             * Invalidate this session token.
-             */
+             *     Invalidate this session token. */
             session_token: string
         }
         /**
@@ -1839,42 +2378,38 @@ export interface components {
              * Format: date-time
              * @description Expires At is the timestamp of when the recovery flow expires
              *
-             * The timestamp when the recovery code expires.
+             *     The timestamp when the recovery code expires.
              */
             expires_at?: string
             /** @description RecoveryCode is the code that can be used to recover the account */
             recovery_code: string
-            /**
-             * @description RecoveryLink with flow
+            /** @description RecoveryLink with flow
              *
-             * This link opens the recovery UI with an empty `code` field.
-             */
+             *     This link opens the recovery UI with an empty `code` field. */
             recovery_link: string
         }
         /**
          * A Recovery Flow
          * @description This request is used when an identity wants to recover their account.
          *
-         * We recommend reading the [Account Recovery Documentation](../self-service/flows/password-reset-account-recovery)
+         *     We recommend reading the [Account Recovery Documentation](../self-service/flows/password-reset-account-recovery)
          */
         recoveryFlow: {
-            /**
-             * @description Active, if set, contains the recovery method that is being used. It is initially
-             * not set.
-             */
+            /** @description Active, if set, contains the recovery method that is being used. It is initially
+             *     not set. */
             active?: string
             /** @description Contains possible actions that could follow this flow */
             continue_with?: components["schemas"]["continueWith"][]
             /**
              * Format: date-time
              * @description ExpiresAt is the time (UTC) when the request expires. If the user still wishes to update the setting,
-             * a new request has to be initiated.
+             *     a new request has to be initiated.
              */
             expires_at: string
             /**
              * Format: uuid
              * @description ID represents the request's unique ID. When performing the recovery flow, this
-             * represents the id in the recovery ui's query parameter: http://<selfservice.flows.recovery.ui_url>?request=<id>
+             *     represents the id in the recovery ui's query parameter: http://<selfservice.flows.recovery.ui_url>?request=<id>
              */
             id: string
             /**
@@ -1882,20 +2417,16 @@ export interface components {
              * @description IssuedAt is the time (UTC) when the request occurred.
              */
             issued_at: string
-            /**
-             * @description RequestURL is the initial URL that was requested from Ory Kratos. It can be used
-             * to forward information contained in the URL's path or query for example.
-             */
+            /** @description RequestURL is the initial URL that was requested from Ory Kratos. It can be used
+             *     to forward information contained in the URL's path or query for example. */
             request_url: string
             /** @description ReturnTo contains the requested return_to URL. */
             return_to?: string
-            /**
-             * @description State represents the state of this request:
+            /** @description State represents the state of this request:
              *
-             * choose_method: ask the user to choose a method (e.g. recover account via email)
-             * sent_email: the email has been sent to the user
-             * passed_challenge: the request was successful and the recovery challenge was passed.
-             */
+             *     choose_method: ask the user to choose a method (e.g. recover account via email)
+             *     sent_email: the email has been sent to the user
+             *     passed_challenge: the request was successful and the recovery challenge was passed. */
             state: unknown
             type: components["schemas"]["selfServiceFlowType"]
             ui: components["schemas"]["uiContainer"]
@@ -1904,9 +2435,9 @@ export interface components {
          * Recovery Flow State
          * @description The state represents the state of the recovery flow.
          *
-         * choose_method: ask the user to choose a method (e.g. recover account via email)
-         * sent_email: the email has been sent to the user
-         * passed_challenge: the request was successful and the recovery challenge was passed.
+         *     choose_method: ask the user to choose a method (e.g. recover account via email)
+         *     sent_email: the email has been sent to the user
+         *     passed_challenge: the request was successful and the recovery challenge was passed.
          * @enum {unknown}
          */
         recoveryFlowState: "choose_method" | "sent_email" | "passed_challenge"
@@ -1935,28 +2466,26 @@ export interface components {
              * Format: date-time
              * @description Recovery Link Expires At
              *
-             * The timestamp when the recovery link expires.
+             *     The timestamp when the recovery link expires.
              */
             expires_at?: string
-            /**
-             * @description Recovery Link
+            /** @description Recovery Link
              *
-             * This link can be used to recover the account.
-             */
+             *     This link can be used to recover the account. */
             recovery_link: string
         }
         registrationFlow: {
             /**
              * @description Active, if set, contains the registration method that is being used. It is initially
-             * not set.
-             * password CredentialsTypePassword
-             * oidc CredentialsTypeOIDC
-             * totp CredentialsTypeTOTP
-             * lookup_secret CredentialsTypeLookup
-             * webauthn CredentialsTypeWebAuthn
-             * code CredentialsTypeCodeAuth
-             * link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
-             * code_recovery CredentialsTypeRecoveryCode
+             *     not set.
+             *     password CredentialsTypePassword
+             *     oidc CredentialsTypeOIDC
+             *     totp CredentialsTypeTOTP
+             *     lookup_secret CredentialsTypeLookup
+             *     webauthn CredentialsTypeWebAuthn
+             *     code CredentialsTypeCodeAuth
+             *     link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
+             *     code_recovery CredentialsTypeRecoveryCode
              * @enum {string}
              */
             active?:
@@ -1971,13 +2500,13 @@ export interface components {
             /**
              * Format: date-time
              * @description ExpiresAt is the time (UTC) when the flow expires. If the user still wishes to log in,
-             * a new flow has to be initiated.
+             *     a new flow has to be initiated.
              */
             expires_at: string
             /**
              * Format: uuid
              * @description ID represents the flow's unique ID. When performing the registration flow, this
-             * represents the id in the registration ui's query parameter: http://<selfservice.flows.registration.ui_url>/?flow=<id>
+             *     represents the id in the registration ui's query parameter: http://<selfservice.flows.registration.ui_url>/?flow=<id>
              */
             id: string
             /**
@@ -1985,35 +2514,27 @@ export interface components {
              * @description IssuedAt is the time (UTC) when the flow occurred.
              */
             issued_at: string
-            /**
-             * @description Ory OAuth 2.0 Login Challenge.
+            /** @description Ory OAuth 2.0 Login Challenge.
              *
-             * This value is set using the `login_challenge` query parameter of the registration and login endpoints.
-             * If set will cooperate with Ory OAuth2 and OpenID to act as an OAuth2 server / OpenID Provider.
-             */
+             *     This value is set using the `login_challenge` query parameter of the registration and login endpoints.
+             *     If set will cooperate with Ory OAuth2 and OpenID to act as an OAuth2 server / OpenID Provider. */
             oauth2_login_challenge?: string
             oauth2_login_request?: components["schemas"]["OAuth2LoginRequest"]
             organization_id?: components["schemas"]["NullUUID"]
-            /**
-             * @description RequestURL is the initial URL that was requested from Ory Kratos. It can be used
-             * to forward information contained in the URL's path or query for example.
-             */
+            /** @description RequestURL is the initial URL that was requested from Ory Kratos. It can be used
+             *     to forward information contained in the URL's path or query for example. */
             request_url: string
             /** @description ReturnTo contains the requested return_to URL. */
             return_to?: string
-            /**
-             * @description SessionTokenExchangeCode holds the secret code that the client can use to retrieve a session token after the flow has been completed.
-             * This is only set if the client has requested a session token exchange code, and if the flow is of type "api",
-             * and only on creating the flow.
-             */
+            /** @description SessionTokenExchangeCode holds the secret code that the client can use to retrieve a session token after the flow has been completed.
+             *     This is only set if the client has requested a session token exchange code, and if the flow is of type "api",
+             *     and only on creating the flow. */
             session_token_exchange_code?: string
-            /**
-             * @description State represents the state of this request:
+            /** @description State represents the state of this request:
              *
-             * choose_method: ask the user to choose a method (e.g. registration with email)
-             * sent_email: the email has been sent to the user
-             * passed_challenge: the request was successful and the registration challenge was passed.
-             */
+             *     choose_method: ask the user to choose a method (e.g. registration with email)
+             *     sent_email: the email has been sent to the user
+             *     passed_challenge: the request was successful and the registration challenge was passed. */
             state: unknown
             /** @description TransientPayload is used to pass data from the registration to a webhook */
             transient_payload?: Record<string, never>
@@ -2023,8 +2544,8 @@ export interface components {
         /**
          * State represents the state of this request:
          * @description choose_method: ask the user to choose a method (e.g. registration with email)
-         * sent_email: the email has been sent to the user
-         * passed_challenge: the request was successful and the registration challenge was passed.
+         *     sent_email: the email has been sent to the user
+         *     passed_challenge: the request was successful and the registration challenge was passed.
          * @enum {unknown}
          */
         registrationFlowState: "choose_method" | "sent_email" | "passed_challenge"
@@ -2056,8 +2577,8 @@ export interface components {
              * Format: date-time
              * @description The Session Authentication Timestamp
              *
-             * When this session was authenticated at. If multi-factor authentication was used this
-             * is the time when the last factor was authenticated (e.g. the TOTP code challenge was completed).
+             *     When this session was authenticated at. If multi-factor authentication was used this
+             *     is the time when the last factor was authenticated (e.g. the TOTP code challenge was completed).
              */
             authenticated_at?: string
             authentication_methods?: components["schemas"]["sessionAuthenticationMethods"]
@@ -2068,7 +2589,7 @@ export interface components {
              * Format: date-time
              * @description The Session Expiry
              *
-             * When this session expires at.
+             *     When this session expires at.
              */
             expires_at?: string
             /**
@@ -2081,14 +2602,12 @@ export interface components {
              * Format: date-time
              * @description The Session Issuance Timestamp
              *
-             * When this session was issued at. Usually equal or close to `authenticated_at`.
+             *     When this session was issued at. Usually equal or close to `authenticated_at`.
              */
             issued_at?: string
-            /**
-             * @description Tokenized is the tokenized (e.g. JWT) version of the session.
+            /** @description Tokenized is the tokenized (e.g. JWT) version of the session.
              *
-             * It is only set when the `tokenize` query parameter was set to a valid tokenize template during calls to `/session/whoami`.
-             */
+             *     It is only set when the `tokenize` query parameter was set to a valid tokenize template during calls to `/session/whoami`. */
             tokenized?: string
         }
         /**
@@ -2143,33 +2662,29 @@ export interface components {
         /**
          * Flow represents a Settings Flow
          * @description This flow is used when an identity wants to update settings
-         * (e.g. profile data, passwords, ...) in a selfservice manner.
+         *     (e.g. profile data, passwords, ...) in a selfservice manner.
          *
-         * We recommend reading the [User Settings Documentation](../self-service/flows/user-settings)
+         *     We recommend reading the [User Settings Documentation](../self-service/flows/user-settings)
          */
         settingsFlow: {
-            /**
-             * @description Active, if set, contains the registration method that is being used. It is initially
-             * not set.
-             */
+            /** @description Active, if set, contains the registration method that is being used. It is initially
+             *     not set. */
             active?: string
-            /**
-             * @description Contains a list of actions, that could follow this flow
+            /** @description Contains a list of actions, that could follow this flow
              *
-             * It can, for example, contain a reference to the verification flow, created as part of the user's
-             * registration.
-             */
+             *     It can, for example, contain a reference to the verification flow, created as part of the user's
+             *     registration. */
             continue_with?: components["schemas"]["continueWith"][]
             /**
              * Format: date-time
              * @description ExpiresAt is the time (UTC) when the flow expires. If the user still wishes to update the setting,
-             * a new flow has to be initiated.
+             *     a new flow has to be initiated.
              */
             expires_at: string
             /**
              * Format: uuid
              * @description ID represents the flow's unique ID. When performing the settings flow, this
-             * represents the id in the settings ui's query parameter: http://<selfservice.flows.settings.ui_url>?flow=<id>
+             *     represents the id in the settings ui's query parameter: http://<selfservice.flows.settings.ui_url>?flow=<id>
              */
             id: string
             identity: components["schemas"]["identity"]
@@ -2178,21 +2693,17 @@ export interface components {
              * @description IssuedAt is the time (UTC) when the flow occurred.
              */
             issued_at: string
-            /**
-             * @description RequestURL is the initial URL that was requested from Ory Kratos. It can be used
-             * to forward information contained in the URL's path or query for example.
-             */
+            /** @description RequestURL is the initial URL that was requested from Ory Kratos. It can be used
+             *     to forward information contained in the URL's path or query for example. */
             request_url: string
             /** @description ReturnTo contains the requested return_to URL. */
             return_to?: string
-            /**
-             * @description State represents the state of this flow. It knows two states:
+            /** @description State represents the state of this flow. It knows two states:
              *
-             * show_form: No user data has been collected, or it is invalid, and thus the form should be shown.
-             * success: Indicates that the settings flow has been updated successfully with the provided data.
-             * Done will stay true when repeatedly checking. If set to true, done will revert back to false only
-             * when a flow with invalid (e.g. "please use a valid phone number") data was sent.
-             */
+             *     show_form: No user data has been collected, or it is invalid, and thus the form should be shown.
+             *     success: Indicates that the settings flow has been updated successfully with the provided data.
+             *     Done will stay true when repeatedly checking. If set to true, done will revert back to false only
+             *     when a flow with invalid (e.g. "please use a valid phone number") data was sent. */
             state: unknown
             type: components["schemas"]["selfServiceFlowType"]
             ui: components["schemas"]["uiContainer"]
@@ -2200,65 +2711,57 @@ export interface components {
         /**
          * State represents the state of this flow. It knows two states:
          * @description show_form: No user data has been collected, or it is invalid, and thus the form should be shown.
-         * success: Indicates that the settings flow has been updated successfully with the provided data.
-         * Done will stay true when repeatedly checking. If set to true, done will revert back to false only
-         * when a flow with invalid (e.g. "please use a valid phone number") data was sent.
+         *     success: Indicates that the settings flow has been updated successfully with the provided data.
+         *     Done will stay true when repeatedly checking. If set to true, done will revert back to false only
+         *     when a flow with invalid (e.g. "please use a valid phone number") data was sent.
          * @enum {unknown}
          */
         settingsFlowState: "show_form" | "success"
         /** @description The Response for Registration Flows via API */
         successfulCodeExchangeResponse: {
             session: components["schemas"]["session"]
-            /**
-             * @description The Session Token
+            /** @description The Session Token
              *
-             * A session token is equivalent to a session cookie, but it can be sent in the HTTP Authorization
-             * Header:
+             *     A session token is equivalent to a session cookie, but it can be sent in the HTTP Authorization
+             *     Header:
              *
-             * Authorization: bearer ${session-token}
+             *     Authorization: bearer ${session-token}
              *
-             * The session token is only issued for API flows, not for Browser flows!
-             */
+             *     The session token is only issued for API flows, not for Browser flows! */
             session_token?: string
         }
         /** @description The Response for Login Flows via API */
         successfulNativeLogin: {
             session: components["schemas"]["session"]
-            /**
-             * @description The Session Token
+            /** @description The Session Token
              *
-             * A session token is equivalent to a session cookie, but it can be sent in the HTTP Authorization
-             * Header:
+             *     A session token is equivalent to a session cookie, but it can be sent in the HTTP Authorization
+             *     Header:
              *
-             * Authorization: bearer ${session-token}
+             *     Authorization: bearer ${session-token}
              *
-             * The session token is only issued for API flows, not for Browser flows!
-             */
+             *     The session token is only issued for API flows, not for Browser flows! */
             session_token?: string
         }
         /** @description The Response for Registration Flows via API */
         successfulNativeRegistration: {
-            /**
-             * @description Contains a list of actions, that could follow this flow
+            /** @description Contains a list of actions, that could follow this flow
              *
-             * It can, for example, this will contain a reference to the verification flow, created as part of the user's
-             * registration or the token of the session.
-             */
+             *     It can, for example, this will contain a reference to the verification flow, created as part of the user's
+             *     registration or the token of the session. */
             continue_with?: components["schemas"]["continueWith"][]
             identity: components["schemas"]["identity"]
             session?: components["schemas"]["session"]
-            /**
-             * @description The Session Token
+            /** @description The Session Token
              *
-             * This field is only set when the session hook is configured as a post-registration hook.
+             *     This field is only set when the session hook is configured as a post-registration hook.
              *
-             * A session token is equivalent to a session cookie, but it can be sent in the HTTP Authorization
-             * Header:
+             *     A session token is equivalent to a session cookie, but it can be sent in the HTTP Authorization
+             *     Header:
              *
-             * Authorization: bearer ${session-token}
+             *     Authorization: bearer ${session-token}
              *
-             * The session token is only issued for API flows, not for Browser flows!
-             */
+             *     The session token is only issued for API flows, not for Browser flows! */
             session_token?: string
         }
         tokenPagination: {
@@ -2266,34 +2769,30 @@ export interface components {
              * Format: int64
              * @description Items per page
              *
-             * This is the number of items per page to return.
-             * For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
+             *     This is the number of items per page to return.
+             *     For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
              * @default 250
              */
-            page_size?: number
+            page_size: number
             /**
              * @description Next Page Token
              *
-             * The next page token.
-             * For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
+             *     The next page token.
+             *     For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
              * @default 1
              */
-            page_token?: string
+            page_token: string
         }
         tokenPaginationHeaders: {
-            /**
-             * @description The link header contains pagination links.
+            /** @description The link header contains pagination links.
              *
-             * For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
+             *     For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
              *
-             * in: header
-             */
+             *     in: header */
             link?: string
-            /**
-             * @description The total number of clients.
+            /** @description The total number of clients.
              *
-             * in: header
-             */
+             *     in: header */
             "x-total-count"?: string
         }
         /** @description Container represents a HTML Form. The container can work with both HTTP Form and JSON requests */
@@ -2308,7 +2807,7 @@ export interface components {
         /**
          * Node represents a flow's nodes
          * @description Nodes are represented as HTML elements or their native UI equivalents. For example,
-         * a node can be an `<img>` tag, or an `<input element>` but also `some plain text`.
+         *     a node can be an `<img>` tag, or an `<input element>` but also `some plain text`.
          */
         uiNode:
             | components["schemas"]["uiNodeText"]
@@ -2321,15 +2820,15 @@ export interface components {
             attributes: components["schemas"]["uiNodeAnchorAttributes"]
             /**
              * @description Group specifies which group (e.g. password authenticator) this node belongs to.
-             * default DefaultGroup
-             * password PasswordGroup
-             * oidc OpenIDConnectGroup
-             * profile ProfileGroup
-             * link LinkGroup
-             * code CodeGroup
-             * totp TOTPGroup
-             * lookup_secret LookupGroup
-             * webauthn WebAuthnGroup
+             *     default DefaultGroup
+             *     password PasswordGroup
+             *     oidc OpenIDConnectGroup
+             *     profile ProfileGroup
+             *     link LinkGroup
+             *     code CodeGroup
+             *     totp TOTPGroup
+             *     lookup_secret LookupGroup
+             *     webauthn WebAuthnGroup
              * @enum {string}
              */
             group: "default" | "password" | "oidc" | "profile" | "link" | "code" | "totp" | "lookup_secret" | "webauthn"
@@ -2339,19 +2838,18 @@ export interface components {
         }
         /** AnchorAttributes represents the attributes of an anchor node. */
         uiNodeAnchorAttributes: {
-            /**
-             * @description The link's href (destination) URL.
+            /** @description The link's href (destination) URL.
              *
-             * format: uri
-             */
+             *     format: uri */
             href: string
             /** @description A unique identifier */
             id: string
             /**
              * @description NodeType represents this node's types. It is a mirror of `node.type` and
-             * is primarily used to allow compatibility with OpenAPI 3.0.  In this struct it technically always is "a".
+             *     is primarily used to allow compatibility with OpenAPI 3.0.  In this struct it technically always is "a". (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            node_type: string
+            node_type: "a"
             title: components["schemas"]["uiText"]
         }
         /** Image represents an image node. */
@@ -2359,15 +2857,15 @@ export interface components {
             attributes: components["schemas"]["uiNodeImageAttributes"]
             /**
              * @description Group specifies which group (e.g. password authenticator) this node belongs to.
-             * default DefaultGroup
-             * password PasswordGroup
-             * oidc OpenIDConnectGroup
-             * profile ProfileGroup
-             * link LinkGroup
-             * code CodeGroup
-             * totp TOTPGroup
-             * lookup_secret LookupGroup
-             * webauthn WebAuthnGroup
+             *     default DefaultGroup
+             *     password PasswordGroup
+             *     oidc OpenIDConnectGroup
+             *     profile ProfileGroup
+             *     link LinkGroup
+             *     code CodeGroup
+             *     totp TOTPGroup
+             *     lookup_secret LookupGroup
+             *     webauthn WebAuthnGroup
              * @enum {string}
              */
             group: "default" | "password" | "oidc" | "profile" | "link" | "code" | "totp" | "lookup_secret" | "webauthn"
@@ -2386,14 +2884,13 @@ export interface components {
             id: string
             /**
              * @description NodeType represents this node's types. It is a mirror of `node.type` and
-             * is primarily used to allow compatibility with OpenAPI 3.0.  In this struct it technically always is "img".
+             *     is primarily used to allow compatibility with OpenAPI 3.0.  In this struct it technically always is "img". (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            node_type: string
-            /**
-             * @description The image's source URL.
+            node_type: "img"
+            /** @description The image's source URL.
              *
-             * format: uri
-             */
+             *     format: uri */
             src: string
             /**
              * Format: int64
@@ -2406,15 +2903,15 @@ export interface components {
             attributes: components["schemas"]["uiNodeInputAttributes"]
             /**
              * @description Group specifies which group (e.g. password authenticator) this node belongs to.
-             * default DefaultGroup
-             * password PasswordGroup
-             * oidc OpenIDConnectGroup
-             * profile ProfileGroup
-             * link LinkGroup
-             * code CodeGroup
-             * totp TOTPGroup
-             * lookup_secret LookupGroup
-             * webauthn WebAuthnGroup
+             *     default DefaultGroup
+             *     password PasswordGroup
+             *     oidc OpenIDConnectGroup
+             *     profile ProfileGroup
+             *     link LinkGroup
+             *     code CodeGroup
+             *     totp TOTPGroup
+             *     lookup_secret LookupGroup
+             *     webauthn WebAuthnGroup
              * @enum {string}
              */
             group: "default" | "password" | "oidc" | "profile" | "link" | "code" | "totp" | "lookup_secret" | "webauthn"
@@ -2426,12 +2923,12 @@ export interface components {
         uiNodeInputAttributes: {
             /**
              * @description The autocomplete attribute for the input.
-             * email InputAttributeAutocompleteEmail
-             * tel InputAttributeAutocompleteTel
-             * url InputAttributeAutocompleteUrl
-             * current-password InputAttributeAutocompleteCurrentPassword
-             * new-password InputAttributeAutocompleteNewPassword
-             * one-time-code InputAttributeAutocompleteOneTimeCode
+             *     email InputAttributeAutocompleteEmail
+             *     tel InputAttributeAutocompleteTel
+             *     url InputAttributeAutocompleteUrl
+             *     current-password InputAttributeAutocompleteCurrentPassword
+             *     new-password InputAttributeAutocompleteNewPassword
+             *     one-time-code InputAttributeAutocompleteOneTimeCode
              * @enum {string}
              */
             autocomplete?: "email" | "tel" | "url" | "current-password" | "new-password" | "one-time-code"
@@ -2442,13 +2939,12 @@ export interface components {
             name: string
             /**
              * @description NodeType represents this node's types. It is a mirror of `node.type` and
-             * is primarily used to allow compatibility with OpenAPI 3.0.  In this struct it technically always is "input".
+             *     is primarily used to allow compatibility with OpenAPI 3.0.  In this struct it technically always is "input". (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            node_type: string
-            /**
-             * @description OnClick may contain javascript which should be executed on click. This is primarily
-             * used for WebAuthn.
-             */
+            node_type: "input"
+            /** @description OnClick may contain javascript which should be executed on click. This is primarily
+             *     used for WebAuthn. */
             onclick?: string
             /** @description The input's pattern. */
             pattern?: string
@@ -2456,18 +2952,18 @@ export interface components {
             required?: boolean
             /**
              * @description The input's element type.
-             * text InputAttributeTypeText
-             * password InputAttributeTypePassword
-             * number InputAttributeTypeNumber
-             * checkbox InputAttributeTypeCheckbox
-             * hidden InputAttributeTypeHidden
-             * email InputAttributeTypeEmail
-             * tel InputAttributeTypeTel
-             * submit InputAttributeTypeSubmit
-             * button InputAttributeTypeButton
-             * datetime-local InputAttributeTypeDateTimeLocal
-             * date InputAttributeTypeDate
-             * url InputAttributeTypeURI
+             *     text InputAttributeTypeText
+             *     password InputAttributeTypePassword
+             *     number InputAttributeTypeNumber
+             *     checkbox InputAttributeTypeCheckbox
+             *     hidden InputAttributeTypeHidden
+             *     email InputAttributeTypeEmail
+             *     tel InputAttributeTypeTel
+             *     submit InputAttributeTypeSubmit
+             *     button InputAttributeTypeButton
+             *     datetime-local InputAttributeTypeDateTimeLocal
+             *     date InputAttributeTypeDate
+             *     url InputAttributeTypeURI
              * @enum {string}
              */
             type:
@@ -2489,7 +2985,7 @@ export interface components {
         /**
          * A Node's Meta Information
          * @description This might include a label and other information that can optionally
-         * be used to render UIs.
+         *     be used to render UIs.
          */
         uiNodeMeta: {
             label?: components["schemas"]["uiText"]
@@ -2499,15 +2995,15 @@ export interface components {
             attributes: components["schemas"]["uiNodeScriptAttributes"]
             /**
              * @description Group specifies which group (e.g. password authenticator) this node belongs to.
-             * default DefaultGroup
-             * password PasswordGroup
-             * oidc OpenIDConnectGroup
-             * profile ProfileGroup
-             * link LinkGroup
-             * code CodeGroup
-             * totp TOTPGroup
-             * lookup_secret LookupGroup
-             * webauthn WebAuthnGroup
+             *     default DefaultGroup
+             *     password PasswordGroup
+             *     oidc OpenIDConnectGroup
+             *     profile ProfileGroup
+             *     link LinkGroup
+             *     code CodeGroup
+             *     totp TOTPGroup
+             *     lookup_secret LookupGroup
+             *     webauthn WebAuthnGroup
              * @enum {string}
              */
             group: "default" | "password" | "oidc" | "profile" | "link" | "code" | "totp" | "lookup_secret" | "webauthn"
@@ -2527,16 +3023,15 @@ export interface components {
             integrity: string
             /**
              * @description NodeType represents this node's types. It is a mirror of `node.type` and
-             * is primarily used to allow compatibility with OpenAPI 3.0. In this struct it technically always is "script".
+             *     is primarily used to allow compatibility with OpenAPI 3.0. In this struct it technically always is "script". (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            node_type: string
-            /**
-             * @description Nonce for CSP
+            node_type: "script"
+            /** @description Nonce for CSP
              *
-             * A nonce you may want to use to improve your Content Security Policy.
-             * You do not have to use this value but if you want to improve your CSP
-             * policies you may use it. You can also choose to use your own nonce value!
-             */
+             *     A nonce you may want to use to improve your Content Security Policy.
+             *     You do not have to use this value but if you want to improve your CSP
+             *     policies you may use it. You can also choose to use your own nonce value! */
             nonce: string
             /** @description The script referrer policy */
             referrerpolicy: string
@@ -2550,15 +3045,15 @@ export interface components {
             attributes: components["schemas"]["uiNodeTextAttributes"]
             /**
              * @description Group specifies which group (e.g. password authenticator) this node belongs to.
-             * default DefaultGroup
-             * password PasswordGroup
-             * oidc OpenIDConnectGroup
-             * profile ProfileGroup
-             * link LinkGroup
-             * code CodeGroup
-             * totp TOTPGroup
-             * lookup_secret LookupGroup
-             * webauthn WebAuthnGroup
+             *     default DefaultGroup
+             *     password PasswordGroup
+             *     oidc OpenIDConnectGroup
+             *     profile ProfileGroup
+             *     link LinkGroup
+             *     code CodeGroup
+             *     totp TOTPGroup
+             *     lookup_secret LookupGroup
+             *     webauthn WebAuthnGroup
              * @enum {string}
              */
             group: "default" | "password" | "oidc" | "profile" | "link" | "code" | "totp" | "lookup_secret" | "webauthn"
@@ -2572,9 +3067,10 @@ export interface components {
             id: string
             /**
              * @description NodeType represents this node's types. It is a mirror of `node.type` and
-             * is primarily used to allow compatibility with OpenAPI 3.0.  In this struct it technically always is "text".
+             *     is primarily used to allow compatibility with OpenAPI 3.0.  In this struct it technically always is "text". (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            node_type: string
+            node_type: "text"
             text: components["schemas"]["uiText"]
         }
         uiNodes: components["schemas"]["uiNode"][]
@@ -2586,9 +3082,9 @@ export interface components {
             text: string
             /**
              * @description The message type.
-             * info Info
-             * error Error
-             * success Success
+             *     info Info
+             *     error Error
+             *     success Success
              * @enum {string}
              */
             type: "info" | "error" | "success"
@@ -2600,28 +3096,22 @@ export interface components {
             credentials?: components["schemas"]["identityWithCredentials"]
             /** @description Store metadata about the user which is only accessible through admin APIs such as `GET /admin/identities/<id>`. */
             metadata_admin?: unknown
-            /**
-             * @description Store metadata about the identity which the identity itself can see when calling for example the
-             * session endpoint. Do not store sensitive information (e.g. credit score) about the identity in this field.
-             */
+            /** @description Store metadata about the identity which the identity itself can see when calling for example the
+             *     session endpoint. Do not store sensitive information (e.g. credit score) about the identity in this field. */
             metadata_public?: unknown
-            /**
-             * @description SchemaID is the ID of the JSON Schema to be used for validating the identity's traits. If set
-             * will update the Identity's SchemaID.
-             */
+            /** @description SchemaID is the ID of the JSON Schema to be used for validating the identity's traits. If set
+             *     will update the Identity's SchemaID. */
             schema_id: string
             /**
              * @description State is the identity's state.
-             * active StateActive
-             * inactive StateInactive
+             *     active StateActive
+             *     inactive StateInactive
              * @enum {string}
              */
             state: "active" | "inactive"
-            /**
-             * @description Traits represent an identity's traits. The identity is able to create, modify, and delete traits
-             * in a self-service manner. The input will always be validated against the JSON Schema defined
-             * in `schema_id`.
-             */
+            /** @description Traits represent an identity's traits. The identity is able to create, modify, and delete traits
+             *     in a self-service manner. The input will always be validated against the JSON Schema defined
+             *     in `schema_id`. */
             traits: Record<string, never>
         }
         updateLoginFlowBody:
@@ -2637,13 +3127,14 @@ export interface components {
             code?: string
             /** @description CSRFToken is the anti-CSRF token */
             csrf_token: string
-            /**
-             * @description Identifier is the code identifier
-             * The identifier requires that the user has already completed the registration or settings with code flow.
-             */
+            /** @description Identifier is the code identifier
+             *     The identifier requires that the user has already completed the registration or settings with code flow. */
             identifier?: string
-            /** @description Method should be set to "code" when logging in using the code strategy. */
-            method: string
+            /**
+             * @description Method should be set to "code" when logging in using the code strategy. (enum property replaced by openapi-typescript)
+             * @enum {string}
+             */
+            method: "code"
             /** @description Resend is set when the user wants to resend the code */
             resend?: string
         }
@@ -2653,49 +3144,47 @@ export interface components {
             csrf_token?: string
             /** @description The lookup secret. */
             lookup_secret: string
-            /** @description Method should be set to "lookup_secret" when logging in using the lookup_secret strategy. */
-            method: string
+            /**
+             * @description Method should be set to "lookup_secret" when logging in using the lookup_secret strategy. (enum property replaced by openapi-typescript)
+             * @enum {string}
+             */
+            method: "lookup_secret"
         }
         /** @description Update Login Flow with OpenID Connect Method */
         updateLoginFlowWithOidcMethod: {
             /** @description The CSRF Token */
             csrf_token?: string
-            /**
-             * @description IDToken is an optional id token provided by an OIDC provider
+            /** @description IDToken is an optional id token provided by an OIDC provider
              *
-             * If submitted, it is verified using the OIDC provider's public key set and the claims are used to populate
-             * the OIDC credentials of the identity.
-             * If the OIDC provider does not store additional claims (such as name, etc.) in the IDToken itself, you can use
-             * the `traits` field to populate the identity's traits. Note, that Apple only includes the users email in the IDToken.
+             *     If submitted, it is verified using the OIDC provider's public key set and the claims are used to populate
+             *     the OIDC credentials of the identity.
+             *     If the OIDC provider does not store additional claims (such as name, etc.) in the IDToken itself, you can use
+             *     the `traits` field to populate the identity's traits. Note, that Apple only includes the users email in the IDToken.
              *
-             * Supported providers are
-             * Apple
-             */
+             *     Supported providers are
+             *     Apple */
             id_token?: string
-            /**
-             * @description IDTokenNonce is the nonce, used when generating the IDToken.
-             * If the provider supports nonce validation, the nonce will be validated against this value and required.
-             */
+            /** @description IDTokenNonce is the nonce, used when generating the IDToken.
+             *     If the provider supports nonce validation, the nonce will be validated against this value and required. */
             id_token_nonce?: string
             /**
              * @description Method to use
              *
-             * This field must be set to `oidc` when using the oidc method.
+             *     This field must be set to `oidc` when using the oidc method. (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            method: string
+            method: "oidc"
             /** @description The provider to register with */
             provider: string
             /** @description The identity traits. This is a placeholder for the registration flow. */
             traits?: Record<string, never>
-            /**
-             * @description UpstreamParameters are the parameters that are passed to the upstream identity provider.
+            /** @description UpstreamParameters are the parameters that are passed to the upstream identity provider.
              *
-             * These parameters are optional and depend on what the upstream identity provider supports.
-             * Supported parameters are:
-             * `login_hint` (string): The `login_hint` parameter suppresses the account chooser and either pre-fills the email box on the sign-in form, or selects the proper session.
-             * `hd` (string): The `hd` parameter limits the login/registration process to a Google Organization, e.g. `mycollege.edu`.
-             * `prompt` (string): The `prompt` specifies whether the Authorization Server prompts the End-User for reauthentication and consent, e.g. `select_account`.
-             */
+             *     These parameters are optional and depend on what the upstream identity provider supports.
+             *     Supported parameters are:
+             *     `login_hint` (string): The `login_hint` parameter suppresses the account chooser and either pre-fills the email box on the sign-in form, or selects the proper session.
+             *     `hd` (string): The `hd` parameter limits the login/registration process to a Google Organization, e.g. `mycollege.edu`.
+             *     `prompt` (string): The `prompt` specifies whether the Authorization Server prompts the End-User for reauthentication and consent, e.g. `select_account`. */
             upstream_parameters?: Record<string, never>
         }
         /** @description Update Login Flow with Password Method */
@@ -2704,22 +3193,26 @@ export interface components {
             csrf_token?: string
             /** @description Identifier is the email or username of the user trying to log in. */
             identifier: string
-            /** @description Method should be set to "password" when logging in using the identifier and password strategy. */
-            method: string
+            /**
+             * @description Method should be set to "password" when logging in using the identifier and password strategy. (enum property replaced by openapi-typescript)
+             * @enum {string}
+             */
+            method: "password"
             /** @description The user's password. */
             password: string
-            /**
-             * @description Identifier is the email or username of the user trying to log in.
-             * This field is deprecated!
-             */
+            /** @description Identifier is the email or username of the user trying to log in.
+             *     This field is deprecated! */
             password_identifier?: string
         }
         /** @description Update Login Flow with TOTP Method */
         updateLoginFlowWithTotpMethod: {
             /** @description Sending the anti-csrf token is only required for browser login flows. */
             csrf_token?: string
-            /** @description Method should be set to "totp" when logging in using the TOTP strategy. */
-            method: string
+            /**
+             * @description Method should be set to "totp" when logging in using the TOTP strategy. (enum property replaced by openapi-typescript)
+             * @enum {string}
+             */
+            method: "totp"
             /** @description The TOTP code. */
             totp_code: string
         }
@@ -2729,13 +3222,14 @@ export interface components {
             csrf_token?: string
             /** @description Identifier is the email or username of the user trying to log in. */
             identifier: string
-            /** @description Method should be set to "webAuthn" when logging in using the WebAuthn strategy. */
-            method: string
             /**
-             * @description Login a WebAuthn Security Key
-             *
-             * This must contain the ID of the WebAuthN connection.
+             * @description Method should be set to "webAuthn" when logging in using the WebAuthn strategy. (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
+            method: "webauthn"
+            /** @description Login a WebAuthn Security Key
+             *
+             *     This must contain the ID of the WebAuthN connection. */
             webauthn_login?: string
         }
         /** @description Update Recovery Flow Request Body */
@@ -2744,60 +3238,54 @@ export interface components {
             | components["schemas"]["updateRecoveryFlowWithCodeMethod"]
         /** @description Update Recovery Flow with Code Method */
         updateRecoveryFlowWithCodeMethod: {
-            /**
-             * @description Code from the recovery email
+            /** @description Code from the recovery email
              *
-             * If you want to submit a code, use this field, but make sure to _not_ include the email field, as well.
-             */
+             *     If you want to submit a code, use this field, but make sure to _not_ include the email field, as well. */
             code?: string
             /** @description Sending the anti-csrf token is only required for browser login flows. */
             csrf_token?: string
-            /**
-             * @description The email address of the account to recover
+            /** @description The email address of the account to recover
              *
-             * If the email belongs to a valid account, a recovery email will be sent.
+             *     If the email belongs to a valid account, a recovery email will be sent.
              *
-             * If you want to notify the email address if the account does not exist, see
-             * the [notify_unknown_recipients flag](https://www.ory.sh/docs/kratos/self-service/flows/account-recovery-password-reset#attempted-recovery-notifications)
+             *     If you want to notify the email address if the account does not exist, see
+             *     the [notify_unknown_recipients flag](https://www.ory.sh/docs/kratos/self-service/flows/account-recovery-password-reset#attempted-recovery-notifications)
              *
-             * If a code was already sent, including this field in the payload will invalidate the sent code and re-send a new code.
+             *     If a code was already sent, including this field in the payload will invalidate the sent code and re-send a new code.
              *
-             * format: email
-             */
+             *     format: email */
             email?: string
             /**
              * @description Method is the method that should be used for this recovery flow
              *
-             * Allowed values are `link` and `code`.
-             * link RecoveryStrategyLink
-             * code RecoveryStrategyCode
+             *     Allowed values are `link` and `code`.
+             *     link RecoveryStrategyLink
+             *     code RecoveryStrategyCode (enum property replaced by openapi-typescript)
              * @enum {string}
              */
-            method: "link" | "code"
+            method: "code"
         }
         /** @description Update Recovery Flow with Link Method */
         updateRecoveryFlowWithLinkMethod: {
             /** @description Sending the anti-csrf token is only required for browser login flows. */
             csrf_token?: string
-            /**
-             * @description Email to Recover
+            /** @description Email to Recover
              *
-             * Needs to be set when initiating the flow. If the email is a registered
-             * recovery email, a recovery link will be sent. If the email is not known,
-             * a email with details on what happened will be sent instead.
+             *     Needs to be set when initiating the flow. If the email is a registered
+             *     recovery email, a recovery link will be sent. If the email is not known,
+             *     a email with details on what happened will be sent instead.
              *
-             * format: email
-             */
+             *     format: email */
             email: string
             /**
              * @description Method is the method that should be used for this recovery flow
              *
-             * Allowed values are `link` and `code`
-             * link RecoveryStrategyLink
-             * code RecoveryStrategyCode
+             *     Allowed values are `link` and `code`
+             *     link RecoveryStrategyLink
+             *     code RecoveryStrategyCode (enum property replaced by openapi-typescript)
              * @enum {string}
              */
-            method: "link" | "code"
+            method: "link"
         }
         /** @description Update Registration Request Body */
         updateRegistrationFlowBody:
@@ -2814,9 +3302,10 @@ export interface components {
             /**
              * @description Method to use
              *
-             * This field must be set to `code` when using the code method.
+             *     This field must be set to `code` when using the code method. (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            method: string
+            method: "code"
             /** @description Resend restarts the flow with a new code */
             resend?: string
             /** @description The identity's traits */
@@ -2828,44 +3317,39 @@ export interface components {
         updateRegistrationFlowWithOidcMethod: {
             /** @description The CSRF Token */
             csrf_token?: string
-            /**
-             * @description IDToken is an optional id token provided by an OIDC provider
+            /** @description IDToken is an optional id token provided by an OIDC provider
              *
-             * If submitted, it is verified using the OIDC provider's public key set and the claims are used to populate
-             * the OIDC credentials of the identity.
-             * If the OIDC provider does not store additional claims (such as name, etc.) in the IDToken itself, you can use
-             * the `traits` field to populate the identity's traits. Note, that Apple only includes the users email in the IDToken.
+             *     If submitted, it is verified using the OIDC provider's public key set and the claims are used to populate
+             *     the OIDC credentials of the identity.
+             *     If the OIDC provider does not store additional claims (such as name, etc.) in the IDToken itself, you can use
+             *     the `traits` field to populate the identity's traits. Note, that Apple only includes the users email in the IDToken.
              *
-             * Supported providers are
-             * Apple
-             */
+             *     Supported providers are
+             *     Apple */
             id_token?: string
-            /**
-             * @description IDTokenNonce is the nonce, used when generating the IDToken.
-             * If the provider supports nonce validation, the nonce will be validated against this value and is required.
-             */
+            /** @description IDTokenNonce is the nonce, used when generating the IDToken.
+             *     If the provider supports nonce validation, the nonce will be validated against this value and is required. */
             id_token_nonce?: string
             /**
              * @description Method to use
              *
-             * This field must be set to `oidc` when using the oidc method.
+             *     This field must be set to `oidc` when using the oidc method. (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            method: string
+            method: "oidc"
             /** @description The provider to register with */
             provider: string
             /** @description The identity traits */
             traits?: Record<string, never>
             /** @description Transient data to pass along to any webhooks */
             transient_payload?: Record<string, never>
-            /**
-             * @description UpstreamParameters are the parameters that are passed to the upstream identity provider.
+            /** @description UpstreamParameters are the parameters that are passed to the upstream identity provider.
              *
-             * These parameters are optional and depend on what the upstream identity provider supports.
-             * Supported parameters are:
-             * `login_hint` (string): The `login_hint` parameter suppresses the account chooser and either pre-fills the email box on the sign-in form, or selects the proper session.
-             * `hd` (string): The `hd` parameter limits the login/registration process to a Google Organization, e.g. `mycollege.edu`.
-             * `prompt` (string): The `prompt` specifies whether the Authorization Server prompts the End-User for reauthentication and consent, e.g. `select_account`.
-             */
+             *     These parameters are optional and depend on what the upstream identity provider supports.
+             *     Supported parameters are:
+             *     `login_hint` (string): The `login_hint` parameter suppresses the account chooser and either pre-fills the email box on the sign-in form, or selects the proper session.
+             *     `hd` (string): The `hd` parameter limits the login/registration process to a Google Organization, e.g. `mycollege.edu`.
+             *     `prompt` (string): The `prompt` specifies whether the Authorization Server prompts the End-User for reauthentication and consent, e.g. `select_account`. */
             upstream_parameters?: Record<string, never>
         }
         /** @description Update Registration Flow with Password Method */
@@ -2875,9 +3359,10 @@ export interface components {
             /**
              * @description Method to use
              *
-             * This field must be set to `password` when using the password method.
+             *     This field must be set to `password` when using the password method. (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            method: string
+            method: "password"
             /** @description Password to sign the user up with */
             password: string
             /** @description The identity's traits */
@@ -2892,25 +3377,22 @@ export interface components {
             /**
              * @description Method
              *
-             * Should be set to "webauthn" when trying to add, update, or remove a webAuthn pairing.
+             *     Should be set to "webauthn" when trying to add, update, or remove a webAuthn pairing. (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            method: string
+            method: "webauthn"
             /** @description The identity's traits */
             traits: Record<string, never>
             /** @description Transient data to pass along to any webhooks */
             transient_payload?: Record<string, never>
-            /**
-             * @description Register a WebAuthn Security Key
+            /** @description Register a WebAuthn Security Key
              *
-             * It is expected that the JSON returned by the WebAuthn registration process
-             * is included here.
-             */
+             *     It is expected that the JSON returned by the WebAuthn registration process
+             *     is included here. */
             webauthn_register?: string
-            /**
-             * @description Name of the WebAuthn Security Key to be Added
+            /** @description Name of the WebAuthn Security Key to be Added
              *
-             * A human-readable name for the security key which will be added.
-             */
+             *     A human-readable name for the security key which will be added. */
             webauthn_register_displayname?: string
         }
         /** @description Update Settings Flow Request Body */
@@ -2936,57 +3418,49 @@ export interface components {
             /**
              * @description Method
              *
-             * Should be set to "lookup" when trying to add, update, or remove a lookup pairing.
+             *     Should be set to "lookup" when trying to add, update, or remove a lookup pairing. (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            method: string
+            method: "lookup_secret"
         }
         /** @description Update Settings Flow with OpenID Connect Method */
         updateSettingsFlowWithOidcMethod: {
-            /**
-             * @description Flow ID is the flow's ID.
+            /** @description Flow ID is the flow's ID.
              *
-             * in: query
-             */
+             *     in: query */
             flow?: string
-            /**
-             * @description Link this provider
+            /** @description Link this provider
              *
-             * Either this or `unlink` must be set.
+             *     Either this or `unlink` must be set.
              *
-             * type: string
-             * in: body
-             */
+             *     type: string
+             *     in: body */
             link?: string
             /**
              * @description Method
              *
-             * Should be set to profile when trying to update a profile.
+             *     Should be set to profile when trying to update a profile. (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            method: string
-            /**
-             * @description The identity's traits
+            method: "oidc"
+            /** @description The identity's traits
              *
-             * in: body
-             */
+             *     in: body */
             traits?: Record<string, never>
-            /**
-             * @description Unlink this provider
+            /** @description Unlink this provider
              *
-             * Either this or `link` must be set.
+             *     Either this or `link` must be set.
              *
-             * type: string
-             * in: body
-             */
+             *     type: string
+             *     in: body */
             unlink?: string
-            /**
-             * @description UpstreamParameters are the parameters that are passed to the upstream identity provider.
+            /** @description UpstreamParameters are the parameters that are passed to the upstream identity provider.
              *
-             * These parameters are optional and depend on what the upstream identity provider supports.
-             * Supported parameters are:
-             * `login_hint` (string): The `login_hint` parameter suppresses the account chooser and either pre-fills the email box on the sign-in form, or selects the proper session.
-             * `hd` (string): The `hd` parameter limits the login/registration process to a Google Organization, e.g. `mycollege.edu`.
-             * `prompt` (string): The `prompt` specifies whether the Authorization Server prompts the End-User for reauthentication and consent, e.g. `select_account`.
-             */
+             *     These parameters are optional and depend on what the upstream identity provider supports.
+             *     Supported parameters are:
+             *     `login_hint` (string): The `login_hint` parameter suppresses the account chooser and either pre-fills the email box on the sign-in form, or selects the proper session.
+             *     `hd` (string): The `hd` parameter limits the login/registration process to a Google Organization, e.g. `mycollege.edu`.
+             *     `prompt` (string): The `prompt` specifies whether the Authorization Server prompts the End-User for reauthentication and consent, e.g. `select_account`. */
             upstream_parameters?: Record<string, never>
         }
         /** @description Update Settings Flow with Password Method */
@@ -2996,31 +3470,29 @@ export interface components {
             /**
              * @description Method
              *
-             * Should be set to password when trying to update a password.
+             *     Should be set to password when trying to update a password. (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            method: string
+            method: "password"
             /** @description Password is the updated password */
             password: string
         }
         /** @description Update Settings Flow with Profile Method */
         updateSettingsFlowWithProfileMethod: {
-            /**
-             * @description The Anti-CSRF Token
+            /** @description The Anti-CSRF Token
              *
-             * This token is only required when performing browser flows.
-             */
+             *     This token is only required when performing browser flows. */
             csrf_token?: string
             /**
              * @description Method
              *
-             * Should be set to profile when trying to update a profile.
+             *     Should be set to profile when trying to update a profile. (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            method: string
-            /**
-             * @description Traits
+            method: "profile"
+            /** @description Traits
              *
-             * The identity's traits.
-             */
+             *     The identity's traits. */
             traits: Record<string, never>
         }
         /** @description Update Settings Flow with TOTP Method */
@@ -3030,16 +3502,15 @@ export interface components {
             /**
              * @description Method
              *
-             * Should be set to "totp" when trying to add, update, or remove a totp pairing.
+             *     Should be set to "totp" when trying to add, update, or remove a totp pairing. (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            method: string
+            method: "totp"
             /** @description ValidationTOTP must contain a valid TOTP based on the */
             totp_code?: string
-            /**
-             * @description UnlinkTOTP if true will remove the TOTP pairing,
-             * effectively removing the credential. This can be used
-             * to set up a new TOTP device.
-             */
+            /** @description UnlinkTOTP if true will remove the TOTP pairing,
+             *     effectively removing the credential. This can be used
+             *     to set up a new TOTP device. */
             totp_unlink?: boolean
         }
         /** @description Update Settings Flow with WebAuthn Method */
@@ -3049,27 +3520,22 @@ export interface components {
             /**
              * @description Method
              *
-             * Should be set to "webauthn" when trying to add, update, or remove a webAuthn pairing.
+             *     Should be set to "webauthn" when trying to add, update, or remove a webAuthn pairing. (enum property replaced by openapi-typescript)
+             * @enum {string}
              */
-            method: string
-            /**
-             * @description Register a WebAuthn Security Key
+            method: "webauthn"
+            /** @description Register a WebAuthn Security Key
              *
-             * It is expected that the JSON returned by the WebAuthn registration process
-             * is included here.
-             */
+             *     It is expected that the JSON returned by the WebAuthn registration process
+             *     is included here. */
             webauthn_register?: string
-            /**
-             * @description Name of the WebAuthn Security Key to be Added
+            /** @description Name of the WebAuthn Security Key to be Added
              *
-             * A human-readable name for the security key which will be added.
-             */
+             *     A human-readable name for the security key which will be added. */
             webauthn_register_displayname?: string
-            /**
-             * @description Remove a WebAuthn Security Key
+            /** @description Remove a WebAuthn Security Key
              *
-             * This must contain the ID of the WebAuthN connection.
-             */
+             *     This must contain the ID of the WebAuthN connection. */
             webauthn_remove?: string
         }
         /** @description Update Verification Flow Request Body */
@@ -3077,60 +3543,54 @@ export interface components {
             | components["schemas"]["updateVerificationFlowWithLinkMethod"]
             | components["schemas"]["updateVerificationFlowWithCodeMethod"]
         updateVerificationFlowWithCodeMethod: {
-            /**
-             * @description Code from the recovery email
+            /** @description Code from the recovery email
              *
-             * If you want to submit a code, use this field, but make sure to _not_ include the email field, as well.
-             */
+             *     If you want to submit a code, use this field, but make sure to _not_ include the email field, as well. */
             code?: string
             /** @description Sending the anti-csrf token is only required for browser login flows. */
             csrf_token?: string
-            /**
-             * @description The email address to verify
+            /** @description The email address to verify
              *
-             * If the email belongs to a valid account, a verifiation email will be sent.
+             *     If the email belongs to a valid account, a verifiation email will be sent.
              *
-             * If you want to notify the email address if the account does not exist, see
-             * the [notify_unknown_recipients flag](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation#attempted-verification-notifications)
+             *     If you want to notify the email address if the account does not exist, see
+             *     the [notify_unknown_recipients flag](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation#attempted-verification-notifications)
              *
-             * If a code was already sent, including this field in the payload will invalidate the sent code and re-send a new code.
+             *     If a code was already sent, including this field in the payload will invalidate the sent code and re-send a new code.
              *
-             * format: email
-             */
+             *     format: email */
             email?: string
             /**
              * @description Method is the method that should be used for this verification flow
              *
-             * Allowed values are `link` and `code`.
-             * link VerificationStrategyLink
-             * code VerificationStrategyCode
+             *     Allowed values are `link` and `code`.
+             *     link VerificationStrategyLink
+             *     code VerificationStrategyCode (enum property replaced by openapi-typescript)
              * @enum {string}
              */
-            method: "link" | "code"
+            method: "code"
         }
         /** @description Update Verification Flow with Link Method */
         updateVerificationFlowWithLinkMethod: {
             /** @description Sending the anti-csrf token is only required for browser login flows. */
             csrf_token?: string
-            /**
-             * @description Email to Verify
+            /** @description Email to Verify
              *
-             * Needs to be set when initiating the flow. If the email is a registered
-             * verification email, a verification link will be sent. If the email is not known,
-             * a email with details on what happened will be sent instead.
+             *     Needs to be set when initiating the flow. If the email is a registered
+             *     verification email, a verification link will be sent. If the email is not known,
+             *     a email with details on what happened will be sent instead.
              *
-             * format: email
-             */
+             *     format: email */
             email: string
             /**
              * @description Method is the method that should be used for this verification flow
              *
-             * Allowed values are `link` and `code`
-             * link VerificationStrategyLink
-             * code VerificationStrategyCode
+             *     Allowed values are `link` and `code`
+             *     link VerificationStrategyLink
+             *     code VerificationStrategyCode (enum property replaced by openapi-typescript)
              * @enum {string}
              */
-            method: "link" | "code"
+            method: "link"
         }
         /** @description VerifiableAddress is an identity's verifiable address */
         verifiableIdentityAddress: {
@@ -3152,11 +3612,9 @@ export interface components {
              * @example 2014-01-01T23:28:56.782Z
              */
             updated_at?: string
-            /**
-             * @description The address value
+            /** @description The address value
              *
-             * example foo@user.com
-             */
+             *     example foo@user.com */
             value: string
             /**
              * @description Indicates if the address has already been verified
@@ -3174,29 +3632,27 @@ export interface components {
         /**
          * A Verification Flow
          * @description Used to verify an out-of-band communication
-         * channel such as an email address or a phone number.
+         *     channel such as an email address or a phone number.
          *
-         * For more information head over to: https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation
+         *     For more information head over to: https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation
          */
         verificationFlow: {
-            /**
-             * @description Active, if set, contains the registration method that is being used. It is initially
-             * not set.
-             */
+            /** @description Active, if set, contains the registration method that is being used. It is initially
+             *     not set. */
             active?: string
             /**
              * Format: date-time
              * @description ExpiresAt is the time (UTC) when the request expires. If the user still wishes to verify the address,
-             * a new request has to be initiated.
+             *     a new request has to be initiated.
              */
             expires_at?: string
             /**
              * Format: uuid
              * @description ID represents the request's unique ID. When performing the verification flow, this
-             * represents the id in the verify ui's query parameter: http://<selfservice.flows.verification.ui_url>?request=<id>
+             *     represents the id in the verify ui's query parameter: http://<selfservice.flows.verification.ui_url>?request=<id>
              *
-             * type: string
-             * format: uuid
+             *     type: string
+             *     format: uuid
              */
             id: string
             /**
@@ -3204,20 +3660,16 @@ export interface components {
              * @description IssuedAt is the time (UTC) when the request occurred.
              */
             issued_at?: string
-            /**
-             * @description RequestURL is the initial URL that was requested from Ory Kratos. It can be used
-             * to forward information contained in the URL's path or query for example.
-             */
+            /** @description RequestURL is the initial URL that was requested from Ory Kratos. It can be used
+             *     to forward information contained in the URL's path or query for example. */
             request_url?: string
             /** @description ReturnTo contains the requested return_to URL. */
             return_to?: string
-            /**
-             * @description State represents the state of this request:
+            /** @description State represents the state of this request:
              *
-             * choose_method: ask the user to choose a method (e.g. verify your email)
-             * sent_email: the email has been sent to the user
-             * passed_challenge: the request was successful and the verification challenge was passed.
-             */
+             *     choose_method: ask the user to choose a method (e.g. verify your email)
+             *     sent_email: the email has been sent to the user
+             *     passed_challenge: the request was successful and the verification challenge was passed. */
             state: unknown
             type: components["schemas"]["selfServiceFlowType"]
             ui: components["schemas"]["uiContainer"]
@@ -3226,9 +3678,9 @@ export interface components {
          * Verification Flow State
          * @description The state represents the state of the verification flow.
          *
-         * choose_method: ask the user to choose a method (e.g. recover account via email)
-         * sent_email: the email has been sent to the user
-         * passed_challenge: the request was successful and the recovery challenge was passed.
+         *     choose_method: ask the user to choose a method (e.g. recover account via email)
+         *     sent_email: the email has been sent to the user
+         *     passed_challenge: the request was successful and the recovery challenge was passed.
          * @enum {unknown}
          */
         verificationFlowState: "choose_method" | "sent_email" | "passed_challenge"
@@ -3241,44 +3693,63 @@ export interface components {
     responses: {
         /** @description Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is typically 201. */
         emptyResponse: {
-            content: never
+            headers: {
+                [name: string]: unknown
+            }
+            content?: never
         }
         /** @description List Identity JSON Schemas Response */
         identitySchemas: {
+            headers: {
+                [name: string]: unknown
+            }
             content: {
                 "application/json": components["schemas"]["identitySchemas"]
             }
         }
         /** @description Paginated Courier Message List Response */
         listCourierMessages: {
+            headers: {
+                [name: string]: unknown
+            }
             content: {
                 "application/json": components["schemas"]["message"][]
             }
         }
         /** @description Paginated Identity List Response */
         listIdentities: {
+            headers: {
+                [name: string]: unknown
+            }
             content: {
                 "application/json": components["schemas"]["identity"][]
             }
         }
         /** @description List Identity Sessions Response */
         listIdentitySessions: {
+            headers: {
+                [name: string]: unknown
+            }
             content: {
                 "application/json": components["schemas"]["session"][]
             }
         }
         /** @description List My Session Response */
         listMySessions: {
+            headers: {
+                [name: string]: unknown
+            }
             content: {
                 "application/json": components["schemas"]["session"][]
             }
         }
-        /**
-         * @description Session List Response
+        /** @description Session List Response
          *
-         * The response given when listing sessions in an administrative context.
-         */
+         *     The response given when listing sessions in an administrative context. */
         listSessions: {
+            headers: {
+                [name: string]: unknown
+            }
             content: {
                 "application/json": components["schemas"]["session"][]
             }
@@ -3289,216 +3760,204 @@ export interface components {
     headers: never
     pathItems: never
 }
-
 export type $defs = Record<string, never>
-
-export type external = Record<string, never>
-
 export interface operations {
-    /**
-     * Get WebAuthn JavaScript
-     * @description This endpoint provides JavaScript which is needed in order to perform WebAuthn login and registration.
-     *
-     * If you are building a JavaScript Browser App (e.g. in ReactJS or AngularJS) you will need to load this file:
-     *
-     * ```html
-     * <script src="https://public-kratos.example.org/.well-known/ory/webauthn.js" type="script" async />
-     * ```
-     *
-     * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
-     */
     getWebAuthnJavaScript: {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description webAuthnJavaScript */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["webAuthnJavaScript"]
                 }
             }
         }
     }
-    /**
-     * List Messages
-     * @description Lists all messages by given status and recipient.
-     */
     listCourierMessages: {
         parameters: {
             query?: {
-                /**
-                 * @description Items per Page
+                /** @description Items per Page
                  *
-                 * This is the number of items per page to return.
-                 * For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
-                 */
+                 *     This is the number of items per page to return.
+                 *     For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). */
                 page_size?: number
-                /**
-                 * @description Next Page Token
+                /** @description Next Page Token
                  *
-                 * The next page token.
-                 * For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
-                 */
+                 *     The next page token.
+                 *     For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). */
                 page_token?: string
-                /**
-                 * @description Status filters out messages based on status.
-                 * If no value is provided, it doesn't take effect on filter.
-                 */
+                /** @description Status filters out messages based on status.
+                 *     If no value is provided, it doesn't take effect on filter. */
                 status?: components["schemas"]["courierMessageStatus"]
-                /**
-                 * @description Recipient filters out messages based on recipient.
-                 * If no value is provided, it doesn't take effect on filter.
-                 */
+                /** @description Recipient filters out messages based on recipient.
+                 *     If no value is provided, it doesn't take effect on filter. */
                 recipient?: string
             }
+            header?: never
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             200: components["responses"]["listCourierMessages"]
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Get a Message
-     * @description Gets a specific messages by the given ID.
-     */
     getCourierMessage: {
         parameters: {
+            query?: never
+            header?: never
             path: {
                 /** @description MessageID is the ID of the message. */
                 id: string
             }
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description message */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["message"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * List Identities
-     * @description Lists all [identities](https://www.ory.sh/docs/kratos/concepts/identity-user-model) in the system.
-     */
     listIdentities: {
         parameters: {
             query?: {
-                /**
-                 * @description Deprecated Items per Page
+                /** @description Deprecated Items per Page
                  *
-                 * DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+                 *     DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
                  *
-                 * This is the number of items per page.
-                 */
+                 *     This is the number of items per page. */
                 per_page?: number
-                /**
-                 * @description Deprecated Pagination Page
+                /** @description Deprecated Pagination Page
                  *
-                 * DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+                 *     DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
                  *
-                 * This value is currently an integer, but it is not sequential. The value is not the page number, but a
-                 * reference. The next page can be any number and some numbers might return an empty list.
+                 *     This value is currently an integer, but it is not sequential. The value is not the page number, but a
+                 *     reference. The next page can be any number and some numbers might return an empty list.
                  *
-                 * For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist.
-                 * The first page can be retrieved by omitting this parameter. Following page pointers will be returned in the
-                 * `Link` header.
-                 */
+                 *     For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist.
+                 *     The first page can be retrieved by omitting this parameter. Following page pointers will be returned in the
+                 *     `Link` header. */
                 page?: number
-                /**
-                 * @description Page Size
+                /** @description Page Size
                  *
-                 * This is the number of items per page to return. For details on pagination please head over to the
-                 * [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
-                 */
+                 *     This is the number of items per page to return. For details on pagination please head over to the
+                 *     [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). */
                 page_size?: number
-                /**
-                 * @description Next Page Token
+                /** @description Next Page Token
                  *
-                 * The next page token. For details on pagination please head over to the
-                 * [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
-                 */
+                 *     The next page token. For details on pagination please head over to the
+                 *     [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). */
                 page_token?: string
-                /**
-                 * @description Read Consistency Level (preview)
+                /** @description Read Consistency Level (preview)
                  *
-                 * The read consistency level determines the consistency guarantee for reads:
+                 *     The read consistency level determines the consistency guarantee for reads:
                  *
-                 * strong (slow): The read is guaranteed to return the most recent data committed at the start of the read.
-                 * eventual (very fast): The result will return data that is about 4.8 seconds old.
+                 *     strong (slow): The read is guaranteed to return the most recent data committed at the start of the read.
+                 *     eventual (very fast): The result will return data that is about 4.8 seconds old.
                  *
-                 * The default consistency guarantee can be changed in the Ory Network Console or using the Ory CLI with
-                 * `ory patch project --replace '/previews/default_read_consistency_level="strong"'`.
+                 *     The default consistency guarantee can be changed in the Ory Network Console or using the Ory CLI with
+                 *     `ory patch project --replace '/previews/default_read_consistency_level="strong"'`.
                  *
-                 * Setting the default consistency level to `eventual` may cause regressions in the future as we add consistency
-                 * controls to more APIs. Currently, the following APIs will be affected by this setting:
+                 *     Setting the default consistency level to `eventual` may cause regressions in the future as we add consistency
+                 *     controls to more APIs. Currently, the following APIs will be affected by this setting:
                  *
-                 * `GET /admin/identities`
+                 *     `GET /admin/identities`
                  *
-                 * This feature is in preview and only available in Ory Network.
-                 *  ConsistencyLevelUnset  ConsistencyLevelUnset is the unset / default consistency level.
-                 * strong ConsistencyLevelStrong  ConsistencyLevelStrong is the strong consistency level.
-                 * eventual ConsistencyLevelEventual  ConsistencyLevelEventual is the eventual consistency level using follower read timestamps.
-                 */
+                 *     This feature is in preview and only available in Ory Network.
+                 *      ConsistencyLevelUnset  ConsistencyLevelUnset is the unset / default consistency level.
+                 *     strong ConsistencyLevelStrong  ConsistencyLevelStrong is the strong consistency level.
+                 *     eventual ConsistencyLevelEventual  ConsistencyLevelEventual is the eventual consistency level using follower read timestamps. */
                 consistency?: "" | "strong" | "eventual"
-                /**
-                 * @description List of ids used to filter identities.
-                 * If this list is empty, then no filter will be applied.
-                 */
+                /** @description List of ids used to filter identities.
+                 *     If this list is empty, then no filter will be applied. */
                 ids?: string[]
-                /**
-                 * @description CredentialsIdentifier is the identifier (username, email) of the credentials to look up using exact match.
-                 * Only one of CredentialsIdentifier and CredentialsIdentifierSimilar can be used.
-                 */
+                /** @description CredentialsIdentifier is the identifier (username, email) of the credentials to look up using exact match.
+                 *     Only one of CredentialsIdentifier and CredentialsIdentifierSimilar can be used. */
                 credentials_identifier?: string
-                /**
-                 * @description This is an EXPERIMENTAL parameter that WILL CHANGE. Do NOT rely on consistent, deterministic behavior.
-                 * THIS PARAMETER WILL BE REMOVED IN AN UPCOMING RELEASE WITHOUT ANY MIGRATION PATH.
+                /** @description This is an EXPERIMENTAL parameter that WILL CHANGE. Do NOT rely on consistent, deterministic behavior.
+                 *     THIS PARAMETER WILL BE REMOVED IN AN UPCOMING RELEASE WITHOUT ANY MIGRATION PATH.
                  *
-                 * CredentialsIdentifierSimilar is the (partial) identifier (username, email) of the credentials to look up using similarity search.
-                 * Only one of CredentialsIdentifier and CredentialsIdentifierSimilar can be used.
-                 */
+                 *     CredentialsIdentifierSimilar is the (partial) identifier (username, email) of the credentials to look up using similarity search.
+                 *     Only one of CredentialsIdentifier and CredentialsIdentifierSimilar can be used. */
                 preview_credentials_identifier_similar?: string
             }
+            header?: never
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             200: components["responses"]["listIdentities"]
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create an Identity
-     * @description Create an [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model).  This endpoint can also be used to
-     * [import credentials](https://www.ory.sh/docs/kratos/manage-identities/import-user-accounts-identities)
-     * for instance passwords, social sign in configurations or multifactor methods.
-     */
     createIdentity: {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["createIdentityBody"]
@@ -3507,39 +3966,49 @@ export interface operations {
         responses: {
             /** @description identity */
             201: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["identity"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             409: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create and deletes multiple identities
-     * @description Creates or delete multiple
-     * [identities](https://www.ory.sh/docs/kratos/concepts/identity-user-model).
-     * This endpoint can also be used to [import
-     * credentials](https://www.ory.sh/docs/kratos/manage-identities/import-user-accounts-identities)
-     * for instance passwords, social sign in configurations or multifactor methods.
-     */
     batchPatchIdentities: {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["patchIdentitiesBody"]
@@ -3548,44 +4017,49 @@ export interface operations {
         responses: {
             /** @description batchPatchIdentitiesResponse */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["batchPatchIdentitiesResponse"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             409: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Get an Identity
-     * @description Return an [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model) by its ID. You can optionally
-     * include credentials (e.g. social sign in connections) in the response by using the `include_credential` query parameter.
-     */
     getIdentity: {
         parameters: {
             query?: {
-                /**
-                 * @description Include Credentials in Response
+                /** @description Include Credentials in Response
                  *
-                 * Include any credential, for example `password` or `oidc`, in the response. When set to `oidc`, This will return
-                 * the initial OAuth 2.0 Access Token, OAuth 2.0 Refresh Token and the OpenID Connect ID Token if available.
-                 */
+                 *     Include any credential, for example `password` or `oidc`, in the response. When set to `oidc`, This will return
+                 *     the initial OAuth 2.0 Access Token, OAuth 2.0 Refresh Token and the OpenID Connect ID Token if available. */
                 include_credential?: (
                     | "password"
                     | "oidc"
@@ -3597,43 +4071,53 @@ export interface operations {
                     | "code_recovery"
                 )[]
             }
+            header?: never
             path: {
                 /** @description ID must be set to the ID of identity you want to get */
                 id: string
             }
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description identity */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["identity"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Update an Identity
-     * @description This endpoint updates an [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model). The full identity
-     * payload (except credentials) is expected. It is possible to update the identity's credentials as well.
-     */
     updateIdentity: {
         parameters: {
+            query?: never
+            header?: never
             path: {
                 /** @description ID must be set to the ID of identity you want to update */
                 id: string
             }
+            cookie?: never
         }
         requestBody?: {
             content: {
@@ -3643,76 +4127,93 @@ export interface operations {
         responses: {
             /** @description identity */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["identity"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             409: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Delete an Identity
-     * @description Calling this endpoint irrecoverably and permanently deletes the [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model) given its ID. This action can not be undone.
-     * This endpoint returns 204 when the identity was deleted or when the identity was not found, in which case it is
-     * assumed that is has been deleted already.
-     */
     deleteIdentity: {
         parameters: {
+            query?: never
+            header?: never
             path: {
                 /** @description ID is the identity's ID. */
                 id: string
             }
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             204: components["responses"]["emptyResponse"]
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Patch an Identity
-     * @description Partially updates an [identity's](https://www.ory.sh/docs/kratos/concepts/identity-user-model) field using [JSON Patch](https://jsonpatch.com/).
-     * The fields `id`, `stateChangedAt` and `credentials` can not be updated using this method.
-     */
     patchIdentity: {
         parameters: {
+            query?: never
+            header?: never
             path: {
                 /** @description ID must be set to the ID of identity you want to update */
                 id: string
             }
+            cookie?: never
         }
         requestBody?: {
             content: {
@@ -3722,57 +4223,67 @@ export interface operations {
         responses: {
             /** @description identity */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["identity"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             409: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Delete a credential for a specific identity
-     * @description Delete an [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model) credential by its type
-     * You can only delete second factor (aal2) credentials.
-     */
     deleteIdentityCredentials: {
         parameters: {
+            query?: never
+            header?: never
             path: {
                 /** @description ID is the identity's ID. */
                 id: string
-                /**
-                 * @description Type is the type of credentials to be deleted.
-                 * password CredentialsTypePassword
-                 * oidc CredentialsTypeOIDC
-                 * totp CredentialsTypeTOTP
-                 * lookup_secret CredentialsTypeLookup
-                 * webauthn CredentialsTypeWebAuthn
-                 * code CredentialsTypeCodeAuth
-                 * link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
-                 * code_recovery CredentialsTypeRecoveryCode
-                 */
+                /** @description Type is the type of credentials to be deleted.
+                 *     password CredentialsTypePassword
+                 *     oidc CredentialsTypeOIDC
+                 *     totp CredentialsTypeTOTP
+                 *     lookup_secret CredentialsTypeLookup
+                 *     webauthn CredentialsTypeWebAuthn
+                 *     code CredentialsTypeCodeAuth
+                 *     link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
+                 *     code_recovery CredentialsTypeRecoveryCode */
                 type:
                     | "password"
                     | "oidc"
@@ -3783,140 +4294,161 @@ export interface operations {
                     | "link_recovery"
                     | "code_recovery"
             }
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             204: components["responses"]["emptyResponse"]
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * List an Identity's Sessions
-     * @description This endpoint returns all sessions that belong to the given Identity.
-     */
     listIdentitySessions: {
         parameters: {
             query?: {
-                /**
-                 * @description Deprecated Items per Page
+                /** @description Deprecated Items per Page
                  *
-                 * DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+                 *     DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
                  *
-                 * This is the number of items per page.
-                 */
+                 *     This is the number of items per page. */
                 per_page?: number
-                /**
-                 * @description Deprecated Pagination Page
+                /** @description Deprecated Pagination Page
                  *
-                 * DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+                 *     DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
                  *
-                 * This value is currently an integer, but it is not sequential. The value is not the page number, but a
-                 * reference. The next page can be any number and some numbers might return an empty list.
+                 *     This value is currently an integer, but it is not sequential. The value is not the page number, but a
+                 *     reference. The next page can be any number and some numbers might return an empty list.
                  *
-                 * For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist.
-                 * The first page can be retrieved by omitting this parameter. Following page pointers will be returned in the
-                 * `Link` header.
-                 */
+                 *     For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist.
+                 *     The first page can be retrieved by omitting this parameter. Following page pointers will be returned in the
+                 *     `Link` header. */
                 page?: number
-                /**
-                 * @description Page Size
+                /** @description Page Size
                  *
-                 * This is the number of items per page to return. For details on pagination please head over to the
-                 * [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
-                 */
+                 *     This is the number of items per page to return. For details on pagination please head over to the
+                 *     [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). */
                 page_size?: number
-                /**
-                 * @description Next Page Token
+                /** @description Next Page Token
                  *
-                 * The next page token. For details on pagination please head over to the
-                 * [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
-                 */
+                 *     The next page token. For details on pagination please head over to the
+                 *     [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). */
                 page_token?: string
                 /** @description Active is a boolean flag that filters out sessions based on the state. If no value is provided, all sessions are returned. */
                 active?: boolean
             }
+            header?: never
             path: {
                 /** @description ID is the identity's ID. */
                 id: string
             }
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             200: components["responses"]["listIdentitySessions"]
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Delete & Invalidate an Identity's Sessions
-     * @description Calling this endpoint irrecoverably and permanently deletes and invalidates all sessions that belong to the given Identity.
-     */
     deleteIdentitySessions: {
         parameters: {
+            query?: never
+            header?: never
             path: {
                 /** @description ID is the identity's ID. */
                 id: string
             }
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             204: components["responses"]["emptyResponse"]
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             401: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create a Recovery Code
-     * @description This endpoint creates a recovery code which should be given to the user in order for them to recover
-     * (or activate) their account.
-     */
     createRecoveryCodeForIdentity: {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["createRecoveryCodeForIdentityBody"]
@@ -3925,40 +4457,50 @@ export interface operations {
         responses: {
             /** @description recoveryCodeForIdentity */
             201: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["recoveryCodeForIdentity"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create a Recovery Link
-     * @description This endpoint creates a recovery link which should be given to the user in order for them to recover
-     * (or activate) their account.
-     */
     createRecoveryLinkForIdentity: {
         parameters: {
             query?: {
                 return_to?: string
             }
+            header?: never
+            path?: never
+            cookie?: never
         }
         requestBody?: {
             content: {
@@ -3968,207 +4510,240 @@ export interface operations {
         responses: {
             /** @description recoveryLinkForIdentity */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["recoveryLinkForIdentity"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * List All Sessions
-     * @description Listing all sessions that exist.
-     */
     listSessions: {
         parameters: {
             query?: {
-                /**
-                 * @description Items per Page
+                /** @description Items per Page
                  *
-                 * This is the number of items per page to return.
-                 * For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
-                 */
+                 *     This is the number of items per page to return.
+                 *     For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). */
                 page_size?: number
-                /**
-                 * @description Next Page Token
+                /** @description Next Page Token
                  *
-                 * The next page token.
-                 * For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
-                 */
+                 *     The next page token.
+                 *     For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). */
                 page_token?: string
                 /** @description Active is a boolean flag that filters out sessions based on the state. If no value is provided, all sessions are returned. */
                 active?: boolean
-                /**
-                 * @description ExpandOptions is a query parameter encoded list of all properties that must be expanded in the Session.
-                 * If no value is provided, the expandable properties are skipped.
-                 */
-                expand?: identity | devices
+                /** @description ExpandOptions is a query parameter encoded list of all properties that must be expanded in the Session.
+                 *     If no value is provided, the expandable properties are skipped. */
+                expand?: "identity" | "devices"
             }
+            header?: never
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             200: components["responses"]["listSessions"]
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Get Session
-     * @description This endpoint is useful for:
-     *
-     * Getting a session object with all specified expandables that exist in an administrative context.
-     */
     getSession: {
         parameters: {
             query?: {
-                /**
-                 * @description ExpandOptions is a query parameter encoded list of all properties that must be expanded in the Session.
-                 * Example - ?expand=Identity&expand=Devices
-                 * If no value is provided, the expandable properties are skipped.
-                 */
-                expand?: identity | devices
+                /** @description ExpandOptions is a query parameter encoded list of all properties that must be expanded in the Session.
+                 *     Example - ?expand=Identity&expand=Devices
+                 *     If no value is provided, the expandable properties are skipped. */
+                expand?: "identity" | "devices"
             }
+            header?: never
             path: {
                 /** @description ID is the session's ID. */
                 id: string
             }
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description session */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["session"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Deactivate a Session
-     * @description Calling this endpoint deactivates the specified session. Session data is not deleted.
-     */
     disableSession: {
         parameters: {
+            query?: never
+            header?: never
             path: {
                 /** @description ID is the session's ID. */
                 id: string
             }
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             204: components["responses"]["emptyResponse"]
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             401: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Extend a Session
-     * @description Calling this endpoint extends the given session ID. If `session.earliest_possible_extend` is set it
-     * will only extend the session after the specified time has passed.
-     *
-     * Retrieve the session ID from the `/sessions/whoami` endpoint / `toSession` SDK method.
-     */
     extendSession: {
         parameters: {
+            query?: never
+            header?: never
             path: {
                 /** @description ID is the session's ID. */
                 id: string
             }
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description session */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["session"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Check HTTP Server Status
-     * @description This endpoint returns a HTTP 200 status code when Ory Kratos is accepting incoming
-     * HTTP requests. This status does currently not include checks whether the database connection is working.
-     *
-     * If the service supports TLS Edge Termination, this endpoint does not require the
-     * `X-Forwarded-Proto` header to be set.
-     *
-     * Be aware that if you are running multiple nodes of this service, the health status will never
-     * refer to the cluster state, only to a single instance.
-     */
     isAlive: {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description Ory Kratos is ready to accept connections. */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": {
                         /** @description Always "ok". */
@@ -4178,27 +4753,29 @@ export interface operations {
             }
             /** @description Unexpected error */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "text/plain": string
                 }
             }
         }
     }
-    /**
-     * Check HTTP Server and Database Status
-     * @description This endpoint returns a HTTP 200 status code when Ory Kratos is up running and the environment dependencies (e.g.
-     * the database) are responsive as well.
-     *
-     * If the service supports TLS Edge Termination, this endpoint does not require the
-     * `X-Forwarded-Proto` header to be set.
-     *
-     * Be aware that if you are running multiple nodes of Ory Kratos, the health status will never
-     * refer to the cluster state, only to a single instance.
-     */
     isReady: {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description Ory Kratos is ready to accept requests. */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": {
                         /** @description Always "ok". */
@@ -4208,6 +4785,9 @@ export interface operations {
             }
             /** @description Ory Kratos is not yet ready to accept requests. */
             503: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": {
                         /** @description Errors contains a list of errors that caused the not ready status. */
@@ -4219,194 +4799,175 @@ export interface operations {
             }
             /** @description Unexpected error */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "text/plain": string
                 }
             }
         }
     }
-    /**
-     * Get all Identity Schemas
-     * @description Returns a list of all identity schemas currently in use.
-     */
     listIdentitySchemas: {
         parameters: {
             query?: {
-                /**
-                 * @description Deprecated Items per Page
+                /** @description Deprecated Items per Page
                  *
-                 * DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+                 *     DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
                  *
-                 * This is the number of items per page.
-                 */
+                 *     This is the number of items per page. */
                 per_page?: number
-                /**
-                 * @description Deprecated Pagination Page
+                /** @description Deprecated Pagination Page
                  *
-                 * DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+                 *     DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
                  *
-                 * This value is currently an integer, but it is not sequential. The value is not the page number, but a
-                 * reference. The next page can be any number and some numbers might return an empty list.
+                 *     This value is currently an integer, but it is not sequential. The value is not the page number, but a
+                 *     reference. The next page can be any number and some numbers might return an empty list.
                  *
-                 * For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist.
-                 * The first page can be retrieved by omitting this parameter. Following page pointers will be returned in the
-                 * `Link` header.
-                 */
+                 *     For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist.
+                 *     The first page can be retrieved by omitting this parameter. Following page pointers will be returned in the
+                 *     `Link` header. */
                 page?: number
-                /**
-                 * @description Page Size
+                /** @description Page Size
                  *
-                 * This is the number of items per page to return. For details on pagination please head over to the
-                 * [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
-                 */
+                 *     This is the number of items per page to return. For details on pagination please head over to the
+                 *     [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). */
                 page_size?: number
-                /**
-                 * @description Next Page Token
+                /** @description Next Page Token
                  *
-                 * The next page token. For details on pagination please head over to the
-                 * [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
-                 */
+                 *     The next page token. For details on pagination please head over to the
+                 *     [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). */
                 page_token?: string
             }
+            header?: never
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             200: components["responses"]["identitySchemas"]
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Get Identity JSON Schema
-     * @description Return a specific identity schema.
-     */
     getIdentitySchema: {
         parameters: {
+            query?: never
+            header?: never
             path: {
                 /** @description ID must be set to the ID of schema you want to get */
                 id: string
             }
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description identitySchema */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["identitySchema"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Get User-Flow Errors
-     * @description This endpoint returns the error associated with a user-facing self service errors.
-     *
-     * This endpoint supports stub values to help you implement the error UI:
-     *
-     * `?id=stub:500` - returns a stub 500 (Internal Server Error) error.
-     *
-     * More information can be found at [Ory Kratos User User Facing Error Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-facing-errors).
-     */
     getFlowError: {
         parameters: {
             query: {
                 /** @description Error is the error's ID */
                 id: string
             }
+            header?: never
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description flowError */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["flowError"]
                 }
             }
             /** @description errorGeneric */
             403: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             500: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Submit a Login Flow
-     * @description Use this endpoint to complete a login flow. This endpoint
-     * behaves differently for API and browser flows.
-     *
-     * API flows expect `application/json` to be sent in the body and responds with
-     * HTTP 200 and a application/json body with the session token on success;
-     * HTTP 410 if the original flow expired with the appropriate error messages set and optionally a `use_flow_id` parameter in the body;
-     * HTTP 400 on form validation errors.
-     *
-     * Browser flows expect a Content-Type of `application/x-www-form-urlencoded` or `application/json` to be sent in the body and respond with
-     * a HTTP 303 redirect to the post/after login URL or the `return_to` value if it was set and if the login succeeded;
-     * a HTTP 303 redirect to the login UI URL with the flow ID containing the validation errors otherwise.
-     *
-     * Browser flows with an accept header of `application/json` will not redirect but instead respond with
-     * HTTP 200 and a application/json body with the signed in identity and a `Set-Cookie` header on success;
-     * HTTP 303 redirect to a fresh login flow if the original flow expired with the appropriate error messages set;
-     * HTTP 400 on form validation errors.
-     *
-     * If this endpoint is called with `Accept: application/json` in the header, the response contains the flow without a redirect. In the
-     * case of an error, the `error.id` of the JSON response body can be one of:
-     *
-     * `session_already_available`: The user is already signed in.
-     * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-     * `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
-     * `browser_location_change_required`: Usually sent when an AJAX request indicates that the browser needs to open a specific URL.
-     * Most likely used in Social Sign In flows.
-     *
-     * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
-     */
     updateLoginFlow: {
         parameters: {
             query: {
-                /**
-                 * @description The Login Flow ID
+                /** @description The Login Flow ID
                  *
-                 * The value for this parameter comes from `flow` URL Query parameter sent to your
-                 * application (e.g. `/login?flow=abcde`).
-                 */
+                 *     The value for this parameter comes from `flow` URL Query parameter sent to your
+                 *     application (e.g. `/login?flow=abcde`). */
                 flow: string
             }
             header?: {
                 /** @description The Session Token of the Identity performing the settings flow. */
                 "X-Session-Token"?: string
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
-                 * sent by the client to your server here. This ensures that CSRF and session cookies are respected.
-                 */
+                 *     When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
+                 *     sent by the client to your server here. This ensures that CSRF and session cookies are respected. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
         requestBody: {
             content: {
@@ -4417,6 +4978,9 @@ export interface operations {
         responses: {
             /** @description successfulNativeLogin */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["successfulNativeLogin"]
                 }
@@ -4424,77 +4988,60 @@ export interface operations {
             303: components["responses"]["emptyResponse"]
             /** @description loginFlow */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["loginFlow"]
                 }
             }
             /** @description errorGeneric */
             410: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorBrowserLocationChangeRequired */
             422: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorBrowserLocationChangeRequired"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create Login Flow for Native Apps
-     * @description This endpoint initiates a login flow for native apps that do not use a browser, such as mobile devices, smart TVs, and so on.
-     *
-     * If a valid provided session cookie or session token is provided, a 400 Bad Request error
-     * will be returned unless the URL query parameter `?refresh=true` is set.
-     *
-     * To fetch an existing login flow call `/self-service/login/flows?flow=<flow_id>`.
-     *
-     * You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
-     * Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
-     * you vulnerable to a variety of CSRF attacks, including CSRF login attacks.
-     *
-     * In the case of an error, the `error.id` of the JSON response body can be one of:
-     *
-     * `session_already_available`: The user is already signed in.
-     * `session_aal1_required`: Multi-factor auth (e.g. 2fa) was requested but the user has no session yet.
-     * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-     *
-     * This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
-     *
-     * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
-     */
     createNativeLoginFlow: {
         parameters: {
             query?: {
-                /**
-                 * @description Refresh a login session
+                /** @description Refresh a login session
                  *
-                 * If set to true, this will refresh an existing login session by
-                 * asking the user to sign in again. This will reset the
-                 * authenticated_at time of the session.
-                 */
+                 *     If set to true, this will refresh an existing login session by
+                 *     asking the user to sign in again. This will reset the
+                 *     authenticated_at time of the session. */
                 refresh?: boolean
-                /**
-                 * @description Request a Specific AuthenticationMethod Assurance Level
+                /** @description Request a Specific AuthenticationMethod Assurance Level
                  *
-                 * Use this parameter to upgrade an existing session's authenticator assurance level (AAL). This
-                 * allows you to ask for multi-factor authentication. When an identity sign in using e.g. username+password,
-                 * the AAL is 1. If you wish to "upgrade" the session's security by asking the user to perform TOTP / WebAuth/ ...
-                 * you would set this to "aal2".
-                 */
+                 *     Use this parameter to upgrade an existing session's authenticator assurance level (AAL). This
+                 *     allows you to ask for multi-factor authentication. When an identity sign in using e.g. username+password,
+                 *     the AAL is 1. If you wish to "upgrade" the session's security by asking the user to perform TOTP / WebAuth/ ...
+                 *     you would set this to "aal2". */
                 aal?: string
-                /**
-                 * @description EnableSessionTokenExchangeCode requests the login flow to include a code that can be used to retrieve the session token
-                 * after the login flow has been completed.
-                 */
+                /** @description EnableSessionTokenExchangeCode requests the login flow to include a code that can be used to retrieve the session token
+                 *     after the login flow has been completed. */
                 return_session_token_exchange_code?: boolean
                 /** @description The URL to return the browser to after the flow was completed. */
                 return_to?: string
@@ -4505,103 +5052,85 @@ export interface operations {
                 /** @description The Session Token of the Identity performing the settings flow. */
                 "X-Session-Token"?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description loginFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["loginFlow"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create Login Flow for Browsers
-     * @description This endpoint initializes a browser-based user login flow. This endpoint will set the appropriate
-     * cookies and anti-CSRF measures required for browser-based flows.
-     *
-     * If this endpoint is opened as a link in the browser, it will be redirected to
-     * `selfservice.flows.login.ui_url` with the flow ID set as the query parameter `?flow=`. If a valid user session
-     * exists already, the browser will be redirected to `urls.default_redirect_url` unless the query parameter
-     * `?refresh=true` was set.
-     *
-     * If this endpoint is called via an AJAX request, the response contains the flow without a redirect. In the
-     * case of an error, the `error.id` of the JSON response body can be one of:
-     *
-     * `session_already_available`: The user is already signed in.
-     * `session_aal1_required`: Multi-factor auth (e.g. 2fa) was requested but the user has no session yet.
-     * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-     * `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
-     *
-     * The optional query parameter login_challenge is set when using Kratos with
-     * Hydra in an OAuth2 flow. See the oauth2_provider.url configuration
-     * option.
-     *
-     * This endpoint is NOT INTENDED for clients that do not have a browser (Chrome, Firefox, ...) as cookies are needed.
-     *
-     * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
-     */
     createBrowserLoginFlow: {
         parameters: {
             query?: {
-                /**
-                 * @description Refresh a login session
+                /** @description Refresh a login session
                  *
-                 * If set to true, this will refresh an existing login session by
-                 * asking the user to sign in again. This will reset the
-                 * authenticated_at time of the session.
-                 */
+                 *     If set to true, this will refresh an existing login session by
+                 *     asking the user to sign in again. This will reset the
+                 *     authenticated_at time of the session. */
                 refresh?: boolean
-                /**
-                 * @description Request a Specific AuthenticationMethod Assurance Level
+                /** @description Request a Specific AuthenticationMethod Assurance Level
                  *
-                 * Use this parameter to upgrade an existing session's authenticator assurance level (AAL). This
-                 * allows you to ask for multi-factor authentication. When an identity sign in using e.g. username+password,
-                 * the AAL is 1. If you wish to "upgrade" the session's security by asking the user to perform TOTP / WebAuth/ ...
-                 * you would set this to "aal2".
-                 */
+                 *     Use this parameter to upgrade an existing session's authenticator assurance level (AAL). This
+                 *     allows you to ask for multi-factor authentication. When an identity sign in using e.g. username+password,
+                 *     the AAL is 1. If you wish to "upgrade" the session's security by asking the user to perform TOTP / WebAuth/ ...
+                 *     you would set this to "aal2". */
                 aal?: string
                 /** @description The URL to return the browser to after the flow was completed. */
                 return_to?: string
-                /**
-                 * @description An optional Hydra login challenge. If present, Kratos will cooperate with
-                 * Ory Hydra to act as an OAuth2 identity provider.
+                /** @description An optional Hydra login challenge. If present, Kratos will cooperate with
+                 *     Ory Hydra to act as an OAuth2 identity provider.
                  *
-                 * The value for this parameter comes from `login_challenge` URL Query parameter sent to your
-                 * application (e.g. `/login?login_challenge=abcde`).
-                 */
+                 *     The value for this parameter comes from `login_challenge` URL Query parameter sent to your
+                 *     application (e.g. `/login?login_challenge=abcde`). */
                 login_challenge?: string
-                /**
-                 * @description An optional organization ID that should be used for logging this user in.
-                 * This parameter is only effective in the Ory Network.
-                 */
+                /** @description An optional organization ID that should be used for logging this user in.
+                 *     This parameter is only effective in the Ory Network. */
                 organization?: string
             }
             header?: {
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
-                 * sent by the client to your server here. This ensures that CSRF and session cookies are respected.
-                 */
+                 *     When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
+                 *     sent by the client to your server here. This ensures that CSRF and session cookies are respected. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description loginFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["loginFlow"]
                 }
@@ -4609,160 +5138,135 @@ export interface operations {
             303: components["responses"]["emptyResponse"]
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Get Login Flow
-     * @description This endpoint returns a login flow's context with, for example, error details and other information.
-     *
-     * Browser flows expect the anti-CSRF cookie to be included in the request's HTTP Cookie Header.
-     * For AJAX requests you must ensure that cookies are included in the request or requests will fail.
-     *
-     * If you use the browser-flow for server-side apps, the services need to run on a common top-level-domain
-     * and you need to forward the incoming HTTP Cookie header to this endpoint:
-     *
-     * ```js
-     * pseudo-code example
-     * router.get('/login', async function (req, res) {
-     * const flow = await client.getLoginFlow(req.header('cookie'), req.query['flow'])
-     *
-     * res.render('login', flow)
-     * })
-     * ```
-     *
-     * This request may fail due to several reasons. The `error.id` can be one of:
-     *
-     * `session_already_available`: The user is already signed in.
-     * `self_service_flow_expired`: The flow is expired and you should request a new one.
-     *
-     * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
-     */
     getLoginFlow: {
         parameters: {
             query: {
-                /**
-                 * @description The Login Flow ID
+                /** @description The Login Flow ID
                  *
-                 * The value for this parameter comes from `flow` URL Query parameter sent to your
-                 * application (e.g. `/login?flow=abcde`).
-                 */
+                 *     The value for this parameter comes from `flow` URL Query parameter sent to your
+                 *     application (e.g. `/login?flow=abcde`). */
                 id: string
             }
             header?: {
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
-                 * sent by the client to your server here. This ensures that CSRF and session cookies are respected.
-                 */
+                 *     When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
+                 *     sent by the client to your server here. This ensures that CSRF and session cookies are respected. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description loginFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["loginFlow"]
                 }
             }
             /** @description errorGeneric */
             403: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             410: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Update Logout Flow
-     * @description This endpoint logs out an identity in a self-service manner.
-     *
-     * If the `Accept` HTTP header is not set to `application/json`, the browser will be redirected (HTTP 303 See Other)
-     * to the `return_to` parameter of the initial request or fall back to `urls.default_return_to`.
-     *
-     * If the `Accept` HTTP header is set to `application/json`, a 204 No Content response
-     * will be sent on successful logout instead.
-     *
-     * This endpoint is NOT INTENDED for API clients and only works
-     * with browsers (Chrome, Firefox, ...). For API clients you can
-     * call the `/self-service/logout/api` URL directly with the Ory Session Token.
-     *
-     * More information can be found at [Ory Kratos User Logout Documentation](https://www.ory.sh/docs/next/kratos/self-service/flows/user-logout).
-     */
     updateLogoutFlow: {
         parameters: {
             query?: {
-                /**
-                 * @description A Valid Logout Token
+                /** @description A Valid Logout Token
                  *
-                 * If you do not have a logout token because you only have a session cookie,
-                 * call `/self-service/logout/browser` to generate a URL for this endpoint.
-                 */
+                 *     If you do not have a logout token because you only have a session cookie,
+                 *     call `/self-service/logout/browser` to generate a URL for this endpoint. */
                 token?: string
                 /** @description The URL to return to after the logout was completed. */
                 return_to?: string
             }
             header?: {
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
-                 * sent by the client to your server here. This ensures that CSRF and session cookies are respected.
-                 */
+                 *     When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
+                 *     sent by the client to your server here. This ensures that CSRF and session cookies are respected. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             204: components["responses"]["emptyResponse"]
             303: components["responses"]["emptyResponse"]
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Perform Logout for Native Apps
-     * @description Use this endpoint to log out an identity using an Ory Session Token. If the Ory Session Token was successfully
-     * revoked, the server returns a 204 No Content response. A 204 No Content response is also sent when
-     * the Ory Session Token has been revoked already before.
-     *
-     * If the Ory Session Token is malformed or does not exist a 403 Forbidden response will be returned.
-     *
-     * This endpoint does not remove any HTTP
-     * Cookies - use the Browser-Based Self-Service Logout Flow instead.
-     */
     performNativeLogout: {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         requestBody: {
             content: {
                 "application/json": components["schemas"]["performNativeLogoutBody"]
@@ -4772,127 +5276,108 @@ export interface operations {
             204: components["responses"]["emptyResponse"]
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create a Logout URL for Browsers
-     * @description This endpoint initializes a browser-based user logout flow and a URL which can be used to log out the user.
-     *
-     * This endpoint is NOT INTENDED for API clients and only works
-     * with browsers (Chrome, Firefox, ...). For API clients you can
-     * call the `/self-service/logout/api` URL directly with the Ory Session Token.
-     *
-     * The URL is only valid for the currently signed in user. If no user is signed in, this endpoint returns
-     * a 401 error.
-     *
-     * When calling this endpoint from a backend, please ensure to properly forward the HTTP cookies.
-     */
     createBrowserLogoutFlow: {
         parameters: {
             query?: {
-                /**
-                 * @description Return to URL
+                /** @description Return to URL
                  *
-                 * The URL to which the browser should be redirected to after the logout
-                 * has been performed.
-                 */
+                 *     The URL to which the browser should be redirected to after the logout
+                 *     has been performed. */
                 return_to?: string
             }
             header?: {
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * If you call this endpoint from a backend, please include the
-                 * original Cookie header in the request.
-                 */
+                 *     If you call this endpoint from a backend, please include the
+                 *     original Cookie header in the request. */
                 cookie?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description logoutFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["logoutFlow"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             401: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             500: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Update Recovery Flow
-     * @description Use this endpoint to update a recovery flow. This endpoint
-     * behaves differently for API and browser flows and has several states:
-     *
-     * `choose_method` expects `flow` (in the URL query) and `email` (in the body) to be sent
-     * and works with API- and Browser-initiated flows.
-     * For API clients and Browser clients with HTTP Header `Accept: application/json` it either returns a HTTP 200 OK when the form is valid and HTTP 400 OK when the form is invalid.
-     * and a HTTP 303 See Other redirect with a fresh recovery flow if the flow was otherwise invalid (e.g. expired).
-     * For Browser clients without HTTP Header `Accept` or with `Accept: text/*` it returns a HTTP 303 See Other redirect to the Recovery UI URL with the Recovery Flow ID appended.
-     * `sent_email` is the success state after `choose_method` for the `link` method and allows the user to request another recovery email. It
-     * works for both API and Browser-initiated flows and returns the same responses as the flow in `choose_method` state.
-     * `passed_challenge` expects a `token` to be sent in the URL query and given the nature of the flow ("sending a recovery link")
-     * does not have any API capabilities. The server responds with a HTTP 303 See Other redirect either to the Settings UI URL
-     * (if the link was valid) and instructs the user to update their password, or a redirect to the Recover UI URL with
-     * a new Recovery Flow ID which contains an error message that the recovery link was invalid.
-     *
-     * More information can be found at [Ory Kratos Account Recovery Documentation](../self-service/flows/account-recovery).
-     */
     updateRecoveryFlow: {
         parameters: {
             query: {
-                /**
-                 * @description The Recovery Flow ID
+                /** @description The Recovery Flow ID
                  *
-                 * The value for this parameter comes from `flow` URL Query parameter sent to your
-                 * application (e.g. `/recovery?flow=abcde`).
-                 */
+                 *     The value for this parameter comes from `flow` URL Query parameter sent to your
+                 *     application (e.g. `/recovery?flow=abcde`). */
                 flow: string
-                /**
-                 * @description Recovery Token
+                /** @description Recovery Token
                  *
-                 * The recovery token which completes the recovery request. If the token
-                 * is invalid (e.g. expired) an error will be shown to the end-user.
+                 *     The recovery token which completes the recovery request. If the token
+                 *     is invalid (e.g. expired) an error will be shown to the end-user.
                  *
-                 * This parameter is usually set in a link and not used by any direct API call.
-                 */
+                 *     This parameter is usually set in a link and not used by any direct API call. */
                 token?: string
             }
             header?: {
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
-                 * sent by the client to your server here. This ensures that CSRF and session cookies are respected.
-                 */
+                 *     When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
+                 *     sent by the client to your server here. This ensures that CSRF and session cookies are respected. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
         requestBody: {
             content: {
@@ -4903,6 +5388,9 @@ export interface operations {
         responses: {
             /** @description recoveryFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["recoveryFlow"]
                 }
@@ -4910,91 +5398,97 @@ export interface operations {
             303: components["responses"]["emptyResponse"]
             /** @description recoveryFlow */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["recoveryFlow"]
                 }
             }
             /** @description errorGeneric */
             410: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorBrowserLocationChangeRequired */
             422: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorBrowserLocationChangeRequired"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create Recovery Flow for Native Apps
-     * @description This endpoint initiates a recovery flow for API clients such as mobile devices, smart TVs, and so on.
-     *
-     * If a valid provided session cookie or session token is provided, a 400 Bad Request error.
-     *
-     * On an existing recovery flow, use the `getRecoveryFlow` API endpoint.
-     *
-     * You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
-     * Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
-     * you vulnerable to a variety of CSRF attacks.
-     *
-     * This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
-     *
-     * More information can be found at [Ory Kratos Account Recovery Documentation](../self-service/flows/account-recovery).
-     */
     createNativeRecoveryFlow: {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description recoveryFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["recoveryFlow"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create Recovery Flow for Browsers
-     * @description This endpoint initializes a browser-based account recovery flow. Once initialized, the browser will be redirected to
-     * `selfservice.flows.recovery.ui_url` with the flow ID set as the query parameter `?flow=`. If a valid user session
-     * exists, the browser is returned to the configured return URL.
-     *
-     * If this endpoint is called via an AJAX request, the response contains the recovery flow without any redirects
-     * or a 400 bad request error if the user is already authenticated.
-     *
-     * This endpoint is NOT INTENDED for clients that do not have a browser (Chrome, Firefox, ...) as cookies are needed.
-     *
-     * More information can be found at [Ory Kratos Account Recovery Documentation](../self-service/flows/account-recovery).
-     */
     createBrowserRecoveryFlow: {
         parameters: {
             query?: {
                 /** @description The URL to return the browser to after the flow was completed. */
                 return_to?: string
             }
+            header?: never
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description recoveryFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["recoveryFlow"]
                 }
@@ -5002,138 +5496,101 @@ export interface operations {
             303: components["responses"]["emptyResponse"]
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Get Recovery Flow
-     * @description This endpoint returns a recovery flow's context with, for example, error details and other information.
-     *
-     * Browser flows expect the anti-CSRF cookie to be included in the request's HTTP Cookie Header.
-     * For AJAX requests you must ensure that cookies are included in the request or requests will fail.
-     *
-     * If you use the browser-flow for server-side apps, the services need to run on a common top-level-domain
-     * and you need to forward the incoming HTTP Cookie header to this endpoint:
-     *
-     * ```js
-     * pseudo-code example
-     * router.get('/recovery', async function (req, res) {
-     * const flow = await client.getRecoveryFlow(req.header('Cookie'), req.query['flow'])
-     *
-     * res.render('recovery', flow)
-     * })
-     * ```
-     *
-     * More information can be found at [Ory Kratos Account Recovery Documentation](../self-service/flows/account-recovery).
-     */
     getRecoveryFlow: {
         parameters: {
             query: {
-                /**
-                 * @description The Flow ID
+                /** @description The Flow ID
                  *
-                 * The value for this parameter comes from `request` URL Query parameter sent to your
-                 * application (e.g. `/recovery?flow=abcde`).
-                 */
+                 *     The value for this parameter comes from `request` URL Query parameter sent to your
+                 *     application (e.g. `/recovery?flow=abcde`). */
                 id: string
             }
             header?: {
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
-                 * sent by the client to your server here. This ensures that CSRF and session cookies are respected.
-                 */
+                 *     When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
+                 *     sent by the client to your server here. This ensures that CSRF and session cookies are respected. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description recoveryFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["recoveryFlow"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             410: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Update Registration Flow
-     * @description Use this endpoint to complete a registration flow by sending an identity's traits and password. This endpoint
-     * behaves differently for API and browser flows.
-     *
-     * API flows expect `application/json` to be sent in the body and respond with
-     * HTTP 200 and a application/json body with the created identity success - if the session hook is configured the
-     * `session` and `session_token` will also be included;
-     * HTTP 410 if the original flow expired with the appropriate error messages set and optionally a `use_flow_id` parameter in the body;
-     * HTTP 400 on form validation errors.
-     *
-     * Browser flows expect a Content-Type of `application/x-www-form-urlencoded` or `application/json` to be sent in the body and respond with
-     * a HTTP 303 redirect to the post/after registration URL or the `return_to` value if it was set and if the registration succeeded;
-     * a HTTP 303 redirect to the registration UI URL with the flow ID containing the validation errors otherwise.
-     *
-     * Browser flows with an accept header of `application/json` will not redirect but instead respond with
-     * HTTP 200 and a application/json body with the signed in identity and a `Set-Cookie` header on success;
-     * HTTP 303 redirect to a fresh login flow if the original flow expired with the appropriate error messages set;
-     * HTTP 400 on form validation errors.
-     *
-     * If this endpoint is called with `Accept: application/json` in the header, the response contains the flow without a redirect. In the
-     * case of an error, the `error.id` of the JSON response body can be one of:
-     *
-     * `session_already_available`: The user is already signed in.
-     * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-     * `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
-     * `browser_location_change_required`: Usually sent when an AJAX request indicates that the browser needs to open a specific URL.
-     * Most likely used in Social Sign In flows.
-     *
-     * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
-     */
     updateRegistrationFlow: {
         parameters: {
             query: {
-                /**
-                 * @description The Registration Flow ID
+                /** @description The Registration Flow ID
                  *
-                 * The value for this parameter comes from `flow` URL Query parameter sent to your
-                 * application (e.g. `/registration?flow=abcde`).
-                 */
+                 *     The value for this parameter comes from `flow` URL Query parameter sent to your
+                 *     application (e.g. `/registration?flow=abcde`). */
                 flow: string
             }
             header?: {
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
-                 * sent by the client to your server here. This ensures that CSRF and session cookies are respected.
-                 */
+                 *     When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
+                 *     sent by the client to your server here. This ensures that CSRF and session cookies are respected. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
         requestBody: {
             content: {
@@ -5144,6 +5601,9 @@ export interface operations {
         responses: {
             /** @description successfulNativeRegistration */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["successfulNativeRegistration"]
                 }
@@ -5151,137 +5611,119 @@ export interface operations {
             303: components["responses"]["emptyResponse"]
             /** @description registrationFlow */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["registrationFlow"]
                 }
             }
             /** @description errorGeneric */
             410: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorBrowserLocationChangeRequired */
             422: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorBrowserLocationChangeRequired"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create Registration Flow for Native Apps
-     * @description This endpoint initiates a registration flow for API clients such as mobile devices, smart TVs, and so on.
-     *
-     * If a valid provided session cookie or session token is provided, a 400 Bad Request error
-     * will be returned unless the URL query parameter `?refresh=true` is set.
-     *
-     * To fetch an existing registration flow call `/self-service/registration/flows?flow=<flow_id>`.
-     *
-     * You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
-     * Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
-     * you vulnerable to a variety of CSRF attacks.
-     *
-     * In the case of an error, the `error.id` of the JSON response body can be one of:
-     *
-     * `session_already_available`: The user is already signed in.
-     * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-     *
-     * This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
-     *
-     * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
-     */
     createNativeRegistrationFlow: {
         parameters: {
             query?: {
-                /**
-                 * @description EnableSessionTokenExchangeCode requests the login flow to include a code that can be used to retrieve the session token
-                 * after the login flow has been completed.
-                 */
+                /** @description EnableSessionTokenExchangeCode requests the login flow to include a code that can be used to retrieve the session token
+                 *     after the login flow has been completed. */
                 return_session_token_exchange_code?: boolean
                 /** @description The URL to return the browser to after the flow was completed. */
                 return_to?: string
             }
+            header?: never
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description registrationFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["registrationFlow"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create Registration Flow for Browsers
-     * @description This endpoint initializes a browser-based user registration flow. This endpoint will set the appropriate
-     * cookies and anti-CSRF measures required for browser-based flows.
-     *
-     * If this endpoint is opened as a link in the browser, it will be redirected to
-     * `selfservice.flows.registration.ui_url` with the flow ID set as the query parameter `?flow=`. If a valid user session
-     * exists already, the browser will be redirected to `urls.default_redirect_url`.
-     *
-     * If this endpoint is called via an AJAX request, the response contains the flow without a redirect. In the
-     * case of an error, the `error.id` of the JSON response body can be one of:
-     *
-     * `session_already_available`: The user is already signed in.
-     * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-     * `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
-     *
-     * If this endpoint is called via an AJAX request, the response contains the registration flow without a redirect.
-     *
-     * This endpoint is NOT INTENDED for clients that do not have a browser (Chrome, Firefox, ...) as cookies are needed.
-     *
-     * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
-     */
     createBrowserRegistrationFlow: {
         parameters: {
             query?: {
                 /** @description The URL to return the browser to after the flow was completed. */
                 return_to?: string
-                /**
-                 * @description Ory OAuth 2.0 Login Challenge.
+                /** @description Ory OAuth 2.0 Login Challenge.
                  *
-                 * If set will cooperate with Ory OAuth2 and OpenID to act as an OAuth2 server / OpenID Provider.
+                 *     If set will cooperate with Ory OAuth2 and OpenID to act as an OAuth2 server / OpenID Provider.
                  *
-                 * The value for this parameter comes from `login_challenge` URL Query parameter sent to your
-                 * application (e.g. `/registration?login_challenge=abcde`).
+                 *     The value for this parameter comes from `login_challenge` URL Query parameter sent to your
+                 *     application (e.g. `/registration?login_challenge=abcde`).
                  *
-                 * This feature is compatible with Ory Hydra when not running on the Ory Network.
-                 */
+                 *     This feature is compatible with Ory Hydra when not running on the Ory Network. */
                 login_challenge?: string
-                /**
-                 * @description The URL to return the browser to after the verification flow was completed.
+                /** @description The URL to return the browser to after the verification flow was completed.
                  *
-                 * After the registration flow is completed, the user will be sent a verification email.
-                 * Upon completing the verification flow, this URL will be used to override the default
-                 * `selfservice.flows.verification.after.default_redirect_to` value.
-                 */
+                 *     After the registration flow is completed, the user will be sent a verification email.
+                 *     Upon completing the verification flow, this URL will be used to override the default
+                 *     `selfservice.flows.verification.after.default_redirect_to` value. */
                 after_verification_return_to?: string
                 organization?: string
             }
+            header?: never
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description registrationFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["registrationFlow"]
                 }
@@ -5289,160 +5731,103 @@ export interface operations {
             303: components["responses"]["emptyResponse"]
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Get Registration Flow
-     * @description This endpoint returns a registration flow's context with, for example, error details and other information.
-     *
-     * Browser flows expect the anti-CSRF cookie to be included in the request's HTTP Cookie Header.
-     * For AJAX requests you must ensure that cookies are included in the request or requests will fail.
-     *
-     * If you use the browser-flow for server-side apps, the services need to run on a common top-level-domain
-     * and you need to forward the incoming HTTP Cookie header to this endpoint:
-     *
-     * ```js
-     * pseudo-code example
-     * router.get('/registration', async function (req, res) {
-     * const flow = await client.getRegistrationFlow(req.header('cookie'), req.query['flow'])
-     *
-     * res.render('registration', flow)
-     * })
-     * ```
-     *
-     * This request may fail due to several reasons. The `error.id` can be one of:
-     *
-     * `session_already_available`: The user is already signed in.
-     * `self_service_flow_expired`: The flow is expired and you should request a new one.
-     *
-     * More information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration).
-     */
     getRegistrationFlow: {
         parameters: {
             query: {
-                /**
-                 * @description The Registration Flow ID
+                /** @description The Registration Flow ID
                  *
-                 * The value for this parameter comes from `flow` URL Query parameter sent to your
-                 * application (e.g. `/registration?flow=abcde`).
-                 */
+                 *     The value for this parameter comes from `flow` URL Query parameter sent to your
+                 *     application (e.g. `/registration?flow=abcde`). */
                 id: string
             }
             header?: {
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
-                 * sent by the client to your server here. This ensures that CSRF and session cookies are respected.
-                 */
+                 *     When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
+                 *     sent by the client to your server here. This ensures that CSRF and session cookies are respected. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description registrationFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["registrationFlow"]
                 }
             }
             /** @description errorGeneric */
             403: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             410: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Complete Settings Flow
-     * @description Use this endpoint to complete a settings flow by sending an identity's updated password. This endpoint
-     * behaves differently for API and browser flows.
-     *
-     * API-initiated flows expect `application/json` to be sent in the body and respond with
-     * HTTP 200 and an application/json body with the session token on success;
-     * HTTP 303 redirect to a fresh settings flow if the original flow expired with the appropriate error messages set;
-     * HTTP 400 on form validation errors.
-     * HTTP 401 when the endpoint is called without a valid session token.
-     * HTTP 403 when `selfservice.flows.settings.privileged_session_max_age` was reached or the session's AAL is too low.
-     * Implies that the user needs to re-authenticate.
-     *
-     * Browser flows without HTTP Header `Accept` or with `Accept: text/*` respond with
-     * a HTTP 303 redirect to the post/after settings URL or the `return_to` value if it was set and if the flow succeeded;
-     * a HTTP 303 redirect to the Settings UI URL with the flow ID containing the validation errors otherwise.
-     * a HTTP 303 redirect to the login endpoint when `selfservice.flows.settings.privileged_session_max_age` was reached or the session's AAL is too low.
-     *
-     * Browser flows with HTTP Header `Accept: application/json` respond with
-     * HTTP 200 and a application/json body with the signed in identity and a `Set-Cookie` header on success;
-     * HTTP 303 redirect to a fresh login flow if the original flow expired with the appropriate error messages set;
-     * HTTP 401 when the endpoint is called without a valid session cookie.
-     * HTTP 403 when the page is accessed without a session cookie or the session's AAL is too low.
-     * HTTP 400 on form validation errors.
-     *
-     * Depending on your configuration this endpoint might return a 403 error if the session has a lower Authenticator
-     * Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
-     * credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
-     * to sign in with the second factor (happens automatically for server-side browser flows) or change the configuration.
-     *
-     * If this endpoint is called with a `Accept: application/json` HTTP header, the response contains the flow without a redirect. In the
-     * case of an error, the `error.id` of the JSON response body can be one of:
-     *
-     * `session_refresh_required`: The identity requested to change something that needs a privileged session. Redirect
-     * the identity to the login init endpoint with query parameters `?refresh=true&return_to=<the-current-browser-url>`,
-     * or initiate a refresh login flow otherwise.
-     * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-     * `session_inactive`: No Ory Session was found - sign in a user first.
-     * `security_identity_mismatch`: The flow was interrupted with `session_refresh_required` but apparently some other
-     * identity logged in instead.
-     * `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
-     * `browser_location_change_required`: Usually sent when an AJAX request indicates that the browser needs to open a specific URL.
-     * Most likely used in Social Sign In flows.
-     *
-     * More information can be found at [Ory Kratos User Settings & Profile Management Documentation](../self-service/flows/user-settings).
-     */
     updateSettingsFlow: {
         parameters: {
             query: {
-                /**
-                 * @description The Settings Flow ID
+                /** @description The Settings Flow ID
                  *
-                 * The value for this parameter comes from `flow` URL Query parameter sent to your
-                 * application (e.g. `/settings?flow=abcde`).
-                 */
+                 *     The value for this parameter comes from `flow` URL Query parameter sent to your
+                 *     application (e.g. `/settings?flow=abcde`). */
                 flow: string
             }
             header?: {
                 /** @description The Session Token of the Identity performing the settings flow. */
                 "X-Session-Token"?: string
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
-                 * sent by the client to your server here. This ensures that CSRF and session cookies are respected.
-                 */
+                 *     When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
+                 *     sent by the client to your server here. This ensures that CSRF and session cookies are respected. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
         requestBody: {
             content: {
@@ -5453,6 +5838,9 @@ export interface operations {
         responses: {
             /** @description settingsFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["settingsFlow"]
                 }
@@ -5460,124 +5848,101 @@ export interface operations {
             303: components["responses"]["emptyResponse"]
             /** @description settingsFlow */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["settingsFlow"]
                 }
             }
             /** @description errorGeneric */
             401: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             403: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             410: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorBrowserLocationChangeRequired */
             422: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorBrowserLocationChangeRequired"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create Settings Flow for Native Apps
-     * @description This endpoint initiates a settings flow for API clients such as mobile devices, smart TVs, and so on.
-     * You must provide a valid Ory Kratos Session Token for this endpoint to respond with HTTP 200 OK.
-     *
-     * To fetch an existing settings flow call `/self-service/settings/flows?flow=<flow_id>`.
-     *
-     * You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
-     * Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
-     * you vulnerable to a variety of CSRF attacks.
-     *
-     * Depending on your configuration this endpoint might return a 403 error if the session has a lower Authenticator
-     * Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
-     * credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
-     * to sign in with the second factor or change the configuration.
-     *
-     * In the case of an error, the `error.id` of the JSON response body can be one of:
-     *
-     * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-     * `session_inactive`: No Ory Session was found - sign in a user first.
-     *
-     * This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
-     *
-     * More information can be found at [Ory Kratos User Settings & Profile Management Documentation](../self-service/flows/user-settings).
-     */
     createNativeSettingsFlow: {
         parameters: {
+            query?: never
             header?: {
                 /** @description The Session Token of the Identity performing the settings flow. */
                 "X-Session-Token"?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description settingsFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["settingsFlow"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create Settings Flow for Browsers
-     * @description This endpoint initializes a browser-based user settings flow. Once initialized, the browser will be redirected to
-     * `selfservice.flows.settings.ui_url` with the flow ID set as the query parameter `?flow=`. If no valid
-     * Ory Kratos Session Cookie is included in the request, a login flow will be initialized.
-     *
-     * If this endpoint is opened as a link in the browser, it will be redirected to
-     * `selfservice.flows.settings.ui_url` with the flow ID set as the query parameter `?flow=`. If no valid user session
-     * was set, the browser will be redirected to the login endpoint.
-     *
-     * If this endpoint is called via an AJAX request, the response contains the settings flow without any redirects
-     * or a 401 forbidden error if no valid session was set.
-     *
-     * Depending on your configuration this endpoint might return a 403 error if the session has a lower Authenticator
-     * Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
-     * credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
-     * to sign in with the second factor (happens automatically for server-side browser flows) or change the configuration.
-     *
-     * If this endpoint is called via an AJAX request, the response contains the flow without a redirect. In the
-     * case of an error, the `error.id` of the JSON response body can be one of:
-     *
-     * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-     * `session_inactive`: No Ory Session was found - sign in a user first.
-     * `security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!
-     *
-     * This endpoint is NOT INTENDED for clients that do not have a browser (Chrome, Firefox, ...) as cookies are needed.
-     *
-     * More information can be found at [Ory Kratos User Settings & Profile Management Documentation](../self-service/flows/user-settings).
-     */
     createBrowserSettingsFlow: {
         parameters: {
             query?: {
@@ -5585,18 +5950,22 @@ export interface operations {
                 return_to?: string
             }
             header?: {
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
-                 * sent by the client to your server here. This ensures that CSRF and session cookies are respected.
-                 */
+                 *     When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
+                 *     sent by the client to your server here. This ensures that CSRF and session cookies are respected. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description settingsFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["settingsFlow"]
                 }
@@ -5604,167 +5973,149 @@ export interface operations {
             303: components["responses"]["emptyResponse"]
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             401: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             403: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Get Settings Flow
-     * @description When accessing this endpoint through Ory Kratos' Public API you must ensure that either the Ory Kratos Session Cookie
-     * or the Ory Kratos Session Token are set.
-     *
-     * Depending on your configuration this endpoint might return a 403 error if the session has a lower Authenticator
-     * Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
-     * credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
-     * to sign in with the second factor or change the configuration.
-     *
-     * You can access this endpoint without credentials when using Ory Kratos' Admin API.
-     *
-     * If this endpoint is called via an AJAX request, the response contains the flow without a redirect. In the
-     * case of an error, the `error.id` of the JSON response body can be one of:
-     *
-     * `security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.
-     * `session_inactive`: No Ory Session was found - sign in a user first.
-     * `security_identity_mismatch`: The flow was interrupted with `session_refresh_required` but apparently some other
-     * identity logged in instead.
-     *
-     * More information can be found at [Ory Kratos User Settings & Profile Management Documentation](../self-service/flows/user-settings).
-     */
     getSettingsFlow: {
         parameters: {
             query: {
-                /**
-                 * @description ID is the Settings Flow ID
+                /** @description ID is the Settings Flow ID
                  *
-                 * The value for this parameter comes from `flow` URL Query parameter sent to your
-                 * application (e.g. `/settings?flow=abcde`).
-                 */
+                 *     The value for this parameter comes from `flow` URL Query parameter sent to your
+                 *     application (e.g. `/settings?flow=abcde`). */
                 id: string
             }
             header?: {
-                /**
-                 * @description The Session Token
+                /** @description The Session Token
                  *
-                 * When using the SDK in an app without a browser, please include the
-                 * session token here.
-                 */
+                 *     When using the SDK in an app without a browser, please include the
+                 *     session token here. */
                 "X-Session-Token"?: string
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
-                 * sent by the client to your server here. This ensures that CSRF and session cookies are respected.
-                 */
+                 *     When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
+                 *     sent by the client to your server here. This ensures that CSRF and session cookies are respected. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description settingsFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["settingsFlow"]
                 }
             }
             /** @description errorGeneric */
             401: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             403: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             410: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Complete Verification Flow
-     * @description Use this endpoint to complete a verification flow. This endpoint
-     * behaves differently for API and browser flows and has several states:
-     *
-     * `choose_method` expects `flow` (in the URL query) and `email` (in the body) to be sent
-     * and works with API- and Browser-initiated flows.
-     * For API clients and Browser clients with HTTP Header `Accept: application/json` it either returns a HTTP 200 OK when the form is valid and HTTP 400 OK when the form is invalid
-     * and a HTTP 303 See Other redirect with a fresh verification flow if the flow was otherwise invalid (e.g. expired).
-     * For Browser clients without HTTP Header `Accept` or with `Accept: text/*` it returns a HTTP 303 See Other redirect to the Verification UI URL with the Verification Flow ID appended.
-     * `sent_email` is the success state after `choose_method` when using the `link` method and allows the user to request another verification email. It
-     * works for both API and Browser-initiated flows and returns the same responses as the flow in `choose_method` state.
-     * `passed_challenge` expects a `token` to be sent in the URL query and given the nature of the flow ("sending a verification link")
-     * does not have any API capabilities. The server responds with a HTTP 303 See Other redirect either to the Settings UI URL
-     * (if the link was valid) and instructs the user to update their password, or a redirect to the Verification UI URL with
-     * a new Verification Flow ID which contains an error message that the verification link was invalid.
-     *
-     * More information can be found at [Ory Kratos Email and Phone Verification Documentation](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation).
-     */
     updateVerificationFlow: {
         parameters: {
             query: {
-                /**
-                 * @description The Verification Flow ID
+                /** @description The Verification Flow ID
                  *
-                 * The value for this parameter comes from `flow` URL Query parameter sent to your
-                 * application (e.g. `/verification?flow=abcde`).
-                 */
+                 *     The value for this parameter comes from `flow` URL Query parameter sent to your
+                 *     application (e.g. `/verification?flow=abcde`). */
                 flow: string
-                /**
-                 * @description Verification Token
+                /** @description Verification Token
                  *
-                 * The verification token which completes the verification request. If the token
-                 * is invalid (e.g. expired) an error will be shown to the end-user.
+                 *     The verification token which completes the verification request. If the token
+                 *     is invalid (e.g. expired) an error will be shown to the end-user.
                  *
-                 * This parameter is usually set in a link and not used by any direct API call.
-                 */
+                 *     This parameter is usually set in a link and not used by any direct API call. */
                 token?: string
             }
             header?: {
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
-                 * sent by the client to your server here. This ensures that CSRF and session cookies are respected.
-                 */
+                 *     When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header
+                 *     sent by the client to your server here. This ensures that CSRF and session cookies are respected. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
         requestBody: {
             content: {
@@ -5775,6 +6126,9 @@ export interface operations {
         responses: {
             /** @description verificationFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["verificationFlow"]
                 }
@@ -5782,81 +6136,88 @@ export interface operations {
             303: components["responses"]["emptyResponse"]
             /** @description verificationFlow */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["verificationFlow"]
                 }
             }
             /** @description errorGeneric */
             410: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create Verification Flow for Native Apps
-     * @description This endpoint initiates a verification flow for API clients such as mobile devices, smart TVs, and so on.
-     *
-     * To fetch an existing verification flow call `/self-service/verification/flows?flow=<flow_id>`.
-     *
-     * You MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server
-     * Pages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make
-     * you vulnerable to a variety of CSRF attacks.
-     *
-     * This endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).
-     *
-     * More information can be found at [Ory Email and Phone Verification Documentation](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation).
-     */
     createNativeVerificationFlow: {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description verificationFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["verificationFlow"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Create Verification Flow for Browser Clients
-     * @description This endpoint initializes a browser-based account verification flow. Once initialized, the browser will be redirected to
-     * `selfservice.flows.verification.ui_url` with the flow ID set as the query parameter `?flow=`.
-     *
-     * If this endpoint is called via an AJAX request, the response contains the recovery flow without any redirects.
-     *
-     * This endpoint is NOT INTENDED for API clients and only works with browsers (Chrome, Firefox, ...).
-     *
-     * More information can be found at [Ory Kratos Email and Phone Verification Documentation](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation).
-     */
     createBrowserVerificationFlow: {
         parameters: {
             query?: {
                 /** @description The URL to return the browser to after the flow was completed. */
                 return_to?: string
             }
+            header?: never
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description verificationFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["verificationFlow"]
                 }
@@ -5864,208 +6225,206 @@ export interface operations {
             303: components["responses"]["emptyResponse"]
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Get Verification Flow
-     * @description This endpoint returns a verification flow's context with, for example, error details and other information.
-     *
-     * Browser flows expect the anti-CSRF cookie to be included in the request's HTTP Cookie Header.
-     * For AJAX requests you must ensure that cookies are included in the request or requests will fail.
-     *
-     * If you use the browser-flow for server-side apps, the services need to run on a common top-level-domain
-     * and you need to forward the incoming HTTP Cookie header to this endpoint:
-     *
-     * ```js
-     * pseudo-code example
-     * router.get('/recovery', async function (req, res) {
-     * const flow = await client.getVerificationFlow(req.header('cookie'), req.query['flow'])
-     *
-     * res.render('verification', flow)
-     * })
-     * ```
-     *
-     * More information can be found at [Ory Kratos Email and Phone Verification Documentation](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation).
-     */
     getVerificationFlow: {
         parameters: {
             query: {
-                /**
-                 * @description The Flow ID
+                /** @description The Flow ID
                  *
-                 * The value for this parameter comes from `request` URL Query parameter sent to your
-                 * application (e.g. `/verification?flow=abcde`).
-                 */
+                 *     The value for this parameter comes from `request` URL Query parameter sent to your
+                 *     application (e.g. `/verification?flow=abcde`). */
                 id: string
             }
             header?: {
-                /**
-                 * @description HTTP Cookies
+                /** @description HTTP Cookies
                  *
-                 * When using the SDK on the server side you must include the HTTP Cookie Header
-                 * originally sent to your HTTP handler here.
-                 */
+                 *     When using the SDK on the server side you must include the HTTP Cookie Header
+                 *     originally sent to your HTTP handler here. */
                 cookie?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description verificationFlow */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["verificationFlow"]
                 }
             }
             /** @description errorGeneric */
             403: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Get My Active Sessions
-     * @description This endpoints returns all other active sessions that belong to the logged-in user.
-     * The current session can be retrieved by calling the `/sessions/whoami` endpoint.
-     */
     listMySessions: {
         parameters: {
             query?: {
-                /**
-                 * @description Deprecated Items per Page
+                /** @description Deprecated Items per Page
                  *
-                 * DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+                 *     DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
                  *
-                 * This is the number of items per page.
-                 */
+                 *     This is the number of items per page. */
                 per_page?: number
-                /**
-                 * @description Deprecated Pagination Page
+                /** @description Deprecated Pagination Page
                  *
-                 * DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+                 *     DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
                  *
-                 * This value is currently an integer, but it is not sequential. The value is not the page number, but a
-                 * reference. The next page can be any number and some numbers might return an empty list.
+                 *     This value is currently an integer, but it is not sequential. The value is not the page number, but a
+                 *     reference. The next page can be any number and some numbers might return an empty list.
                  *
-                 * For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist.
-                 * The first page can be retrieved by omitting this parameter. Following page pointers will be returned in the
-                 * `Link` header.
-                 */
+                 *     For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist.
+                 *     The first page can be retrieved by omitting this parameter. Following page pointers will be returned in the
+                 *     `Link` header. */
                 page?: number
-                /**
-                 * @description Page Size
+                /** @description Page Size
                  *
-                 * This is the number of items per page to return. For details on pagination please head over to the
-                 * [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
-                 */
+                 *     This is the number of items per page to return. For details on pagination please head over to the
+                 *     [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). */
                 page_size?: number
-                /**
-                 * @description Next Page Token
+                /** @description Next Page Token
                  *
-                 * The next page token. For details on pagination please head over to the
-                 * [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination).
-                 */
+                 *     The next page token. For details on pagination please head over to the
+                 *     [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). */
                 page_token?: string
             }
             header?: {
                 /** @description Set the Session Token when calling from non-browser clients. A session token has a format of `MP2YWEMeM8MxjkGKpH4dqOQ4Q4DlSPaj`. */
                 "X-Session-Token"?: string
-                /**
-                 * @description Set the Cookie Header. This is especially useful when calling this endpoint from a server-side application. In that
-                 * scenario you must include the HTTP Cookie Header which originally was included in the request to your server.
-                 * An example of a session in the HTTP Cookie Header is: `ory_kratos_session=a19iOVAbdzdgl70Rq1QZmrKmcjDtdsviCTZx7m9a9yHIUS8Wa9T7hvqyGTsLHi6Qifn2WUfpAKx9DWp0SJGleIn9vh2YF4A16id93kXFTgIgmwIOvbVAScyrx7yVl6bPZnCx27ec4WQDtaTewC1CpgudeDV2jQQnSaCP6ny3xa8qLH-QUgYqdQuoA_LF1phxgRCUfIrCLQOkolX5nv3ze_f==`.
+                /** @description Set the Cookie Header. This is especially useful when calling this endpoint from a server-side application. In that
+                 *     scenario you must include the HTTP Cookie Header which originally was included in the request to your server.
+                 *     An example of a session in the HTTP Cookie Header is: `ory_kratos_session=a19iOVAbdzdgl70Rq1QZmrKmcjDtdsviCTZx7m9a9yHIUS8Wa9T7hvqyGTsLHi6Qifn2WUfpAKx9DWp0SJGleIn9vh2YF4A16id93kXFTgIgmwIOvbVAScyrx7yVl6bPZnCx27ec4WQDtaTewC1CpgudeDV2jQQnSaCP6ny3xa8qLH-QUgYqdQuoA_LF1phxgRCUfIrCLQOkolX5nv3ze_f==`.
                  *
-                 * It is ok if more than one cookie are included here as all other cookies will be ignored.
-                 */
+                 *     It is ok if more than one cookie are included here as all other cookies will be ignored. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             200: components["responses"]["listMySessions"]
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             401: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Disable my other sessions
-     * @description Calling this endpoint invalidates all except the current session that belong to the logged-in user.
-     * Session data are not deleted.
-     */
     disableMyOtherSessions: {
         parameters: {
+            query?: never
             header?: {
                 /** @description Set the Session Token when calling from non-browser clients. A session token has a format of `MP2YWEMeM8MxjkGKpH4dqOQ4Q4DlSPaj`. */
                 "X-Session-Token"?: string
-                /**
-                 * @description Set the Cookie Header. This is especially useful when calling this endpoint from a server-side application. In that
-                 * scenario you must include the HTTP Cookie Header which originally was included in the request to your server.
-                 * An example of a session in the HTTP Cookie Header is: `ory_kratos_session=a19iOVAbdzdgl70Rq1QZmrKmcjDtdsviCTZx7m9a9yHIUS8Wa9T7hvqyGTsLHi6Qifn2WUfpAKx9DWp0SJGleIn9vh2YF4A16id93kXFTgIgmwIOvbVAScyrx7yVl6bPZnCx27ec4WQDtaTewC1CpgudeDV2jQQnSaCP6ny3xa8qLH-QUgYqdQuoA_LF1phxgRCUfIrCLQOkolX5nv3ze_f==`.
+                /** @description Set the Cookie Header. This is especially useful when calling this endpoint from a server-side application. In that
+                 *     scenario you must include the HTTP Cookie Header which originally was included in the request to your server.
+                 *     An example of a session in the HTTP Cookie Header is: `ory_kratos_session=a19iOVAbdzdgl70Rq1QZmrKmcjDtdsviCTZx7m9a9yHIUS8Wa9T7hvqyGTsLHi6Qifn2WUfpAKx9DWp0SJGleIn9vh2YF4A16id93kXFTgIgmwIOvbVAScyrx7yVl6bPZnCx27ec4WQDtaTewC1CpgudeDV2jQQnSaCP6ny3xa8qLH-QUgYqdQuoA_LF1phxgRCUfIrCLQOkolX5nv3ze_f==`.
                  *
-                 * It is ok if more than one cookie are included here as all other cookies will be ignored.
-                 */
+                 *     It is ok if more than one cookie are included here as all other cookies will be ignored. */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description deleteMySessionsCount */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["deleteMySessionsCount"]
                 }
             }
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             401: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /** Exchange Session Token */
     exchangeSessionToken: {
         parameters: {
             query: {
@@ -6074,110 +6433,65 @@ export interface operations {
                 /** @description The part of the code returned by the return_to URL. */
                 return_to_code: string
             }
+            header?: never
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description successfulNativeLogin */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["successfulNativeLogin"]
                 }
             }
             /** @description errorGeneric */
             403: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             404: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             410: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Check Who the Current HTTP Session Belongs To
-     * @description Uses the HTTP Headers in the GET request to determine (e.g. by using checking the cookies) who is authenticated.
-     * Returns a session object in the body or 401 if the credentials are invalid or no credentials were sent.
-     * When the request it successful it adds the user ID to the 'X-Kratos-Authenticated-Identity-Id' header
-     * in the response.
-     *
-     * If you call this endpoint from a server-side application, you must forward the HTTP Cookie Header to this endpoint:
-     *
-     * ```js
-     * pseudo-code example
-     * router.get('/protected-endpoint', async function (req, res) {
-     * const session = await client.toSession(undefined, req.header('cookie'))
-     *
-     * console.log(session)
-     * })
-     * ```
-     *
-     * When calling this endpoint from a non-browser application (e.g. mobile app) you must include the session token:
-     *
-     * ```js
-     * pseudo-code example
-     * ...
-     * const session = await client.toSession("the-session-token")
-     *
-     * console.log(session)
-     * ```
-     *
-     * When using a token template, the token is included in the `tokenized` field of the session.
-     *
-     * ```js
-     * pseudo-code example
-     * ...
-     * const session = await client.toSession("the-session-token", { tokenize_as: "example-jwt-template" })
-     *
-     * console.log(session.tokenized) // The JWT
-     * ```
-     *
-     * Depending on your configuration this endpoint might return a 403 status code if the session has a lower Authenticator
-     * Assurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn
-     * credentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user
-     * to sign in with the second factor or change the configuration.
-     *
-     * This endpoint is useful for:
-     *
-     * AJAX calls. Remember to send credentials and set up CORS correctly!
-     * Reverse proxies and API Gateways
-     * Server-side calls - use the `X-Session-Token` header!
-     *
-     * This endpoint authenticates users by checking:
-     *
-     * if the `Cookie` HTTP header was set containing an Ory Kratos Session Cookie;
-     * if the `Authorization: bearer <ory-session-token>` HTTP header was set with a valid Ory Kratos Session Token;
-     * if the `X-Session-Token` HTTP header was set with a valid Ory Kratos Session Token.
-     *
-     * If none of these headers are set or the cookie or token are invalid, the endpoint returns a HTTP 401 status code.
-     *
-     * As explained above, this request may fail due to several reasons. The `error.id` can be one of:
-     *
-     * `session_inactive`: No active session was found in the request (e.g. no Ory Session Cookie / Ory Session Token).
-     * `session_aal2_required`: An active session was found but it does not fulfil the Authenticator Assurance Level, implying that the session must (e.g.) authenticate the second factor.
-     */
     toSession: {
         parameters: {
             query?: {
-                /**
-                 * @description Returns the session additionally as a token (such as a JWT)
+                /** @description Returns the session additionally as a token (such as a JWT)
                  *
-                 * The value of this parameter has to be a valid, configured Ory Session token template. For more information head over to [the documentation](http://ory.sh/docs/identities/session-to-jwt-cors).
-                 */
+                 *     The value of this parameter has to be a valid, configured Ory Session token template. For more information head over to [the documentation](http://ory.sh/docs/identities/session-to-jwt-cors). */
                 tokenize_as?: string
             }
             header?: {
@@ -6188,102 +6502,122 @@ export interface operations {
                 "X-Session-Token"?: string
                 /**
                  * @description Set the Cookie Header. This is especially useful when calling this endpoint from a server-side application. In that
-                 * scenario you must include the HTTP Cookie Header which originally was included in the request to your server.
-                 * An example of a session in the HTTP Cookie Header is: `ory_kratos_session=a19iOVAbdzdgl70Rq1QZmrKmcjDtdsviCTZx7m9a9yHIUS8Wa9T7hvqyGTsLHi6Qifn2WUfpAKx9DWp0SJGleIn9vh2YF4A16id93kXFTgIgmwIOvbVAScyrx7yVl6bPZnCx27ec4WQDtaTewC1CpgudeDV2jQQnSaCP6ny3xa8qLH-QUgYqdQuoA_LF1phxgRCUfIrCLQOkolX5nv3ze_f==`.
+                 *     scenario you must include the HTTP Cookie Header which originally was included in the request to your server.
+                 *     An example of a session in the HTTP Cookie Header is: `ory_kratos_session=a19iOVAbdzdgl70Rq1QZmrKmcjDtdsviCTZx7m9a9yHIUS8Wa9T7hvqyGTsLHi6Qifn2WUfpAKx9DWp0SJGleIn9vh2YF4A16id93kXFTgIgmwIOvbVAScyrx7yVl6bPZnCx27ec4WQDtaTewC1CpgudeDV2jQQnSaCP6ny3xa8qLH-QUgYqdQuoA_LF1phxgRCUfIrCLQOkolX5nv3ze_f==`.
                  *
-                 * It is ok if more than one cookie are included here as all other cookies will be ignored.
+                 *     It is ok if more than one cookie are included here as all other cookies will be ignored.
                  * @example ory_session=a19iOVAbdzdgl70Rq1QZmrKmcjDtdsviCTZx7m9a9yHIUS8Wa9T7hvqyGTsLHi6Qifn2WUfpAKx9DWp0SJGleIn9vh2YF4A16id93kXFTgIgmwIOvbVAScyrx7yVl6bPZnCx27ec4WQDtaTewC1CpgudeDV2jQQnSaCP6ny3xa8qLH-QUgYqdQuoA_LF1phxgRCUfIrCLQOkolX5nv3ze_f==
                  */
                 Cookie?: string
             }
+            path?: never
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             /** @description session */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["session"]
                 }
             }
             /** @description errorGeneric */
             401: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             403: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Disable one of my sessions
-     * @description Calling this endpoint invalidates the specified session. The current session cannot be revoked.
-     * Session data are not deleted.
-     */
     disableMySession: {
         parameters: {
+            query?: never
             header?: {
                 /** @description Set the Session Token when calling from non-browser clients. A session token has a format of `MP2YWEMeM8MxjkGKpH4dqOQ4Q4DlSPaj`. */
                 "X-Session-Token"?: string
-                /**
-                 * @description Set the Cookie Header. This is especially useful when calling this endpoint from a server-side application. In that
-                 * scenario you must include the HTTP Cookie Header which originally was included in the request to your server.
-                 * An example of a session in the HTTP Cookie Header is: `ory_kratos_session=a19iOVAbdzdgl70Rq1QZmrKmcjDtdsviCTZx7m9a9yHIUS8Wa9T7hvqyGTsLHi6Qifn2WUfpAKx9DWp0SJGleIn9vh2YF4A16id93kXFTgIgmwIOvbVAScyrx7yVl6bPZnCx27ec4WQDtaTewC1CpgudeDV2jQQnSaCP6ny3xa8qLH-QUgYqdQuoA_LF1phxgRCUfIrCLQOkolX5nv3ze_f==`.
+                /** @description Set the Cookie Header. This is especially useful when calling this endpoint from a server-side application. In that
+                 *     scenario you must include the HTTP Cookie Header which originally was included in the request to your server.
+                 *     An example of a session in the HTTP Cookie Header is: `ory_kratos_session=a19iOVAbdzdgl70Rq1QZmrKmcjDtdsviCTZx7m9a9yHIUS8Wa9T7hvqyGTsLHi6Qifn2WUfpAKx9DWp0SJGleIn9vh2YF4A16id93kXFTgIgmwIOvbVAScyrx7yVl6bPZnCx27ec4WQDtaTewC1CpgudeDV2jQQnSaCP6ny3xa8qLH-QUgYqdQuoA_LF1phxgRCUfIrCLQOkolX5nv3ze_f==`.
                  *
-                 * It is ok if more than one cookie are included here as all other cookies will be ignored.
-                 */
+                 *     It is ok if more than one cookie are included here as all other cookies will be ignored. */
                 Cookie?: string
             }
             path: {
                 /** @description ID is the session's ID. */
                 id: string
             }
+            cookie?: never
         }
+        requestBody?: never
         responses: {
             204: components["responses"]["emptyResponse"]
             /** @description errorGeneric */
             400: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             401: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
             /** @description errorGeneric */
             default: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": components["schemas"]["errorGeneric"]
                 }
             }
         }
     }
-    /**
-     * Return Running Software Version.
-     * @description This endpoint returns the version of Ory Kratos.
-     *
-     * If the service supports TLS Edge Termination, this endpoint does not require the
-     * `X-Forwarded-Proto` header to be set.
-     *
-     * Be aware that if you are running multiple nodes of this service, the version will never
-     * refer to the cluster state, only to a single instance.
-     */
     getVersion: {
+        parameters: {
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description Returns the Ory Kratos version. */
             200: {
+                headers: {
+                    [name: string]: unknown
+                }
                 content: {
                     "application/json": {
                         /** @description The version of Ory Kratos. */

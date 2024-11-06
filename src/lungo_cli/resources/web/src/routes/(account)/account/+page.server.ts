@@ -12,7 +12,7 @@ export const actions = {
             params: { query: { flow: data.get("flow") as string } },
             body: {
                 csrf_token: data.get("csrf_token") as string,
-                method: data.get("method") as string,
+                method: data.get("method") as "password",
                 password: data.get("password") as string,
             },
         })
