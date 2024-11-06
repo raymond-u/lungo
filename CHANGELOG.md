@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Enable GitHub Copilot integration in RStudio
+- Update File Browser to 2.31.2
+- Update JupyterLab to 4.3.0
+- Update RStudio to 4.4.2
+- Update RustDesk Server to 1.1.12
+- Update Stirling PDF to 0.31.1
+- Update Xray to 24.11.5
 
 ## [0.5.10](https://github.com/raymond-u/lungo/compare/v0.5.9...v0.5.10) - 2024-8-20
 

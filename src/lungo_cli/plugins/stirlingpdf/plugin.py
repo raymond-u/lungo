@@ -7,7 +7,7 @@ from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginManifest
 class Plugin(BasePlugin[BaseSettings]):
     manifest = PluginManifest(
         name="stirlingpdf",
-        version="0.2.0",
+        version="0.2.1",
         descriptive_name="Stirling PDF",
         description="Stirling PDF as a Lungo plugin.",
         compatible_with="~=0.5.0",
@@ -23,7 +23,7 @@ class Plugin(BasePlugin[BaseSettings]):
 
     @override
     def get_custom_rendering_context(self) -> dict[str, Any]:
-        return {"stirlingpdf_version": "0.26.1"}
+        return {"stirlingpdf_version": "0.31.1"}
 
     @override
     def on_plugin_initialization(self) -> None:

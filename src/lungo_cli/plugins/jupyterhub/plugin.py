@@ -12,7 +12,7 @@ class Settings(BaseSettings):
 class Plugin(BasePlugin[Settings]):
     manifest = PluginManifest(
         name="jupyterhub",
-        version="0.3.4",
+        version="0.3.5",
         descriptive_name="JupyterHub",
         description="JupyterHub as a Lungo plugin.",
         compatible_with="~=0.5.0",
@@ -40,7 +40,7 @@ class Plugin(BasePlugin[Settings]):
         return {
             "jupyterhub_password": self.settings.password or self.file_utils.read_text(self.password_file),
             "jupyterhub_version": "4.1.6",
-            "jupyterlab_version": "4.2.4",
+            "jupyterlab_version": "4.3.0",
         }
 
     @override

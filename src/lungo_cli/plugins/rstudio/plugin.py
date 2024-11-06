@@ -12,7 +12,7 @@ class Settings(BaseSettings):
 class Plugin(BasePlugin[Settings]):
     manifest = PluginManifest(
         name="rstudio",
-        version="0.3.3",
+        version="0.3.4",
         descriptive_name="RStudio",
         description="RStudio as a Lungo plugin.",
         compatible_with="~=0.5.0",
@@ -36,7 +36,7 @@ class Plugin(BasePlugin[Settings]):
     def get_custom_rendering_context(self) -> dict[str, Any]:
         return {
             "rstudio_password": self.settings.password or self.file_utils.read_text(self.password_file),
-            "rstudio_version": "4.4.1",
+            "rstudio_version": "4.4.2",
         }
 
     @override

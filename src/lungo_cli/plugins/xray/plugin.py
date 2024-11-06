@@ -16,7 +16,7 @@ class Settings(BaseSettings):
 class Plugin(BasePlugin[Settings]):
     manifest = PluginManifest(
         name="xray",
-        version="0.3.3",
+        version="0.3.4",
         descriptive_name="Xray",
         description="Xray as a Lungo plugin.",
         compatible_with="~=0.5.0",
@@ -45,7 +45,7 @@ class Plugin(BasePlugin[Settings]):
                 (account.email, uuid5(salt, account.username)) for account in self.context_manager.users.accounts
             ],
             "xray_salt": salt,
-            "xray_version": "1.8.23",
+            "xray_version": "24.11.5",
         }
 
     @override

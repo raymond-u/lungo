@@ -9,7 +9,7 @@ from lungo_cli.helpers.crypto import generate_raw_ed25519_keypair
 class Plugin(BasePlugin[BaseSettings]):
     manifest = PluginManifest(
         name="rustdesk",
-        version="0.2.0",
+        version="0.2.1",
         descriptive_name="RustDesk",
         description="RustDesk as a Lungo plugin.",
         compatible_with="~=0.5.0",
@@ -32,7 +32,7 @@ class Plugin(BasePlugin[BaseSettings]):
         return {
             "rustdesk_private_key": self.file_utils.read_text(self.private_key_file),
             "rustdesk_public_key": self.file_utils.read_text(self.public_key_file),
-            "rustdesk_server_version": "1.1.11-1",
+            "rustdesk_server_version": "1.1.12",
         }
 
     @override
