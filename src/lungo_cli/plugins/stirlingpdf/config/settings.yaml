@@ -9,6 +9,7 @@ system:
   googlevisibility: false
   enableAlphaFunctionality: false
   showUpdate: false
+  enableAnalytics: false
 
 endpoints:
   toRemove: []

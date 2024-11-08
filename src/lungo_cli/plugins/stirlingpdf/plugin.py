@@ -7,7 +7,7 @@ from lungo_cli.core.plugin import BasePlugin, BaseSettings, PluginManifest
 class Plugin(BasePlugin[BaseSettings]):
     manifest = PluginManifest(
         name="stirlingpdf",
-        version="0.2.1",
+        version="0.2.2",
         descriptive_name="Stirling PDF",
         description="Stirling PDF as a Lungo plugin.",
         compatible_with="~=0.5.0",
