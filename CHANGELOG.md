@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Supress the user survey prompt from Stirling PDF
 
+### Fixed
+
+- Rollback RStudio to 4.4.1 due to broken installation
+
 ## [0.5.11](https://github.com/raymond-u/lungo/compare/v0.5.10...v0.5.11) - 2024-11-7
 
 ### Added
