@@ -137,11 +137,13 @@
         }
 
         // Patch all redirects
-        patchRedirects(iframe.contentDocument!.body)
-        observer.observe(iframe.contentDocument!.body, {
-            childList: true,
-            subtree: true,
-        })
+        if (iframe.contentDocument!.body) {
+            patchRedirects(iframe.contentDocument!.body)
+            observer.observe(iframe.contentDocument!.body, {
+                childList: true,
+                subtree: true,
+            })
+        }
 
         // Patch the cookie setter
         Object.defineProperty(iframe.contentDocument, "cookie", {
