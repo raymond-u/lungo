@@ -1003,54 +1003,36 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#check" class="md-nav__link">
+  <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
-      check
+      Usage
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#down" class="md-nav__link">
+  <a href="#arguments" class="md-nav__link">
     <span class="md-ellipsis">
-      down
+      Arguments
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
+  <a href="#options" class="md-nav__link">
     <span class="md-ellipsis">
-      install
+      Options
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#list" class="md-nav__link">
+  <a href="#sub-commands" class="md-nav__link">
     <span class="md-ellipsis">
-      list
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#uninstall" class="md-nav__link">
-    <span class="md-ellipsis">
-      uninstall
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#up" class="md-nav__link">
-    <span class="md-ellipsis">
-      up
+      Sub Commands
     </span>
   </a>
   
@@ -1114,54 +1096,36 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#check" class="md-nav__link">
+  <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
-      check
+      Usage
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#down" class="md-nav__link">
+  <a href="#arguments" class="md-nav__link">
     <span class="md-ellipsis">
-      down
+      Arguments
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
+  <a href="#options" class="md-nav__link">
     <span class="md-ellipsis">
-      install
+      Options
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#list" class="md-nav__link">
+  <a href="#sub-commands" class="md-nav__link">
     <span class="md-ellipsis">
-      list
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#uninstall" class="md-nav__link">
-    <span class="md-ellipsis">
-      uninstall
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#up" class="md-nav__link">
-    <span class="md-ellipsis">
-      up
+      Sub Commands
     </span>
   </a>
   
@@ -1201,94 +1165,463 @@ You're not viewing the latest version.
   
 
 
-<h1 id="lungo">lungo<a class="headerlink" href="#lungo" title="Permanent link">#</a></h1>
-<p>CLI for Lungo, a user-friendly home lab setup designed for small-to-mid-scale on-premises hosting.</p>
-<p>Usage:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1">lungo [OPTIONS] COMMAND [ARGS]...
-</span></code></pre></div>
-<p>Options:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1">  -v, --version         Show the version of the program and exit.
-</span><span id="__span-1-2">  --install-completion  Install completion for the current shell.
-</span><span id="__span-1-3">  --show-completion     Show completion for the current shell, to copy it or
-</span><span id="__span-1-4">                        customize the installation.
-</span></code></pre></div>
-<h2 id="check">check<a class="headerlink" href="#check" title="Permanent link">#</a></h2>
-<p>Check if the configuration is valid.</p>
-<p>Usage:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1">lungo check [OPTIONS]
-</span></code></pre></div>
-<p>Options:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1">  -c, --config-dir PATH  Path to the configuration directory.
-</span><span id="__span-3-2">  --dev                  Use the development configuration.
-</span><span id="__span-3-3">  -q, --quiet            Suppress all output except for errors.
-</span><span id="__span-3-4">  -v, --verbose          Increase verbosity.
-</span></code></pre></div>
-<h2 id="down">down<a class="headerlink" href="#down" title="Permanent link">#</a></h2>
-<p>Stop the service.</p>
-<p>Usage:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1">lungo down [OPTIONS]
-</span></code></pre></div>
-<p>Options:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1">  --container-tool [docker|docker-compose|podman-compose]
-</span><span id="__span-5-2">                                  Container management tool to use.
-</span><span id="__span-5-3">  -c, --config-dir PATH           Path to the configuration directory.
-</span><span id="__span-5-4">  --dev                           Use the development configuration.
-</span><span id="__span-5-5">  -q, --quiet                     Suppress all output except for errors.
-</span><span id="__span-5-6">  -v, --verbose                   Increase verbosity.
-</span></code></pre></div>
-<h2 id="install">install<a class="headerlink" href="#install" title="Permanent link">#</a></h2>
-<p>Install or upgrade plugins.</p>
-<p>Usage:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1">lungo install [OPTIONS] ARGS...
-</span></code></pre></div>
-<p>Options:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1">  ARGS...                Names of the plugins to add.  \[required]
-</span><span id="__span-7-2">  -c, --config-dir PATH  Path to the configuration directory.
-</span><span id="__span-7-3">  --dev                  Use the development configuration.
-</span><span id="__span-7-4">  -q, --quiet            Suppress all output except for errors.
-</span><span id="__span-7-5">  -v, --verbose          Increase verbosity.
-</span></code></pre></div>
-<h2 id="list">list<a class="headerlink" href="#list" title="Permanent link">#</a></h2>
-<p>List all plugins.</p>
-<p>Usage:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1">lungo list [OPTIONS] [ARGS]...
-</span></code></pre></div>
-<p>Options:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1">  [ARGS]...              Names of the plugins to list.
-</span><span id="__span-9-2">  -c, --config-dir PATH  Path to the configuration directory.
-</span><span id="__span-9-3">  --dev                  Use the development configuration.
-</span><span id="__span-9-4">  -q, --quiet            Suppress all output except for errors.
-</span><span id="__span-9-5">  -v, --verbose          Increase verbosity.
-</span></code></pre></div>
-<h2 id="uninstall">uninstall<a class="headerlink" href="#uninstall" title="Permanent link">#</a></h2>
-<p>Uninstall plugins.</p>
-<p>Usage:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1">lungo uninstall [OPTIONS] ARGS...
-</span></code></pre></div>
-<p>Options:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1">  ARGS...                Names of the plugins to remove.  \[required]
-</span><span id="__span-11-2">  -c, --config-dir PATH  Path to the configuration directory.
-</span><span id="__span-11-3">  --dev                  Use the development configuration.
-</span><span id="__span-11-4">  -q, --quiet            Suppress all output except for errors.
-</span><span id="__span-11-5">  -v, --verbose          Increase verbosity.
-</span></code></pre></div>
-<h2 id="up">up<a class="headerlink" href="#up" title="Permanent link">#</a></h2>
-<p>Start the service.</p>
-<p>Usage:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1">lungo up [OPTIONS]
-</span></code></pre></div>
-<p>Options:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1">  --build-only                    Only build the containers.
-</span><span id="__span-13-2">  --container-tool [docker|docker-compose|podman-compose]
-</span><span id="__span-13-3">                                  Container management tool to use.
-</span><span id="__span-13-4">  --render-only                   Only render the templates.
-</span><span id="__span-13-5">  --force-init                    Do a fresh initialization.
-</span><span id="__span-13-6">  --remove-lock                   Remove the lock file.
-</span><span id="__span-13-7">  -c, --config-dir PATH           Path to the configuration directory.
-</span><span id="__span-13-8">  --dev                           Use the development configuration.
-</span><span id="__span-13-9">  -q, --quiet                     Suppress all output except for errors.
-</span><span id="__span-13-10">  -v, --verbose                   Increase verbosity.
-</span></code></pre></div>
+<div class="typer-docs">
+<h1 id="lungo"><code>lungo</code><a class="headerlink" href="#lungo" title="Permanent link">#</a></h1>
+<p><em>No description available</em></p>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">#</a></h2>
+<p><code>lungo [OPTIONS] COMMAND [ARGS]...</code></p>
+<h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">#</a></h2>
+<p><em>No arguments available</em></p>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-v, --version</code></td>
+<td>Show the version of the program and exit.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--install-completion</code></td>
+<td>Install completion for the current shell.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--show-completion</code></td>
+<td>Show completion for the current shell, to copy it or customize the installation.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--help</code></td>
+<td>Show this message and exit.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>check</code></td>
+<td>Check if the configuration is valid.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>up</code></td>
+<td>Start the service.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>down</code></td>
+<td>Stop the service.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>list</code></td>
+<td>List all plugins.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>install</code></td>
+<td>Install or upgrade plugins.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>uninstall</code></td>
+<td>Uninstall plugins.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sub-commands">Sub Commands<a class="headerlink" href="#sub-commands" title="Permanent link">#</a></h2>
+<h3 id="lungo-check">lungo check<a class="headerlink" href="#lungo-check" title="Permanent link">#</a></h3>
+<p><em>No description available</em></p>
+<h4 id="usage_1">Usage<a class="headerlink" href="#usage_1" title="Permanent link">#</a></h4>
+<p><code>lungo [OPTIONS] COMMAND [ARGS]...</code></p>
+<h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">#</a></h4>
+<p><em>No arguments available</em></p>
+<h4 id="options_1">Options<a class="headerlink" href="#options_1" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-c, --config-dir PATH</code></td>
+<td>Path to the configuration directory.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--dev</code></td>
+<td>Use the development configuration.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-q, --quiet</code></td>
+<td>Suppress all output except for errors.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-v, --verbose</code></td>
+<td>Increase verbosity.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--help</code></td>
+<td>Show this message and exit.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lungo-up">lungo up<a class="headerlink" href="#lungo-up" title="Permanent link">#</a></h3>
+<p><em>No description available</em></p>
+<h4 id="usage_2">Usage<a class="headerlink" href="#usage_2" title="Permanent link">#</a></h4>
+<p><code>lungo [OPTIONS] COMMAND [ARGS]...</code></p>
+<h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">#</a></h4>
+<p><em>No arguments available</em></p>
+<h4 id="options_2">Options<a class="headerlink" href="#options_2" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--build-only</code></td>
+<td>Only build the containers.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--container-tool [docker|docker-compose|podman-compose]</code></td>
+<td>Container management tool to use.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--render-only</code></td>
+<td>Only render the templates.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--force-init</code></td>
+<td>Do a fresh initialization.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--remove-lock</code></td>
+<td>Remove the lock file.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-c, --config-dir PATH</code></td>
+<td>Path to the configuration directory.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--dev</code></td>
+<td>Use the development configuration.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-q, --quiet</code></td>
+<td>Suppress all output except for errors.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-v, --verbose</code></td>
+<td>Increase verbosity.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--help</code></td>
+<td>Show this message and exit.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lungo-down">lungo down<a class="headerlink" href="#lungo-down" title="Permanent link">#</a></h3>
+<p><em>No description available</em></p>
+<h4 id="usage_3">Usage<a class="headerlink" href="#usage_3" title="Permanent link">#</a></h4>
+<p><code>lungo [OPTIONS] COMMAND [ARGS]...</code></p>
+<h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">#</a></h4>
+<p><em>No arguments available</em></p>
+<h4 id="options_3">Options<a class="headerlink" href="#options_3" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--container-tool [docker|docker-compose|podman-compose]</code></td>
+<td>Container management tool to use.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-c, --config-dir PATH</code></td>
+<td>Path to the configuration directory.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--dev</code></td>
+<td>Use the development configuration.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-q, --quiet</code></td>
+<td>Suppress all output except for errors.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-v, --verbose</code></td>
+<td>Increase verbosity.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--help</code></td>
+<td>Show this message and exit.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lungo-list">lungo list<a class="headerlink" href="#lungo-list" title="Permanent link">#</a></h3>
+<p><em>No description available</em></p>
+<h4 id="usage_4">Usage<a class="headerlink" href="#usage_4" title="Permanent link">#</a></h4>
+<p><code>lungo [OPTIONS] COMMAND [ARGS]...</code></p>
+<h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[ARGS]...</code></td>
+<td>Names of the plugins to list.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<h4 id="options_4">Options<a class="headerlink" href="#options_4" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-c, --config-dir PATH</code></td>
+<td>Path to the configuration directory.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--dev</code></td>
+<td>Use the development configuration.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-q, --quiet</code></td>
+<td>Suppress all output except for errors.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-v, --verbose</code></td>
+<td>Increase verbosity.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--help</code></td>
+<td>Show this message and exit.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lungo-install">lungo install<a class="headerlink" href="#lungo-install" title="Permanent link">#</a></h3>
+<p><em>No description available</em></p>
+<h4 id="usage_5">Usage<a class="headerlink" href="#usage_5" title="Permanent link">#</a></h4>
+<p><code>lungo [OPTIONS] COMMAND [ARGS]...</code></p>
+<h4 id="arguments_5">Arguments<a class="headerlink" href="#arguments_5" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ARGS...</code></td>
+<td>Names of the plugins to add.</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h4 id="options_5">Options<a class="headerlink" href="#options_5" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-c, --config-dir PATH</code></td>
+<td>Path to the configuration directory.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--dev</code></td>
+<td>Use the development configuration.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-q, --quiet</code></td>
+<td>Suppress all output except for errors.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-v, --verbose</code></td>
+<td>Increase verbosity.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--help</code></td>
+<td>Show this message and exit.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lungo-uninstall">lungo uninstall<a class="headerlink" href="#lungo-uninstall" title="Permanent link">#</a></h3>
+<p><em>No description available</em></p>
+<h4 id="usage_6">Usage<a class="headerlink" href="#usage_6" title="Permanent link">#</a></h4>
+<p><code>lungo [OPTIONS] COMMAND [ARGS]...</code></p>
+<h4 id="arguments_6">Arguments<a class="headerlink" href="#arguments_6" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ARGS...</code></td>
+<td>Names of the plugins to remove.</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h4 id="options_6">Options<a class="headerlink" href="#options_6" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-c, --config-dir PATH</code></td>
+<td>Path to the configuration directory.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--dev</code></td>
+<td>Use the development configuration.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-q, --quiet</code></td>
+<td>Suppress all output except for errors.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>-v, --verbose</code></td>
+<td>Increase verbosity.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>--help</code></td>
+<td>Show this message and exit.</td>
+<td>No</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</div>
 
 
 
