@@ -47,6 +47,6 @@ def main(
     ] = False,
 ):
     """
-    A CLI tool for Lungo: a user-friendly home lab setup designed for small-to-mid-scale on-premises hosting.
+    CLI for Lungo, a user-friendly home lab setup designed for small-to-mid-scale on-premises hosting.
     """
     ...
