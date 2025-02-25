@@ -4,11 +4,12 @@ from typer import Exit, Option, Typer
 
 from .state import console
 from ..commands import check, down, install, list, uninstall, up
-from ..core.constants import APP_NAME_CAPITALIZED
+from ..core.constants import APP_NAME, APP_NAME_CAPITALIZED
 from ..helpers.common import get_app_version
 
 app = Typer(
     context_settings={"help_option_names": ["-h", "--help"]},
+    name=APP_NAME,
     no_args_is_help=True,
     pretty_exceptions_show_locals=False,
     rich_markup_mode="rich",
