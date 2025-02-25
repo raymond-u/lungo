@@ -7,5 +7,5 @@ hide:
 
 ::: mkdocs-typer
     :module: lungo_cli.app.main
-    :command: main
+    :command: app
     :prog_name: lungo
