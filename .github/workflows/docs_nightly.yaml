@@ -18,6 +18,8 @@ jobs:
   deploy-docs:
     name: Deploy docs
     runs-on: ubuntu-latest
+    concurrency:
+      group: docs
     permissions:
       contents: write
 
