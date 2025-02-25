@@ -5,7 +5,6 @@ hide:
 
 <!-- @formatter:off -->
 
-::: mkdocs-typer
+::: mkdocs-typer2
     :module: lungo_cli.app.main
-    :command: app
-    :prog_name: lungo
+    :name: lungo

@@ -66,7 +66,6 @@ theme:
 markdown_extensions:
   - attr_list
   - md_in_html
-  - mkdocs-typer
   - sane_lists
   - tables
   - toc:
@@ -94,6 +93,8 @@ plugins:
       zoomable: false
   - mike:
       canonical_version: stable
+  - mkdocs-typer2:
+      pretty: true
   - privacy
   - search
 

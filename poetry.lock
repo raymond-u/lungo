@@ -729,19 +729,19 @@ files = [
 ]
 
 [[package]]
-name = "mkdocs-typer"
-version = "0.0.3"
-description = "An MkDocs extension to generate documentation for Typer command line applications"
+name = "mkdocs-typer2"
+version = "0.1.1"
+description = "Mkdocs plugin for generating Typer CLI docs"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.10"
 files = [
-    {file = "mkdocs_typer-0.0.3-py3-none-any.whl", hash = "sha256:b2a9a44da590a7100114fde4de9123fedfea692d229379984db20ee3b3f12d7c"},
-    {file = "mkdocs_typer-0.0.3.tar.gz", hash = "sha256:4dd37f024190a82aaf0f6c984faafb15167d34eab7e29a6a85e61362423a4eb7"},
+    {file = "mkdocs_typer2-0.1.1-py3-none-any.whl", hash = "sha256:66dbc0271839f8b853cd66870775d030820b2fa6a7953a843e9b0ae5200a81ba"},
+    {file = "mkdocs_typer2-0.1.1.tar.gz", hash = "sha256:a5d16f35278ead431510aaf4aa3541e6db9982be0ec70196abaf1d12c8e9a138"},
 ]
 
 [package.dependencies]
-markdown = "==3.*"
-typer = "==0.*"
+mkdocs = ">=1.6.1"
+typer = ">=0.12.5"
 
 [[package]]
 name = "mypy-extensions"
@@ -1467,4 +1467,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "d3d9ccca03640b93edf68de203b6da5454bd93d49a451dddea74b0a1e6641aba"
+content-hash = "b9c5fba72578fa2a2434f26275a1577586949768129698cb9a0f8077da2ea3d8"

@@ -34,7 +34,7 @@ optional = true
 mike = "^2.1.3"
 mkdocs-glightbox = "^0.4.0"
 mkdocs-material = "^9.6.5"
-mkdocs-typer = "^0.0.3"
+mkdocs-typer2 = "^0.1.1"
 
 [tool.poetry.scripts]
 lungo = "lungo_cli.app.main:app_wrapper"
