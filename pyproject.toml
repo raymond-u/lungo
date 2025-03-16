@@ -15,14 +15,14 @@ packages = [{ include = "lungo_cli", from = "src" }]
 [tool.poetry.dependencies]
 python = "^3.12"
 aenum = "^3.1.15"
-cryptography = "^44.0.1"
-jinja2 = "^3.1.4"
+cryptography = "^44.0.2"
+jinja2 = "^3.1.6"
 packaging = "^24.2"
 platformdirs = "^4.3.6"
 pydantic = { extras = ["email"], version = "^2.10.6" }
 pydantic-yaml = "^1.3.0"
 requests = "^2.32.3"
-typer = "^0.15.1"
+typer = "^0.15.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^25.1.0"
@@ -33,8 +33,8 @@ optional = true
 [tool.poetry.group.docs.dependencies]
 mike = "^2.1.3"
 mkdocs-glightbox = "^0.4.0"
-mkdocs-material = "^9.6.5"
-mkdocs-typer2 = "^0.1.1"
+mkdocs-material = "^9.6.8"
+mkdocs-typer2 = "^0.1.4"
 
 [tool.poetry.scripts]
 lungo = "lungo_cli.app.main:app_wrapper"
